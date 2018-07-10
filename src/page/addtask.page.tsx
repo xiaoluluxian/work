@@ -10,6 +10,7 @@ import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from './logo';
 import { IItem, IPage } from './interface';
+import * as $ from "jquery";
 
 import Config from '../config/config';
 
@@ -25,99 +26,127 @@ export interface IState {
 class PageGhotiAddtask extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
-        this.addTask = this.addTask.bind(this);
-        this.initTask = this.initTask.bind(this);
+        this.submitTask = this.submitTask.bind(this);
+        
     }
 
     public render() {
         return (<div className="main">
-        <div className="title">
-        <div style={{
-            display:'flex',
-            height: '100px',
-            alignItems: 'center',
-            width: '100%'
-        }}>
-            <img src={logo} alt="logo" style={{
-                width: '70px',
-                height: '50px',
-            }} />
-            <div style={{
-                flex: 1,
-                paddingLeft: '10px',
-                paddingTop: '20px',
-                display: 'inline',
-                fontSize: '20px',
-                color: 'darkblue',
-                fontWeight: 'bold',
-            }}>
-                Repair and Preservation Network, LLC
+            <div className="title">
+                <div style={{
+                    display: 'flex',
+                    height: '100px',
+                    alignItems: 'center',
+                    width: '100%'
+                }}>
+                    <img src={logo} alt="logo" style={{
+                        width: '70px',
+                        height: '50px',
+                    }} />
+                    <div style={{
+                        flex: 1,
+                        paddingLeft: '10px',
+                        paddingTop: '20px',
+                        display: 'inline',
+                        fontSize: '20px',
+                        color: 'darkblue',
+                        fontWeight: 'bold',
+                    }}>
+                        Repair and Preservation Network, LLC
             </div>
-            <div style={{
-                marginTop:'20px',
-                marginRight:'20px',
-                textAlign:'center',
-                width:'30%'
-                
-            }}>
-            <input type="text" id="myInput"  placeholder="Search for Addr.." title="Search Task"/>
+                    <div style={{
+                        marginTop: '20px',
+                        marginRight: '20px',
+                        textAlign: 'center',
+                        width: '30%'
+
+                    }}>
+                        <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
+                    </div>
+                    <div style={{
+                        marginTop: '20px',
+                        marginRight: '10px',
+                        textAlign: 'right',
+                    }}>
+                        <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
+                    </div>
+                </div>
             </div>
-            <div style={{
-                marginTop:'20px',
-                marginRight:'10px',
-                textAlign:'right',
-            }}>
-            <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
+            <div className="space">
+                <div style={{
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    marginTop: '10px',
+                    width: '100%',
+                }}>
+                    Welcome to Repair and Preservation Network Company!
             </div>
-        </div>
-        </div>
-        <div className="space">
-            <div style={{
-                alignItems:'center',
-                textAlign : 'center',
-                marginTop:'10px',
-                width: '100%',
-            }}>
-            Welcome to Repair and Preservation Network Company!
             </div>
-        </div>
-        <div className="menu">
-            <div style={{
-                margin : '15px',
-            }}>
-            <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
-            </div>
-            <div style={{
-                margin : '5px',
-            }}>
-            <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
-            </div></div>
-            <button onClick={this.addTask} className="big" title="add item">
-                <i className="fas fa-plus-square"></i>
-            </button>
+            <div className="menu">
+                <div style={{
+                    margin: '15px',
+                }}>
+                    <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
+                </div>
+                <div style={{
+                    margin: '5px',
+                }}>
+                    <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
+                </div></div>
+
+            <table>
+                <tr>
+                    <tr>Property Address <input className="text" id = 'propaddr' ></input></tr>
+                    <tr>Asset Number <input className="text" id = 'assetnum' ></input></tr>
+                    <tr>Start Date      <input className="text" id= 'startdate'></input></tr>
+                    <tr>City      <input className="text" id= 'city'></input></tr>
+                    <tr>Stage <input className="text" id='stage'></input></tr>
+                </tr>
+            </table>
+            <button
+            style={{
+                marginLeft:'10px',
+                width: '60px',
+                height: '25px',
+            }}
+            title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
         </div>);
-    }
-    protected logout(){
 
     }
-    protected changeStatus(){
+    protected logout() {
+
+    }
+    protected changeStatus() {
+
+    }
+    protected addTask(){
 
     }
 
-    protected initTask(): IItem {
-        const uniqueIdSmall = () => {
-            return '_' + Math.random().toString(36).substring(2, 9);
-        };
-        return {
-            propaddr: '',
-            assetnum: 0,
-            startdate: 0,
-        };
-    }
-    protected addTask(): void {
-        let page: IPage = this.props.page;
-        page.item.push(this.initTask());
-        this.props.updatePage(page);
+    
+    protected submitTask(){
+        var temp;
+        $.ajax({
+            url: 'https://rpnserver.appspot.com/initTask',
+            //url: 'http://localhost:8080/login',
+            method: 'POST',
+            datatype: "json",
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpdHkiOiIyIiwiZXhwIjoxNTMxMzE1NDUyLCJ1c2VybmFtZSI6Im5pazAxMDUifQ.Vft0xtLq6lvcJwym0eFl7QRqo6MLi8TQRLeXX5KTL9U",
+            },
+            data: JSON.stringify({
+                asset_num:$('#assetnum').val(),
+                startDate:$('#startdate').val(),
+                city:$('#city').val(),
+                address:$('#propaddr').val(),
+                stage:$('#stage').val()
+            }),
+            success: function (data) {
+                temp=data;
+                //this.IProps.key = data;
+                console.log(temp);
+            },
+        });
     }
 }
 

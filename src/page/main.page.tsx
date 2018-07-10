@@ -10,6 +10,7 @@ import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from "./logo";
 import { IItem, IPage } from './interface';
+import * as $ from 'jquery';
 
 import Config from '../config/config';
 
@@ -109,11 +110,16 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }}>
                 <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                 </div>
+                <div style={{
+                    margin : '5px',
+                }}>
+                <button className="link" title="Refresh Task" onClick={this.updateItem}><ins>Refresh</ins></button>
+                </div>
             </div>
-                <table>
+                <table id="task">
                     <tr>
-                        <th>Property Address</th>
                         <th>Asset Number</th>
+                        <th>Property Address</th>
                         <th>Country</th>
                     </tr>
                     <tr>
@@ -130,6 +136,38 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             
         </div>);
     }
+    protected insert() {
+        var table = document.getElementById("myTable");
+        //var row = table.insertRow(0);
+        //var cell1 = row.insertCell(0);
+        //var cell2 = row.insertCell(1);
+        //cell1.innerHTML = "NEW CELL1";
+        //cell2.innerHTML = "NEW CELL2";
+    }
+    protected updateItem(){
+        var temp;
+        $.ajax({
+            url: 'https://rpnserver.appspot.com/findAllTasks',
+            //url: 'http://localhost:8080/login',
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpdHkiOiIyIiwiZXhwIjoxNTMxMzE1NDUyLCJ1c2VybmFtZSI6Im5pazAxMDUifQ.Vft0xtLq6lvcJwym0eFl7QRqo6MLi8TQRLeXX5KTL9U",
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: function (data) {
+                temp=data;
+                //this.IProps.key = data;
+                console.log(temp[0].StartDate);
+                for(var i=0;i<temp.length;i++){
+
+                }
+                
+                
+            },
+        });
+    }
 
     protected mapItem(value: IItem, index: number): JSX.Element {
         return (<React.Fragment key={index}><tr>
@@ -145,7 +183,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 <div style={{ display: 'flex' }}>
                     <div>$</div>
                     <div style={{ flex: 1, textAlign: 'right' }}>
-                        {value.assetnum ? value.assetnum.toFixed(2) : 0}
+                        
                     </div>
                 </div>
             </td>

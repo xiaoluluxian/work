@@ -4,6 +4,7 @@ export interface IPage {
 
 export interface IItem {
     propaddr: string;
-    assetnum: number;
-    startdate: number;
+    assetnum: string;
+    startdate: string;
+    city: string;
 }

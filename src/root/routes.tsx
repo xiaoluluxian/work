@@ -28,7 +28,7 @@ export default function (props) {
                 {
                     component: Pages.addtask,
                     exact: true,
-                    path: '/addtask',
+                    path: '/addTask',
 
                 },
                 {

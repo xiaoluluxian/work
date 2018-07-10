@@ -5,18 +5,22 @@
  */
 
 import * as React from 'react';
+import { Router, Route, hashHistory } from 'react-router';
 import * as Component from '../component/import';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from "./logo";
 import * as $ from "jquery";
+import PageTransition from 'react-router-page-transition';
+
+import { Redirect } from 'react-router-dom';
 //import TextField from '@material-ui/core/TextField';
 
 import Config from '../config/config';
 
 export interface IProps {
-    main: any;
     key:any;
+    router:any;
 }
 
 export interface IState {
@@ -27,6 +31,7 @@ export interface IState {
 class PageGhotiLogin extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
+        this.changeStatus = this.changeStatus.bind(this)
         this.login = this.login.bind(this);
     }
 
@@ -100,7 +105,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
     protected login() {
         var temp;
         $.ajax({
-            url: 'http://67.205.144.64:8000/login',
+            url: 'https://rpnserver.appspot.com/login',
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",
@@ -112,6 +117,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                 temp=data;
                 //this.IProps.key = data;
                 console.log(temp);
+                this.props.router.push('/');
             },
         });
         
