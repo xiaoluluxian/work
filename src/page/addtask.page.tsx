@@ -9,7 +9,7 @@ import * as Component from '../component/import';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from './logo';
-import { IItem, IPage } from './interface';
+import { ITask, IPage } from './interface';
 import * as $ from "jquery";
 
 import Config from '../config/config';

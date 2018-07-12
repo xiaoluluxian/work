@@ -9,17 +9,21 @@ import * as Component from '../component/import';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from "./logo";
-import { IItem, IPage } from './interface';
+import { ITask, IPage } from './interface';
 import * as $ from 'jquery';
+import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
+import { Redirect } from 'react-router-dom'
+import * as ReactDOM from 'react-dom'
+
+
 
 import Config from '../config/config';
 
-export type MMode = 'taskview' | 'addtask';
 
 export interface IProps {
     page: IPage;
     updatePage?: (page: IPage) => void;
-    addtask:any;
+    history: any;
 }
 
 export interface IState {
@@ -27,149 +31,167 @@ export interface IState {
 }
 
 const s = {
-    th :{
-        border: '1px solid #dddddd',
-        textAlign: 'left',
-        padding: '8px',
+    td: {
+        border: '1px solid black',
     },
-    td :{
-        border: '1px solid #dddddd',
-        textAlign: 'left',
-        padding: '8px',
+    th: {
+        textAlign: 'center',
+        border: '1px solid black',
+    },
+    div: {
+        padding: '3px',
+    },
+    entireDiv: {
+        border: '1px solid black',
+    },
+    topDiv: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    tdInvisable: {
+        border: '1px solid black',
+    },
+    lowDiv: {
+
     },
 };
+
 
 class PageGhotiMain extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
-        this.search=this.search.bind(this);
-        this.logout=this.logout.bind(this);
-        this.addTask=this.addTask.bind(this);
+        this.search = this.search.bind(this);
+        this.logout = this.logout.bind(this);
+        this.addTask = this.addTask.bind(this);
+        this.state = { tasks: [] };
+    }
+    state
+    public componentWillMount() {
+        console.log(localStorage.getItem('Token'));
+        $.ajax({
+            url: 'https://rpnserver.appspot.com/findAllTasks',
+            //url: 'http://localhost:8080/login',
+            headers: {
+                Authorization: "Bearer "+localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (data) {
+                console.log(data);
+                this.setState(data)
+            }).bind(this),
+        });
     }
 
     public render() {
+        let tasks = this.state.tasks
         return (<div className="main">
             <div className="title">
-            <div style={{
-                display:'flex',
-                height: '100px',
-                alignItems: 'center',
-                width: '100%'
-            }}>
-                <img src={logo} alt="logo" style={{
-                    width: '70px',
-                    height: '50px',
-                }} />
                 <div style={{
-                    flex: 1,
-                    paddingLeft: '10px',
-                    paddingTop: '20px',
-                    display: 'inline',
-                    fontSize: '20px',
-                    color: 'darkblue',
-                    fontWeight: 'bold',
+                    display: 'flex',
+                    height: '100px',
+                    alignItems: 'center',
+                    width: '100%'
                 }}>
-                    Repair and Preservation Network, LLC
+                    <img src={logo} alt="logo" style={{
+                        width: '70px',
+                        height: '50px',
+                    }} />
+                    <div style={{
+                        flex: 1,
+                        paddingLeft: '10px',
+                        paddingTop: '20px',
+                        display: 'inline',
+                        fontSize: '20px',
+                        color: 'darkblue',
+                        fontWeight: 'bold',
+                    }}>
+                        Repair and Preservation Network, LLC
                 </div>
-                <div style={{
-                    marginTop:'20px',
-                    marginRight:'20px',
-                    textAlign:'center',
-                    width:'30%'
-                    
-                }}>
-                <input type="text" id="myInput"  placeholder="Search for Addr.." title="Search Task"/>
+                    <div style={{
+                        marginTop: '20px',
+                        marginRight: '20px',
+                        textAlign: 'center',
+                        width: '30%'
+
+                    }}>
+                        <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
+                    </div>
+                    <div style={{
+                        marginTop: '20px',
+                        marginRight: '10px',
+                        textAlign: 'right',
+                    }}>
+                        <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
+                    </div>
                 </div>
-                <div style={{
-                    marginTop:'20px',
-                    marginRight:'10px',
-                    textAlign:'right',
-                }}>
-                <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
-                </div>
-            </div>
             </div>
             <div className="space">
                 <div style={{
-                    alignItems:'center',
-                    textAlign : 'center',
-                    marginTop:'10px',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    marginTop: '10px',
                     width: '100%',
                 }}>
-                Welcome to Repair and Preservation Network Company!
+                    Welcome to Repair and Preservation Network Company!
                 </div>
             </div>
             <div className="menu">
                 <div style={{
-                    margin : '15px',
+                    margin: '15px',
                 }}>
-                <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
+                    <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div>
                 <div style={{
-                    margin : '5px',
+                    margin: '5px',
                 }}>
-                <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
+                    <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                 </div>
                 <div style={{
-                    margin : '5px',
+                    margin: '5px',
                 }}>
-                <button className="link" title="Refresh Task" onClick={this.updateItem}><ins>Refresh</ins></button>
+                    <button className="link" title="Refresh Task" onClick={this.updateItem}><ins>Refresh</ins></button>
                 </div>
             </div>
-                <table id="task">
-                    <tr>
-                        <th>Asset Number</th>
-                        <th>Property Address</th>
-                        <th>Country</th>
-                    </tr>
-                    <tr>
-                        <td>Alfreds Futterkiste</td>
-                        <td>Maria Anders</td>
-                        <td>Germany</td>
-                    </tr>
-                    <tr>
-                        <td>Magazzini Alimentari Riuniti</td>
-                        <td>Giovanni Rovelli</td>
-                        <td>Italy</td>
-                    </tr>
-                </table>
-            
-        </div>);
+
+            {['1', '2', '3'].map((value) => {
+                return value
+            })// ['11', '22', '33']
+            }
+            <div>
+                {tasks.map(tasks => <h1>{tasks.Area}</h1>)}
+                </div>
+
+        </div >);
     }
-    protected insert() {
-        var table = document.getElementById("myTable");
-        //var row = table.insertRow(0);
-        //var cell1 = row.insertCell(0);
-        //var cell2 = row.insertCell(1);
-        //cell1.innerHTML = "NEW CELL1";
-        //cell2.innerHTML = "NEW CELL2";
-    }
-    protected updateItem(){
+
+    protected updateItem() {
         var temp;
         $.ajax({
             url: 'https://rpnserver.appspot.com/findAllTasks',
             //url: 'http://localhost:8080/login',
             headers: {
-                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpdHkiOiIyIiwiZXhwIjoxNTMxMzE1NDUyLCJ1c2VybmFtZSI6Im5pazAxMDUifQ.Vft0xtLq6lvcJwym0eFl7QRqo6MLi8TQRLeXX5KTL9U",
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpdHkiOiIyIiwiZXhwIjoxNTMxNDA4NjA5LCJ1c2VybmFtZSI6Im5pazAxMDUifQ.HLjqGv9A2zfu99OVxSPQRTXSj1Znv5ygbx_n9ucB65M",
             },
             method: 'GET',
             datatype: "json",
             data: JSON.stringify({
             }),
             success: function (data) {
-                temp=data;
+                temp = data;
                 //this.IProps.key = data;
-                console.log(temp[0].StartDate);
-                for(var i=0;i<temp.length;i++){
+                console.log(temp);
+                console.log(temp[0].Area);
 
-                }
-                
-                
+
             },
         });
     }
 
-    protected mapItem(value: IItem, index: number): JSX.Element {
+
+    protected mapItem(value: ITask, index: number): JSX.Element {
         return (<React.Fragment key={index}><tr>
             <td style={(s.td as any)}>
                 <div style={{
@@ -183,7 +205,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 <div style={{ display: 'flex' }}>
                     <div>$</div>
                     <div style={{ flex: 1, textAlign: 'right' }}>
-                        
+
                     </div>
                 </div>
             </td>
@@ -191,18 +213,18 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         </React.Fragment>);
     }
 
-    protected search(){
-        
-    }
-
-    protected logout(){
+    protected search() {
 
     }
-    protected changeStatus(){
+
+    protected logout() {
 
     }
-    protected addTask(){
-        this.props.addtask.push('/addtask');
+    protected changeStatus() {
+
+    }
+    protected addTask() {
+        this.props.history.push('/addTask');
     }
 }
 

@@ -1,8 +1,8 @@
 export interface IPage {
-    item: IItem[];
+    item: ITask[];
 }
 
-export interface IItem {
+export interface ITask {
     propaddr: string;
     assetnum: string;
     startdate: string;

@@ -12,93 +12,119 @@ import * as Lambda from '../lambda/import';
 import logo from "./logo";
 import * as $ from "jquery";
 import PageTransition from 'react-router-page-transition';
+import mainp from "./main.page";
 
-import { Redirect } from 'react-router-dom';
+
+import { Redirect, BrowserRouter } from 'react-router-dom';
 //import TextField from '@material-ui/core/TextField';
 
 import Config from '../config/config';
 
 export interface IProps {
-    key:any;
-    router:any;
+    history: any;
 }
 
 export interface IState {
-
+    isPop: boolean;
+    pop: JSX.Element;
 }
 
 
+
+
 class PageGhotiLogin extends React.Component<IProps, IState> {
+    public state: IState = {
+        isPop: false,
+        pop: void 0,
+    };
+
     public constructor(props) {
         super(props);
         this.changeStatus = this.changeStatus.bind(this)
         this.login = this.login.bind(this);
     }
 
+    public componentWillMount() {
+        this.setState({
+            isPop: true,
+            pop: <div>123</div>,
+        })
+        // cookie
+        // localstorage
+        // if (meiyoudenglu) {
+        //     this.props.history.replace('/');
+        // }
+    }
+
     public render() {
         return (
-            <div className="main">
-                <div className="title">
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        height: '100px',
-                        alignItems: 'center',
-                    }}>
-                        <img src={logo} alt="logo" style={{
-                            width: '70px',
-                            height: '50px',
-                        }} />
+            <React.Fragment>
+                {this.state.isPop ? <div>
+                    {this.state.pop}
+                </div> : void 0}
+                <div className="main">
+                    <div className="title">
                         <div style={{
-                            flex: 1,
-                            paddingLeft: '10px',
-                            paddingTop: '20px',
-                            display: 'inline',
-                            fontSize: '20px',
-                            color: 'darkblue',
-                            fontWeight: 'bold',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            height: '100px',
+                            alignItems: 'center',
                         }}>
-                            Repair and Preservation Network, LLC
+                            <img src={logo} alt="logo" style={{
+                                width: '70px',
+                                height: '50px',
+                            }} />
+                            <div style={{
+                                flex: 1,
+                                paddingLeft: '10px',
+                                paddingTop: '20px',
+                                display: 'inline',
+                                fontSize: '20px',
+                                color: 'darkblue',
+                                fontWeight: 'bold',
+                            }}>
+                                Repair and Preservation Network, LLC
                     </div>
+                        </div>
                     </div>
-                </div>
-                <div className="space">
-                    <div style={{
-                        alignItems: 'center',
-                        textAlign: 'center',
-                        width: '100%',
-                    }}>
-                        Welcome to Repair and Preservation Network Company!
-                </div>
-                </div>
-                <div className="menu">
-                    <div style={{
-                        margin: '15px',
-                    }}>
-                        <button className="link" title="Sign In" onClick={this.changeStatus}><ins>Sign In</ins></button>
-                    </div>
-                    <div style={{
-                        margin: '5px',
-                    }}>
-                        <button className="link" title="Sign Up" onClick={this.changeStatus}><ins>Sign Up</ins></button>
-                    </div>
-                </div>
-                <div className="loginT">
-                    <div style={{
-                        textAlign: 'center',
-
-                    }}>
-                        <h1>Sign in</h1>
-
-                        Username: <input id="UN" /><br /><br />
-                        Password:  <input id="PW" type="password" /><br /><br />
+                    <div className="space">
                         <div style={{
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            width: '100%',
                         }}>
-                            <button onClick={this.login}>
-                            </button></div>
+                            Welcome to Repair and Preservation Network Company!
+                </div>
+                    </div>
+                    <div className="menu">
+                        <div style={{
+                            margin: '15px',
+                        }}>
+                            <button className="link" title="Sign In" onClick={this.changeStatus}><ins>Sign In</ins></button>
+                        </div>
+                        <div style={{
+                            margin: '5px',
+                        }}>
+                            <button className="link" title="Sign Up" onClick={this.changeStatus}><ins>Sign Up</ins></button>
+                        </div>
+                    </div>
+                    <div className="loginT">
+                        <div style={{
+                            textAlign: 'center',
+
+                        }}>
+                            <h1>Sign in</h1>
+
+                            Username: <input id="UN" /><br /><br />
+                            Password:  <input id="PW" type="password" /><br /><br />
+                            <div style={{
+                            }}>
+                                <button onClick={this.login}>
+                                </button></div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 
@@ -113,14 +139,16 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                 username: $('#UN').val(),
                 password: $('#PW').val(),
             }),
-            success: function (data) {
-                temp=data;
+            success: (function (data) {
+                var result = JSON.parse(data);
                 //this.IProps.key = data;
-                console.log(temp);
-                this.props.router.push('/');
-            },
+                console.log(result.Authority);
+                localStorage.setItem('Token', result.Token);
+                localStorage.setItem('Suthority', result.Authority);
+                this.props.history.push('/main');
+            }).bind(this),
         });
-        
+
     }
 
     protected changeStatus() {
