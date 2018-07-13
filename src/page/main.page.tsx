@@ -27,34 +27,9 @@ export interface IProps {
 }
 
 export interface IState {
-
 }
+var jdata: any;
 
-const s = {
-    td: {
-        border: '1px solid black',
-    },
-    th: {
-        textAlign: 'center',
-        border: '1px solid black',
-    },
-    div: {
-        padding: '3px',
-    },
-    entireDiv: {
-        border: '1px solid black',
-    },
-    topDiv: {
-        textAlign: 'center',
-        fontWeight: 'bold',
-    },
-    tdInvisable: {
-        border: '1px solid black',
-    },
-    lowDiv: {
-
-    },
-};
 
 
 class PageGhotiMain extends React.Component<IProps, IState> {
@@ -63,30 +38,40 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.search = this.search.bind(this);
         this.logout = this.logout.bind(this);
         this.addTask = this.addTask.bind(this);
-        this.state = { tasks: [] };
+
     }
-    state
+
     public componentWillMount() {
-        console.log(localStorage.getItem('Token'));
+        //console.log(localStorage.getItem('Token'));
         $.ajax({
             url: 'https://rpnserver.appspot.com/findAllTasks',
+            //url: 'https://rpnserver.appspot.com/userProfile',
             //url: 'http://localhost:8080/login',
             headers: {
-                Authorization: "Bearer "+localStorage.getItem('Token'),
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             method: 'GET',
             datatype: "json",
             data: JSON.stringify({
             }),
             success: (function (data) {
+                var items = [];
                 console.log(data);
-                this.setState(data)
+                $.each(data, function (key, val) {
+                    items.push("<tr>");
+                    items.push("<td id=''" + key +"onclick=''" +"''>" + val.Address + "</td>");
+                    items.push("<td id=''" + key + "''>" + val.asset_num + "</td>");
+                    items.push("<td id=''" + key + "''>" + val.StartDate + "</td>");
+                    items.push("<td id=''" + key + "''>" + val.Username + "</td>");
+                    items.push("</tr>");
+                });
+                $("<tbody/>", { html: items.join("") }).appendTo("table");
+
             }).bind(this),
         });
     }
 
     public render() {
-        let tasks = this.state.tasks
         return (<div className="main">
             <div className="title">
                 <div style={{
@@ -155,14 +140,16 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <button className="link" title="Refresh Task" onClick={this.updateItem}><ins>Refresh</ins></button>
                 </div>
             </div>
-
-            {['1', '2', '3'].map((value) => {
-                return value
-            })// ['11', '22', '33']
-            }
-            <div>
-                {tasks.map(tasks => <h1>{tasks.Area}</h1>)}
-                </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property Address</th>
+                        <th>Asset Number</th>
+                        <th>Due Date</th>
+                        <th>User</th>
+                    </tr>
+                </thead>
+            </table>
 
         </div >);
     }
@@ -191,27 +178,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
 
-    protected mapItem(value: ITask, index: number): JSX.Element {
-        return (<React.Fragment key={index}><tr>
-            <td style={(s.td as any)}>
-                <div style={{
-                    padding: '3px',
-                }}>{index + 1}.&nbsp;{value.propaddr}</div>
-            </td>
-            <td style={{
-                padding: '3px',
-                fontWeight: 'bold',
-            }}>
-                <div style={{ display: 'flex' }}>
-                    <div>$</div>
-                    <div style={{ flex: 1, textAlign: 'right' }}>
-
-                    </div>
-                </div>
-            </td>
-        </tr>
-        </React.Fragment>);
-    }
+    
 
     protected search() {
 

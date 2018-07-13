@@ -132,7 +132,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
             method: 'POST',
             datatype: "json",
             headers: {
-                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpdHkiOiIyIiwiZXhwIjoxNTMxMzE1NDUyLCJ1c2VybmFtZSI6Im5pazAxMDUifQ.Vft0xtLq6lvcJwym0eFl7QRqo6MLi8TQRLeXX5KTL9U",
+                Authorization:"Bearer " + localStorage.getItem('Token'),
             },
             data: JSON.stringify({
                 asset_num:$('#assetnum').val(),
@@ -142,10 +142,9 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 stage:$('#stage').val()
             }),
             success: function (data) {
-                temp=data;
-                //this.IProps.key = data;
-                console.log(temp);
-            },
+                console.log(data);
+                this.props.history.push('/main');
+            }.bind(this),
         });
     }
 }

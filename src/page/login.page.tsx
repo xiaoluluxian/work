@@ -45,6 +45,8 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
     }
 
     public componentWillMount() {
+        localStorage.clear();
+        console.log(localStorage.getItem('Token'));
         this.setState({
             isPop: true,
             pop: <div>123</div>,
