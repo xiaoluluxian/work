@@ -146,7 +146,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                 //this.IProps.key = data;
                 console.log(result.Authority);
                 localStorage.setItem('Token', result.Token);
-                localStorage.setItem('Suthority', result.Authority);
+                localStorage.setItem('Authority', result.Authority);
                 this.props.history.push('/main');
             }).bind(this),
         });

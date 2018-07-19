@@ -32,6 +32,12 @@ export default function (props) {
 
                 },
                 {
+                    component: Pages.edittask,
+                    exact: true,
+                    path: '/editTask',
+
+                },
+                {
                     component: () => <div>Path = /home</div>,
                     path: '/home',
                 },

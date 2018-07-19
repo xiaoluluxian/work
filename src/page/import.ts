@@ -6,9 +6,11 @@
 
 import PageGhotiMain from './main.page';
 import PageGhotiAddtask from './addtask.page';
+import PageGhotiEdittask from './edittask.page';
 import PageGhotiLogin from './login.page';
 export {
     PageGhotiMain as main,
     PageGhotiAddtask as addtask,
+    PageGhotiEdittask as edittask,
     PageGhotiLogin as login,
 };

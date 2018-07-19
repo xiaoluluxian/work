@@ -24,24 +24,29 @@ export interface IProps {
     page: IPage;
     updatePage?: (page: IPage) => void;
     history: any;
+
 }
 
 export interface IState {
 }
-var jdata: any;
+
 
 
 
 class PageGhotiMain extends React.Component<IProps, IState> {
+    state = { data: [] };
     public constructor(props) {
         super(props);
         this.search = this.search.bind(this);
         this.logout = this.logout.bind(this);
         this.addTask = this.addTask.bind(this);
+        this.editTask = this.editTask.bind(this);
+        this.setState = this.setState.bind(this);
+        this.delTask = this.delTask.bind(this);
 
     }
 
-    public componentWillMount() {
+    public componentDidMount() {
         //console.log(localStorage.getItem('Token'));
         $.ajax({
             url: 'https://rpnserver.appspot.com/findAllTasks',
@@ -54,24 +59,25 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             datatype: "json",
             data: JSON.stringify({
             }),
-            success: (function (data) {
-                var items = [];
-                console.log(data);
-                $.each(data, function (key, val) {
-                    items.push("<tr>");
-                    items.push("<td id=''" + key +"onclick=''" +"''>" + val.Address + "</td>");
-                    items.push("<td id=''" + key + "''>" + val.asset_num + "</td>");
-                    items.push("<td id=''" + key + "''>" + val.StartDate + "</td>");
-                    items.push("<td id=''" + key + "''>" + val.Username + "</td>");
-                    items.push("</tr>");
-                });
-                $("<tbody/>", { html: items.join("") }).appendTo("table");
+            success: (function (result) {
+                console.log(result);
+                this.setState({ data: result });
+                // $.each(result, function (key, val) {
+                //     items.push("<tr>");
+                //     items.push("<td id=''" + key +" onclick=" +"''>" + val.Address + "</td>");
+                //     items.push("<td id=''" + key + "''>" + val.asset_num + "</td>");
+                //     items.push("<td id=''" + key + "''>" + val.StartDate + "</td>");
+                //     items.push("<td id=''" + key + "''>" + val.Username + "</td>");
+                //     items.push("</tr>");
+                // });
+                // $("<tbody/>", { html: items.join("") }).appendTo("table");
 
             }).bind(this),
         });
     }
 
     public render() {
+
         return (<div className="main">
             <div className="title">
                 <div style={{
@@ -140,18 +146,39 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <button className="link" title="Refresh Task" onClick={this.updateItem}><ins>Refresh</ins></button>
                 </div>
             </div>
-            <table>
+            <table id = 'taskT'>
                 <thead>
-                    <tr>
+                    <tr><th>Action</th>
                         <th>Property Address</th>
                         <th>Asset Number</th>
                         <th>Due Date</th>
                         <th>User</th>
                     </tr>
                 </thead>
+                <tbody>{this.state.data.map(function (item, key) {
+                    return (
+                        
+                        <tr key={key}>
+                        <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                        <button title="delete" onClick={this.delTask.bind(this, item)}><ins>Delete</ins></button>
+
+                        </td>
+                            <td>{item.Address}</td>
+                            <td>{item.asset_num}</td>
+                            <td>{item.StartDate}</td>
+                            <td>{item.Username}</td>
+                        </tr>
+                    )
+                }.bind(this))}</tbody>
             </table>
+            
 
         </div >);
+    }
+    protected editTask(item) {
+        localStorage.setItem("currTask",item.TaskID);
+        console.log(item.TaskID);
+        this.props.history.push('/edittask');
     }
 
     protected updateItem() {
@@ -160,7 +187,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             url: 'https://rpnserver.appspot.com/findAllTasks',
             //url: 'http://localhost:8080/login',
             headers: {
-                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpdHkiOiIyIiwiZXhwIjoxNTMxNDA4NjA5LCJ1c2VybmFtZSI6Im5pazAxMDUifQ.HLjqGv9A2zfu99OVxSPQRTXSj1Znv5ygbx_n9ucB65M",
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             method: 'GET',
             datatype: "json",
@@ -177,8 +204,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         });
     }
 
-
-    
+    protected delTask(item){
+        console.log(item);
+    }
 
     protected search() {
 
