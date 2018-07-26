@@ -5,6 +5,7 @@
 */
 
 import ComponentGhotiIcon from './icon.component';
+
 export {
     ComponentGhotiIcon as icon,
 };

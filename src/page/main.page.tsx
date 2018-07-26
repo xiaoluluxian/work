@@ -43,6 +43,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.editTask = this.editTask.bind(this);
         this.setState = this.setState.bind(this);
         this.delTask = this.delTask.bind(this);
+        this.register = this.register.bind(this);
 
     }
 
@@ -62,15 +63,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             success: (function (result) {
                 console.log(result);
                 this.setState({ data: result });
-                // $.each(result, function (key, val) {
-                //     items.push("<tr>");
-                //     items.push("<td id=''" + key +" onclick=" +"''>" + val.Address + "</td>");
-                //     items.push("<td id=''" + key + "''>" + val.asset_num + "</td>");
-                //     items.push("<td id=''" + key + "''>" + val.StartDate + "</td>");
-                //     items.push("<td id=''" + key + "''>" + val.Username + "</td>");
-                //     items.push("</tr>");
-                // });
-                // $("<tbody/>", { html: items.join("") }).appendTo("table");
 
             }).bind(this),
         });
@@ -143,7 +135,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 <div style={{
                     margin: '5px',
                 }}>
-                    <button className="link" title="Refresh Task" onClick={this.updateItem}><ins>Refresh</ins></button>
+                    <button className="link" title="Refresh Task" onClick={this.register}><ins>Register</ins></button>
                 </div>
             </div>
             <table id = 'taskT'>
@@ -161,6 +153,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         <tr key={key}>
                         <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
                         <button title="delete" onClick={this.delTask.bind(this, item)}><ins>Delete</ins></button>
+                        <button title="setTask" onClick={this.setTask.bind(this, item)}><ins>setTask</ins></button>
 
                         </td>
                             <td>{item.Address}</td>
@@ -175,13 +168,19 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
         </div >);
     }
+
+    protected setTask(item){
+        localStorage.setItem("currTask",item.TaskID);
+        console.log(item.TaskID);
+        this.props.history.push('/setTask');
+    }
     protected editTask(item) {
         localStorage.setItem("currTask",item.TaskID);
         console.log(item.TaskID);
         this.props.history.push('/edittask');
     }
 
-    protected updateItem() {
+    protected register() {
         var temp;
         $.ajax({
             url: 'https://rpnserver.appspot.com/findAllTasks',

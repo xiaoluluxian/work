@@ -8,9 +8,13 @@ import PageGhotiMain from './main.page';
 import PageGhotiAddtask from './addtask.page';
 import PageGhotiEdittask from './edittask.page';
 import PageGhotiLogin from './login.page';
+import PageGhotiSettask from './settask.page';
+import PageGhotiRegister from './register.page';
 export {
     PageGhotiMain as main,
     PageGhotiAddtask as addtask,
     PageGhotiEdittask as edittask,
     PageGhotiLogin as login,
+    PageGhotiSettask as settask,
+    PageGhotiRegister as register,
 };

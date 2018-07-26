@@ -20,6 +20,12 @@ export default function (props) {
 
                 },
                 {
+                    component: Pages.settask,
+                    exact: true,
+                    path: '/setTask',
+
+                },
+                {
                     component: Pages.login,
                     exact: true,
                     path: '/',

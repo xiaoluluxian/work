@@ -18,19 +18,17 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
+    history: any;
 }
 
 export interface IState {
 
 }
 
-class PageGhotiEdittask extends React.Component<IProps, IState> {
+class PageGhotiSettask extends React.Component<IProps, IState> {
     state={
-        Address:'',
-        AssetNum:'',
-        StartDate:'',
-        City:'',
-        Stage:'',
+        oldUser:'',
+        newUser:'',
     };
     public componentDidMount(){
         var id;
@@ -46,14 +44,22 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 console.log(result);
-                this.setState({ Address: result.Address });
-                this.setState({ AssetNum: result.asset_num });
-                this.setState({ StartDate: result.StartDate });
-                this.setState({ City: result.City });
-                this.setState({ Stage: result.Stage });
-                console.log(this.state.City);
-
-
+                this.setState({ oldUser: result.Username });
+                console.log(this.state.oldUser);
+            }).bind(this),
+        });
+        $.ajax({
+            url: 'https://rpnserver.appspot.com/findAllUsers',
+            
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
             }).bind(this),
         });
     }
@@ -129,17 +135,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                 </div></div>
 
-            <table id="edittask">
-                    <tr>Property Address <input className="text" id = 'propaddr' value={this.state.Address} 
-                    onChange={e=> this.AddrChange(e.target.value)}/></tr>
-                    <tr>Asset Number <input className="text" id = 'assetnum' value={this.state.AssetNum}
-                    onChange={e=> this.AssetChange(e.target.value)}/></tr>
-                    <tr>Start Date      <input className="text" id= 'startdate' value={this.state.StartDate}
-                    onChange={e=> this.StartDChange(e.target.value)}/></tr>
-                    <tr>City      <input className="text" id= 'city' value={this.state.City}
-                    onChange={e=> this.CityChange(e.target.value)}/></tr>
-                    <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                    onChange={e=> this.StageChange(e.target.value)}/></tr>
+            <table id="settask">
+                    <tr>User <input className="text" id = 'setUser' value={this.state.newUser} 
+                    onChange={e=> this.UserChange(e.target.value)}/></tr>
             </table>
             <button
             style={{
@@ -148,14 +146,6 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 height: '25px',
             }}
             title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-            <input 
-            style={{
-                marginTop:'10px',
-                marginLeft:'10px',
-                width: '60px',
-                height: '25px',
-            }}
-            type="file" id="fileUpload" onChange={ (e) => {this.handleChange(e.target.files)} }/>
         </div>);
 
     }
@@ -168,31 +158,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         console.log(page);
         // console.log(tmppath);
     }
-    protected AddrChange(value){
+    protected UserChange(value){
         this.setState({
-            Address: value
-       });
+            newUser: value
+        })
     }
-    protected AssetChange(value){
-        this.setState({
-            AssetNum: value
-       });
-    }
-    protected StartDChange(value){
-        this.setState({
-            StartDate: value
-       });
-    }
-    protected StageChange(value){
-        this.setState({
-            Stage: value
-       });
-    }
-    protected CityChange(value){
-        this.setState({
-            City: value
-       });
-    }
+    
+   
     protected logout() {
 
     }
@@ -205,22 +177,22 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     
     protected submitTask(){
-        var temp;
+        var fd = new FormData();
+        fd.append('userToRemove',this.state.oldUser);
+        fd.append('userToAdd',$('#setUser').val());
+        fd.append('task_id',localStorage.getItem('currTask'));
         $.ajax({
-            url: 'https://rpnserver.appspot.com/updateTask?task_id='+localStorage.getItem("currTask"),
-            //url: 'http://localhost:8080/login',
+            url: 'https://rpnserver.appspot.com/addTaskToUser',
+            //url: 'http://192.168.0.66:8080/addTaskToUserII?userToRemove='+this.state.oldUser+'&userToAdd='+$('#setUser').val()+'&task_id='+localStorage.getItem('currTask'),
             method: 'POST',
-            datatype: "json",
+            dataType:'json',
             headers: {
                 Authorization:"Bearer " + localStorage.getItem('Token'),
             },
-            data: JSON.stringify({
-                asset_num:$('#assetnum').val(),
-                startDate:$('#startdate').val(),
-                city:$('#city').val(),
-                address:$('#propaddr').val(),
-                stage:$('#stage').val()
-            }),
+            cache: false,
+            processData: false,
+            contentType: false,
+            data: fd,
             success: function (data) {
                 console.log(data);
                 this.props.history.push('/main');
@@ -229,4 +201,4 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 }
 
-export default PageGhotiEdittask;
+export default PageGhotiSettask;

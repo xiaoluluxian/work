@@ -24,7 +24,7 @@ export interface IState {
 
 }
 
-class PageGhotiEdittask extends React.Component<IProps, IState> {
+class PageGhotiRegister extends React.Component<IProps, IState> {
     state={
         Address:'',
         AssetNum:'',
@@ -33,29 +33,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Stage:'',
     };
     public componentDidMount(){
-        var id;
-        $.ajax({
-            url: 'https://rpnserver.appspot.com/findTaskById?task_id='+localStorage.getItem("currTask"),
-            //url: 'http://localhost:8080/login',
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('Token'),
-            },
-            method: 'GET',
-            datatype: "json",
-            data: JSON.stringify({
-            }),
-            success: (function (result) {
-                console.log(result);
-                this.setState({ Address: result.Address });
-                this.setState({ AssetNum: result.asset_num });
-                this.setState({ StartDate: result.StartDate });
-                this.setState({ City: result.City });
-                this.setState({ Stage: result.Stage });
-                console.log(this.state.City);
-
-
-            }).bind(this),
-        });
+        
     }
 
     public constructor(props) {
@@ -229,4 +207,4 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 }
 
-export default PageGhotiEdittask;
+export default PageGhotiRegister;
