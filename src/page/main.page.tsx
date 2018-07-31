@@ -44,28 +44,50 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.setState = this.setState.bind(this);
         this.delTask = this.delTask.bind(this);
         this.register = this.register.bind(this);
+        this.showSetTask = this.showSetTask.bind(this);
 
     }
 
     public componentDidMount() {
-        //console.log(localStorage.getItem('Token'));
-        $.ajax({
-            url: 'https://rpnserver.appspot.com/findAllTasks',
-            //url: 'https://rpnserver.appspot.com/userProfile',
-            //url: 'http://localhost:8080/login',
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('Token'),
-            },
-            method: 'GET',
-            datatype: "json",
-            data: JSON.stringify({
-            }),
-            success: (function (result) {
-                console.log(result);
-                this.setState({ data: result });
+        if (localStorage.getItem('Authority') === '2') {
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                //url: 'https://rpnserver.appspot.com/userProfile',
+                //url: 'http://localhost:8080/login',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ data: result });
 
-            }).bind(this),
-        });
+                }).bind(this),
+            });
+        }
+        else if (localStorage.getItem('Authority') === '1') {
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/userProfile',
+                //url: 'https://rpnserver.appspot.com/userProfile',
+                //url: 'http://localhost:8080/login',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ data: result });
+
+                }).bind(this),
+            });
+        }
+
     }
 
     public render() {
@@ -100,7 +122,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         width: '30%'
 
                     }}>
-                        <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
+                        <input type="text" id="myInput" onKeyUp={this.search} placeholder="Search for Addr.." title="Search Task" />
                     </div>
                     <div style={{
                         marginTop: '20px',
@@ -138,44 +160,55 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <button className="link" title="Refresh Task" onClick={this.register}><ins>Register</ins></button>
                 </div>
             </div>
-            <table id = 'taskT'>
+            <table id='taskT'>
                 <thead>
                     <tr><th>Action</th>
                         <th>Property Address</th>
                         <th>Asset Number</th>
                         <th>Due Date</th>
                         <th>User</th>
+                        <th>Stage</th>
                     </tr>
                 </thead>
                 <tbody>{this.state.data.map(function (item, key) {
                     return (
-                        
-                        <tr key={key}>
-                        <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
-                        <button title="delete" onClick={this.delTask.bind(this, item)}><ins>Delete</ins></button>
-                        <button title="setTask" onClick={this.setTask.bind(this, item)}><ins>setTask</ins></button>
 
-                        </td>
+                        <tr key={key}>
+                            <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                                {this.showSetTask(item)}
+
+
+                            </td>
                             <td>{item.Address}</td>
                             <td>{item.asset_num}</td>
                             <td>{item.StartDate}</td>
                             <td>{item.Username}</td>
+                            <td>{item.Stage}</td>
                         </tr>
                     )
                 }.bind(this))}</tbody>
             </table>
-            
+
 
         </div >);
     }
 
-    protected setTask(item){
-        localStorage.setItem("currTask",item.TaskID);
+    protected showSetTask(item){
+        if(localStorage.getItem('Authority')==='2'){
+            return <button title="setTask" onClick={this.setTask.bind(this, item)}><ins>setTask</ins></button>
+        }
+        else{
+            return void 0;
+        }
+    }
+
+    protected setTask(item) {
+        localStorage.setItem("currTask", item.TaskID);
         console.log(item.TaskID);
         this.props.history.push('/setTask');
     }
     protected editTask(item) {
-        localStorage.setItem("currTask",item.TaskID);
+        localStorage.setItem("currTask", item.TaskID);
         console.log(item.TaskID);
         this.props.history.push('/edittask');
     }
@@ -183,7 +216,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     protected register() {
         var temp;
         $.ajax({
-            url: 'https://rpnserver.appspot.com/findAllTasks',
+            url: 'https://rpntechserver.appspot.com/findAllTasks',
             //url: 'http://localhost:8080/login',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -203,12 +236,26 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         });
     }
 
-    protected delTask(item){
+    protected delTask(item) {
         console.log(item);
     }
 
     protected search() {
-
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("taskT");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     }
 
     protected logout() {

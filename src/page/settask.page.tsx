@@ -29,11 +29,13 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
     state={
         oldUser:'',
         newUser:'',
+        stage:'',
+        alluser:[]
     };
     public componentDidMount(){
         var id;
         $.ajax({
-            url: 'https://rpnserver.appspot.com/findTaskById?task_id='+localStorage.getItem("currTask"),
+            url: 'https://rpntechserver.appspot.com/findTaskById?task_id='+localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -49,7 +51,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpnserver.appspot.com/findAllUsers',
+            url: 'https://rpntechserver.appspot.com/findAllUsers',
             
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -60,6 +62,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 console.log(result);
+                this.setState({alluser:result});
             }).bind(this),
         });
     }
@@ -68,6 +71,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         super(props);
         this.submitTask = this.submitTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.findUserByName = this.findUserByName.bind(this);
         
     }
 
@@ -134,11 +138,20 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                 </div></div>
-
-            <table id="settask">
-                    <tr>User <input className="text" id = 'setUser' value={this.state.newUser} 
-                    onChange={e=> this.UserChange(e.target.value)}/></tr>
-            </table>
+                <div style={{
+                    padding : '10px',
+                }}>
+                    <tr>User:  
+                    <select id= 'setUser' onChange={e=>this.UserChange(e.target.value)}>
+                    {this.state.alluser.map(function (item, key) {
+                    return (
+                        <option>{item.firstname}</option>
+                    )}.bind(this))}
+                    </select>
+                    </tr>
+                    <tr>Stage: <input className="text" id = 'setStage' value={this.state.stage} 
+                    onChange={e=> this.StageChange(e.target.value)}/></tr>
+                    </div>
             <button
             style={{
                 marginLeft:'10px',
@@ -163,6 +176,11 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             newUser: value
         })
     }
+    protected StageChange(value){
+        this.setState({
+            stage: value
+        })
+    }
     
    
     protected logout() {
@@ -174,15 +192,34 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
     protected addTask(){
 
     }
+    protected findUserByName(name){
+        //console.log(this.state.newUser); tim001
+        console.log(name);
+        for(let i=0;i<this.state.alluser.length;i++){
+            if(this.state.alluser[i].firstname===name){
+                // console.log(this.state.alluser[i].username);//tim
+                // console.log(i);
+                // this.setState({newUser : this.state.alluser[i].username});
+                // console.log('!!!!!!!');
+                // console.log(this.state.newUser);//tim001
+                return this.state.alluser[i].username;
+            }   
+            
+        }
+        
+    }
 
     
     protected submitTask(){
         var fd = new FormData();
-        fd.append('userToRemove',this.state.oldUser);
-        fd.append('userToAdd',$('#setUser').val());
+        var newname = this.findUserByName($('#setUser').val());
+        console.log(newname);
+        fd.append('userToRemove',this.state.oldUser[$('#setStage').val()]);
+        fd.append('userToAdd',newname);
         fd.append('task_id',localStorage.getItem('currTask'));
+        fd.append('stage',$('#setStage').val());
         $.ajax({
-            url: 'https://rpnserver.appspot.com/addTaskToUser',
+            url: 'https://rpntechserver.appspot.com/addTaskToUser',
             //url: 'http://192.168.0.66:8080/addTaskToUserII?userToRemove='+this.state.oldUser+'&userToAdd='+$('#setUser').val()+'&task_id='+localStorage.getItem('currTask'),
             method: 'POST',
             dataType:'json',

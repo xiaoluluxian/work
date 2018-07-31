@@ -25,17 +25,18 @@ export interface IState {
 }
 
 class PageGhotiEdittask extends React.Component<IProps, IState> {
-    state={
-        Address:'',
-        AssetNum:'',
-        StartDate:'',
-        City:'',
-        Stage:'',
+    state = {
+        Address: '',
+        AssetNum: '',
+        StartDate: '',
+        City: '',
+        Stage: '',
+        data: []
     };
-    public componentDidMount(){
+    public componentDidMount() {
         var id;
         $.ajax({
-            url: 'https://rpnserver.appspot.com/findTaskById?task_id='+localStorage.getItem("currTask"),
+            url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -62,7 +63,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         super(props);
         this.submitTask = this.submitTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        
+        this.showTable = this.showTable.bind(this);
+
     }
 
     public render() {
@@ -128,70 +130,139 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                 </div></div>
-
+            <div style={{
+                marginLeft: '10px',
+                marginTop: '10px',
+            }}>
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1">Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                </select></div>
+            {this.showTable()}
             <table id="edittask">
-                    <tr>Property Address <input className="text" id = 'propaddr' value={this.state.Address} 
-                    onChange={e=> this.AddrChange(e.target.value)}/></tr>
-                    <tr>Asset Number <input className="text" id = 'assetnum' value={this.state.AssetNum}
-                    onChange={e=> this.AssetChange(e.target.value)}/></tr>
-                    <tr>Start Date      <input className="text" id= 'startdate' value={this.state.StartDate}
-                    onChange={e=> this.StartDChange(e.target.value)}/></tr>
-                    <tr>City      <input className="text" id= 'city' value={this.state.City}
-                    onChange={e=> this.CityChange(e.target.value)}/></tr>
-                    <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                    onChange={e=> this.StageChange(e.target.value)}/></tr>
+                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                    onChange={e => this.AddrChange(e.target.value)} /></tr>
+                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                    onChange={e => this.AssetChange(e.target.value)} /></tr>
+                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
+                    onChange={e => this.StartDChange(e.target.value)} /></tr>
+                <tr>City      <input className="text" id='city' value={this.state.City}
+                    onChange={e => this.CityChange(e.target.value)} /></tr>
+                <tr>Stage <input className="text" id='stage' value={this.state.Stage}
+                    onChange={e => this.StageChange(e.target.value)} /></tr>
             </table>
             <button
-            style={{
-                marginLeft:'10px',
-                width: '60px',
-                height: '25px',
-            }}
-            title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-            <input 
-            style={{
-                marginTop:'10px',
-                marginLeft:'10px',
-                width: '60px',
-                height: '25px',
-            }}
-            type="file" id="fileUpload" onChange={ (e) => {this.handleChange(e.target.files)} }/>
+                style={{
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+            <input
+                style={{
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
         </div>);
+    }
 
+    protected showTable() {
+        if (this.state.Stage === '0') {
+            return <div><table id="edittask">
+                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                    onChange={e => this.AddrChange(e.target.value)} /></tr>
+                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                    onChange={e => this.AssetChange(e.target.value)} /></tr>
+                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
+                    onChange={e => this.StartDChange(e.target.value)} /></tr>
+                <tr>City      <input className="text" id='city' value={this.state.City}
+                    onChange={e => this.CityChange(e.target.value)} /></tr>
+                <tr>Stage <input className="text" id='stage' value={this.state.Stage}
+                    onChange={e => this.StageChange(e.target.value)} /></tr>
+            </table>
+
+
+            </div>
+        }
+        else if (this.state.Stage === '1') {
+            return <div><table id="generalInfo">
+                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                    onChange={e => this.AddrChange(e.target.value)} /></tr>
+                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                    onChange={e => this.AssetChange(e.target.value)} /></tr>
+                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
+                    onChange={e => this.StartDChange(e.target.value)} /></tr>
+                <tr>City      <input className="text" id='city' value={this.state.City}
+                    onChange={e => this.CityChange(e.target.value)} /></tr>
+                <tr>Stage <input className="text" id='stage' value={this.state.Stage}
+                    onChange={e => this.StageChange(e.target.value)} /></tr>
+            </table>
+                <table>
+                    <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                        onChange={e => this.AddrChange(e.target.value)} /></tr>
+                    <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                        onChange={e => this.AssetChange(e.target.value)} /></tr>
+                    <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
+                        onChange={e => this.StartDChange(e.target.value)} /></tr>
+                    <tr>City      <input className="text" id='city' value={this.state.City}
+                        onChange={e => this.CityChange(e.target.value)} /></tr>
+                    <tr>Stage <input className="text" id='stage' value={this.state.Stage}
+                        onChange={e => this.StageChange(e.target.value)} /></tr>
+                </table>
+            </div>
+        }
+        else {
+            return <div> 2 </div>
+        }
     }
-    protected handleChange(selectorFiles: FileList)
-    {
-        //var tmppath = URL.createObjectURL(selectorFiles[0]);
-        let page = JSON.parse(selectorFiles[0].toString());
-        // let temp = JSON.stringify(selectorFiles[0].toString());
-        // let page = JSON.parse(temp);
-        console.log(page);
-        // console.log(tmppath);
-    }
-    protected AddrChange(value){
-        this.setState({
-            Address: value
-       });
-    }
-    protected AssetChange(value){
-        this.setState({
-            AssetNum: value
-       });
-    }
-    protected StartDChange(value){
-        this.setState({
-            StartDate: value
-       });
-    }
-    protected StageChange(value){
+
+    protected changeStage(value) {
+        console.log(value);
         this.setState({
             Stage: value
-       });
+        });
     }
-    protected CityChange(value){
+    protected handleChange(selectorFiles: FileList) {
+        var data;
+        var file = selectorFiles[0];
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            data = JSON.parse(event.target.result);
+            this.setState({ Address: data.address })
+            //console.log(this.state.Address);
+        }.bind(this);
+        reader.readAsText(file);
+        //console.log(data);
+    }
+    protected AddrChange(value) {
+        this.setState({
+            Address: value
+        });
+    }
+    protected AssetChange(value) {
+        this.setState({
+            AssetNum: value
+        });
+    }
+    protected StartDChange(value) {
+        this.setState({
+            StartDate: value
+        });
+    }
+    protected StageChange(value) {
+        this.setState({
+            Stage: value
+        });
+    }
+    protected CityChange(value) {
         this.setState({
             City: value
-       });
+        });
     }
     protected logout() {
 
@@ -199,27 +270,27 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     protected changeStatus() {
 
     }
-    protected addTask(){
+    protected addTask() {
 
     }
 
-    
-    protected submitTask(){
+
+    protected submitTask() {
         var temp;
         $.ajax({
-            url: 'https://rpnserver.appspot.com/updateTask?task_id='+localStorage.getItem("currTask"),
+            url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",
             headers: {
-                Authorization:"Bearer " + localStorage.getItem('Token'),
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             data: JSON.stringify({
-                asset_num:$('#assetnum').val(),
-                startDate:$('#startdate').val(),
-                city:$('#city').val(),
-                address:$('#propaddr').val(),
-                stage:$('#stage').val()
+                asset_num: $('#assetnum').val(),
+                startDate: $('#startdate').val(),
+                city: $('#city').val(),
+                address: $('#propaddr').val(),
+                stage: $('#stage').val()
             }),
             success: function (data) {
                 console.log(data);

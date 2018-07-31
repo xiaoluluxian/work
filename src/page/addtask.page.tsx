@@ -127,7 +127,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
     protected submitTask(){
         var temp;
         $.ajax({
-            url: 'https://rpnserver.appspot.com/initTask',
+            url: 'https://rpntechserver.appspot.com/initTask',
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",

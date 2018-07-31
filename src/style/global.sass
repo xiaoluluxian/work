@@ -22,11 +22,12 @@ html, body, #container
     display: flex
     flex-direction: column
     height: 100%
+    overflow: scroll
     .title
         height: 90px
         background-color: $silver
         color: $white
-        display: flex
+        display: absolute
         align-items: center
     .space
         height: 72px
@@ -46,6 +47,7 @@ html, body, #container
         background-color: $silver
 
 table
+    display: static
     margin-top: 10px
     font-family: arial, sans-serif
     border-collapse: collapse
