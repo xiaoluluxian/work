@@ -176,8 +176,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         <tr key={key}>
                             <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
                                 {this.showSetTask(item)}
-
-
                             </td>
                             <td>{item.Address}</td>
                             <td>{item.asset_num}</td>

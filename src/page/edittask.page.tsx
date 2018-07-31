@@ -31,6 +31,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         StartDate: '',
         City: '',
         Stage: '',
+        Invoice: '',
+        DueDate: '',
+        CompletionDate: '',
+        BillTo: '',
         data: []
     };
     public componentDidMount() {
@@ -52,7 +56,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ StartDate: result.StartDate });
                 this.setState({ City: result.City });
                 this.setState({ Stage: result.Stage });
-                console.log(this.state.City);
+                this.setState({ Invoice: result.Invoice });
+                this.setState({ BillTo: result.BillTo });
+                this.setState({ CompletionDate: result.CompletionDate });
+                this.setState({ DueDate: result.InvoiceDate });
+                
 
 
             }).bind(this),
@@ -64,6 +72,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.submitTask = this.submitTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.showTable = this.showTable.bind(this);
+        this.readJson = this.readJson.bind(this);
 
     }
 
@@ -141,18 +150,6 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <option value="3">Invoice</option>
                 </select></div>
             {this.showTable()}
-            <table id="edittask">
-                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                    onChange={e => this.AddrChange(e.target.value)} /></tr>
-                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                    onChange={e => this.AssetChange(e.target.value)} /></tr>
-                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
-                    onChange={e => this.StartDChange(e.target.value)} /></tr>
-                <tr>City      <input className="text" id='city' value={this.state.City}
-                    onChange={e => this.CityChange(e.target.value)} /></tr>
-                <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                    onChange={e => this.StageChange(e.target.value)} /></tr>
-            </table>
             <button
                 style={{
                     marginLeft: '10px',
@@ -160,6 +157,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     height: '25px',
                 }}
                 title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+                <button
+                style={{
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                title="Read Json" onClick={this.readJson}><ins>JSON</ins></button>
             <input
                 style={{
                     marginTop: '10px',
@@ -169,6 +173,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 }}
                 type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
         </div>);
+    }
+    protected readJson(){
+
     }
 
     protected showTable() {
@@ -201,18 +208,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     onChange={e => this.CityChange(e.target.value)} /></tr>
                 <tr>Stage <input className="text" id='stage' value={this.state.Stage}
                     onChange={e => this.StageChange(e.target.value)} /></tr>
+                <tr>Invoice <input className="text" id='invoice' value={this.state.Invoice}
+                    onChange={e => this.InvoiceChange(e.target.value)} /></tr>
+                <tr>CompletionDate <input className="text" id='cdate' value={this.state.CompletionDate}
+                    onChange={e => this.CDateChange(e.target.value)} /></tr>
+                <tr>DueDate <input className="text" id='idate' value={this.state.DueDate}
+                    onChange={e => this.IDateChange(e.target.value)} /></tr>
+                <tr>BillTo <input className="text" id='billto' value={this.state.BillTo}
+                    onChange={e => this.BillToChange(e.target.value)} /></tr>
             </table>
                 <table>
-                    <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                        onChange={e => this.AddrChange(e.target.value)} /></tr>
-                    <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                        onChange={e => this.AssetChange(e.target.value)} /></tr>
-                    <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
-                        onChange={e => this.StartDChange(e.target.value)} /></tr>
-                    <tr>City      <input className="text" id='city' value={this.state.City}
-                        onChange={e => this.CityChange(e.target.value)} /></tr>
-                    <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                        onChange={e => this.StageChange(e.target.value)} /></tr>
+
                 </table>
             </div>
         }
@@ -227,13 +233,38 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             Stage: value
         });
     }
+    protected IDateChange(value) {
+        this.setState({
+            DueDate: value
+        });
+    }
+    protected CDateChange(value) {
+        this.setState({
+            CompletionDate: value
+        });
+    }
+    protected BillToChange(value) {
+        this.setState({
+            BillTo: value
+        });
+    }
+    protected InvoiceChange(value) {
+        this.setState({
+            Invoice: value
+        });
+    }
     protected handleChange(selectorFiles: FileList) {
         var data;
         var file = selectorFiles[0];
         var reader = new FileReader();
         reader.onload = function (event) {
             data = JSON.parse(event.target.result);
-            this.setState({ Address: data.address })
+            console.log(data.completionDate);
+            this.setState({ Address: data.address });
+            this.setState({ DueDate: data.invoiceDate });
+            this.setState({ CompletionDate: data.completionDate });
+            this.setState({ Invoice: data.invoice });
+            this.setState({ BillTo: data.billTo });
             //console.log(this.state.Address);
         }.bind(this);
         reader.readAsText(file);
@@ -290,7 +321,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 startDate: $('#startdate').val(),
                 city: $('#city').val(),
                 address: $('#propaddr').val(),
-                stage: $('#stage').val()
+                stage: $('#stage').val(),
+                Invoice: $('#invoice').val(),
+                CompletionDate: $('#cdate').val(),
+                InvoiceDate: $('#idate').val(),
+                billTo: $('#billto').val(),
+
             }),
             success: function (data) {
                 console.log(data);
