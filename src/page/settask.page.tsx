@@ -197,11 +197,6 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         console.log(name);
         for(let i=0;i<this.state.alluser.length;i++){
             if(this.state.alluser[i].firstname===name){
-                // console.log(this.state.alluser[i].username);//tim
-                // console.log(i);
-                // this.setState({newUser : this.state.alluser[i].username});
-                // console.log('!!!!!!!');
-                // console.log(this.state.newUser);//tim001
                 return this.state.alluser[i].username;
             }   
             

@@ -34,7 +34,10 @@ export interface IState {
 
 
 class PageGhotiMain extends React.Component<IProps, IState> {
-    state = { data: [] };
+    state = { 
+        data: [],
+        alluser:[],
+    };
     public constructor(props) {
         super(props);
         this.search = this.search.bind(this);
@@ -49,6 +52,21 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                this.setState({alluser:result});
+            }).bind(this),
+        });
         if (localStorage.getItem('Authority') === '2') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',
@@ -141,6 +159,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     width: '100%',
                 }}>
                     Welcome to Repair and Preservation Network Company!
+                    {this.date}
                 </div>
             </div>
             <div className="menu">
@@ -159,6 +178,20 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="Refresh Task" onClick={this.register}><ins>Register</ins></button>
                 </div>
+                <div style={{
+                    padding : '10px',
+                }}>
+                    <tr>User:  
+                    <select id= 'setUser' onChange={e=>this.UserChange(e.target.value)}>
+                    <option>all</option>
+                    {this.state.alluser.map(function (item, key) {
+                    return (
+                        
+                        <option>{item.firstname}</option>
+                    )}.bind(this))}
+                    </select>
+                    </tr>
+                    </div>
             </div>
             <table id='taskT'>
                 <thead>
@@ -189,6 +222,60 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
 
         </div >);
+    }
+
+    protected date(){
+        
+    }
+
+    protected UserChange(value){
+        console.log(value);
+        if (value==='all') {
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ data: result });
+
+                }).bind(this),
+            });
+        }
+        else{
+            var newname = this.findUserByName(value);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/userProfile',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ data: result });
+
+                }).bind(this),
+            });
+        }
+
+    }
+
+    protected findUserByName(name){
+        //console.log(this.state.newUser); tim001
+        console.log(name);
+        for(let i=0;i<this.state.alluser.length;i++){
+            if(this.state.alluser[i].firstname===name){
+                return this.state.alluser[i].username;
+            }    
+        }
     }
 
     protected showSetTask(item){

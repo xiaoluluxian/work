@@ -25,6 +25,7 @@ export interface IState {
 }
 
 class PageGhotiEdittask extends React.Component<IProps, IState> {
+
     state = {
         Address: '',
         AssetNum: '',
@@ -35,10 +36,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         DueDate: '',
         CompletionDate: '',
         BillTo: '',
-        data: []
+        data: [],
     };
     public componentDidMount() {
-        var id;
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
@@ -60,7 +60,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ BillTo: result.BillTo });
                 this.setState({ CompletionDate: result.CompletionDate });
                 this.setState({ DueDate: result.InvoiceDate });
-                
+
 
 
             }).bind(this),
@@ -73,6 +73,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.handleChange = this.handleChange.bind(this);
         this.showTable = this.showTable.bind(this);
         this.readJson = this.readJson.bind(this);
+
 
     }
 
@@ -157,13 +158,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     height: '25px',
                 }}
                 title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-                <button
+            <input
                 style={{
+                    marginTop: '10px',
                     marginLeft: '10px',
                     width: '60px',
                     height: '25px',
                 }}
-                title="Read Json" onClick={this.readJson}><ins>JSON</ins></button>
+                type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} />
             <input
                 style={{
                     marginTop: '10px',
@@ -174,7 +176,34 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
         </div>);
     }
-    protected readJson(){
+
+
+    protected readJson(selectorFiles: FileList) {
+        var json;
+        var file = selectorFiles[0];
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            json = JSON.parse(event.target.result);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/',
+                //url: 'http://localhost:8080/login',
+                method: 'POST',
+                datatype: "json",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: {
+                    taskId: localStorage.getItem('currTask'),
+                    username: '',
+                    json
+                },
+                success: function (data) {
+                    console.log(data);
+                    //this.props.history.push('/main');
+                }.bind(this),
+            });
+        }.bind(this);
+        reader.readAsText(file);
 
     }
 
