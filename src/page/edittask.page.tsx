@@ -36,6 +36,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         DueDate: '',
         CompletionDate: '',
         BillTo: '',
+        Item:[],
         data: [],
     };
     public componentDidMount() {
@@ -60,6 +61,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ BillTo: result.BillTo });
                 this.setState({ CompletionDate: result.CompletionDate });
                 this.setState({ DueDate: result.InvoiceDate });
+                this.setState({ Item: result.ItemList});
 
 
 
@@ -183,20 +185,22 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         var file = selectorFiles[0];
         var reader = new FileReader();
         reader.onload = function (event) {
-            json = JSON.parse(event.target.result);
+            var test = event.target.result;
+            console.log(test);
+            //json = JSON.parse(event.target.result);
+            //console.log(json);
+            //json = JSON.stringify(json);
+            //console.log(json);
+            console.log(localStorage.getItem('currTask'));
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/',
-                //url: 'http://localhost:8080/login',
+                //url: 'https://rpntechserver.appspot.com/parseJson',
+                url: 'https://rpntechserver.appspot.com/parseJson?task_id='+localStorage.getItem('currTask'),
                 method: 'POST',
                 datatype: "json",
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
-                data: {
-                    taskId: localStorage.getItem('currTask'),
-                    username: '',
-                    json
-                },
+                data: test,
                 success: function (data) {
                     console.log(data);
                     //this.props.history.push('/main');
@@ -208,6 +212,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected showTable() {
+        console.log(this.state.Item);
         if (this.state.Stage === '0') {
             return <div><table id="edittask">
                 <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
@@ -226,6 +231,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </div>
         }
         else if (this.state.Stage === '1') {
+            
             return <div><table id="generalInfo">
                 <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
                     onChange={e => this.AddrChange(e.target.value)} /></tr>
@@ -247,7 +253,25 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     onChange={e => this.BillToChange(e.target.value)} /></tr>
             </table>
                 <table>
+                <thead>
+                    <tr><th>Item</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>{this.state.Item.map(function (item, key) {
+                    let count=0;
+                    console.log(item.Descripiton);
+                    return (
 
+                        <tr key={key}>
+                            <td>{item.Item}</td>
+                            <td>{item.description}</td>
+                            <td>{(item.Qty)*(item.PPU)}</td>
+                        </tr>
+                    )
+                }.bind(this))}
+                    </tbody>
                 </table>
             </div>
         }

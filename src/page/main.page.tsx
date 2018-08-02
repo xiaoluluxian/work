@@ -225,7 +225,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected date(){
-        
+
     }
 
     protected UserChange(value){
@@ -250,7 +250,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         else{
             var newname = this.findUserByName(value);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/userProfile',
+                //url: 'https://rpntechserver.appspot.com/userProfile',
+                url: 'http://192.168.1.96:8080/getTasksByUser?username='+newname,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },

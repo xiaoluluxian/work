@@ -2,7 +2,13 @@ export interface IPage {
     propaddr: string;
     assetnum: string;
     startdate: string;
+    billTo: string;
     city: string;
+    stage: string;
+    invoice: string;
+    completionDate: string;
+    invoiceDate: Date;
+    item: IItem[];
 }
 
 export interface ITask {
