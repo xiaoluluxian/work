@@ -12,6 +12,13 @@ import logo from './logo';
 import { ITask, IPage } from './interface';
 import * as $ from "jquery";
 import * as fs from 'fs';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from 'jszip-utils';
+import * as FileSaver from 'file-saver';
+import * as downloadi from "images-downloader";
+import * as request from 'request';
+
+
 
 import Config from '../config/config';
 
@@ -36,7 +43,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         DueDate: '',
         CompletionDate: '',
         BillTo: '',
-        Item:[],
+        Item: [],
         data: [],
     };
     public componentDidMount() {
@@ -61,7 +68,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ BillTo: result.BillTo });
                 this.setState({ CompletionDate: result.CompletionDate });
                 this.setState({ DueDate: result.InvoiceDate });
-                this.setState({ Item: result.ItemList});
+                this.setState({ Item: result.ItemList });
 
 
 
@@ -75,12 +82,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.handleChange = this.handleChange.bind(this);
         this.showTable = this.showTable.bind(this);
         this.readJson = this.readJson.bind(this);
+        this.mapPicture = this.mapPicture.bind(this);
 
 
     }
 
     public render() {
-        return (<div className="main">
+        
+        return (
+        
+        <div className="main">
             <div className="title">
                 <div style={{
                     display: 'flex',
@@ -155,6 +166,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             {this.showTable()}
             <button
                 style={{
+                    marginTop: '10px',
                     marginLeft: '10px',
                     width: '60px',
                     height: '25px',
@@ -176,6 +188,30 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     height: '25px',
                 }}
                 type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+            <button
+                style={{
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                title="download before" onClick={this.downloadBefore}><ins>Before</ins></button>
+            <button
+                style={{
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                title="download during" onClick={this.downloadDuring}><ins>During</ins></button>
+            <button
+                style={{
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                title="download after" onClick={this.downloadAfter}><ins>After</ins></button>
         </div>);
     }
 
@@ -194,7 +230,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             console.log(localStorage.getItem('currTask'));
             $.ajax({
                 //url: 'https://rpntechserver.appspot.com/parseJson',
-                url: 'https://rpntechserver.appspot.com/parseJson?task_id='+localStorage.getItem('currTask'),
+                url: 'https://rpntechserver.appspot.com/parseJson?task_id=' + localStorage.getItem('currTask'),
                 method: 'POST',
                 datatype: "json",
                 headers: {
@@ -212,9 +248,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected showTable() {
-        console.log(this.state.Item);
         if (this.state.Stage === '0') {
-            return <div><table id="edittask">
+            return <div><table>
                 <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
                     onChange={e => this.AddrChange(e.target.value)} /></tr>
                 <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
@@ -231,46 +266,53 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </div>
         }
         else if (this.state.Stage === '1') {
-            
-            return <div><table id="generalInfo">
-                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                    onChange={e => this.AddrChange(e.target.value)} /></tr>
-                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                    onChange={e => this.AssetChange(e.target.value)} /></tr>
-                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
-                    onChange={e => this.StartDChange(e.target.value)} /></tr>
-                <tr>City      <input className="text" id='city' value={this.state.City}
-                    onChange={e => this.CityChange(e.target.value)} /></tr>
-                <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                    onChange={e => this.StageChange(e.target.value)} /></tr>
-                <tr>Invoice <input className="text" id='invoice' value={this.state.Invoice}
-                    onChange={e => this.InvoiceChange(e.target.value)} /></tr>
-                <tr>CompletionDate <input className="text" id='cdate' value={this.state.CompletionDate}
-                    onChange={e => this.CDateChange(e.target.value)} /></tr>
-                <tr>DueDate <input className="text" id='idate' value={this.state.DueDate}
-                    onChange={e => this.IDateChange(e.target.value)} /></tr>
-                <tr>BillTo <input className="text" id='billto' value={this.state.BillTo}
-                    onChange={e => this.BillToChange(e.target.value)} /></tr>
-            </table>
-                <table>
-                <thead>
-                    <tr><th>Item</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>{this.state.Item.map(function (item, key) {
-                    let count=0;
-                    console.log(item.Descripiton);
-                    return (
 
-                        <tr key={key}>
-                            <td>{item.Item}</td>
-                            <td>{item.description}</td>
-                            <td>{(item.Qty)*(item.PPU)}</td>
+            return <div style={{
+                display: "flex",
+                height: "1080px"
+            }}>
+                <table>
+                    <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                        onChange={e => this.AddrChange(e.target.value)} /></tr>
+                    <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                        onChange={e => this.AssetChange(e.target.value)} /></tr>
+                    <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
+                        onChange={e => this.StartDChange(e.target.value)} /></tr>
+                    <tr>City      <input className="text" id='city' value={this.state.City}
+                        onChange={e => this.CityChange(e.target.value)} /></tr>
+                    <tr>Stage <input className="text" id='stage' value={this.state.Stage}
+                        onChange={e => this.StageChange(e.target.value)} /></tr>
+                    <tr>Invoice <input className="text" id='invoice' value={this.state.Invoice}
+                        onChange={e => this.InvoiceChange(e.target.value)} /></tr>
+                    <tr>CompletionDate <input className="text" id='cdate' value={this.state.CompletionDate}
+                        onChange={e => this.CDateChange(e.target.value)} /></tr>
+                    <tr>DueDate <input className="text" id='idate' value={this.state.DueDate}
+                        onChange={e => this.IDateChange(e.target.value)} /></tr>
+                    <tr>BillTo <input className="text" id='billto' value={this.state.BillTo}
+                        onChange={e => this.BillToChange(e.target.value)} /></tr>
+                </table>
+                <table>
+                    <thead>
+                        <tr><th>Item</th>
+                            <th>Description</th>
+                            <th>Amount</th>
                         </tr>
-                    )
-                }.bind(this))}
+                    </thead>
+                    <tbody>{this.state.Item.map(function (item, key) {
+
+                        return (
+
+                            <tr key={key}>
+                                <td>{item.Item}</td>
+                                <td>{item.description}</td>
+                                <td>{(item.Qty) * (item.PPU)}</td>
+                                <tr style={{
+
+                                }}> Before </tr>
+                                <tr>{this.mapPicture(item.Before)}</tr>
+                            </tr>
+                        )
+                    }.bind(this))}
                     </tbody>
                 </table>
             </div>
@@ -278,6 +320,77 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         else {
             return <div> 2 </div>
         }
+    }
+
+    protected mapPicture(picture: any[]) {
+        return (
+            picture.map(function (item, key) {
+                return (
+                    <img style={{
+                        width: '95%',
+                        height: 'auto',
+                    }}
+                        src={item.Src} />
+                )
+            }.bind(this))
+        )
+    }
+
+    protected downloadBefore() {
+        var zip = new JSZip();
+        var count = 0;
+        var zipFilename = "before.zip";
+        var urls = [
+            'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media',
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
+        ];
+
+        urls.forEach(function (url) {
+            console.log(url);
+            var filename = "filename";
+            // loading a file and add it in a zip file
+            JSZipUtils.getBinaryContent(url, function (err, data) {
+                if (err) {
+                    throw err; // or handle the error
+                }
+                zip.file('1.jpg', data, { binary: true });
+                count++;
+                if (count == urls.length) {
+                    zip.generateAsync({type:'blob'}).then(function(content) {
+                        FileSaver.saveAs(content, zipFilename);
+                     });
+                }
+            });
+        });
+
+    }
+    protected test(url:string){
+        window.location.href=url;
+    }
+
+    protected downloadDuring() {
+        var urls = [
+            'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media',
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
+        ];
+        for(let i=0;i<urls.length;i++){
+            console.log(urls[i]);
+            //window.open(urls[i],'_blank');
+            test(urls[i]);
+        }
+        
+    }
+
+    protected downloadAfter() {
+        var urls = [
+            'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media',
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
+        ];
+        
+
     }
 
     protected changeStage(value) {
@@ -318,6 +431,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             this.setState({ CompletionDate: data.completionDate });
             this.setState({ Invoice: data.invoice });
             this.setState({ BillTo: data.billTo });
+            this.setState({})
             //console.log(this.state.Address);
         }.bind(this);
         reader.readAsText(file);
