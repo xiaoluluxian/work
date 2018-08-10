@@ -12,13 +12,16 @@ import logo from './logo';
 import { ITask, IPage } from './interface';
 import * as $ from "jquery";
 import * as fs from 'fs';
-import * as JSZip from 'jszip';
-import * as JSZipUtils from 'jszip-utils';
+// import * as JSZip from 'jszip';
+// import * as JSZipUtils from 'jszip-utils';
 import * as FileSaver from 'file-saver';
-import * as downloadi from "images-downloader";
-import * as request from 'request';
-
-
+// import * as downloadi from "images-downloader";
+// import * as request from 'request';
+import * as JSZipUtils from "./jszip-utils.js";
+import * as JSZipUtilsMin from "./jszip-utils.min.js";
+//import * as saveas from "./FileSaver.js";
+import * as JSZip from "./jszip.js";
+import * as helper from "./helpers.js";
 
 import Config from '../config/config';
 
@@ -47,8 +50,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Desc: '',
         uploadLink: '',
         Note: '',
-        Process:'',
-        Status:'',
+        Process: '',
+        Status: '',
         Item: [],
         data: [],
     };
@@ -79,8 +82,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ uploadLink: result.upload_link });
                 this.setState({ Item: result.ItemList });
                 this.setState({ Note: result.Note });
-                this.setState({ Process: result.Process});
-                this.setState({ Status: result.Status});
+                this.setState({ Process: result.Process });
+                this.setState({ Status: result.Status });
             }).bind(this),
         });
     }
@@ -309,7 +312,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </table>
             </div>
         }
-        else if(this.state.Stage === '1'){
+        else if (this.state.Stage === '1') {
             return <div><table>
                 <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
                     onChange={e => this.AddrChange(e.target.value)} /></tr>
@@ -317,7 +320,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     onChange={e => this.AssetChange(e.target.value)} /></tr>
                 <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
                     onChange={e => this.StartDChange(e.target.value)} /></tr>
-                    <tr>Due Date      <input className="text" id='duedate' value={this.state.DueDate}
+                <tr>Due Date      <input className="text" id='duedate' value={this.state.DueDate}
                     onChange={e => this.IDateChange(e.target.value)} /></tr>
                 <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
                     onChange={e => this.CityChange(e.target.value)} /></tr>
@@ -326,7 +329,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
                     onChange={e => this.LBNumChange(e.target.value)} /></tr>
             </table>
-            <table>
+                <table>
                     <thead>
                         <tr>
                             <th>Category</th>
@@ -347,7 +350,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Cost}</td>
                                     <td>{this.showProcess}</td>
                                     <td>{this.showStatus}</td>
-                                    </tr>
+                                </tr>
                                 <th> Before </th>
                                 <tr>{this.mapPicture(item.Before)}</tr>
                                 <th> During </th>
@@ -395,7 +398,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
                                     <td>{item.Cost}</td>
-                                    </tr>
+                                </tr>
                                 <th> Before </th>
                                 <tr>{this.mapPicture(item.Before)}</tr>
                                 <th> During </th>
@@ -443,11 +446,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
                                     <td>{item.Cost}</td>
-                                    </tr>
+                                </tr>
                                 <tr> Before </tr>
                                 <tr>{this.mapPicture(item.Before)}</tr>
 
-                                
+
                             </React.Fragment>
 
 
@@ -482,32 +485,96 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected downloadBefore() {
-        var zip = new JSZip();
-        var count = 0;
-        var zipFilename = "before.zip";
-        var urls = [
-            'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media',
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
-        ];
+        // var Promise = window.Promise;
+        // if (!Promise) {
+        //     Promise = JSZip.external.Promise;
+        // }
+        /**
+ * Reset the message.
+ */
+        function resetMessage() {
+            $("#result")
+                .removeClass()
+                .text("");
+        }
+        /**
+         * show a successful message.
+         * @param {String} text the text to show.
+         */
+        function showMessage(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-success")
+                .text(text);
+        }
+        /**
+         * show an error message.
+         * @param {String} text the text to show.
+         */
+        function showError(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-danger")
+                .text(text);
+        }
+        /**
+         * Update the progress bar.
+         * @param {Integer} percent the current percent
+         */
+        function updatePercent(percent) {
+            $("#progress_bar").removeClass("hide")
+                .find(".progress-bar")
+                .attr("aria-valuenow", percent)
+                .css({
+                    width: percent + "%"
+                });
+        }
 
+        function urlToPromise(url) {
+            console.log(url)
+            return new Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+        resetMessage();
+        var zip = new JSZip();
+        var urls = [
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_3EF09DCB-BF8D-4D87-92D5-544B5C2C2663?generation=1533849576717144&alt=media",
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_5CB0C48A-4A7D-449F-A7B2-D3C1C18F5B98?generation=1533849576896821&alt=media",
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_68F4F80C-2896-491A-9DE3-68F48293DA6F?generation=1533849576940002&alt=media",
+            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_F65B73A6-9848-4925-A36F-79C3121D0796?generation=1533849577065521&alt=media"
+        ];
+        // find every checked item
         urls.forEach(function (url) {
             console.log(url);
-            var filename = "filename";
-            // loading a file and add it in a zip file
-            JSZipUtils.getBinaryContent(url, function (err, data) {
-                if (err) {
-                    throw err; // or handle the error
-                }
-                zip.file('1.jpg', data, { binary: true });
-                count++;
-                if (count == urls.length) {
-                    zip.generateAsync({ type: 'blob' }).then(function (content) {
-                        FileSaver.saveAs(content, zipFilename);
-                    });
-                }
-            });
+            var filename = url.replace(/.*\//g, "") + ".jpg";
+            zip.file(filename, urlToPromise(url), { binary: true });
         });
+
+        // when everything has been downloaded, we can trigger the dl
+        zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
+            var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+            if (metadata.currentFile) {
+                msg += ", current file = " + metadata.currentFile;
+            }
+            showMessage(msg);
+        })
+            .then(function callback(blob) {
+
+                FileSaver.saveAs(blob, "example.zip");
+                showMessage("done !");
+            }, function (e) {
+                showError(e);
+            });
+
+        return false;
+
 
     }
     protected test(url: string) {
@@ -520,11 +587,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
             "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
         ];
-        for (let i = 0; i < urls.length; i++) {
-            console.log(urls[i]);
-            //window.open(urls[i],'_blank');
-            test(urls[i]);
-        }
+        var url = 'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media';
+
+
 
     }
 
@@ -538,20 +603,20 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
-    protected showProcess(value){
-        if(value==='0'){
+    protected showProcess(value) {
+        if (value === '0') {
             return (<div>Imcomplete</div>);
         }
-        else{
+        else {
             return (<div>Done</div>);
         }
     }
 
-    protected showStatus(value){
-        if(value==='0'){
+    protected showStatus(value) {
+        if (value === '0') {
             return "Incomplete"
         }
-        else{
+        else {
             return "Done"
         }
     }
