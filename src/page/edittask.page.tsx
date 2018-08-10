@@ -53,6 +53,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Process: '',
         Status: '',
         Item: [],
+        Before:[],
+        During:[],
+        After:[],
         data: [],
     };
     public componentDidMount() {
@@ -86,6 +89,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ Status: result.Status });
             }).bind(this),
         });
+        $.ajax({
+            url:'https://rpntechserver.appspot.com/findAllImg?task_id='+ localStorage.getItem("currTask")+'&status=before',
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            success:(function(result){
+                //console.log(result);
+                this.setState({Before:result});
+            }).bind(this),
+        })
     }
 
     public constructor(props) {
@@ -99,6 +114,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.showCurrStage = this.showCurrStage.bind(this);
         this.showProcess = this.showProcess.bind(this);
         this.showStatus = this.showStatus.bind(this);
+        this.downloadBefore = this.downloadBefore.bind(this);
 
 
     }
@@ -517,18 +533,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 .addClass("alert alert-danger")
                 .text(text);
         }
-        /**
-         * Update the progress bar.
-         * @param {Integer} percent the current percent
-         */
-        function updatePercent(percent) {
-            $("#progress_bar").removeClass("hide")
-                .find(".progress-bar")
-                .attr("aria-valuenow", percent)
-                .css({
-                    width: percent + "%"
-                });
-        }
+
 
         function urlToPromise(url) {
             console.log(url)
@@ -544,12 +549,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
         resetMessage();
         var zip = new JSZip();
-        var urls = [
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_3EF09DCB-BF8D-4D87-92D5-544B5C2C2663?generation=1533849576717144&alt=media",
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_5CB0C48A-4A7D-449F-A7B2-D3C1C18F5B98?generation=1533849576896821&alt=media",
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_68F4F80C-2896-491A-9DE3-68F48293DA6F?generation=1533849576940002&alt=media",
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/410_E_4TH_ST_Uploads_1_before_F65B73A6-9848-4925-A36F-79C3121D0796?generation=1533849577065521&alt=media"
-        ];
+        var urls = this.state.Before;
         // find every checked item
         urls.forEach(function (url) {
             console.log(url);
