@@ -139,6 +139,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.showProcess = this.showProcess.bind(this);
         this.showStatus = this.showStatus.bind(this);
         this.downloadBefore = this.downloadBefore.bind(this);
+        this.downloadAfter = this.downloadAfter.bind(this);
+        this.downloadDuring = this.downloadDuring.bind(this);
 
 
     }
