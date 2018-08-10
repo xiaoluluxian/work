@@ -14,7 +14,7 @@ const FAVICON_DIR = path.resolve(__dirname, '..', 'public', 'favicon.png');
 const MANIFEST_DIR = path.resolve(__dirname, '..', 'public', 'manifest.json');
 
 let config = {
-    entry: APP_DIR + "/index.build.tsx",
+    entry: APP_DIR + "/index.dev.tsx",
     output: {
         filename: "bundle.js",
         path: BUILD_DIR
