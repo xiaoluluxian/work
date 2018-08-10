@@ -100,6 +100,30 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 //console.log(result);
                 this.setState({Before:result});
             }).bind(this),
+        });
+        $.ajax({
+            url:'https://rpntechserver.appspot.com/findAllImg?task_id='+ localStorage.getItem("currTask")+'&status=during',
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            success:(function(result){
+                //console.log(result);
+                this.setState({During:result});
+            }).bind(this),
+        });
+        $.ajax({
+            url:'https://rpntechserver.appspot.com/findAllImg?task_id='+ localStorage.getItem("currTask")+'&status=after',
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            success:(function(result){
+                //console.log(result);
+                this.setState({After:result});
+            }).bind(this),
         })
     }
 
@@ -582,24 +606,144 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected downloadDuring() {
-        var urls = [
-            'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media',
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
-        ];
-        var url = 'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media';
+        function resetMessage() {
+            $("#result")
+                .removeClass()
+                .text("");
+        }
+        /**
+         * show a successful message.
+         * @param {String} text the text to show.
+         */
+        function showMessage(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-success")
+                .text(text);
+        }
+        /**
+         * show an error message.
+         * @param {String} text the text to show.
+         */
+        function showError(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-danger")
+                .text(text);
+        }
+
+
+        function urlToPromise(url) {
+            console.log(url)
+            return new Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+        resetMessage();
+        var zip = new JSZip();
+        var urls = this.state.During;
+        // find every checked item
+        urls.forEach(function (url) {
+            console.log(url);
+            var filename = url.replace(/.*\//g, "") + ".jpg";
+            zip.file(filename, urlToPromise(url), { binary: true });
+        });
+
+        // when everything has been downloaded, we can trigger the dl
+        zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
+            var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+            if (metadata.currentFile) {
+                msg += ", current file = " + metadata.currentFile;
+            }
+            showMessage(msg);
+        })
+            .then(function callback(blob) {
+
+                FileSaver.saveAs(blob, "example.zip");
+                showMessage("done !");
+            }, function (e) {
+                showError(e);
+            });
+
+        return false;
 
 
 
     }
 
     protected downloadAfter() {
-        var urls = [
-            'https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d07%22)?generation=1533743628002482&alt=media',
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
-            "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
-        ];
+        function resetMessage() {
+            $("#result")
+                .removeClass()
+                .text("");
+        }
+        /**
+         * show a successful message.
+         * @param {String} text the text to show.
+         */
+        function showMessage(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-success")
+                .text(text);
+        }
+        /**
+         * show an error message.
+         * @param {String} text the text to show.
+         */
+        function showError(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-danger")
+                .text(text);
+        }
 
+
+        function urlToPromise(url) {
+            console.log(url)
+            return new Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+        resetMessage();
+        var zip = new JSZip();
+        var urls = this.state.After;
+        // find every checked item
+        urls.forEach(function (url) {
+            console.log(url);
+            var filename = url.replace(/.*\//g, "") + ".jpg";
+            zip.file(filename, urlToPromise(url), { binary: true });
+        });
+
+        // when everything has been downloaded, we can trigger the dl
+        zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
+            var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+            if (metadata.currentFile) {
+                msg += ", current file = " + metadata.currentFile;
+            }
+            showMessage(msg);
+        })
+            .then(function callback(blob) {
+
+                FileSaver.saveAs(blob, "example.zip");
+                showMessage("done !");
+            }, function (e) {
+                showError(e);
+            });
+
+        return false;
 
     }
 
