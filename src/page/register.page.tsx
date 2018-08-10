@@ -25,22 +25,22 @@ export interface IState {
 }
 
 class PageGhotiRegister extends React.Component<IProps, IState> {
-    state={
-        Address:'',
-        AssetNum:'',
-        StartDate:'',
-        City:'',
-        Stage:'',
+    state = {
+        Username: '',
+        Name: '',
+        Password: '',
+        Authority: '',
+
     };
-    public componentDidMount(){
-        
+    public componentDidMount() {
+
     }
 
     public constructor(props) {
         super(props);
         this.submitTask = this.submitTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        
+
     }
 
     public render() {
@@ -76,13 +76,13 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                     }}>
                         <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
                     </div>
-                    <div style={{
+                    {/* <div style={{
                         marginTop: '20px',
                         marginRight: '10px',
                         textAlign: 'right',
                     }}>
                         <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="space">
@@ -100,45 +100,36 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                     margin: '15px',
                 }}>
                     <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
-                </div>
-                <div style={{
-                    margin: '5px',
-                }}>
-                    <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                 </div></div>
 
-            <table id="edittask">
-                    <tr>Property Address <input className="text" id = 'propaddr' value={this.state.Address} 
-                    onChange={e=> this.AddrChange(e.target.value)}/></tr>
-                    <tr>Asset Number <input className="text" id = 'assetnum' value={this.state.AssetNum}
-                    onChange={e=> this.AssetChange(e.target.value)}/></tr>
-                    <tr>Start Date      <input className="text" id= 'startdate' value={this.state.StartDate}
-                    onChange={e=> this.StartDChange(e.target.value)}/></tr>
-                    <tr>City      <input className="text" id= 'city' value={this.state.City}
-                    onChange={e=> this.CityChange(e.target.value)}/></tr>
-                    <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                    onChange={e=> this.StageChange(e.target.value)}/></tr>
+            <table id="register">
+                <tr>Username <input className="text" id='username' ></input></tr>
+                <tr>Password      <input className="text" id='password'></input></tr>
+                <tr>Authority      <input className="text" id='authority'></input></tr>
+                <tr>Firstname <input className="text" id='firstname' ></input></tr>
+                <tr>LastName <input className="text" id='lastname' ></input></tr>
+                <tr>Email <input className="text" id='email' ></input></tr>
+                <tr>Phone <input className="text" id='phone' ></input></tr>
             </table>
             <button
-            style={{
-                marginLeft:'10px',
-                width: '60px',
-                height: '25px',
-            }}
-            title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-            <input 
-            style={{
-                marginTop:'10px',
-                marginLeft:'10px',
-                width: '60px',
-                height: '25px',
-            }}
-            type="file" id="fileUpload" onChange={ (e) => {this.handleChange(e.target.files)} }/>
+                style={{
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+            <input
+                style={{
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
         </div>);
 
     }
-    protected handleChange(selectorFiles: FileList)
-    {
+    protected handleChange(selectorFiles: FileList) {
         //var tmppath = URL.createObjectURL(selectorFiles[0]);
         let page = JSON.parse(selectorFiles[0].toString());
         // let temp = JSON.stringify(selectorFiles[0].toString());
@@ -146,30 +137,30 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         console.log(page);
         // console.log(tmppath);
     }
-    protected AddrChange(value){
+    protected AddrChange(value) {
         this.setState({
             Address: value
-       });
+        });
     }
-    protected AssetChange(value){
+    protected AssetChange(value) {
         this.setState({
             AssetNum: value
-       });
+        });
     }
-    protected StartDChange(value){
+    protected StartDChange(value) {
         this.setState({
             StartDate: value
-       });
+        });
     }
-    protected StageChange(value){
+    protected StageChange(value) {
         this.setState({
             Stage: value
-       });
+        });
     }
-    protected CityChange(value){
+    protected CityChange(value) {
         this.setState({
             City: value
-       });
+        });
     }
     protected logout() {
 
@@ -177,15 +168,14 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
     protected changeStatus() {
 
     }
-    protected addTask(){
+    protected addTask() {
 
     }
 
-    
-    protected submitTask(){
-        var temp;
+
+    protected submitTask() {
         $.ajax({
-            url: 'https://rpnserver.appspot.com/updateTask?task_id='+localStorage.getItem("currTask"),
+            url: 'https://rpntechserver.appspot.com/register',
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",
@@ -193,11 +183,13 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 Authorization:"Bearer " + localStorage.getItem('Token'),
             },
             data: JSON.stringify({
-                asset_num:$('#assetnum').val(),
-                startDate:$('#startdate').val(),
-                city:$('#city').val(),
-                address:$('#propaddr').val(),
-                stage:$('#stage').val()
+                username:$('#username').val(),
+                password:$('#password').val(),
+                authority:$('#authority').val(),
+                firstname:$('#firstname').val(),
+                lastname:$('#lastname').val(),
+                email:$('#email').val(),
+                phone:$('#phone').val(),
             }),
             success: function (data) {
                 console.log(data);

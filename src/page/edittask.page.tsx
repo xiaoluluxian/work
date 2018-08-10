@@ -43,6 +43,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         DueDate: '',
         CompletionDate: '',
         BillTo: '',
+        LBNum: '',
+        Desc: '',
+        uploadLink: '',
+        Note: '',
+        Process:'',
+        Status:'',
         Item: [],
         data: [],
     };
@@ -68,10 +74,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ BillTo: result.BillTo });
                 this.setState({ CompletionDate: result.CompletionDate });
                 this.setState({ DueDate: result.InvoiceDate });
+                this.setState({ LBNum: result.KeyCode });
+                this.setState({ Desc: result.Desc });
+                this.setState({ uploadLink: result.upload_link });
                 this.setState({ Item: result.ItemList });
-
-
-
+                this.setState({ Note: result.Note });
+                this.setState({ Process: result.Process});
+                this.setState({ Status: result.Status});
             }).bind(this),
         });
     }
@@ -83,136 +92,171 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.showTable = this.showTable.bind(this);
         this.readJson = this.readJson.bind(this);
         this.mapPicture = this.mapPicture.bind(this);
+        this.changeStage2 = this.changeStage2.bind(this);
+        this.showCurrStage = this.showCurrStage.bind(this);
+        this.showProcess = this.showProcess.bind(this);
+        this.showStatus = this.showStatus.bind(this);
 
 
     }
 
     public render() {
-        
         return (
-        
-        <div className="main">
-            <div className="title">
-                <div style={{
-                    display: 'flex',
-                    height: '100px',
-                    alignItems: 'center',
-                    width: '100%'
-                }}>
-                    <img src={logo} alt="logo" style={{
-                        width: '70px',
-                        height: '50px',
-                    }} />
+            <div className="main">
+                <div className="title">
                     <div style={{
-                        flex: 1,
-                        paddingLeft: '10px',
-                        paddingTop: '20px',
-                        display: 'inline',
-                        fontSize: '20px',
-                        color: 'darkblue',
-                        fontWeight: 'bold',
+                        display: 'flex',
+                        height: '100px',
+                        alignItems: 'center',
+                        width: '100%'
                     }}>
-                        Repair and Preservation Network, LLC
+                        <img src={logo} alt="logo" style={{
+                            width: '70px',
+                            height: '50px',
+                        }} />
+                        <div style={{
+                            flex: 1,
+                            paddingLeft: '10px',
+                            paddingTop: '20px',
+                            display: 'inline',
+                            fontSize: '20px',
+                            color: 'darkblue',
+                            fontWeight: 'bold',
+                        }}>
+                            Repair and Preservation Network, LLC
             </div>
-                    <div style={{
-                        marginTop: '20px',
-                        marginRight: '20px',
-                        textAlign: 'center',
-                        width: '30%'
+                        <div style={{
+                            marginTop: '20px',
+                            marginRight: '20px',
+                            textAlign: 'center',
+                            width: '30%'
 
+                        }}>
+                            <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
+                        </div>
+                        {/* <div style={{
+                            marginTop: '20px',
+                            marginRight: '10px',
+                            textAlign: 'right',
+                        }}>
+                            <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
+                        </div> */}
+                    </div>
+                </div>
+                <div className="space">
+                    <div style={{
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        marginTop: '10px',
+                        width: '100%',
                     }}>
-                        <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
+                        Welcome to Repair and Preservation Network Company!
+            </div>
+                </div>
+                <div className="menu">
+                    <div style={{
+                        margin: '15px',
+                    }}>
+                        <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
                     <div style={{
-                        marginTop: '20px',
-                        marginRight: '10px',
-                        textAlign: 'right',
+                        margin: '5px',
                     }}>
-                        <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
-                    </div>
+                        <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
+                    </div></div>
+                <div style={{
+                    marginLeft: '10px',
+                    marginTop: '10px',
+                }}>
+                    <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                        <option value="0">Initial</option>
+                        <option value="1">Bid</option>
+                        <option value="2">Work Order</option>
+                        <option value="3">Invoice</option>
+                    </select></div>
+                <div>
+                    <button style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '35px',
+                    }}
+                        title="Submit Task" onClick={this.changeStage2}><ins>Next Stage</ins>
+                    </button>
+                    <div style={{
+                        marginLeft: '10px'
+                    }}>Current Stage is : {this.state.Stage}</div>
                 </div>
-            </div>
-            <div className="space">
-                <div style={{
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    marginTop: '10px',
-                    width: '100%',
-                }}>
-                    Welcome to Repair and Preservation Network Company!
-            </div>
-            </div>
-            <div className="menu">
-                <div style={{
-                    margin: '15px',
-                }}>
-                    <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
-                </div>
-                <div style={{
-                    margin: '5px',
-                }}>
-                    <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
-                </div></div>
-            <div style={{
-                marginLeft: '10px',
-                marginTop: '10px',
-            }}>
-                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
-                    <option value="0">Initial</option>
-                    <option value="1">Bid</option>
-                    <option value="2">Work Order</option>
-                    <option value="3">Invoice</option>
-                </select></div>
-            {this.showTable()}
-            <button
-                style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '60px',
-                    height: '25px',
-                }}
-                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-            <input
-                style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '60px',
-                    height: '25px',
-                }}
-                type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} />
-            <input
-                style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '60px',
-                    height: '25px',
-                }}
-                type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
-            <button
-                style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '60px',
-                    height: '25px',
-                }}
-                title="download before" onClick={this.downloadBefore}><ins>Before</ins></button>
-            <button
-                style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '60px',
-                    height: '25px',
-                }}
-                title="download during" onClick={this.downloadDuring}><ins>During</ins></button>
-            <button
-                style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '60px',
-                    height: '25px',
-                }}
-                title="download after" onClick={this.downloadAfter}><ins>After</ins></button>
-        </div>);
+                {this.showTable()}
+
+                <button
+                    style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '25px',
+                    }}
+                    title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+                <input
+                    style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '25px',
+                    }}
+                    type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} />
+                <input
+                    style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '25px',
+                    }}
+                    type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+                <button
+                    style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '25px',
+                    }}
+                    title="download before" onClick={this.downloadBefore}><ins>Before</ins></button>
+                <button
+                    style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '25px',
+                    }}
+                    title="download during" onClick={this.downloadDuring}><ins>During</ins></button>
+                <button
+                    style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '25px',
+                    }}
+                    title="download after" onClick={this.downloadAfter}><ins>After</ins></button>
+            </div>);
+    }
+
+    protected showCurrStage() {
+
+        // if (this.state.Stage === '0') {
+        //     return <div>Initial</div>;
+        // }
+        // else if (this.state.Stage === '1') {
+        //     return <div>Bid</div>;
+        // }
+        // else if (this.state.Stage === '2') {
+        //     return <div>Work Order</div>;
+        // }
+        // else if (this.state.Stage === '3') {
+        //     return <div>Invoice</div>;
+        // }
+        // else {
+        //     return <div>Done</div>;
+        // }
     }
 
 
@@ -258,18 +302,67 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     onChange={e => this.StartDChange(e.target.value)} /></tr>
                 <tr>City      <input className="text" id='city' value={this.state.City}
                     onChange={e => this.CityChange(e.target.value)} /></tr>
-                <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                    onChange={e => this.StageChange(e.target.value)} /></tr>
+                <tr>Description      <input className="text" id='description' value={this.state.Desc}
+                    onChange={e => this.DescChange(e.target.value)} /></tr>
+                <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
+                    onChange={e => this.LBNumChange(e.target.value)} /></tr>
             </table>
-
-
             </div>
         }
-        else if (this.state.Stage === '1') {
-
+        else if(this.state.Stage === '1'){
+            return <div><table>
+                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                    onChange={e => this.AddrChange(e.target.value)} /></tr>
+                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                    onChange={e => this.AssetChange(e.target.value)} /></tr>
+                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
+                    onChange={e => this.StartDChange(e.target.value)} /></tr>
+                    <tr>Due Date      <input className="text" id='duedate' value={this.state.DueDate}
+                    onChange={e => this.IDateChange(e.target.value)} /></tr>
+                <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
+                    onChange={e => this.CityChange(e.target.value)} /></tr>
+                <tr>Description      <input className="text" id='description' value={this.state.Desc}
+                    onChange={e => this.DescChange(e.target.value)} /></tr>
+                <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
+                    onChange={e => this.LBNumChange(e.target.value)} /></tr>
+            </table>
+            <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Item</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Process</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>{this.state.Item.map(function (item, key) {
+                        return (
+                            <React.Fragment>
+                                <tr key={key}>
+                                    <td>{item.Cate}</td>
+                                    <td>{item.Item}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.Cost}</td>
+                                    <td>{this.showProcess}</td>
+                                    <td>{this.showStatus}</td>
+                                    </tr>
+                                <th> Before </th>
+                                <tr>{this.mapPicture(item.Before)}</tr>
+                                <th> During </th>
+                                <tr>{this.mapPicture(item.During)}</tr>
+                                <th> After </th>
+                                <tr>{this.mapPicture(item.After)}</tr>
+                            </React.Fragment>
+                        )
+                    }.bind(this))}
+                    </tbody>
+                </table>
+            </div>
+        }
+        else if (this.state.Stage === '2') {
             return <div style={{
-                display: "flex",
-                height: "1080px"
             }}>
                 <table>
                     <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
@@ -280,16 +373,60 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         onChange={e => this.StartDChange(e.target.value)} /></tr>
                     <tr>City      <input className="text" id='city' value={this.state.City}
                         onChange={e => this.CityChange(e.target.value)} /></tr>
-                    <tr>Stage <input className="text" id='stage' value={this.state.Stage}
-                        onChange={e => this.StageChange(e.target.value)} /></tr>
-                    <tr>Invoice <input className="text" id='invoice' value={this.state.Invoice}
-                        onChange={e => this.InvoiceChange(e.target.value)} /></tr>
-                    <tr>CompletionDate <input className="text" id='cdate' value={this.state.CompletionDate}
-                        onChange={e => this.CDateChange(e.target.value)} /></tr>
                     <tr>DueDate <input className="text" id='idate' value={this.state.DueDate}
                         onChange={e => this.IDateChange(e.target.value)} /></tr>
-                    <tr>BillTo <input className="text" id='billto' value={this.state.BillTo}
-                        onChange={e => this.BillToChange(e.target.value)} /></tr>
+                    <tr>Note <input className="text" id='note' value={this.state.Note}
+                        onChange={e => this.NoteChange(e.target.value)} /></tr>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Item</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>{this.state.Item.map(function (item, key) {
+                        return (
+                            <React.Fragment>
+                                <tr key={key}>
+                                    <td>{item.Cate}</td>
+                                    <td>{item.Item}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.Cost}</td>
+                                    </tr>
+                                <th> Before </th>
+                                <tr>{this.mapPicture(item.Before)}</tr>
+                                <th> During </th>
+                                <tr>{this.mapPicture(item.During)}</tr>
+                                <th> After </th>
+                                <tr>{this.mapPicture(item.After)}</tr>
+                            </React.Fragment>
+                        )
+                    }.bind(this))}
+                    </tbody>
+                </table>
+            </div>
+        }
+        else if (this.state.Stage === '3') {
+            return <div style={{
+            }}>
+                <table>
+                    <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                        onChange={e => this.AddrChange(e.target.value)} /></tr>
+                    <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                        onChange={e => this.AssetChange(e.target.value)} /></tr>
+                    <tr>Lock Box Number <input className="text" id='lockboxnumber' value={this.state.LBNum}
+                        onChange={e => this.LBNumChange(e.target.value)} /></tr>
+                    <tr>City      <input className="text" id='city' value={this.state.City}
+                        onChange={e => this.CityChange(e.target.value)} /></tr>
+                    <tr>DueDate <input className="text" id='idate' value={this.state.DueDate}
+                        onChange={e => this.IDateChange(e.target.value)} /></tr>
+                    <tr>Note <input className="text" id='note' value={this.state.Note}
+                        onChange={e => this.NoteChange(e.target.value)} /></tr>
+                    <tr>Upload Link <input className="text" id='uploadlink' value={this.state.uploadLink}
+                        onChange={e => this.uploadLinkChange(e.target.value)} /></tr>
                 </table>
                 <table>
                     <thead>
@@ -301,24 +438,31 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <tbody>{this.state.Item.map(function (item, key) {
 
                         return (
-
-                            <tr key={key}>
-                                <td>{item.Item}</td>
-                                <td>{item.description}</td>
-                                <td>{(item.Qty) * (item.PPU)}</td>
-                                <tr style={{
-
-                                }}> Before </tr>
+                            <React.Fragment>
+                                <tr key={key}>
+                                    <td>{item.Item}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.Cost}</td>
+                                    </tr>
+                                <tr> Before </tr>
                                 <tr>{this.mapPicture(item.Before)}</tr>
-                            </tr>
+
+                                
+                            </React.Fragment>
+
+
                         )
-                    }.bind(this))}
+                    }.bind(this))
+                    }
                     </tbody>
                 </table>
             </div>
         }
+        else if (this.state.Stage === '4') {
+
+        }
         else {
-            return <div> 2 </div>
+            return <div> done </div>
         }
     }
 
@@ -327,8 +471,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             picture.map(function (item, key) {
                 return (
                     <img style={{
-                        width: '95%',
+                        width: '20%',
                         height: 'auto',
+                        padding: '3px'
                     }}
                         src={item.Src} />
                 )
@@ -357,16 +502,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 zip.file('1.jpg', data, { binary: true });
                 count++;
                 if (count == urls.length) {
-                    zip.generateAsync({type:'blob'}).then(function(content) {
+                    zip.generateAsync({ type: 'blob' }).then(function (content) {
                         FileSaver.saveAs(content, zipFilename);
-                     });
+                    });
                 }
             });
         });
 
     }
-    protected test(url:string){
-        window.location.href=url;
+    protected test(url: string) {
+        window.location.href = url;
     }
 
     protected downloadDuring() {
@@ -375,12 +520,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
             "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
         ];
-        for(let i=0;i<urls.length;i++){
+        for (let i = 0; i < urls.length; i++) {
             console.log(urls[i]);
             //window.open(urls[i],'_blank');
             test(urls[i]);
         }
-        
+
     }
 
     protected downloadAfter() {
@@ -389,14 +534,66 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d08%22)?generation=1533743628113813&alt=media",
             "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/ObjectIdHex(%225b6b120b65689c0001317d09%22)?generation=1533743628191702&alt=media"
         ];
-        
 
+
+    }
+
+    protected showProcess(value){
+        if(value==='0'){
+            return (<div>Imcomplete</div>);
+        }
+        else{
+            return (<div>Done</div>);
+        }
+    }
+
+    protected showStatus(value){
+        if(value==='0'){
+            return "Incomplete"
+        }
+        else{
+            return "Done"
+        }
+    }
+
+    protected uploadLinkChange(value) {
+        this.setState({
+            uploadLink: value
+        })
+    }
+
+    protected NoteChange(value) {
+        this.setState({
+            Note: value
+        });
+    }
+
+    protected DescChange(value) {
+        this.setState({
+            Desc: value
+        })
+    }
+
+    protected LBNumChange(value) {
+        this.setState({
+            LBNum: value
+        })
     }
 
     protected changeStage(value) {
         console.log(value);
         this.setState({
             Stage: value
+        });
+    }
+    protected changeStage2() {
+
+        let temp = parseInt(this.state.Stage, 10);
+        let result = temp + 1;
+
+        console.log(temp);
+        this.setState({
+            Stage: result.toString()
         });
     }
     protected IDateChange(value) {
@@ -431,7 +628,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             this.setState({ CompletionDate: data.completionDate });
             this.setState({ Invoice: data.invoice });
             this.setState({ BillTo: data.billTo });
-            this.setState({})
+            //this.setState({})
             //console.log(this.state.Address);
         }.bind(this);
         reader.readAsText(file);
@@ -484,15 +681,20 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             data: JSON.stringify({
-                asset_num: $('#assetnum').val(),
-                startDate: $('#startdate').val(),
-                city: $('#city').val(),
-                address: $('#propaddr').val(),
-                stage: $('#stage').val(),
-                Invoice: $('#invoice').val(),
-                CompletionDate: $('#cdate').val(),
-                InvoiceDate: $('#idate').val(),
-                billTo: $('#billto').val(),
+                asset_num: this.state.AssetNum,
+                startDate: this.state.StartDate,
+                city: this.state.City,
+                address: this.state.Address,
+                stage: this.state.Stage,
+                Invoice: this.state.Invoice,
+                CompletionDate: this.state.CompletionDate,
+                InvoiceDate: this.state.DueDate,
+                billTo: this.state.BillTo,
+                KeyCode: this.state.LBNum,
+                upload_link: this.state.uploadLink,
+                ItemList: this.state.Item,
+                Note: this.state.Note,
+                Desc: this.state.Desc
 
             }),
             success: function (data) {

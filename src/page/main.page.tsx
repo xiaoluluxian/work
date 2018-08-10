@@ -41,7 +41,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
         this.search = this.search.bind(this);
-        this.logout = this.logout.bind(this);
         this.addTask = this.addTask.bind(this);
         this.editTask = this.editTask.bind(this);
         this.setState = this.setState.bind(this);
@@ -147,7 +146,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         marginRight: '10px',
                         textAlign: 'right',
                     }}>
-                        <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
+                        
                     </div>
                 </div>
             </div>
@@ -300,26 +299,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected register() {
-        var temp;
-        $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllTasks',
-            //url: 'http://localhost:8080/login',
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('Token'),
-            },
-            method: 'GET',
-            datatype: "json",
-            data: JSON.stringify({
-            }),
-            success: function (data) {
-                temp = data;
-                //this.IProps.key = data;
-                console.log(temp);
-                console.log(temp[0].Area);
-
-
-            },
-        });
+        this.props.history.push('/register');
     }
 
     protected delTask(item) {
@@ -344,9 +324,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
     }
 
-    protected logout() {
-
-    }
+    
     protected changeStatus() {
 
     }

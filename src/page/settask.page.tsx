@@ -209,7 +209,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         var fd = new FormData();
         var newname = this.findUserByName($('#setUser').val());
         console.log(newname);
-        fd.append('userToRemove',this.state.oldUser[$('#setStage').val()]);
+        //fd.append('userToRemove',this.state.oldUser[$('#setStage').val()]);
         fd.append('userToAdd',newname);
         fd.append('task_id',localStorage.getItem('currTask'));
         fd.append('stage',$('#setStage').val());

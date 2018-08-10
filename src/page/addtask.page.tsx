@@ -63,13 +63,13 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                     }}>
                         <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
                     </div>
-                    <div style={{
+                    {/* <div style={{
                         marginTop: '20px',
                         marginRight: '10px',
                         textAlign: 'right',
                     }}>
                         <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="space">
@@ -100,7 +100,10 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                     <tr>Asset Number <input className="text" id = 'assetnum' ></input></tr>
                     <tr>Start Date      <input className="text" id= 'startdate'></input></tr>
                     <tr>City      <input className="text" id= 'city'></input></tr>
-                    <tr>Stage <input className="text" id='stage'></input></tr>
+                    <tr>Description      <input className="text" id= 'description'></input></tr>
+                    <tr>Lock Box Number      <input className="text" id= 'lockboxnumber'></input></tr>
+                    <tr>Username <input className="text" id='username'></input></tr>
+                    {/* <tr>Stage <input className="text" id='stage'></input></tr> */}
                 </tr>
             </table>
             <button
@@ -125,7 +128,8 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
 
     
     protected submitTask(){
-        var temp;
+        let name=[];
+        name.push($('#username').val());
         $.ajax({
             url: 'https://rpntechserver.appspot.com/initTask',
             //url: 'http://localhost:8080/login',
@@ -136,10 +140,13 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
             },
             data: JSON.stringify({
                 asset_num:$('#assetnum').val(),
-                startDate:$('#startdate').val(),
-                city:$('#city').val(),
-                address:$('#propaddr').val(),
-                stage:$('#stage').val()
+                StartDate:$('#startdate').val(),
+                City:$('#city').val(),
+                Address:$('#propaddr').val(),
+                Desc: $('#description').val(),
+                keycode: $('#lockboxnumber').val(),
+                Username: name,
+                //stage:$('#stage').val()
             }),
             success: function (data) {
                 console.log(data);

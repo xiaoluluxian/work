@@ -44,6 +44,12 @@ export default function (props) {
 
                 },
                 {
+                    component: Pages.register,
+                    exact: true,
+                    path: '/register',
+
+                },
+                {
                     component: () => <div>Path = /home</div>,
                     path: '/home',
                 },
