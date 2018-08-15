@@ -53,9 +53,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Process: '',
         Status: '',
         Item: [],
-        Before:[],
-        During:[],
-        After:[],
+        Before: [],
+        During: [],
+        After: [],
         data: [],
     };
     public componentDidMount() {
@@ -90,39 +90,39 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url:'https://rpntechserver.appspot.com/findAllImg?task_id='+ localStorage.getItem("currTask")+'&status=before',
+            url: 'https://rpntechserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=before',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             method: 'GET',
             datatype: "json",
-            success:(function(result){
+            success: (function (result) {
                 //console.log(result);
-                this.setState({Before:result});
+                this.setState({ Before: result });
             }).bind(this),
         });
         $.ajax({
-            url:'https://rpntechserver.appspot.com/findAllImg?task_id='+ localStorage.getItem("currTask")+'&status=during',
+            url: 'https://rpntechserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=during',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             method: 'GET',
             datatype: "json",
-            success:(function(result){
+            success: (function (result) {
                 //console.log(result);
-                this.setState({During:result});
+                this.setState({ During: result });
             }).bind(this),
         });
         $.ajax({
-            url:'https://rpntechserver.appspot.com/findAllImg?task_id='+ localStorage.getItem("currTask")+'&status=after',
+            url: 'https://rpntechserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=after',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             method: 'GET',
             datatype: "json",
-            success:(function(result){
+            success: (function (result) {
                 //console.log(result);
-                this.setState({After:result});
+                this.setState({ After: result });
             }).bind(this),
         })
     }
@@ -141,6 +141,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.downloadBefore = this.downloadBefore.bind(this);
         this.downloadAfter = this.downloadAfter.bind(this);
         this.downloadDuring = this.downloadDuring.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.submitItem = this.submitItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
+        this.confirmDel = this.confirmDel.bind(this);
 
 
     }
@@ -232,57 +236,197 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         marginLeft: '10px'
                     }}>Current Stage is : {this.state.Stage}</div>
                 </div>
-                {this.showTable()}
+                <div className='edit'>
+                    <button
+                        style={{
+                            // paddingTop: '20px',
+                            // marginTop: '10px',
+                            marginLeft: '10px',
+                            width: '60px',
+                            height: '25px',
 
-                <button
-                    style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '60px',
-                        height: '25px',
-                    }}
-                    title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-                <input
-                    style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '60px',
-                        height: '25px',
-                    }}
-                    type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} />
-                <input
-                    style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '60px',
-                        height: '25px',
-                    }}
-                    type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
-                <button
-                    style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '60px',
-                        height: '25px',
-                    }}
-                    title="download before" onClick={this.downloadBefore}><ins>Before</ins></button>
-                <button
-                    style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '60px',
-                        height: '25px',
-                    }}
-                    title="download during" onClick={this.downloadDuring}><ins>During</ins></button>
-                <button
-                    style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '60px',
-                        height: '25px',
-                    }}
-                    title="download after" onClick={this.downloadAfter}><ins>After</ins></button>
-            </div>);
+                        }}
+                        title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+                    <input
+                        style={{
+
+                            marginTop: '10px',
+                            marginLeft: '10px',
+                            marginRight: '10px',
+                            width: '60px',
+                            height: '25px',
+                        }}
+                        type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} />
+                    <input
+                        style={{
+                            marginTop: '10px',
+                            marginLeft: '30px',
+                            marginRight: '10px',
+                            width: '60px',
+                            height: '25px',
+                        }}
+                        type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+                    <button
+                        style={{
+                            // paddingTop: '20px',
+                            // marginTop: '10px',
+                            marginLeft: '30px',
+                            width: '60px',
+                            height: '25px',
+                        }}
+                        title="download before" onClick={this.downloadBefore}>Before</button>
+                    <button
+                        style={{
+                            // paddingTop: '20px',
+                            // marginTop: '10px',
+                            marginLeft: '10px',
+                            width: '60px',
+                            height: '25px',
+                        }}
+                        title="download during" onClick={this.downloadDuring}>During</button>
+                    <button
+                        style={{
+                            // paddingTop: '20px',
+                            // marginTop: '10px',
+                            marginLeft: '10px',
+                            width: '60px',
+                            height: '25px',
+                        }}
+                        title="download after" onClick={this.downloadAfter}>After</button>
+                    <button
+                        style={{
+                            // paddingTop: '20px',
+                            marginTop: '10px',
+                            marginLeft: '10px',
+                            width: '65px',
+                            height: '25px',
+                        }}
+                        title="additem" onClick={this.addItem}>AddItem</button>
+                    <button
+                        style={{
+                            // paddingTop: '20px',
+                            marginTop: '10px',
+                            marginLeft: '10px',
+                            width: '65px',
+                            height: '25px',
+                        }}
+                        title="delitem" onClick={this.deleteItem}>DelItem</button>
+                    <div id="myModal" className="modal">
+                        <div className="modal-content">
+                            <span className="close">&times;</span>
+                            <table>
+                                <tr>Category <input className="text" id='cate' /></tr>
+                                <tr>Item <input className="text" id='item' /></tr>
+                                <tr>Description <input className="text" id='description' /></tr>
+                                <tr>QTY      <input className="text" id='qty' /></tr>
+                                <tr>UM <input className="text" id='um' /></tr>
+                                <tr>PPU <input className="text" id='ppu' /></tr>
+                                <tr>Cost <input className="text" id='cost' /></tr>
+                            </table>
+                            <button title="submit" onClick={this.submitItem}>Submit</button>
+                        </div>
+                    </div>
+                    <div id="myModal2" className="modal">
+                        <div className="modal-content">
+                            <span className="close">&times;</span>
+                            <table>
+                                <tr>Category <input className="text" id='delcate' /></tr>
+                                <tr>Item <input className="text" id='delitem' /></tr>
+                                
+                            </table>
+                            <button title="submit" onClick={this.confirmDel}>Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div className='page'>
+                    {this.showTable()}
+                </div>
+            </div>
+
+        );
+    }
+
+    protected confirmDel(){
+        console.log($('#delcate').val());
+        console.log($('#delitem').val());
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/deleteItem?task_id='+localStorage.getItem("currTask")+"&cate="+$('#delcate').val()+"&item="+$('#delitem').val(),
+            //url: 'http://localhost:8080/login',
+            method: 'POST',
+            datatype: "json",
+            headers: {
+                Authorization:"Bearer " + localStorage.getItem('Token'),
+            },
+            success: function (data) {
+                console.log(data);
+                location.reload();
+            }.bind(this),
+        });
+    }
+
+    protected deleteItem() {
+        var modal = document.getElementById('myModal2');
+        modal.style.display = "block";
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+    protected submitItem() {
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/addItem?task_id=' + localStorage.getItem('currTask'),
+            //url: 'http://localhost:8080/login',
+            method: 'POST',
+            datatype: "json",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            data: JSON.stringify({
+                cate: $('#cate').val(),
+                item: parseInt($('#item').val(), 10),
+                description: $('#description').val(),
+                qty: parseInt($('#qty').val(), 10),
+                um: $('#um').val(),
+                ppu: parseFloat($('#ppu').val()),
+                cost: parseFloat($('#cost').val()),
+                taxable: true,
+                tax: parseFloat('7'),
+                comments: "test",
+                before: [],
+                during: [],
+                after: []
+
+                //stage:$('#stage').val()
+            }),
+            success: function (data) {
+                console.log(data);
+                location.reload();
+            }.bind(this),
+        });
+    }
+
+    protected addItem() {
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        modal.style.display = "block";
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
     }
 
     protected showCurrStage() {
@@ -390,8 +534,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
                                     <td>{item.Cost}</td>
-                                    <td>{this.showProcess}</td>
-                                    <td>{this.showStatus}</td>
+                                    <td>{this.showProcess(item.Process)}</td>
+                                    <td>{this.showStatus(item.Status)}</td>
                                 </tr>
                                 <th> Before </th>
                                 <tr>{this.mapPicture(item.Before)}</tr>

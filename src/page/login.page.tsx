@@ -121,7 +121,11 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                             Password:  <input id="PW" type="password" /><br /><br />
                             <div style={{
                             }}>
-                                <button onClick={this.login}>
+                                <button style={{
+                                    width: '40px',
+                                    height: '20px'
+                                }}
+                                onClick={this.login}>
                                 </button></div>
                         </div>
                     </div>

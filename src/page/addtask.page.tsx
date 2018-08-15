@@ -95,16 +95,17 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 </div></div>
 
             <table>
-                <tr>
+                
                     <tr>Property Address <input className="text" id = 'propaddr' ></input></tr>
                     <tr>Asset Number <input className="text" id = 'assetnum' ></input></tr>
                     <tr>Start Date      <input className="text" id= 'startdate'></input></tr>
+                    <tr>Due Date <input className='text' id= 'duedate'></input></tr>
                     <tr>City      <input className="text" id= 'city'></input></tr>
                     <tr>Description      <input className="text" id= 'description'></input></tr>
                     <tr>Lock Box Number      <input className="text" id= 'lockboxnumber'></input></tr>
                     <tr>Username <input className="text" id='username'></input></tr>
                     {/* <tr>Stage <input className="text" id='stage'></input></tr> */}
-                </tr>
+                
             </table>
             <button
             style={{
