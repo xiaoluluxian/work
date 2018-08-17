@@ -234,7 +234,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     </button>
                     <div style={{
                         marginLeft: '10px'
-                    }}>Current Stage is : {this.state.Stage}</div>
+                    }}>Current Stage is : {this.showCurrStage}</div>
                 </div>
                 <div className='edit'>
                     <button
@@ -311,6 +311,30 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             height: '25px',
                         }}
                         title="delitem" onClick={this.deleteItem}>DelItem</button>
+                    <table>
+                        <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
+                            onChange={e => this.AddrChange(e.target.value)} /></tr>
+                        <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
+                            onChange={e => this.AssetChange(e.target.value)} /></tr>
+                        <tr>Start Date      <input type="date" id='startdate' value={this.state.StartDate}
+                            onChange={e => this.StartDChange(e.target.value)} /></tr>
+                        <tr>Due Date      <input type="date" id='duedate' value={this.state.DueDate}
+                            onChange={e => this.IDateChange(e.target.value)} /></tr>
+                        <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
+                            onChange={e => this.CityChange(e.target.value)} /></tr>
+                        <tr>
+                            Description
+                            <textarea id='description' value={this.state.Desc}
+                            onChange={e => this.DescChange(e.target.value)} style={{
+                                width: "475px",
+                                height: "140px",
+                                resize: "none"
+                            }}>
+                            </textarea>
+                        </tr>
+                        <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
+                            onChange={e => this.LBNumChange(e.target.value)} /></tr>
+                    </table>
                     <div id="myModal" className="modal">
                         <div className="modal-content">
                             <span className="close">&times;</span>
@@ -332,7 +356,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             <table>
                                 <tr>Category <input className="text" id='delcate' /></tr>
                                 <tr>Item <input className="text" id='delitem' /></tr>
-                                
+
                             </table>
                             <button title="submit" onClick={this.confirmDel}>Submit</button>
                         </div>
@@ -346,16 +370,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         );
     }
 
-    protected confirmDel(){
+    protected confirmDel() {
         console.log($('#delcate').val());
         console.log($('#delitem').val());
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/deleteItem?task_id='+localStorage.getItem("currTask")+"&cate="+$('#delcate').val()+"&item="+$('#delitem').val(),
+            url: 'https://rpntechserver.appspot.com/deleteItem?task_id=' + localStorage.getItem("currTask") + "&cate=" + $('#delcate').val() + "&item=" + $('#delitem').val(),
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",
             headers: {
-                Authorization:"Bearer " + localStorage.getItem('Token'),
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             success: function (data) {
                 console.log(data);
@@ -429,23 +453,28 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
-    protected showCurrStage() {
+    protected formatDate(date){
 
-        // if (this.state.Stage === '0') {
-        //     return <div>Initial</div>;
-        // }
-        // else if (this.state.Stage === '1') {
-        //     return <div>Bid</div>;
-        // }
-        // else if (this.state.Stage === '2') {
-        //     return <div>Work Order</div>;
-        // }
-        // else if (this.state.Stage === '3') {
-        //     return <div>Invoice</div>;
-        // }
-        // else {
-        //     return <div>Done</div>;
-        // }
+    }
+
+    protected showCurrStage() {
+        console.log(this.state.Stage);
+
+        if (this.state.Stage === '0') {
+            return <div>Initial</div>;
+        }
+        else if (this.state.Stage === '1') {
+            return <div>Bid</div>;
+        }
+        else if (this.state.Stage === '2') {
+            return <div>Work Order</div>;
+        }
+        else if (this.state.Stage === '3') {
+            return <div>Invoice</div>;
+        }
+        else {
+            return <div>Done</div>;
+        }
     }
 
 
@@ -483,37 +512,28 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     protected showTable() {
         if (this.state.Stage === '0') {
             return <div><table>
-                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                    onChange={e => this.AddrChange(e.target.value)} /></tr>
-                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                    onChange={e => this.AssetChange(e.target.value)} /></tr>
-                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
-                    onChange={e => this.StartDChange(e.target.value)} /></tr>
-                <tr>City      <input className="text" id='city' value={this.state.City}
-                    onChange={e => this.CityChange(e.target.value)} /></tr>
-                <tr>Description      <input className="text" id='description' value={this.state.Desc}
-                    onChange={e => this.DescChange(e.target.value)} /></tr>
-                <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
-                    onChange={e => this.LBNumChange(e.target.value)} /></tr>
+                <tr ><td>Property Address:</td> <td>{this.state.Address}</td></tr>
+                <tr><td>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
+                <tr><td>Start Date</td><td>{this.state.StartDate}</td></tr>
+                <tr><td>Due Date</td><td>{this.state.DueDate}</td></tr>
+                <tr><td>City/State/Zip Code </td><td>{this.state.City}</td></tr>
+                <tr><td>Description </td><td>{this.state.Desc}</td></tr>
+                <tr><td>Lock Box Number</td> <td>{this.state.LBNum}</td></tr>
             </table>
             </div>
         }
         else if (this.state.Stage === '1') {
-            return <div><table>
-                <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                    onChange={e => this.AddrChange(e.target.value)} /></tr>
-                <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                    onChange={e => this.AssetChange(e.target.value)} /></tr>
-                <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
-                    onChange={e => this.StartDChange(e.target.value)} /></tr>
-                <tr>Due Date      <input className="text" id='duedate' value={this.state.DueDate}
-                    onChange={e => this.IDateChange(e.target.value)} /></tr>
-                <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
-                    onChange={e => this.CityChange(e.target.value)} /></tr>
-                <tr>Description      <input className="text" id='description' value={this.state.Desc}
-                    onChange={e => this.DescChange(e.target.value)} /></tr>
-                <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
-                    onChange={e => this.LBNumChange(e.target.value)} /></tr>
+            return <div><table style={{
+                tableLayout: "fixed",
+                wordWrap: "break-word"
+            }}>
+                <tr><td style={{width:"25%"}}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                <tr><td style={{width:"25%"}}>Asset Number:</td> <td>{this.state.AssetNum}</td></tr>
+                <tr><td style={{width:"25%"}}>Start Date:</td><td>{this.state.StartDate}</td></tr>
+                <tr><td style={{width:"25%"}}>Due Date:</td><td>{this.state.DueDate}</td></tr>
+                <tr><td style={{width:"25%"}}>City/State/Zip Code: </td><td>{this.state.City}</td></tr>
+                <tr><td style={{width:"25%"}}> Description:</td><td>{this.state.Desc}</td></tr>
+                <tr><td style={{width:"25%"}}>Lock Box Number:</td> <td>{this.state.LBNum}</td></tr>
             </table>
                 <table>
                     <thead>
@@ -543,6 +563,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 <tr>{this.mapPicture(item.During)}</tr>
                                 <th> After </th>
                                 <tr>{this.mapPicture(item.After)}</tr>
+
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -554,18 +575,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             return <div style={{
             }}>
                 <table>
-                    <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                        onChange={e => this.AddrChange(e.target.value)} /></tr>
-                    <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                        onChange={e => this.AssetChange(e.target.value)} /></tr>
-                    <tr>Start Date      <input className="text" id='startdate' value={this.state.StartDate}
-                        onChange={e => this.StartDChange(e.target.value)} /></tr>
-                    <tr>City      <input className="text" id='city' value={this.state.City}
-                        onChange={e => this.CityChange(e.target.value)} /></tr>
-                    <tr>DueDate <input className="text" id='idate' value={this.state.DueDate}
-                        onChange={e => this.IDateChange(e.target.value)} /></tr>
-                    <tr>Note <input className="text" id='note' value={this.state.Note}
-                        onChange={e => this.NoteChange(e.target.value)} /></tr>
+                    <tr><td>Property Address:</td> <td>{this.state.Address}</td></tr>
+                    <tr><td>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
+                    <tr><td>Start Date</td><td>{this.state.StartDate}</td></tr>
+                    <tr><td>Due Date</td><td>{this.state.DueDate}</td></tr>
+                    <tr><td>City/State/Zip Code </td><td>{this.state.City}</td></tr>
+                    <tr><td>Note</td><td>{this.state.Note}</td></tr>
                 </table>
                 <table>
                     <thead>
@@ -660,7 +675,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             picture.map(function (item, key) {
                 return (
                     <img style={{
-                        width: '20%',
+                        width: '30%',
                         height: 'auto',
                         padding: '3px'
                     }}
