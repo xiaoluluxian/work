@@ -9,7 +9,7 @@ import * as Component from '../component/import';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from "./logo";
-import { ITask, IPage } from './interface';
+import { IItem, IPage } from './interface';
 import * as $ from 'jquery';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { Redirect } from 'react-router-dom'
@@ -47,6 +47,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.delTask = this.delTask.bind(this);
         this.register = this.register.bind(this);
         this.showSetTask = this.showSetTask.bind(this);
+        this.test = this.test.bind(this);
 
     }
 
@@ -180,6 +181,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 <div style={{
                     padding : '10px',
                 }}>
+                <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
+                </div>
+                <div style={{
+                    padding : '10px',
+                }}>
                     <tr>User:  
                     <select id= 'setUser' onChange={e=>this.UserChange(e.target.value)}>
                     <option>all</option>
@@ -191,6 +197,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     </select>
                     </tr>
                     </div>
+                    
             </div>
             <table id='taskT'>
                 <thead>
@@ -285,6 +292,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         else{
             return void 0;
         }
+    }
+
+    protected test(){
+        this.props.history.push('/test');
     }
 
     protected setTask(item) {

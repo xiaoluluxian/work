@@ -50,6 +50,12 @@ export default function (props) {
 
                 },
                 {
+                    component: Pages.test,
+                    exact: true,
+                    path: '/test',
+
+                },
+                {
                     component: () => <div>Path = /home</div>,
                     path: '/home',
                 },
