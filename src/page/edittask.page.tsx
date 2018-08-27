@@ -164,6 +164,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.initItem = this.initItem.bind(this);
         this.addaddItem = this.addaddItem.bind(this);
         this.mapItem = this.mapItem.bind(this);
+        this.exportJson = this.exportJson.bind(this);
+        this.addBeforePicture = this.addBeforePicture.bind(this);
+        this.addDuringPicture = this.addDuringPicture.bind(this);
+        this.addAfterPicture = this.addAfterPicture.bind(this);
 
 
 
@@ -267,15 +271,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                         }}
                         title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-                    <input
+                    {/* <input
                         style={{
 
                             marginTop: '10px',
                             marginLeft: '10px',
                             marginRight: '10px',
-                            
+
                         }}
-                        type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} />
+                        type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} /> */}
                     <input
                         style={{
                             marginTop: '10px',
@@ -311,7 +315,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             height: '25px',
                         }}
                         title="download after" onClick={this.downloadAfter}>After</button>
-                    <button
+                    {/* <button
                         style={{
                             // paddingTop: '20px',
                             marginTop: '10px',
@@ -328,7 +332,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             width: '65px',
                             height: '25px',
                         }}
-                        title="delitem" onClick={this.deleteItem}>DelItem</button>
+                        title="delitem" onClick={this.deleteItem}>DelItem</button> */}
                     <button
                         style={{
                             // paddingTop: '20px',
@@ -338,6 +342,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             height: '25px',
                         }}
                         title="delitem" onClick={this.printPDF}>PrintPDF</button>
+                    <button
+                        style={{
+                            // paddingTop: '20px',
+                            marginTop: '10px',
+                            marginLeft: '10px',
+                            width: '85px',
+                            height: '25px',
+                        }}
+                        title="delitem" onClick={this.exportJson}>ExportJson</button>
 
                     <table>
                         <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
@@ -364,7 +377,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => this.LBNumChange(e.target.value)} /></tr>
                     </table>
 
-                    <div id="myModal" className="modal">
+                    {/* <div id="myModal" className="modal">
                         <div className="modal-content">
                             <span className="close">&times;</span>
                             <table>
@@ -389,7 +402,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             </table>
                             <button title="submit" onClick={this.confirmDel}>Submit</button>
                         </div>
-                    </div>
+                    </div> */}
                     {this.state.Item.map(this.mapItem)}
                     <button style={{
                         marginTop: '10px',
@@ -407,6 +420,36 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         );
     }
 
+    protected exportJson() {
+        const uniqueIdSmall = () => {
+            return '_' + Math.random().toString(36).substring(2, 9);
+        };
+        let json = {
+            invoice: '0',
+            billTo: this.state.BillTo,
+            address: this.state.Address,
+            completionDate: this.state.CompletionDate,
+            invoiceDate: this.state.DueDate,
+            item: [],
+            tax: 0,
+        }
+
+        for (let each of this.state.Item) {
+            json.item.push({
+                description: each.description,
+                unique: uniqueIdSmall(),
+                amount: each.Cost,
+                taxable: each.Taxable,
+                before: [...each.Before ? each.Before.map((picture) => picture.Src) : []],
+                during: [...each.During ? each.During.map((picture) => picture.Src) : []],
+                after: [...each.After ? each.After.map((picture) => picture.Src) : []]
+            })
+        }
+        var file = new File([JSON.stringify(json)], "rpn.rpni");
+        FileSaver.saveAs(file);
+
+    }
+
     protected initItem() {
         return {
             After: [],
@@ -416,7 +459,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             Status: '',
             Tax: 0,
             Taxable: true,
-            Description: '',
+            description: '',
             Cate: '',
             Comments: '',
             Item: 0,
@@ -444,7 +487,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <button style={{
                         marginTop: '10px',
                         marginLeft: '10px',
-                        width: '65px',
+                        width: '465px',
                         height: '25px',
                     }}
                         onClick={() => {
@@ -483,58 +526,246 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div style={{
                             marginLeft: '10px'
                         }}
-                            className="left"><h4>Item - {index + 1}</h4></div>
+                            className="left"><h4>{this.state.Item[index].Cate} - {this.state.Item[index].Item}</h4></div>
                     </div>
                     <table>
                         <tr>Category <input className="text" id='cate' value={value.Cate}
                             onChange={e => {
-                                let list=this.state.Item;
-                                list[index].Cate=e.target.value;
-                                this.setState({Item:list});
+                                let list = this.state.Item;
+                                list[index].Cate = e.target.value;
+                                this.setState({ Item: list });
                             }} /></tr>
                         <tr>Item <input className="text" id='item' value={value.Item}
                             onChange={e => {
-                                let list=this.state.Item;
-                                list[index].Item=e.target.value;
-                                this.setState({Item:list});
+                                let list = this.state.Item;
+                                list[index].Item = e.target.value;
+                                this.setState({ Item: list });
                             }} /></tr>
-                        <tr>Description <input className="text" id='description' value={value.Description}
+                        <tr>Description <textarea id='description' value={value.description}
                             onChange={e => {
-                                let list=this.state.Item;
-                                list[index].Description=e.target.value;
-                                this.setState({Item:list});
-                            }} /></tr>
+                                let list = this.state.Item;
+                                list[index].description = e.target.value;
+                                this.setState({ Item: list });
+                            }}
+                            style={{
+                                width: "385px",
+                                height: "100px",
+                                resize: "none"
+                            }}>
+                        </textarea></tr>
                         <tr>QTY <input className="text" id='qty' value={value.Qty}
                             onChange={e => {
-                                let list=this.state.Item;
-                                list[index].Qty=e.target.value;
-                                this.setState({Item:list});
+                                let list = this.state.Item;
+                                list[index].Qty = e.target.value;
+                                this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
                             onChange={e => {
-                                let list=this.state.Item;
-                                list[index].UM=e.target.value;
-                                this.setState({Item:list});
+                                let list = this.state.Item;
+                                list[index].UM = e.target.value;
+                                this.setState({ Item: list });
                             }} /></tr>
                         <tr>PPU <input className="text" id='ppu' value={value.PPU}
                             onChange={e => {
-                                let list=this.state.Item;
-                                list[index].PPU=e.target.value;
-                                this.setState({Item:list});
+                                let list = this.state.Item;
+                                list[index].PPU = e.target.value;
+                                this.setState({ Item: list });
                             }} /></tr>
                         <tr>Cost <input className="text" id='cost' value={value.Cost}
                             onChange={e => {
-                                let list=this.state.Item;
-                                list[index].Cost=e.target.value;
-                                this.setState({Item:list});
+                                let list = this.state.Item;
+                                list[index].Cost = e.target.value;
+                                this.setState({ Item: list });
                             }} /></tr>
+                        <tr>
+                            Before:
+                            <input
+                                style={{
+                                    marginTop: '10px',
+                                    marginLeft: '30px',
+
+
+                                }}
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index) }} />
+                            {this.state.Item[index].Before.map(function (pic, key) {
+                                return (
+                                    <tr key={key}>
+                                    <td>{pic.Name}</td>
+                                    <td><button style={{
+                                        marginLeft:'10px',
+                                    }} onClick={() => {
+                                        let list = this.state.Item;
+                                        list[index].Before.splice(key, 1);
+                                        this.setState({ Item: list });
+                                    }}>Del</button></td>
+                                    
+                                    </tr>
+                                )
+                            }.bind(this))}
+                        </tr>
+                        <tr>
+                            During:
+                            <input
+                                style={{
+                                    marginTop: '10px',
+                                    marginLeft: '30px',
+
+
+                                }}
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addDuringPicture(e.target.files, index) }} />
+                            {this.state.Item[index].During.map(function (pic, key) {
+                                return (
+                                    <tr key={key}>
+                                    <td>{pic.Name}</td>
+                                    <td><button style={{
+                                        marginLeft:'10px',
+                                    }} onClick={() => {
+                                        let list = this.state.Item;
+                                        list[index].During.splice(key, 1);
+                                        this.setState({ Item: list });
+                                    }}>Del</button></td>
+                                    
+                                    </tr>
+                                )
+                            }.bind(this))}
+                        </tr>
+                        <tr>
+                            After:
+                            <input
+                                style={{
+                                    marginTop: '10px',
+                                    marginLeft: '30px',
+
+
+                                }}
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addAfterPicture(e.target.files, index) }} />
+                            {this.state.Item[index].After.map(function (pic, key) {
+                                return (
+                                    <tr key={key}>
+                                    <td>{pic.Name}</td>
+                                    <td><button style={{
+                                        marginLeft:'10px',
+                                    }} onClick={() => {
+                                        let list = this.state.Item;
+                                        list[index].After.splice(key, 1);
+                                        this.setState({ Item: list });
+                                    }}>Del</button></td>
+                                    
+                                    </tr>
+                                )
+                            }.bind(this))}
+                        </tr>
                     </table>
                     <div className="picture">
-                    
+
                     </div>
                 </React.Fragment>
             </div>
         )
+    }
+    protected addAfterPicture(Files: FileList, index: number) {
+
+        for (let i = 0; i < Files.length; i++) {
+            var formData = new FormData();
+            formData.append('image', Files[i]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    console.log(result);
+                    let list = this.state.Item;
+                    list[index].Before.push({
+                        Name: '',
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                }.bind(this),
+            });
+        }
+
+    }
+
+    protected addDuringPicture(Files: FileList, index: number) {
+
+        for (let i = 0; i < Files.length; i++) {
+            var formData = new FormData();
+            formData.append('image', Files[i]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    console.log(result);
+                    let list = this.state.Item;
+                    list[index].Before.push({
+                        Name: '',
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                }.bind(this),
+            });
+        }
+
+    }
+
+    protected addBeforePicture(Files: FileList, index: number) {
+
+        for (let i = 0; i < Files.length; i++) {
+            var formData = new FormData();
+            formData.append('image', Files[i]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    console.log(result);
+                    let list = this.state.Item;
+                    list[index].Before.push({
+                        Name: '',
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                }.bind(this),
+            });
+        }
+
     }
 
     protected confirmDel() {
@@ -715,16 +946,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     </thead>
                     <tbody>{this.state.Item.map(function (item, key) {
                         return (
-                            <React.Fragment>
-                                <tr key={key}>
+                            <React.Fragment key={key}>
+                                <tr>
                                     <td>{item.Cate}</td>
                                     <td>{item.Item}</td>
-                                    <td>{item.Description}</td>
+                                    <td>{item.description}</td>
                                     <td>{item.Cost}</td>
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <th> Before </th>
+                                <th>Before </th>
                                 <tr>{this.mapPicture(item.Before)}</tr>
                                 <th> During </th>
                                 <tr>{this.mapPicture(item.During)}</tr>
@@ -853,62 +1084,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected printPDF() {
-        // var pdf = new jsPDF('p', 'pt', 'letter');
-        // var source = document.getElementById('show').innerHTML;
-        // var specialElementHandlers = {
-        //     // element with id of "bypass" - jQuery style selector
-        //     '#bypassme': function (element, renderer) {
-        //         // true = "handled elsewhere, bypass text extraction"
-        //         return true
-        //     }
-        // };
-        // var margins = {
-        //     top: 10,
-        //     bottom: 10,
-        //     left: 10,
-        //     width: 595
-        // };
-        // pdf.fromHTML(
-        //     source, // HTML string or DOM elem ref.
-        //     margins.left, // x coord
-        //     margins.top, { // y coord
-        //         'width': margins.width, // max width of content on PDF
-        //         'elementHandlers': specialElementHandlers
-        //     },
-
-        //     function (dispose) {
-        //         // dispose: object with X, Y of the last line add to the PDF 
-        //         //          this allow the insertion of new lines after html
-        //         pdf.save('Test.pdf');
-        //     }, margins);
-
-        var printContents = document.getElementById('show').innerHTML;
-        // var originalContents = document.body.innerHTML;
-        // document.body.innerHTML = printContents;
-        // window.print();
-        // document.body.innerHTML = originalContents;
-
-        var contents = $("#show").html();
-        var frame1 = $('<iframe />');
-        frame1[0].name = "frame1";
-        frame1.css({ "position": "absolute", "top": "-1000000px" });
-        $("body").append(frame1);
-        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
-        frameDoc.document.open();
-        //Create a new HTML document.
-        frameDoc.document.write('<html><head><title>DIV Contents</title>');
-        frameDoc.document.write('</head><body>');
-        //Append the external CSS file.
-        frameDoc.document.write('<link href="/global.sass" rel="stylesheet" type="text/css" />');
-        //Append the DIV contents.
-        frameDoc.document.write(contents);
-        frameDoc.document.write('</body></html>');
-        frameDoc.document.close();
-        setTimeout(function () {
-            window.frames["frame1"].focus();
-            window.frames["frame1"].print();
-            frame1.remove();
-        }, 500);
+        var divToPrint = document.getElementById('show');
+        var popupWin = window.open('', '_blank', 'width=300,height=300');
+        popupWin.document.open();
+        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+        popupWin.document.close();
     }
 
     protected downloadBefore() {
@@ -1256,6 +1436,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 Name: '',
                                 Src: '',
                                 itemID: 0,
+                                Format: ''
                             }
                             pic.Cate = cate;
                             pic.Name = data.list[i].each[j].image[k].name;

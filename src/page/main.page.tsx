@@ -14,6 +14,8 @@ import * as $ from 'jquery';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { Redirect } from 'react-router-dom'
 import * as ReactDOM from 'react-dom'
+import {Button} from 'reactstrap'
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -166,7 +168,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 <div style={{
                     margin: '15px',
                 }}>
-                    <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
+                    <button className="btn btn-primary" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div>
                 <div style={{
                     margin: '5px',
