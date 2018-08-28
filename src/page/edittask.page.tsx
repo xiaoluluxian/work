@@ -139,7 +139,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 //console.log(result);
                 this.setState({ After: result });
             }).bind(this),
-        })
+        });
+        //this.mentionSave();
+        
     }
 
     public constructor(props) {
@@ -164,6 +166,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.initItem = this.initItem.bind(this);
         this.addaddItem = this.addaddItem.bind(this);
         this.mapItem = this.mapItem.bind(this);
+        this.mapPicture = this.mapPicture.bind(this);
         this.exportJson = this.exportJson.bind(this);
         this.addBeforePicture = this.addBeforePicture.bind(this);
         this.addDuringPicture = this.addDuringPicture.bind(this);
@@ -172,6 +175,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
     }
+    
 
     public render() {
         return (
@@ -258,7 +262,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     </button>
                     <div style={{
                         marginLeft: '10px'
-                    }}>Current Stage is : {this.showCurrStage}</div>
+                    }}>{this.showCurrStage}</div>
                 </div>
                 <div className='edit'>
                     <button
@@ -363,18 +367,27 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => this.IDateChange(e.target.value)} /></tr>
                         <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
                             onChange={e => this.CityChange(e.target.value)} /></tr>
+                        <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
+                            onChange={e => this.LBNumChange(e.target.value)} /></tr>
+                        <tr>Note <input className="text" id='assetnum' value={this.state.Note}
+                            onChange={e => {
+                                this.setState({ Note: e.target.value });
+                            }} /></tr>
+                        <tr>BillTo <input className="text" id='assetnum' value={this.state.BillTo}
+                            onChange={e => {
+                                this.setState({ BillTo: e.target.value });
+                            }} /></tr>
                         <tr>
                             Description
                             <textarea id='description' value={this.state.Desc}
                                 onChange={e => this.DescChange(e.target.value)} style={{
-                                    width: "475px",
+                                    width: "425px",
                                     height: "140px",
                                     resize: "none"
                                 }}>
                             </textarea>
                         </tr>
-                        <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
-                            onChange={e => this.LBNumChange(e.target.value)} /></tr>
+
                     </table>
 
                     {/* <div id="myModal" className="modal">
@@ -407,7 +420,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <button style={{
                         marginTop: '10px',
                         marginLeft: '10px',
-                        width: '65px',
+                        width: '430px',
                         height: '25px',
                     }} onClick={this.addaddItem} title="add item">AddItem</button>
                 </div>
@@ -420,33 +433,104 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         );
     }
 
+    protected mentionSave(){
+        window.setInterval(function () {
+            alert("save");
+            
+        }, 300000);
+    }
+
     protected exportJson() {
         const uniqueIdSmall = () => {
             return '_' + Math.random().toString(36).substring(2, 9);
         };
-        let json = {
-            invoice: '0',
-            billTo: this.state.BillTo,
-            address: this.state.Address,
-            completionDate: this.state.CompletionDate,
-            invoiceDate: this.state.DueDate,
-            item: [],
-            tax: 0,
+        
+        if(this.state.Stage ==='1'){
+            let json = {
+                invoice: '0',
+                billTo: this.state.Note,
+                address: this.state.Address,
+                completionDate: this.state.CompletionDate,
+                invoiceDate: this.state.DueDate,
+                item: [],
+                tax: 0,
+            }
+            for (let each of this.state.Item) {
+                json.item.push({
+                    description: each.description,
+                    unique: uniqueIdSmall(),
+                    amount: each.Cost,
+                    taxable: each.Taxable,
+                    before: [...each.Before ? each.Before.map((picture) => picture.Src) : []],
+                    during: [...each.During ? each.During.map((picture) => picture.Src) : []],
+                    after: [...each.After ? each.After.map((picture) => picture.Src) : []]
+                })
+            }
+            var file = new File([JSON.stringify(json)], this.state.Address+"-bid.rpni");
+            FileSaver.saveAs(file);
+        }
+        else if(this.state.Stage ==='2'){
+            let json = {
+                invoice: this.state.LBNum,
+                billTo: this.state.uploadLink,
+                address: this.state.Address,
+                completionDate: this.state.CompletionDate,
+                invoiceDate: this.state.DueDate,
+                item: [],
+                tax: 0,
+            }
+            for (let each of this.state.Item) {
+                json.item.push({
+                    description: each.description,
+                    unique: uniqueIdSmall(),
+                    amount: each.Cost,
+                    taxable: each.Taxable,
+                    before: [...each.Before ? each.Before.map((picture) => picture.Src) : []],
+                    during: [...each.During ? each.During.map((picture) => picture.Src) : []],
+                    after: [...each.After ? each.After.map((picture) => picture.Src) : []]
+                })
+            }
+            var file = new File([JSON.stringify(json)], this.state.Address+"-workorder.rpni");
+            FileSaver.saveAs(file);
+        }
+        else if(this.state.Stage ==='3'){
+            let json = {
+                invoice: this.state.Invoice,
+                billTo: this.state.BillTo,
+                address: this.state.Address,
+                completionDate: this.state.CompletionDate,
+                invoiceDate: this.state.DueDate,
+                item: [],
+                tax: 0,
+            }
+            for (let each of this.state.Item) {
+                json.item.push({
+                    description: each.description,
+                    unique: uniqueIdSmall(),
+                    amount: each.Cost,
+                    taxable: each.Taxable,
+                    before: [...each.Before ? each.Before.map((picture) => picture.Src) : []],
+                    during: [...each.During ? each.During.map((picture) => picture.Src) : []],
+                    after: [...each.After ? each.After.map((picture) => picture.Src) : []]
+                })
+            }
+            var file = new File([JSON.stringify(json)], this.state.Address+"-invoice.rpni");
+            FileSaver.saveAs(file);
         }
 
-        for (let each of this.state.Item) {
-            json.item.push({
-                description: each.description,
-                unique: uniqueIdSmall(),
-                amount: each.Cost,
-                taxable: each.Taxable,
-                before: [...each.Before ? each.Before.map((picture) => picture.Src) : []],
-                during: [...each.During ? each.During.map((picture) => picture.Src) : []],
-                after: [...each.After ? each.After.map((picture) => picture.Src) : []]
-            })
-        }
-        var file = new File([JSON.stringify(json)], "rpn.rpni");
-        FileSaver.saveAs(file);
+        // for (let each of this.state.Item) {
+        //     json.item.push({
+        //         description: each.description,
+        //         unique: uniqueIdSmall(),
+        //         amount: each.Cost,
+        //         taxable: each.Taxable,
+        //         before: [...each.Before ? each.Before.map((picture) => picture.Src) : []],
+        //         during: [...each.During ? each.During.map((picture) => picture.Src) : []],
+        //         after: [...each.After ? each.After.map((picture) => picture.Src) : []]
+        //     })
+        // }
+        // var file = new File([JSON.stringify(json)], "rpn.rpni");
+        // FileSaver.saveAs(file);
 
     }
 
@@ -487,7 +571,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <button style={{
                         marginTop: '10px',
                         marginLeft: '10px',
-                        width: '465px',
+                        width: '430px',
                         height: '25px',
                     }}
                         onClick={() => {
@@ -515,6 +599,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 marginLeft: '10px',
                                 width: '65px',
                                 height: '25px',
+                                backgroundColor:this.state.Item[index].Taxable==true ? 'red':'blue'
                             }}
                                 className={value.taxable ? "check" : "uncheck"} onClick={() => {
                                     let list = this.state.Item;
@@ -548,7 +633,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 this.setState({ Item: list });
                             }}
                             style={{
-                                width: "385px",
+                                width: "345px",
                                 height: "100px",
                                 resize: "none"
                             }}>
@@ -590,15 +675,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             {this.state.Item[index].Before.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
-                                    <td>{pic.Name}</td>
-                                    <td><button style={{
-                                        marginLeft:'10px',
-                                    }} onClick={() => {
-                                        let list = this.state.Item;
-                                        list[index].Before.splice(key, 1);
-                                        this.setState({ Item: list });
-                                    }}>Del</button></td>
-                                    
+                                        <td>{key + 1}:{pic.Name}</td>
+                                        <td><button style={{
+                                            marginLeft: '10px',
+                                        }} onClick={() => {
+                                            let list = this.state.Item;
+                                            list[index].Before.splice(key, 1);
+                                            this.setState({ Item: list });
+                                        }}>Del</button></td>
+
                                     </tr>
                                 )
                             }.bind(this))}
@@ -616,15 +701,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             {this.state.Item[index].During.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
-                                    <td>{pic.Name}</td>
-                                    <td><button style={{
-                                        marginLeft:'10px',
-                                    }} onClick={() => {
-                                        let list = this.state.Item;
-                                        list[index].During.splice(key, 1);
-                                        this.setState({ Item: list });
-                                    }}>Del</button></td>
-                                    
+                                        <td>{pic.Name}</td>
+                                        <td><button style={{
+                                            marginLeft: '10px',
+                                        }} onClick={() => {
+                                            let list = this.state.Item;
+                                            list[index].During.splice(key, 1);
+                                            this.setState({ Item: list });
+                                        }}>Del</button></td>
+
                                     </tr>
                                 )
                             }.bind(this))}
@@ -642,15 +727,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             {this.state.Item[index].After.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
-                                    <td>{pic.Name}</td>
-                                    <td><button style={{
-                                        marginLeft:'10px',
-                                    }} onClick={() => {
-                                        let list = this.state.Item;
-                                        list[index].After.splice(key, 1);
-                                        this.setState({ Item: list });
-                                    }}>Del</button></td>
-                                    
+                                        <td>{pic.Name}</td>
+                                        <td><button style={{
+                                            marginLeft: '10px',
+                                        }} onClick={() => {
+                                            let list = this.state.Item;
+                                            list[index].After.splice(key, 1);
+                                            this.setState({ Item: list });
+                                        }}>Del</button></td>
+
                                     </tr>
                                 )
                             }.bind(this))}
@@ -685,7 +770,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     console.log(result);
                     let list = this.state.Item;
                     list[index].Before.push({
-                        Name: '',
+                        Name: Files[i].name,
                         Format: '',
                         Cate: list[index].Cate,
                         itemId: list[index].Item,
@@ -720,7 +805,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     console.log(result);
                     let list = this.state.Item;
                     list[index].Before.push({
-                        Name: '',
+                        Name: Files[i].name,
                         Format: '',
                         Cate: list[index].Cate,
                         itemId: list[index].Item,
@@ -738,6 +823,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         for (let i = 0; i < Files.length; i++) {
             var formData = new FormData();
             formData.append('image', Files[i]);
+            //console.log(Files[i].name);
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/uploadImage',
                 method: 'POST',
@@ -752,10 +838,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 },
                 data: formData,
                 success: function (result) {
-                    console.log(result);
+                    //console.log(Files[i].name);
                     let list = this.state.Item;
                     list[index].Before.push({
-                        Name: '',
+                        Name: Files[i].name,
                         Format: '',
                         Cate: list[index].Cate,
                         itemId: list[index].Item,
@@ -859,19 +945,19 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         console.log(this.state.Stage);
 
         if (this.state.Stage === '0') {
-            return "initial";
+            return (<div>Current Stage is : Initial</div>);
         }
         else if (this.state.Stage === '1') {
-            return <div>Bid</div>;
+            return (<div>Bid</div>);
         }
         else if (this.state.Stage === '2') {
-            return <div>Work Order</div>;
+            return (<div>Work Order</div>);
         }
         else if (this.state.Stage === '3') {
-            return <div>Invoice</div>;
+            return (<div>Invoice</div>);
         }
         else {
-            return <div>Done</div>;
+            return (<div>Done</div>);
         }
     }
 
@@ -910,13 +996,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     protected showTable() {
         if (this.state.Stage === '0') {
             return <div><table id="stage0">
-                <tr ><td>Property Address:</td> <td>{this.state.Address}</td></tr>
-                <tr><td>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
-                <tr><td>Start Date</td><td>{this.state.StartDate}</td></tr>
-                <tr><td>Due Date</td><td>{this.state.DueDate}</td></tr>
-                <tr><td>City/State/Zip Code </td><td>{this.state.City}</td></tr>
-                <tr><td>Description </td><td>{this.state.Desc}</td></tr>
-                <tr><td>Lock Box Number</td> <td>{this.state.LBNum}</td></tr>
+                <tr ><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                <tr><td style={{ width: "25%" }}>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
+                <tr><td style={{ width: "25%" }}>Start Date</td><td>{this.state.StartDate}</td></tr>
+                <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
+                <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
+                <tr><td style={{ width: "25%" }}>Description </td><td>{this.state.Desc}</td></tr>
+                <tr><td style={{ width: "25%" }}>Lock Box Number</td> <td>{this.state.LBNum}</td></tr>
             </table>
             </div>
         }
@@ -956,11 +1042,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
                                 <th>Before </th>
-                                <tr>{this.mapPicture(item.Before)}</tr>
+                                <tr>{this.mapPicture(item.Before,item.description)}</tr>
                                 <th> During </th>
-                                <tr>{this.mapPicture(item.During)}</tr>
+                                <tr>{this.mapPicture(item.During,item.description)}</tr>
                                 <th> After </th>
-                                <tr>{this.mapPicture(item.After)}</tr>
+                                <tr>{this.mapPicture(item.After,item.description)}</tr>
 
                             </React.Fragment>
                         )
@@ -973,12 +1059,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             return <div style={{
             }}>
                 <table id="stage2">
-                    <tr><td>Property Address:</td> <td>{this.state.Address}</td></tr>
-                    <tr><td>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
-                    <tr><td>Start Date</td><td>{this.state.StartDate}</td></tr>
-                    <tr><td>Due Date</td><td>{this.state.DueDate}</td></tr>
-                    <tr><td>City/State/Zip Code </td><td>{this.state.City}</td></tr>
-                    <tr><td>Note</td><td>{this.state.Note}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                    <tr><td style={{ width: "25%" }}>KeyCode/LockBoxNum</td><td>{this.state.LBNum}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
+                    <tr><td style={{ width: "25%" }}>UploadLink</td><td>{this.state.uploadLink}</td></tr>
                 </table>
                 <table>
                     <thead>
@@ -987,6 +1072,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             <th>Item</th>
                             <th>Description</th>
                             <th>Amount</th>
+                            <th>Process</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>{this.state.Item.map(function (item, key) {
@@ -997,13 +1084,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
                                     <td>{item.Cost}</td>
+                                    <td>{this.showProcess(item.Process)}</td>
+                                    <td>{this.showStatus(item.Status)}</td>
                                 </tr>
                                 <th> Before </th>
-                                <tr>{this.mapPicture(item.Before)}</tr>
+                                <tr>{this.mapPicture(item.Before,item.description)}</tr>
                                 <th> During </th>
-                                <tr>{this.mapPicture(item.During)}</tr>
+                                <tr>{this.mapPicture(item.During,item.description)}</tr>
                                 <th> After </th>
-                                <tr>{this.mapPicture(item.After)}</tr>
+                                <tr>{this.mapPicture(item.After,item.description)}</tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -1014,48 +1103,44 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         else if (this.state.Stage === '3') {
             return <div style={{
             }}>
-                <table>
-                    <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                        onChange={e => this.AddrChange(e.target.value)} /></tr>
-                    <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                        onChange={e => this.AssetChange(e.target.value)} /></tr>
-                    <tr>Lock Box Number <input className="text" id='lockboxnumber' value={this.state.LBNum}
-                        onChange={e => this.LBNumChange(e.target.value)} /></tr>
-                    <tr>City      <input className="text" id='city' value={this.state.City}
-                        onChange={e => this.CityChange(e.target.value)} /></tr>
-                    <tr>DueDate <input className="text" id='idate' value={this.state.DueDate}
-                        onChange={e => this.IDateChange(e.target.value)} /></tr>
-                    <tr>Note <input className="text" id='note' value={this.state.Note}
-                        onChange={e => this.NoteChange(e.target.value)} /></tr>
-                    <tr>Upload Link <input className="text" id='uploadlink' value={this.state.uploadLink}
-                        onChange={e => this.uploadLinkChange(e.target.value)} /></tr>
+                <table id="stage3">
+                    <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Invoice Number</td> <td>{this.state.Invoice}</td></tr>
+                    <tr><td style={{ width: "25%" }}>CompletionDate</td><td>{this.state.CompletionDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Invoice Date</td><td>{this.state.DueDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>BillTo </td><td>{this.state.BillTo}</td></tr>
                 </table>
                 <table>
                     <thead>
-                        <tr><th>Item</th>
+                        <tr>
+                            <th>Category</th>
+                            <th>Item</th>
                             <th>Description</th>
                             <th>Amount</th>
+                            <th>Process</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>{this.state.Item.map(function (item, key) {
-
                         return (
                             <React.Fragment>
                                 <tr key={key}>
+                                    <td>{item.Cate}</td>
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
                                     <td>{item.Cost}</td>
+                                    <td>{this.showProcess(item.Process)}</td>
+                                    <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <tr> Before </tr>
-                                <tr>{this.mapPicture(item.Before)}</tr>
-
-
+                                <th> Before </th>
+                                <tr>{this.mapPicture(item.Before,item.description)}</tr>
+                                <th> During </th>
+                                <tr>{this.mapPicture(item.During,item.description)}</tr>
+                                <th> After </th>
+                                <tr>{this.mapPicture(item.After,item.description)}</tr>
                             </React.Fragment>
-
-
                         )
-                    }.bind(this))
-                    }
+                    }.bind(this))}
                     </tbody>
                 </table>
             </div>
@@ -1068,16 +1153,25 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
     }
 
-    protected mapPicture(picture: any[]) {
+    protected mapPicture(picture: any[],desc: string) {
         return (
             picture.map(function (item, key) {
                 return (
-                    <img style={{
-                        width: '30%',
-                        height: 'auto',
-                        padding: '3px'
-                    }}
-                        src={item.Src} />
+                    <div>
+                        <img style={{
+                            width: '40%',
+                            height: 'auto',
+                            
+                            padding: '3px'
+                        }}
+                            src={item.Src} />
+                            {key+1}.{desc}
+                            
+                            </div>
+                    
+
+
+
                 )
             }.bind(this))
         )
