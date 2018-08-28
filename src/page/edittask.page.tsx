@@ -64,6 +64,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         After: [],
         //data: [],
     };
+    time;
     public componentDidMount() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
@@ -142,6 +143,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         });
         //this.mentionSave();
         
+    }
+
+    public componentWillUnmount(){
+        //clearInterval();
     }
 
     public constructor(props) {
@@ -437,7 +442,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         window.setInterval(function () {
             alert("save");
             
-        }, 300000);
+        }, 5000);
     }
 
     protected exportJson() {
