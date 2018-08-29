@@ -84,7 +84,7 @@ let config = {
         hot: true,
         contentBase: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        port: 8081,
+        port: 8080,
         inline: true,
         historyApiFallback: true
     }
