@@ -19,6 +19,7 @@ class Hello extends React.Component<{}, {}> {
         return (
             <BrowserRouter>
                 {renderRoutes(routes(this.props))}
+                {console.log('hello')}
             </BrowserRouter>
         );
     }
