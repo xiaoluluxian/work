@@ -10,6 +10,8 @@ import { BrowserRouter } from 'react-router-dom';
 import Config from '../config/config';
 import routes from './routes';
 
+
+console.log('hello');
 class Hello extends React.Component<{}, {}> {
     public constructor(props) {
         super(props);
