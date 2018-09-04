@@ -24,10 +24,33 @@ export interface IState {
 }
 
 class PageGhotiAddtask extends React.Component<IProps, IState> {
+    state = {
+        alluser: [],
+        username: "",
+    };
+
     public constructor(props) {
         super(props);
         this.submitTask = this.submitTask.bind(this);
         
+    }
+
+    public componentDidMount(){
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllUsers',
+
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                //console.log(result);
+                this.setState({ alluser: result });
+            }).bind(this),
+        });
     }
 
     public render() {
@@ -103,7 +126,17 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                     <tr>City      <input className="text" id= 'city'></input></tr>
                     <tr>Description      <input className="text" id= 'description'></input></tr>
                     <tr>Lock Box Number      <input className="text" id= 'lockboxnumber'></input></tr>
-                    <tr>Username <input className="text" id='username'></input></tr>
+                    <tr>Username 
+                    <select id='username' onChange={e => this.UserChange(e.target.value)}>
+                            <option>all</option>
+                            {this.state.alluser.map(function (item, key) {
+                                return (
+
+                                    <option>{item.firstname}</option>
+                                )
+                            }.bind(this))}
+                        </select>
+                    </tr>
                     {/* <tr>Stage <input className="text" id='stage'></input></tr> */}
                 
             </table>
@@ -116,6 +149,20 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
             title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
         </div>);
 
+    }
+    protected findUserByName(name) {
+        //console.log(this.state.newUser); tim001
+        
+        for (let i = 0; i < this.state.alluser.length; i++) {
+            if (this.state.alluser[i].firstname === name) {
+                return this.state.alluser[i].username;
+            }
+        }
+    }
+
+    protected UserChange(value){
+        this.setState({username:this.findUserByName(value)})
+        //console.log(this.findUserByName(value));
     }
     protected logout() {
 
@@ -130,7 +177,9 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
     
     protected submitTask(){
         let name=[];
-        name.push($('#username').val());
+        name.push(this.state.username);
+        //console.log(this.state.username);
+        
         $.ajax({
             url: 'https://rpntechserver.appspot.com/initTask',
             //url: 'http://localhost:8080/login',
@@ -150,7 +199,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 //stage:$('#stage').val()
             }),
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 this.props.history.push('/main');
             }.bind(this),
         });

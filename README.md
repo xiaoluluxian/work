@@ -39,3 +39,11 @@ Fixed some bugs in editpage:
 1. Add color for tax button
 2. Export different json file for different stage
 3. Add number and description on picture
+
+### 1.0.2
+
+Main:
+1. show users in list
+
+AddTask:
+1. selectable user name

@@ -14,7 +14,7 @@ import * as $ from 'jquery';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { Redirect } from 'react-router-dom'
 import * as ReactDOM from 'react-dom'
-import {Button} from 'reactstrap'
+import { Button } from 'reactstrap'
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -36,9 +36,9 @@ export interface IState {
 
 
 class PageGhotiMain extends React.Component<IProps, IState> {
-    state = { 
+    state = {
         data: [],
-        alluser:[],
+        alluser: [],
     };
     public constructor(props) {
         super(props);
@@ -56,7 +56,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     public componentDidMount() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllUsers',
-            
+
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -66,7 +66,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 console.log(result);
-                this.setState({alluser:result});
+                this.setState({ alluser: result });
             }).bind(this),
         });
         if (localStorage.getItem('Authority') === '2') {
@@ -149,7 +149,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         marginRight: '10px',
                         textAlign: 'right',
                     }}>
-                        
+
                     </div>
                 </div>
             </div>
@@ -181,25 +181,26 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <button className="link" title="Refresh Task" onClick={this.register}><ins>Register</ins></button>
                 </div>
                 <div style={{
-                    padding : '10px',
+                    padding: '10px',
                 }}>
-                <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
+                    <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
                 </div>
                 <div style={{
-                    padding : '10px',
+                    padding: '10px',
                 }}>
-                    <tr>User:  
-                    <select id= 'setUser' onChange={e=>this.UserChange(e.target.value)}>
-                    <option>all</option>
-                    {this.state.alluser.map(function (item, key) {
-                    return (
-                        
-                        <option>{item.firstname}</option>
-                    )}.bind(this))}
-                    </select>
+                    <tr>User:
+                    <select id='setUser' onChange={e => this.UserChange(e.target.value)}>
+                            <option>all</option>
+                            {this.state.alluser.map(function (item, key) {
+                                return (
+
+                                    <option>{item.firstname}</option>
+                                )
+                            }.bind(this))}
+                        </select>
                     </tr>
-                    </div>
-                    
+                </div>
+
             </div>
             <table id='taskT'>
                 <thead>
@@ -221,7 +222,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                             <td>{item.Address}</td>
                             <td>{item.asset_num}</td>
                             <td>{item.StartDate}</td>
-                            <td>{item.Username}</td>
+                            <td>{this.showUsername(item.Username)}</td>
                             <td>{item.Stage}</td>
                         </tr>
                     )
@@ -232,13 +233,58 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         </div >);
     }
 
-    protected date(){
+    protected showUsername(username) {
+        if(username===null){
+            return
+        }
+        if (username.length == 1) {
+            return (
+                <React.Fragment>
+                    <li>Bid: {void 0}</li>
+                    <li>WorkOrder: {void 0}</li>
+                    <li>Invoice: {void 0}</li>
+                </React.Fragment>
+            )
+        }
+        else if (username.length == 2) {
+            return (
+                <React.Fragment>
+                    <li>Bid: {username[1]}</li>
+                    <li>WorkOrder: {void 0}</li>
+                    <li>Invoice: {void 0}</li>
+                </React.Fragment>
+            )
+        }
+        else if (username.length == 3) {
+            return (
+                <React.Fragment>
+                    <li>Bid: {username[1]}</li>
+                    <li>WorkOrder: {username[2]}</li>
+                    <li>Invoice: {void 0}</li>
+                </React.Fragment>
+            )
+        }
+        else if (username.length == 4) {
+            return (
+                <React.Fragment>
+                    <li>Bid: {username[1]}</li>
+                    <li>WorkOrder: {username[2]}</li>
+                    <li>Invoice: {username[3]}</li>
+                </React.Fragment>
+            )
+        }
+        else{
+            return
+        }
+    }
+
+    protected date() {
 
     }
 
-    protected UserChange(value){
+    protected UserChange(value) {
         console.log(value);
-        if (value==='all') {
+        if (value === 'all') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',
                 headers: {
@@ -255,11 +301,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }).bind(this),
             });
         }
-        else{
+        else {
             var newname = this.findUserByName(value);
             $.ajax({
                 //url: 'https://rpntechserver.appspot.com/userProfile',
-                url: 'http://192.168.1.96:8080/getTasksByUser?username='+newname,
+                url: 'http://rpntechserver.appspot.com/getTasksByUser?username=' + newname,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -277,26 +323,26 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
     }
 
-    protected findUserByName(name){
+    protected findUserByName(name) {
         //console.log(this.state.newUser); tim001
         console.log(name);
-        for(let i=0;i<this.state.alluser.length;i++){
-            if(this.state.alluser[i].firstname===name){
+        for (let i = 0; i < this.state.alluser.length; i++) {
+            if (this.state.alluser[i].firstname === name) {
                 return this.state.alluser[i].username;
-            }    
+            }
         }
     }
 
-    protected showSetTask(item){
-        if(localStorage.getItem('Authority')==='2'){
+    protected showSetTask(item) {
+        if (localStorage.getItem('Authority') === '2') {
             return <button title="setTask" onClick={this.setTask.bind(this, item)}><ins>setTask</ins></button>
         }
-        else{
+        else {
             return void 0;
         }
     }
 
-    protected test(){
+    protected test() {
         this.props.history.push('/test');
     }
 
@@ -337,7 +383,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
     }
 
-    
+
     protected changeStatus() {
 
     }
