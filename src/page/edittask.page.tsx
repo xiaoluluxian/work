@@ -37,7 +37,7 @@ export interface IState {
 }
 
 class PageGhotiEdittask extends React.Component<IProps, IState> {
-
+    count = 0;
     state = {
         //page:null,
         Address: '',
@@ -59,12 +59,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Year: '',
         AssetNum: '',
         uploadLink: '',
+        Tax:0,
         Before: [],
         During: [],
         After: [],
         //data: [],
     };
-    time;
     public componentDidMount() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
@@ -183,6 +183,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     
 
     public render() {
+        let tax: number = 0;
+        let taxTotal: number = 0;
+        let total: number = 0;
+        for (let i of this.state.Item) {
+            total += (i.Amount ? i.Amount : 0);
+            if (i.taxable) {
+                taxTotal += (i.Amount ? i.Amount : 0);
+            }
+        }
+        tax = taxTotal * (this.state.Tax ? this.state.Tax : 0) * 0.01;
+        total += tax;
         return (
             <div className="main">
                 <div className="title">
@@ -679,17 +690,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index) }} />
                             {this.state.Item[index].Before.map(function (pic, key) {
                                 return (
+                                    <React.Fragment>
                                     <tr key={key}>
-                                        <td>{key + 1}:{pic.Name}</td>
-                                        <td><button style={{
-                                            marginLeft: '10px',
+                                        <td>{key + 1}:<button style={{
+                                            //marginLeft: '10px',
                                         }} onClick={() => {
                                             let list = this.state.Item;
                                             list[index].Before.splice(key, 1);
                                             this.setState({ Item: list });
                                         }}>Del</button></td>
-
+                                        <td>{pic.Name}</td>
                                     </tr>
+                                    </React.Fragment>
                                 )
                             }.bind(this))}
                         </tr>
@@ -706,14 +718,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             {this.state.Item[index].During.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
-                                        <td>{pic.Name}</td>
-                                        <td><button style={{
-                                            marginLeft: '10px',
+                                        <td>{key + 1}:<button style={{
+                                            //marginLeft: '10px',
                                         }} onClick={() => {
                                             let list = this.state.Item;
                                             list[index].During.splice(key, 1);
                                             this.setState({ Item: list });
                                         }}>Del</button></td>
+                                        <td>{pic.Name}</td>
 
                                     </tr>
                                 )
@@ -732,15 +744,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             {this.state.Item[index].After.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
-                                        <td>{pic.Name}</td>
-                                        <td><button style={{
-                                            marginLeft: '10px',
+                                        <td>{key + 1}:<button style={{
+                                            //marginLeft: '10px',
                                         }} onClick={() => {
                                             let list = this.state.Item;
                                             list[index].After.splice(key, 1);
                                             this.setState({ Item: list });
                                         }}>Del</button></td>
-
+                                        <td>{pic.Name}</td>
                                     </tr>
                                 )
                             }.bind(this))}
@@ -998,6 +1009,133 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
+    protected mapShowItem(value, index){
+        const mapShowPicture = (picture , pIndex)=>{
+            this.count = this.count+1;
+            return (
+                <div key={pIndex} style={{
+                    flex: 1,
+                    position: 'relative',
+                    // minWidth: '33%',
+                    minWidth: '180px',
+                    maxWidth: '180px',
+                    padding: '2px',
+                    //marginLeft:'20px',
+                    //marginTop:'0px',
+                }} >
+                    <img
+                        style={{
+                            // position: 'static',
+                            width: '95%',
+                            height: 'auto',
+                            marginLeft:'3px',
+                            //marginTop:'0px',
+                            border: '1px solid black',
+                        }}
+                        src={picture}
+                    />
+                    <div>{this.count}</div>
+                    <div>{this.state.Item[index].description}</div>
+                    
+                </div>
+            );
+        };
+
+        const buildShowPicture = (pictureE:any[])=>{
+            this.count=0;
+            const picture = [...pictureE];
+            let pictureList: any[] = [];
+            let tempList: string[] = [];
+            let key: number = 0;
+            while (picture.length > 0) {
+                /**
+                 * FOR MAINTAINER
+                 * FOR KEY! this is a bad practice, due to key change, the entire component list may rendered again due to small change.
+                 * TOFIXIT: use individual key value.
+                 */
+                if (tempList.length >= 3) {
+                    pictureList.push(<tr key={key++}>
+                        <td >
+                            <div >
+                                <div style={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    justifyContent: 'center',
+                                }}>{tempList.map(mapShowPicture)}</div>
+                            </div>
+                        </td>
+                    </tr>);
+                    tempList = [];
+                }
+                tempList.push(picture.shift());
+            }
+            if (tempList.length > 0) {
+                pictureList.push(<tr key={key}>
+                    <td>
+                        <div>
+                            <div style={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                justifyContent: 'center',
+                            }}>{tempList.map(mapShowPicture)}</div>
+                        </div>
+                    </td>
+                </tr>);
+            }
+            return pictureList;
+        };
+
+        return (<React.Fragment key={index}><tr>
+            <td>
+                <div style={{
+                    padding: '3px',
+                }}>{index + 1}.&nbsp;{value.description}</div>
+            </td>
+            <td style={{
+                
+                padding: '3px',
+                fontWeight: 'bold',
+            }}>
+                <div style={{ display: 'flex' }}>
+                    <div>$</div>
+                    <div style={{ flex: 1, textAlign: 'right' }}>
+                        {value.amount ? value.amount.toFixed(2) : 0}
+                    </div>
+                </div>
+            </td>
+        </tr>
+            {value.before.length > 0 ?
+            
+                <React.Fragment>
+                    <tr>
+                        <td colSpan={2}>Before</td>
+                    </tr>
+                    {buildShowPicture(value.before)}
+                    
+                </React.Fragment>
+                : void 0}
+            {value.during.length > 0 ?
+                <React.Fragment>
+                    <tr>
+                        <td colSpan={2}>During</td>
+                    </tr>
+                    {buildShowPicture(value.during)}
+                </React.Fragment>
+                : void 0}
+
+            {value.after.length > 0 ?
+                <React.Fragment>
+                    <tr>
+                        <td colSpan={2}>After</td>
+                    </tr>
+                    {buildShowPicture(value.after)}
+                </React.Fragment>
+                : void 0}
+        </React.Fragment>);
+
+        
+    }
+
     protected showTable() {
         if (this.state.Stage === '0') {
             return <div><table id="stage0">
@@ -1057,6 +1195,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         )
                     }.bind(this))}
                     </tbody>
+                    {/* <tbody>
+                        {this.state.Item.map(this.mapShowItem)}
+                    </tbody> */}
                 </table>
             </div>
         }
