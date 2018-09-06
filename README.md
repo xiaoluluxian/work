@@ -47,3 +47,8 @@ Main:
 
 AddTask:
 1. selectable user name
+
+### 1.0.3
+
+Login page changed using bootstrap in scss
+Part of editpage modified
