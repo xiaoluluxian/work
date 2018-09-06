@@ -24,7 +24,7 @@ import * as JSZip from "./jszip.js";
 import * as jsPDF from "jspdf";
 import * as helper from "./helpers.js";
 import * as ReactToPrint from "react-to-print"
-
+import 'bootstrap';
 import Config from '../config/config';
 
 export interface IProps {

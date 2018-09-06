@@ -13,6 +13,8 @@ import logo from "./logo";
 import * as $ from "jquery";
 import PageTransition from 'react-router-page-transition';
 import mainp from "./main.page";
+//import "bootstrap/dist/css/bootstrap.min.css";
+//import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 import { Redirect, BrowserRouter } from 'react-router-dom';
@@ -73,6 +75,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                             alignItems: 'center',
                         }}>
                             <img src={logo} alt="logo" style={{
+                                marginLeft: "5px",
                                 width: '70px',
                                 height: '50px',
                             }} />
@@ -89,7 +92,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                     </div>
                         </div>
                     </div>
-                    <div className="space">
+                    {/* <div className="space">
                         <div style={{
                             alignItems: 'center',
                             textAlign: 'center',
@@ -128,7 +131,68 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                                 onClick={this.login}>
                                 </button></div>
                         </div>
+                    </div> */}
+                    <section className="login-block">
+                <div className="containner">
+                    <div className='row'>
+                        <div className="col-md-4 login-sec">
+                            <h2 className="text-center">Login</h2>
+                            <form className="login-form">
+                                <div className="form-group">
+                                    <label className="text-uppercase">Username</label>
+                                    <input type="text" id="UN" className="form-control" placeholder="" />
+                                </div>
+                                <div className="form-group">
+                                    <label className="text-uppercase">Password</label>
+                                    <input type="password" id="PW" className="form-control" placeholder="" />
+                                </div>
+                                
+                                    <button type="button" className="btn btn-login float-right" onClick={this.login}>LogIn</button>
+                                
+                            </form>
+                            <div className="copy-text">Created <span className="glyphicon glyphicon-pencil"></span><i className="fa fa-heart"></i> by <a href="http://www.rpncompany.com">rpncompany.com</a></div>
+                        </div>
+                        <div className="col-md-8 banner-sec">
+                            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                                <ol className="carousel-indicators">
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                </ol>
+                                <div className="carousel-inner" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img className="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide" />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <div className="banner-text">
+                                                <h2>Start From RPN</h2>
+                                                <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="carousel-item">
+                                        <img className="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide" />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <div className="banner-text">
+                                                <h2>Start From RPN</h2>
+                                                <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="carousel-item">
+                                        <img className="d-block img-fluid" src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="First slide" />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <div className="banner-text">
+                                                <h2>Start From RPN</h2>
+                                                <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </section>
                 </div>
             </React.Fragment>
         );
@@ -136,6 +200,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
 
     protected login() {
         var temp;
+        
         $.ajax({
             url: 'https://rpntechserver.appspot.com/login',
             //url: 'http://localhost:8080/login',

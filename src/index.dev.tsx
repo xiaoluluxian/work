@@ -9,7 +9,8 @@ import { AppContainer } from 'react-hot-loader';
 
 import Hello from './root/hello';
 import Config from './config/config';
-
+// import 'bootstrap/dist/css/bootstrap.css';
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './style/global.sass';
 
 declare const module: any;

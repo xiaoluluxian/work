@@ -14,11 +14,8 @@ export interface IProps {
     route: any;
 }
 
-console.log('hello');
-
 class AppRoot extends React.Component<IProps, {}> {
     public render() {
-        console.log("hello");
         return renderRoutes(this.props.route.routes);
     }
 }

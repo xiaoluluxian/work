@@ -9,9 +9,10 @@ import { renderRoutes } from 'react-router-config';
 import { BrowserRouter } from 'react-router-dom';
 import Config from '../config/config';
 import routes from './routes';
+//import 'bootstrap/dist/css/bootstrap.css';
 
 
-console.log('hello');
+
 class Hello extends React.Component<{}, {}> {
     public constructor(props) {
         super(props);

@@ -12,6 +12,7 @@ import * as Lambda from '../lambda/import';
 import * as $ from "jquery";
 
 import Config from '../config/config';
+import {bootstrap,button} from "bootstrap"
 
 export interface IProps {
     page: IPage;
@@ -31,14 +32,48 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
     }
 
-    public render() {
-        return (<div>
-            <input
-                style={{
+    public componentDidMount() {
 
-                }}
-                type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} />
-        </div>);
+    }
+
+    public render() {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12">
+                        <h4>WorkFlow</h4>
+                        <div className="table-reponsive">
+                            <table id="mytable" className="table table-bordred table-striped">
+                                <thead>
+
+                                    <th><input type="checkbox" id="checkall" /></th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Address</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Edit</th>
+
+                                    <th>Delete</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" className="checkthis" /></td>
+                                        <td>Mohsin</td>
+                                        <td>Irshad</td>
+                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
+                                        <td>isometric.mohsin@gmail.com</td>
+                                        <td>+923335586757</td>
+                                        <td><p data-placement="top" data-toggle="tooltip" ><button type="button" className="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" ><span className="glyphicon glyphicon-pencil"></span></button></p></td>
+                                        <td><p data-placement="top" data-toggle="tooltip" title="Set"><button type="button" className="btn btn-success btn-xs" data-title="Set" data-toggle="modal" data-target="#delete" ><span className="glyphicon glyphicon-user"></span></button></p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     protected readJson(Files: FileList) {
@@ -59,7 +94,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 invoicenum: '',
                 completiondate: '',
                 invoicedate: '',
-                totalcost:js.totalCost,
+                totalcost: js.totalCost,
                 totalimage: parseInt(js.totalImage),
                 item: js.list,
             }
@@ -85,8 +120,8 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             invoicenum: '',
             completiondate: '',
             invoicedate: '',
-            totalcost:'',
-            totalimage:0,
+            totalcost: '',
+            totalimage: 0,
             item: [],
         };
     }
