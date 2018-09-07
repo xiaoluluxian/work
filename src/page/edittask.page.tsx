@@ -30,6 +30,7 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
+    history:any;
 }
 
 export interface IState {
@@ -152,6 +153,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
         this.submitTask = this.submitTask.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.showTable = this.showTable.bind(this);
         this.readJson = this.readJson.bind(this);
@@ -218,7 +220,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         }}>
                             Repair and Preservation Network, LLC
             </div>
-                        <div style={{
+                        {/* <div style={{
                             marginTop: '20px',
                             marginRight: '20px',
                             textAlign: 'center',
@@ -226,7 +228,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                         }}>
                             <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
-                        </div>
+                        </div> */}
                         {/* <div style={{
                             marginTop: '20px',
                             marginRight: '10px',
@@ -252,11 +254,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
-                    <div style={{
+                    {/* <div style={{
                         margin: '5px',
                     }}>
                         <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
-                    </div></div>
+                    </div> */}
+                    </div>
                 <div style={{
                     marginLeft: '10px',
                     marginTop: '10px',
@@ -1756,7 +1759,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
     protected changeStatus() {
-
+        this.props.history.push("/main");
     }
     protected addTask() {
 

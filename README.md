@@ -52,3 +52,11 @@ AddTask:
 
 Login page changed using bootstrap in scss
 Part of editpage modified
+
+### 1.0.4
+
+New Function Add:
+1. Delete User
+2. Delete Task
+
+Change stage display in main page

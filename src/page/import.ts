@@ -11,6 +11,8 @@ import PageGhotiLogin from './login.page';
 import PageGhotiSettask from './settask.page';
 import PageGhotiRegister from './register.page';
 import PageGhotiTest from './test.page';
+import PageGhotiDeluser from './deluser.page';
+import PageGhotiUserprofile from './userprofile.page';
 export {
     PageGhotiMain as main,
     PageGhotiAddtask as addtask,
@@ -19,4 +21,6 @@ export {
     PageGhotiSettask as settask,
     PageGhotiRegister as register,
     PageGhotiTest as test,
+    PageGhotiDeluser as deluser,
+    PageGhotiUserprofile as userprofile,
 };

@@ -56,6 +56,18 @@ export default function (props) {
 
                 },
                 {
+                    component: Pages.deluser,
+                    exact: true,
+                    path: '/deluser',
+
+                },
+                {
+                    component: Pages.userprofile,
+                    exact: true,
+                    path: '/userprofile',
+
+                },
+                {
                     component: () => <div>Path = /home</div>,
                     path: '/home',
                 },

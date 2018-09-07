@@ -33,6 +33,7 @@
         "enzyme-adapter-react-16": "1.1.1",
         "extract-text-webpack-plugin": "^3.0.2",
         "file-loader": "^1.1.11",
+        "font-awesome": "^4.7.0",
         "ghoti-cli": "^3.5.1",
         "html-webpack-plugin": "^2.30.1",
         "mocha": "^5.0.1",
@@ -50,6 +51,8 @@
         "webpack-dev-server": "^2.11.1"
     },
     "dependencies": {
+        "@fortawesome/fontawesome": "^1.1.8",
+        "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
         "bootstrap": "^4.1.3",
         "file-saver": "^1.3.8",
         "images-downloader": "^1.0.3",

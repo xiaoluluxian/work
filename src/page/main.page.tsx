@@ -14,7 +14,8 @@ import * as $ from 'jquery';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { Redirect } from 'react-router-dom'
 import * as ReactDOM from 'react-dom'
-import { Button } from 'reactstrap'
+//import { Button } from 'reactstrap'
+//import "bootstrap/dist/css/bootstrap.min.css";
 //import {FontAwesomeIcon} from '@fortawesome/fontawesome-free'
 //import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 
@@ -25,7 +26,6 @@ import Config from '../config/config';
 
 export interface IProps {
     page: IPage;
-    updatePage?: (page: IPage) => void;
     history: any;
 
 }
@@ -51,6 +51,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.register = this.register.bind(this);
         this.showSetTask = this.showSetTask.bind(this);
         this.test = this.test.bind(this);
+        this.delUser = this.delUser.bind(this);
+        this.userProfile = this.userProfile.bind(this);
 
     }
 
@@ -113,131 +115,196 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
     public render() {
 
-        return (<div className="main">
-            <div className="title">
-                <div style={{
-                    display: 'flex',
-                    height: '100px',
-                    alignItems: 'center',
-                    width: '100%'
-                }}>
-                    <img src={logo} alt="logo" style={{
-                        width: '70px',
-                        height: '50px',
-                    }} />
+        return (
+            <div className="main">
+                <div className="title">
                     <div style={{
-                        flex: 1,
-                        paddingLeft: '10px',
-                        paddingTop: '20px',
-                        display: 'inline',
-                        fontSize: '20px',
-                        color: 'darkblue',
-                        fontWeight: 'bold',
+                        display: 'flex',
+                        height: '100px',
+                        alignItems: 'center',
+                        width: '100%',
+                        marginLeft: "10px"
                     }}>
-                        Repair and Preservation Network, LLC
+                        <img src={logo} alt="logo" style={{
+                            width: '70px',
+                            height: '50px',
+                        }} />
+                        <div style={{
+                            flex: 1,
+                            paddingLeft: '10px',
+                            paddingTop: '20px',
+                            display: 'inline',
+                            fontSize: '20px',
+                            color: 'darkblue',
+                            fontWeight: 'bold',
+                        }}>
+                            Repair and Preservation Network, LLC
                 </div>
+                        <div style={{
+                            marginTop: '20px',
+                            marginRight: '20px',
+                            textAlign: 'center',
+                            width: '30%'
+
+                        }}>
+                            <input type="text" id="myInput" onKeyUp={this.search} placeholder="Search for Addr.." title="Search Task" />
+                        </div>
+                        <div style={{
+                            marginTop: '20px',
+                            marginRight: '10px',
+                            textAlign: 'right',
+                        }}>
+
+                        </div>
+                    </div>
+                </div>
+                <div className="space">
                     <div style={{
-                        marginTop: '20px',
-                        marginRight: '20px',
+                        alignItems: 'center',
                         textAlign: 'center',
-                        width: '30%'
-
+                        marginTop: '10px',
+                        width: '100%',
                     }}>
-                        <input type="text" id="myInput" onKeyUp={this.search} placeholder="Search for Addr.." title="Search Task" />
+                        Welcome to Repair and Preservation Network Company!
+                    {this.date}
+                    </div>
+                </div>
+                <div className="menu">
+                    <div style={{
+                        margin: '15px',
+                    }}>
+                        <button type="button" aria-label="Left Align">
+                            <i className="fas fa-basketball-ball"></i>
+                        </button>
                     </div>
                     <div style={{
-                        marginTop: '20px',
-                        marginRight: '10px',
-                        textAlign: 'right',
+                        margin: '5px',
                     }}>
-
+                        <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                     </div>
-                </div>
-            </div>
-            <div className="space">
-                <div style={{
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    marginTop: '10px',
-                    width: '100%',
-                }}>
-                    Welcome to Repair and Preservation Network Company!
-                    {this.date}
-                </div>
-            </div>
-            <div className="menu">
-                <div style={{
-                    margin: '15px',
-                }}>
-                    <button className="btn btn-primary" title="View Task" onClick={this.changeStatus}>
-                    <i className="fas fa-plus-square"></i>
-                    </button>
-                </div>
-                <div style={{
-                    margin: '5px',
-                }}>
-                    <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
-                </div>
-                <div style={{
-                    margin: '5px',
-                }}>
-                    <button className="link" title="Refresh Task" onClick={this.register}><ins>Register</ins></button>
-                </div>
-                <div style={{
-                    padding: '10px',
-                }}>
-                    <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
-                </div>
-                <div style={{
-                    padding: '10px',
-                }}>
-                    <tr>User:
-                    <select id='setUser' onChange={e => this.UserChange(e.target.value)}>
-                            <option>all</option>
-                            {this.state.alluser.map(function (item, key) {
-                                return (
+                    <div style={{
+                        margin: '5px',
+                    }}>
+                        <button className="link" title="Register" onClick={this.register}><ins>Register</ins></button>
+                    </div>
+                    <div style={{
+                        padding: '10px',
+                    }}>
+                        <button className="link" title="Delete User" onClick={this.delUser}><ins>DelUser</ins></button>
+                    </div>
+                    <div style={{
+                        padding: '10px',
+                    }}>
+                        <button className="link" title="UserProfile" onClick={this.userProfile}><ins>Profile</ins></button>
+                    </div>
+                    <div style={{
+                        padding: '10px',
+                    }}>
+                        <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
+                    </div>
+                    
+                    <div style={{
+                        padding: '10px',
+                    }}>
+                        <div>User:
+                    <select style={{
+                        width: "100px"
+                    }}
+                    id='setUser' onChange={e => this.UserChange(e.target.value)}>
+                                <option>all</option>
+                                {this.state.alluser.map(function (item, key) {
+                                    return (
 
-                                    <option>{item.firstname}</option>
-                                )
-                            }.bind(this))}
-                        </select>
-                    </tr>
+                                        <option key={key}>{item.Firstname}</option>
+                                    )
+                                }.bind(this))}
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
-
-            </div>
-            <table id='taskT'>
-                <thead>
-                    <tr><th>Action</th>
-                        <th>Property Address</th>
-                        <th>Asset Number</th>
-                        <th>Due Date</th>
-                        <th>User</th>
-                        <th>Stage</th>
-                    </tr>
-                </thead>
-                <tbody>{this.state.data.map(function (item, key) {
-                    return (
-
-                        <tr key={key}>
-                            <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
-                                {this.showSetTask(item)}
-                            </td>
-                            <td>{item.Address}</td>
-                            <td>{item.asset_num}</td>
-                            <td>{item.StartDate}</td>
-                            <td>{this.showUsername(item.Username)}</td>
-                            <td>{item.Stage}</td>
+                <table id='taskT'>
+                    <thead>
+                        <tr><th>Action</th>
+                            <th>Property Address</th>
+                            <th>Asset Number</th>
+                            <th>Due Date</th>
+                            <th>User</th>
+                            <th>CurrStage</th>
                         </tr>
-                    )
-                }.bind(this))}</tbody>
-            </table>
+                    </thead>
+                    <tbody>{this.state.data.map(function (item, key) {
+                        return (
+
+                            <tr key={key}>
+                                <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                                    {this.showSetTask(item)}
+                                    <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button>
+                                </td>
+                                <td>{item.Address}</td>
+                                <td>{item.asset_num}</td>
+                                <td>{item.StartDate}</td>
+                                <td>{this.showUsername(item.Username)}</td>
+                                {/* <td>{item.Stage}</td> */}
+                                <td>{this.showStage(item.Stage)}</td>
+                            </tr>
+                        )
+                    }.bind(this))}</tbody>
+                </table>
 
 
-        </div >);
+            </div >);
+    }
+
+    protected showStage(stage){
+        if(stage==="0"){
+            return "initial"
+        }
+        else if(stage==="1"){
+            return "Bid"
+        }
+        else if(stage==="2"){
+            return "Work Order"
+        }
+        else if(stage==="3"){
+            return "Invoice"
+        }
+        else if(stage==="4") {
+            return "Complete"
+        }
+        else if(stage==="5"){
+            return "Push Back"
+        }
+        else{
+            
+        }
+    }
+
+    protected userProfile(){
+        this.props.history.push("/userprofile");
+    }
+
+    protected delUser() {
+        this.props.history.push("/deluser");
+        // $.ajax({
+        //     url: 'https://rpntechserver.appspot.com/removeUser',
+        //     headers: {
+        //         Authorization: "Bearer " + localStorage.getItem('Token'),
+        //     },
+        //     method: 'GET',
+        //     datatype: "json",
+        //     data: JSON.stringify({
+        //     }),
+        //     success: (function (result) {
+        //         console.log(result);
+        //         this.setState({ data: result });
+
+        //     }).bind(this),
+        // });
     }
 
     protected showUsername(username) {
-        if(username===null){
+        if (username === null) {
             return
         }
         if (username.length == 1) {
@@ -276,7 +343,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 </React.Fragment>
             )
         }
-        else{
+        else {
             return
         }
     }
@@ -330,7 +397,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         //console.log(this.state.newUser); tim001
         console.log(name);
         for (let i = 0; i < this.state.alluser.length; i++) {
-            if (this.state.alluser[i].firstname === name) {
+            if (this.state.alluser[i].Firstname === name) {
                 return this.state.alluser[i].username;
             }
         }
@@ -365,7 +432,21 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected delTask(item) {
-        console.log(item);
+        console.log(item.TaskID);
+        $.ajax({
+            url: 'http://rpntechserver.appspot.com/deleteTask?task_id=' + item.TaskID,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'POST',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+
+            }).bind(this),
+        });
     }
 
     protected search() {

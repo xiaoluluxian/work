@@ -150,7 +150,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                                     <button type="button" className="btn btn-login float-right" onClick={this.login}>LogIn</button>
                                 
                             </form>
-                            <div className="copy-text">Created <span className="glyphicon glyphicon-pencil"></span><i className="fa fa-heart"></i> by <a href="http://www.rpncompany.com">rpncompany.com</a></div>
+                            <div className="copy-text"><div>© 2018 REPAIR AND PRESERVATION NETWORK.</div><div> All Rights Reserved <a href="http://www.rpncompany.com">rpncompany.com</a></div></div>
                         </div>
                         <div className="col-md-8 banner-sec">
                             <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
@@ -211,11 +211,11 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                 password: $('#PW').val(),
             }),
             success: (function (data) {
-                console.log(data);
+                //console.log(data);
                 var result = JSON.parse(data);
                 //this.IProps.key = data;
-                console.log(result.Authority);
-                console.log(result);
+                //console.log(result.Authority);
+                //console.log(result);
                 localStorage.setItem('Token', result.Token);
                 localStorage.setItem('Authority', result.Authority);
                 this.props.history.push('/main');
