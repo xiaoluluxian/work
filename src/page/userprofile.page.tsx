@@ -37,8 +37,9 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
     }
     
     public componentDidMount(){
+        console.log(localStorage.getItem('currUser'));
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/userProfile',
+            url: 'https://rpntechserver.appspot.com/findUser?username='+localStorage.getItem('currUser'),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -97,7 +98,19 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
-                </div></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>Username: <input></input></tr>
+                        <tr>Password: <input></input></tr>
+                        <tr>Email: <input></input></tr>
+                        <tr>Phone: <input></input></tr>
+                        <tr>Firstname: <input></input></tr>
+                        <tr>Lastname: <input></input></tr>
+                    </thead>
+                </table>
+                
+            </div>
         );
     }
     protected changeStatus(){
