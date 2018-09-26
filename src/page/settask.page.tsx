@@ -72,6 +72,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         this.submitTask = this.submitTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.findUserByName = this.findUserByName.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
         
     }
 
@@ -145,7 +146,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
                     <select id= 'setUser' onChange={e=>this.UserChange(e.target.value)}>
                     {this.state.alluser.map(function (item, key) {
                     return (
-                        <option>{item.firstname}</option>
+                        <option>{item.Firstname}</option>
                     )}.bind(this))}
                     </select>
                     </tr>
@@ -187,7 +188,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
 
     }
     protected changeStatus() {
-
+        this.props.history.push('/main');
     }
     protected addTask(){
 
@@ -196,8 +197,8 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         //console.log(this.state.newUser); tim001
         console.log(name);
         for(let i=0;i<this.state.alluser.length;i++){
-            if(this.state.alluser[i].firstname===name){
-                return this.state.alluser[i].username;
+            if(this.state.alluser[i].Firstname===name){
+                return this.state.alluser[i].Username;
             }   
             
         }

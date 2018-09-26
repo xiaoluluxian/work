@@ -18,6 +18,7 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
+    history:any;
 }
 
 export interface IState {
@@ -40,6 +41,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         super(props);
         this.submitTask = this.submitTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
 
     }
 
@@ -114,18 +116,21 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
             <button
                 style={{
                     marginLeft: '10px',
+                    marginTop: '5px',
                     width: '60px',
-                    height: '25px',
+                    height: '28px',
+                    fontSize: '14px',
                 }}
                 title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-            <input
+            {/* <input
                 style={{
                     marginTop: '10px',
                     marginLeft: '10px',
                     width: '60px',
                     height: '25px',
+                    fontSize: '14px',
                 }}
-                type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+                type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} /> */}
         </div>);
 
     }
@@ -166,7 +171,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
 
     }
     protected changeStatus() {
-
+        this.props.history.push('/main');
     }
     protected addTask() {
 

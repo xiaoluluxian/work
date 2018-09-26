@@ -171,11 +171,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 </div>
                 <div className="menu">
                     <div style={{
-                        margin: '15px',
+                        margin: '5px',
                     }}>
-                        <button type="button" aria-label="Left Align">
-                            <i className="fas fa-basketball-ball"></i>
-                        </button>
+                        <button className="link" title="Show Task" onClick={this.showTask}><ins>Show Task</ins></button>
                     </div>
                     <div style={{
                         margin: '5px',
@@ -202,15 +200,15 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
                     </div>
-                    
+
                     <div style={{
                         padding: '10px',
                     }}>
                         <div>User:
                     <select style={{
-                        width: "100px"
-                    }}
-                    id='setUser' onChange={e => this.UserChange(e.target.value)}>
+                                width: "100px"
+                            }}
+                                id='setUser' onChange={e => this.UserChange(e.target.value)}>
                                 <option>all</option>
                                 {this.state.alluser.map(function (item, key) {
                                     return (
@@ -237,7 +235,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         return (
 
                             <tr key={key}>
-                                <td><button title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                                <td><button style={{
+                                    //fontSize: '12px',
+                                }}title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
                                     {this.showSetTask(item)}
                                     <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button>
                                 </td>
@@ -256,31 +256,35 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             </div >);
     }
 
-    protected showStage(stage){
-        if(stage==="0"){
+    protected showTask(){
+        window.location.reload();
+    }
+
+    protected showStage(stage) {
+        if (stage === "0") {
             return "initial"
         }
-        else if(stage==="1"){
+        else if (stage === "1") {
             return "Bid"
         }
-        else if(stage==="2"){
+        else if (stage === "2") {
             return "Work Order"
         }
-        else if(stage==="3"){
+        else if (stage === "3") {
             return "Invoice"
         }
-        else if(stage==="4") {
+        else if (stage === "4") {
             return "Complete"
         }
-        else if(stage==="5"){
+        else if (stage === "5") {
             return "Push Back"
         }
-        else{
-            
+        else {
+
         }
     }
 
-    protected userProfile(){
+    protected userProfile() {
         this.props.history.push("/userprofile");
     }
 
@@ -373,6 +377,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
         else {
             var newname = this.findUserByName(value);
+            console.log(newname);
             $.ajax({
                 //url: 'https://rpntechserver.appspot.com/userProfile',
                 url: 'http://rpntechserver.appspot.com/getTasksByUser?username=' + newname,
@@ -398,7 +403,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         console.log(name);
         for (let i = 0; i < this.state.alluser.length; i++) {
             if (this.state.alluser[i].Firstname === name) {
-                return this.state.alluser[i].username;
+                return this.state.alluser[i].Username;
             }
         }
     }

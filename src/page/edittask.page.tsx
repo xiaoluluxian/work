@@ -263,6 +263,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 <div style={{
                     marginLeft: '10px',
                     marginTop: '10px',
+                    fontSize: '15px',
                 }}>
                     <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
                         <option value="0">Initial</option>
@@ -274,13 +275,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <button style={{
                         marginTop: '10px',
                         marginLeft: '10px',
-                        width: '60px',
-                        height: '35px',
+                        width: '100px',
+                        height: '31px',
+                        fontSize: '14px',
+                        marginBottom: '5px'
                     }}
                         title="Submit Task" onClick={this.changeStage2}><ins>Next Stage</ins>
                     </button>
                     <div style={{
-                        marginLeft: '10px'
+                        marginLeft: '10px',
+                        //fontSize: '14px',
                     }}>{this.showCurrStage}</div>
                 </div>
                 <div className='edit'>
@@ -291,6 +295,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             marginLeft: '10px',
                             width: '60px',
                             height: '25px',
+                            fontSize: '14px',
 
                         }}
                         title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
@@ -307,6 +312,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         style={{
                             marginTop: '10px',
                             marginLeft: '30px',
+                            fontSize: '14px',
 
 
                         }}
@@ -318,6 +324,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                             width: '60px',
                             height: '25px',
+                            fontSize: '14px',
                         }}
                         title="download before" onClick={this.downloadBefore}>Before</button>
                     <button
@@ -327,6 +334,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             marginLeft: '10px',
                             width: '60px',
                             height: '25px',
+                            fontSize: '14px',
                         }}
                         title="download during" onClick={this.downloadDuring}>During</button>
                     <button
@@ -336,6 +344,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             marginLeft: '10px',
                             width: '60px',
                             height: '25px',
+                            fontSize: '14px',
                         }}
                         title="download after" onClick={this.downloadAfter}>After</button>
                     {/* <button
@@ -356,15 +365,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             height: '25px',
                         }}
                         title="delitem" onClick={this.deleteItem}>DelItem</button> */}
-                    <button
+                    {/* <button
                         style={{
                             // paddingTop: '20px',
                             marginTop: '10px',
                             marginLeft: '10px',
                             width: '65px',
                             height: '25px',
+                            fontSize: '14px',
                         }}
-                        title="delitem" onClick={this.printPDF}>PrintPDF</button>
+                        title="delitem" onClick={this.printPDF}>PrintPDF</button> */}
                     <button
                         style={{
                             // paddingTop: '20px',
@@ -372,6 +382,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             marginLeft: '10px',
                             width: '85px',
                             height: '25px',
+                            fontSize: '14px',
                         }}
                         title="delitem" onClick={this.exportJson}>ExportJson</button>
 
@@ -440,7 +451,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         marginTop: '10px',
                         marginLeft: '10px',
                         width: '430px',
-                        height: '25px',
+                        height: '27px',
+                        fontSize: '14px',
                     }} onClick={this.addaddItem} title="add item">AddItem</button>
                 </div>
                 <div id='show' className='page'>
@@ -592,6 +604,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         marginLeft: '10px',
                         width: '430px',
                         height: '25px',
+                        fontSize: '14px',
                     }}
                         onClick={() => {
                             let list = this.state.Item;
@@ -607,6 +620,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 marginLeft: '10px',
                                 width: '65px',
                                 height: '25px',
+                                fontSize: '14px',
                             }}
                                 className="bigger" onClick={() => {
                                     let list = this.state.Item;
@@ -616,6 +630,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             <button style={{
                                 marginTop: '10px',
                                 marginLeft: '10px',
+                                fontSize: '14px',
                                 width: '65px',
                                 height: '25px',
                                 backgroundColor:this.state.Item[index].Taxable==true ? 'red':'blue'
@@ -626,6 +641,47 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     console.log(list[index].Taxable);
                                     this.setState({ Item: list });
                                 }} title="tax">Tax</button>
+
+                                <button style={{
+                                marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '65px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                                className="bigger" onClick={() => {
+                                    let list = this.state.Item;
+                                    if(list[index].Process==='0'){
+                                        list[index].Process='1';
+                                        this.setState({Item:list});
+                                    }
+                                    else{
+                                        list[index].Process='0';
+                                        this.setState({Item:list});
+                                    }
+                                }} title="process">Process</button>
+                                <button style={{
+                                marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '65px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                                className="bigger" onClick={() => {
+                                    let list = this.state.Item;
+                                    if(list[index].Status==='0'){
+                                        list[index].Status='1';
+                                        this.setState({Item:list});
+                                    }
+                                    else if(list[index].Status==='1'){
+                                        list[index].Status='-1';
+                                        this.setState({Item:list});
+                                    }
+                                    else{
+                                        list[index].Status='0';
+                                        this.setState({Item:list});
+                                    }
+                                }} title="process">Status</button>
                         </div>
                         <div style={{
                             marginLeft: '10px'
@@ -687,7 +743,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 style={{
                                     marginTop: '10px',
                                     marginLeft: '30px',
-
+                                    fontSize: '14px',
+                                    marginBottom: '5px',
 
                                 }}
                                 type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index) }} />
@@ -696,12 +753,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <React.Fragment>
                                     <tr key={key}>
                                         <td>{key + 1}:<button style={{
-                                            //marginLeft: '10px',
+                                            fontSize: '14px',
                                         }} onClick={() => {
                                             let list = this.state.Item;
                                             list[index].Before.splice(key, 1);
                                             this.setState({ Item: list });
-                                        }}>Del</button></td>
+                                        }}
+                                        
+                                        >Del</button></td>
                                         <td>{pic.Name}</td>
                                     </tr>
                                     </React.Fragment>
@@ -714,7 +773,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 style={{
                                     marginTop: '10px',
                                     marginLeft: '30px',
-
+                                    fontSize: '14px',
+                                    marginBottom: '5px',
 
                                 }}
                                 type="file" multiple id="fileUpload" onChange={(e) => { this.addDuringPicture(e.target.files, index) }} />
@@ -740,7 +800,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 style={{
                                     marginTop: '10px',
                                     marginLeft: '30px',
-
+                                    fontSize: '14px',
+                                    marginBottom: '5px',
 
                                 }}
                                 type="file" multiple id="fileUpload" onChange={(e) => { this.addAfterPicture(e.target.files, index) }} />
@@ -1555,16 +1616,19 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             return (<div>Imcomplete</div>);
         }
         else {
-            return (<div>Done</div>);
+            return (<div>Complete</div>);
         }
     }
 
     protected showStatus(value) {
         if (value === '0') {
-            return "Incomplete"
+            return "Unknown";
+        }
+        else if(value==='1'){
+            return 'Approved';
         }
         else {
-            return "Done"
+            return "Pushback";
         }
     }
 

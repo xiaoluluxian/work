@@ -17,6 +17,7 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
+    history: any;
 }
 
 export interface IState {
@@ -32,6 +33,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
         this.submitTask = this.submitTask.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
         
     }
 
@@ -111,11 +113,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div>
-                <div style={{
-                    margin: '5px',
-                }}>
-                    <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
-                </div></div>
+                </div>
 
             <table>
                 
@@ -132,7 +130,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                             {this.state.alluser.map(function (item, key) {
                                 return (
 
-                                    <option>{item.firstname}</option>
+                                    <option>{item.Firstname}</option>
                                 )
                             }.bind(this))}
                         </select>
@@ -145,6 +143,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 marginLeft:'10px',
                 width: '60px',
                 height: '25px',
+                fontSize: '14px',
             }}
             title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
         </div>);
@@ -154,8 +153,8 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
         //console.log(this.state.newUser); tim001
         
         for (let i = 0; i < this.state.alluser.length; i++) {
-            if (this.state.alluser[i].firstname === name) {
-                return this.state.alluser[i].username;
+            if (this.state.alluser[i].Firstname === name) {
+                return this.state.alluser[i].Username;
             }
         }
     }
@@ -168,7 +167,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
 
     }
     protected changeStatus() {
-
+        this.props.history.push('/main');
     }
     protected addTask(){
 
