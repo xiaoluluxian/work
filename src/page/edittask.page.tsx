@@ -572,8 +572,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             After: [],
             Amount: 0,
             During: [],
-            Process: '',
-            Status: '',
+            Process: '0',
+            Status: '0',
             Tax: 0,
             Taxable: true,
             description: '',
@@ -700,7 +700,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <tr>Item <input className="text" id='item' value={value.Item}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].Item = e.target.value;
+                                //console.log(e.target.value);
+                                list[index].Item = parseInt(e.target.value);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Description <textarea id='description' value={value.description}
@@ -718,7 +719,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <tr>QTY <input className="text" id='qty' value={value.Qty}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].Qty = e.target.value;
+                                list[index].Qty = parseInt(e.target.value);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -730,13 +731,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <tr>PPU <input className="text" id='ppu' value={value.PPU}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].PPU = e.target.value;
+                                list[index].PPU = parseFloat(e.target.value);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Cost <input className="text" id='cost' value={value.Cost}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].Cost = e.target.value;
+                                list[index].Cost = parseFloat(e.target.value);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>
