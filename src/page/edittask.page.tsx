@@ -66,6 +66,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         After: [],
         //data: [],
     };
+
+    
     public componentDidMount() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
@@ -849,7 +851,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 success: function (result) {
                     console.log(result);
                     let list = this.state.Item;
-                    list[index].Before.push({
+                    list[index].After.push({
                         Name: Files[i].name,
                         Format: '',
                         Cate: list[index].Cate,
@@ -884,7 +886,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 success: function (result) {
                     console.log(result);
                     let list = this.state.Item;
-                    list[index].Before.push({
+                    list[index].During.push({
                         Name: Files[i].name,
                         Format: '',
                         Cate: list[index].Cate,
