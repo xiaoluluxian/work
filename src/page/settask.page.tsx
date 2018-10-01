@@ -45,9 +45,9 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             data: JSON.stringify({
             }),
             success: (function (result) {
-                console.log(result);
+                //console.log(result);
                 this.setState({ oldUser: result.Username });
-                console.log(this.state.oldUser);
+                //console.log(this.state.oldUser);
             }).bind(this),
         });
         $.ajax({
@@ -61,7 +61,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             data: JSON.stringify({
             }),
             success: (function (result) {
-                console.log(result);
+                //console.log(result);
                 this.setState({alluser:result});
             }).bind(this),
         });
@@ -169,7 +169,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         let page = JSON.parse(selectorFiles[0].toString());
         // let temp = JSON.stringify(selectorFiles[0].toString());
         // let page = JSON.parse(temp);
-        console.log(page);
+        //console.log(page);
         // console.log(tmppath);
     }
     protected UserChange(value){
@@ -195,7 +195,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
     }
     protected findUserByName(name){
         //console.log(this.state.newUser); tim001
-        console.log(name);
+        //console.log(name);
         for(let i=0;i<this.state.alluser.length;i++){
             if(this.state.alluser[i].Firstname===name){
                 return this.state.alluser[i].Username;
@@ -209,8 +209,8 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
     protected submitTask(){
         var fd = new FormData();
         var newname = this.findUserByName($('#setUser').val());
-        console.log(newname);
-        //fd.append('userToRemove',this.state.oldUser[$('#setStage').val()]);
+        //console.log(this.state.oldUser[$('#setStage').val()]);
+        fd.append('userToRemove',this.state.oldUser[$('#setStage').val()]);
         fd.append('userToAdd',newname);
         fd.append('task_id',localStorage.getItem('currTask'));
         fd.append('stage',$('#setStage').val());
@@ -227,7 +227,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             contentType: false,
             data: fd,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 this.props.history.push('/main');
             }.bind(this),
         });

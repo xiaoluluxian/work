@@ -190,6 +190,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
             data: JSON.stringify({
                 asset_num:$('#assetnum').val(),
                 StartDate:$('#startdate').val(),
+                DueDate:$('#duedate').val(),
                 City:$('#city').val(),
                 Address:$('#propaddr').val(),
                 Desc: $('#description').val(),

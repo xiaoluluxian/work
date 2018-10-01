@@ -68,7 +68,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             data: JSON.stringify({
             }),
             success: (function (result) {
-                console.log(result);
+                //console.log(result);
                 this.setState({ alluser: result });
             }).bind(this),
         });
@@ -85,7 +85,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                 }),
                 success: (function (result) {
-                    console.log(result);
+                    //console.log(result);
                     this.setState({ data: result });
 
                 }).bind(this),
@@ -104,7 +104,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                 }),
                 success: (function (result) {
-                    console.log(result);
+                    //console.log(result);
                     this.setState({ data: result });
 
                 }).bind(this),
@@ -243,7 +243,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 </td>
                                 <td>{item.Address}</td>
                                 <td>{item.asset_num}</td>
-                                <td>{item.StartDate}</td>
+                                <td>{item.DueDate}</td>
                                 <td>{this.showUsername(item.Username)}</td>
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
@@ -274,13 +274,16 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             return "Invoice"
         }
         else if (stage === "4") {
-            return "Complete"
+            return "Pending Accointing Review"
         }
         else if (stage === "5") {
-            return "Push Back"
+            return "Complete"
+        }
+        else if(stage==='6'){
+            return "Archived"
         }
         else {
-
+            return "Terminated"
         }
     }
 
@@ -314,6 +317,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         if (username.length == 1) {
             return (
                 <React.Fragment>
+                    <li>Initial: {username[0]}</li>
                     <li>Bid: {void 0}</li>
                     <li>WorkOrder: {void 0}</li>
                     <li>Invoice: {void 0}</li>
@@ -323,6 +327,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         else if (username.length == 2) {
             return (
                 <React.Fragment>
+                    <li>Initial: {username[0]}</li>
                     <li>Bid: {username[1]}</li>
                     <li>WorkOrder: {void 0}</li>
                     <li>Invoice: {void 0}</li>
@@ -332,6 +337,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         else if (username.length == 3) {
             return (
                 <React.Fragment>
+                    <li>Initial: {username[0]}</li>
                     <li>Bid: {username[1]}</li>
                     <li>WorkOrder: {username[2]}</li>
                     <li>Invoice: {void 0}</li>
@@ -341,6 +347,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         else if (username.length == 4) {
             return (
                 <React.Fragment>
+                    <li>Initial: {username[0]}</li>
                     <li>Bid: {username[1]}</li>
                     <li>WorkOrder: {username[2]}</li>
                     <li>Invoice: {username[3]}</li>
@@ -357,7 +364,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected UserChange(value) {
-        console.log(value);
+        //console.log(value);
         if (value === 'all') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',
@@ -369,7 +376,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                 }),
                 success: (function (result) {
-                    console.log(result);
+                    //console.log(result);
                     this.setState({ data: result });
 
                 }).bind(this),
@@ -377,7 +384,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
         else {
             var newname = this.findUserByName(value);
-            console.log(newname);
+            //console.log(newname);
             $.ajax({
                 //url: 'https://rpntechserver.appspot.com/userProfile',
                 url: 'http://rpntechserver.appspot.com/getTasksByUser?username=' + newname,
@@ -389,7 +396,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                 }),
                 success: (function (result) {
-                    console.log(result);
+                    //console.log(result);
                     this.setState({ data: result });
 
                 }).bind(this),
@@ -400,7 +407,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
     protected findUserByName(name) {
         //console.log(this.state.newUser); tim001
-        console.log(name);
+        //console.log(name);
         for (let i = 0; i < this.state.alluser.length; i++) {
             if (this.state.alluser[i].Firstname === name) {
                 return this.state.alluser[i].Username;
@@ -423,12 +430,12 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
     protected setTask(item) {
         localStorage.setItem("currTask", item.TaskID);
-        console.log(item.TaskID);
+        //console.log(item.TaskID);
         this.props.history.push('/setTask');
     }
     protected editTask(item) {
         localStorage.setItem("currTask", item.TaskID);
-        console.log(item.TaskID);
+        //console.log(item.TaskID);
         this.props.history.push('/edittask');
     }
 
@@ -437,7 +444,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected delTask(item) {
-        console.log(item.TaskID);
+        //console.log(item.TaskID);
         $.ajax({
             url: 'http://rpntechserver.appspot.com/deleteTask?task_id=' + item.TaskID,
             headers: {
@@ -448,7 +455,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             data: JSON.stringify({
             }),
             success: (function (result) {
-                console.log(result);
+                //console.log(result);
+                window.location.reload();
 
             }).bind(this),
         });

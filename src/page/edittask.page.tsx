@@ -49,6 +49,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Desc: '',
         Invoice: '',
         DueDate: '',
+        InvoiceDate:'',
         Item: [],
         LBNum: '',
         Note: '',
@@ -90,7 +91,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ CompletionDate: result.CompletionDate });
                 this.setState({ Desc: result.Desc });
                 this.setState({ Invoice: result.Invoice });
-                this.setState({ DueDate: result.InvoiceDate });
+                this.setState({ DueDate: result.DueDate });
+                this.setState({ InvoiceDate: result.InvoiceDate });
                 this.setState({ Item: result.ItemList });
                 this.setState({ LBNum: result.KeyCode });
                 this.setState({ Note: result.Note });
@@ -397,6 +399,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => this.StartDChange(e.target.value)} /></tr>
                         <tr>Due Date      <input type="date" id='duedate' value={this.state.DueDate}
                             onChange={e => this.IDateChange(e.target.value)} /></tr>
+                        <tr>Completion Date <input className="text" id='invdate' value={this.state.InvoiceDate}
+                            onChange={e => this.AddrChange(e.target.value)} /></tr>
                         <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
                             onChange={e => this.CityChange(e.target.value)} /></tr>
                         <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
@@ -750,7 +754,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     marginBottom: '5px',
 
                                 }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index) }} />
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index)}}
+                                //onClick={e.target.value=null}
+                                //type="file" multiple id="beforefileupload" onClick={}
+                                />
                             {this.state.Item[index].Before.map(function (pic, key) {
                                 return (
                                     <React.Fragment>
@@ -1702,7 +1709,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         reader.onload = function (event) {
             data = JSON.parse(event.target.result);
             //let test = data;
-            console.log(data);
+            //console.log(data);
             let allitem = [];
             let count = 0;
 
@@ -1720,7 +1727,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         Status: '',
                         Tax: 0,
                         Taxable: false,
-                        Description: '',
+                        description: '',
                         Cate: '',
                         Comments: '',
                         Item: 0,
@@ -1731,7 +1738,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         Before: []
                     }
                     eachitem.Item = j + 1;
-                    eachitem.Description = data.list[i].each[j].description;
+                    eachitem.description = data.list[i].each[j].description;
                     eachitem.Cate = cate;
                     eachitem.Comments = data.list[i].each[j].comments;
                     eachitem.Qty = data.list[i].each[j].qty;
@@ -1766,7 +1773,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             this.setState({ Area: data.area });
             this.setState({ TotalCost: data.totalCost });
             this.setState({ Item: allitem });
-            console.log(this.state);
+            //console.log(this.state);
             let aata = JSON.stringify({
                 Address: this.state.Address,
                 Area: this.state.Area,
@@ -1790,7 +1797,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
             })
-            console.log(JSON.parse(aata));
+            //console.log(JSON.parse(aata));
 
 
         }.bind(this);
@@ -1851,7 +1858,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 CompletionDate: this.state.CompletionDate,
                 Desc: this.state.Desc,
                 Invoice: this.state.Invoice,
-                InvoiceDate: this.state.DueDate,
+                InvoiceDate: this.state.InvoiceDate,
+                DueDate: this.state.DueDate,
                 ItemList: this.state.Item,
                 KeyCode: this.state.LBNum,
                 Note: this.state.Note,

@@ -58,5 +58,11 @@ Part of editpage modified
 New Function Add:
 1. Delete User
 2. Delete Task
-
 Change stage display in main page
+
+### 1.0.5
+
+1. Due Date fixed
+2. console log removed
+3. stage display changed to 4 stage
+4. import dexcription fixed

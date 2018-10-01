@@ -48,7 +48,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
 
     public componentWillMount() {
         localStorage.clear();
-        console.log(localStorage.getItem('Token'));
+        //console.log(localStorage.getItem('Token'));
         // this.setState({
         //     isPop: true,
         //     pop: <div>123</div>,
@@ -215,7 +215,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                 var result = JSON.parse(data);
                 //this.IProps.key = data;
                 //console.log(result.Authority);
-                console.log(result);
+                //console.log(result);
                 localStorage.setItem('Token', result.Token);
                 localStorage.setItem('Authority', result.Authority);
                 localStorage.setItem('currUser',result.Username);
