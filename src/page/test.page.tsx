@@ -12,7 +12,7 @@ import * as Lambda from '../lambda/import';
 import * as $ from "jquery";
 
 import Config from '../config/config';
-import {bootstrap,button} from "bootstrap"
+import { bootstrap, button } from "bootstrap"
 
 export interface IProps {
     page: IPage;
@@ -29,6 +29,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
         this.readJson = this.readJson.bind(this);
+        this.sortTable = this.sortTable.bind(this);
 
     }
 
@@ -37,44 +38,95 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     public render() {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-12">
-                        <h4>WorkFlow</h4>
-                        <div className="table-reponsive">
-                            <table id="mytable" className="table table-bordred table-striped">
-                                <thead>
+        return (<React.Fragment>
+            <p>Click the button to sort the table alphabetically, by name:</p>
+            <p><button onClick={this.sortTable}>Sort</button></p>
 
-                                    <th><input type="checkbox" id="checkall" /></th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Address</th>
-                                    <th>Email</th>
-                                    <th>Contact</th>
-                                    <th>Edit</th>
-
-                                    <th>Delete</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" className="checkthis" /></td>
-                                        <td>Mohsin</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" ><button type="button" className="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" ><span className="glyphicon glyphicon-pencil"></span></button></p></td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Set"><button type="button" className="btn btn-success btn-xs" data-title="Set" data-toggle="modal" data-target="#delete" ><span className="glyphicon glyphicon-user"></span></button></p></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <table id="myTable">
+                <tr>
+                    <th>Name</th>
+                    <th>number</th>
+                </tr>
+                <tr>
+                    <td>Berglunds snabbkop</td>
+                    <td>2018-05-03</td>
+                </tr>
+                <tr>
+                    <td>North/South</td>
+                    <td>2017-03-16</td>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>2018-05-03</td>
+                </tr>
+                <tr>
+                    <td>Koniglich Essen</td>
+                    <td>2018-06-03</td>
+                </tr>
+                <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>2018-05-17</td>
+                </tr>
+                <tr>
+                    <td>Paris specialites</td>
+                    <td>2018-09-21</td>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>2018-05-14</td>
+                </tr>
+                <tr>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>2018-08-24</td>
+                </tr>
+            </table></React.Fragment>
         )
     }
+
+    protected sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("myTable");
+        //console.log(table.rows);
+        switching = true;
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+          //start by saying: no switching is done:
+          switching = false;
+          rows = table.rows;
+          /*Loop through all table rows (except the
+          first, which contains table headers):*/
+          for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[1];
+            //console.log(rows[i].getElementsByTagName("TD")[1].innerHTML);
+            //console.log(rows[i].getElementsByTagName("TD")[1]);
+            y = rows[i + 1].getElementsByTagName("TD")[1];
+            //check if the two rows should switch place:
+            if (this.convertDate(x.innerHTML) > this.convertDate(y.innerHTML)) {
+              //if so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+          }
+        }
+      }
+
+      protected convertDate(d){
+        var p = d.split("-");
+        return +(p[0]+p[1]+p[2]);
+      }
+
+      
 
     protected readJson(Files: FileList) {
         var file = Files[0];

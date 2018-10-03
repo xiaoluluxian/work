@@ -65,4 +65,12 @@ Change stage display in main page
 1. Due Date fixed
 2. console log removed
 3. stage display changed to 4 stage
-4. import dexcription fixed
+4. import description fixed
+
+### 1.0.6
+
+1. Sort by DueDate
+2. Default stage fixed
+3. Add stagefield in editpage
+4. number input fixed
+5. Add tax field

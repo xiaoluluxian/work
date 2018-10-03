@@ -30,7 +30,7 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
-    history:any;
+    history: any;
 }
 
 export interface IState {
@@ -49,7 +49,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Desc: '',
         Invoice: '',
         DueDate: '',
-        InvoiceDate:'',
+        InvoiceDate: '',
         Item: [],
         LBNum: '',
         Note: '',
@@ -61,14 +61,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Year: '',
         AssetNum: '',
         uploadLink: '',
-        Tax:0,
+        Tax: 0,
         Before: [],
         During: [],
         After: [],
         //data: [],
     };
 
-    
+
     public componentDidMount() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
@@ -104,6 +104,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ Year: result.Year });
                 this.setState({ AssetNum: result.asset_num });
                 this.setState({ uploadLink: result.upload_link });
+                this.setState({ Tax: result.Tax});
                 console.log(result.ItemList);
                 //this.setState({ })                
 
@@ -147,10 +148,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         //this.mentionSave();
-        
+
     }
 
-    public componentWillUnmount(){
+    public componentWillUnmount() {
         //clearInterval();
     }
 
@@ -182,11 +183,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.addBeforePicture = this.addBeforePicture.bind(this);
         this.addDuringPicture = this.addDuringPicture.bind(this);
         this.addAfterPicture = this.addAfterPicture.bind(this);
+        this.showStage = this.showStage.bind(this);
 
 
 
     }
-    
+
 
     public render() {
         let tax: number = 0;
@@ -263,20 +265,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                     </div> */}
-                    </div>
+                </div>
                 <div style={{
                     marginLeft: '10px',
                     marginTop: '10px',
-                    fontSize: '15px',
+                    marginBottom: '10px',
+                    fontSize: '14px',
                 }}>
-                    <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
-                        <option value="0">Initial</option>
-                        <option value="1">Bid</option>
-                        <option value="2">Work Order</option>
-                        <option value="3">Invoice</option>
-                    </select></div>
+                    {this.showStage()}
+                </div>
                 <div>
-                    <button style={{
+                    {/* <button style={{
                         marginTop: '10px',
                         marginLeft: '10px',
                         width: '100px',
@@ -285,11 +284,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         marginBottom: '5px'
                     }}
                         title="Submit Task" onClick={this.changeStage2}><ins>Next Stage</ins>
-                    </button>
-                    <div style={{
-                        marginLeft: '10px',
-                        //fontSize: '14px',
-                    }}>{this.showCurrStage}</div>
+                    </button> */}
                 </div>
                 <div className='edit'>
                     <button
@@ -399,8 +394,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => this.StartDChange(e.target.value)} /></tr>
                         <tr>Due Date      <input type="date" id='duedate' value={this.state.DueDate}
                             onChange={e => this.IDateChange(e.target.value)} /></tr>
-                        <tr>Completion Date <input className="text" id='invdate' value={this.state.InvoiceDate}
-                            onChange={e => this.AddrChange(e.target.value)} /></tr>
+                        <tr>Completion Date <input type="date" id='comdate' value={this.state.CompletionDate}
+                            onChange={e => {
+                                this.setState({ CompletionDate: e.target.value });
+                            }} />
+                        </tr>
+                        <tr>Invoice Date <input type="date" id='invdate' value={this.state.InvoiceDate}
+                            onChange={e => {
+                                this.setState({ InvoiceDate: e.target.value });
+                            }} />
+                        </tr>
                         <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
                             onChange={e => this.CityChange(e.target.value)} /></tr>
                         <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
@@ -409,6 +412,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 this.setState({ Note: e.target.value });
                             }} /></tr>
+                        <tr>Tax <input className="text" id='tax' value={this.state.Tax}
+                            onChange={e => {
+                                this.setState({ Tax: e.target.value });
+                            }} /></tr>
+
                         <tr>BillTo <input className="text" id='assetnum' value={this.state.BillTo}
                             onChange={e => {
                                 this.setState({ BillTo: e.target.value });
@@ -470,10 +478,107 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         );
     }
 
-    protected mentionSave(){
+    protected showStage() {
+        if (this.state.Stage === '0') {
+            return (
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0" selected>Initial</option>
+                    <option value="1">Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.Stage === '1') {
+            return (
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1" selected>Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.Stage === '2') {
+            return (
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1">Bid</option>
+                    <option value="2" selected>Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.Stage === '3') {
+            return (
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3" selected>Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.Stage === '4') {
+            return (
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4" selected>Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.Stage === '5') {
+            return (
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5" selected>Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.Stage === '6') {
+            return (
+                <select id='setStage' onChange={e => this.changeStage(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6" selected>Archived</option>
+                </select>
+            )
+        }
+        else {
+            <div>?</div>
+        }
+    }
+
+    protected mentionSave() {
         window.setInterval(function () {
             alert("save");
-            
+
         }, 5000);
     }
 
@@ -481,8 +586,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         const uniqueIdSmall = () => {
             return '_' + Math.random().toString(36).substring(2, 9);
         };
-        
-        if(this.state.Stage ==='1'){
+
+        if (this.state.Stage === '1') {
             let json = {
                 invoice: '0',
                 billTo: this.state.Note,
@@ -503,10 +608,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     after: [...each.After ? each.After.map((picture) => picture.Src) : []]
                 })
             }
-            var file = new File([JSON.stringify(json)], this.state.Address+"-bid.rpni");
+            var file = new File([JSON.stringify(json)], this.state.Address + "-bid.rpni");
             FileSaver.saveAs(file);
         }
-        else if(this.state.Stage ==='2'){
+        else if (this.state.Stage === '2') {
             let json = {
                 invoice: this.state.LBNum,
                 billTo: this.state.uploadLink,
@@ -527,10 +632,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     after: [...each.After ? each.After.map((picture) => picture.Src) : []]
                 })
             }
-            var file = new File([JSON.stringify(json)], this.state.Address+"-workorder.rpni");
+            var file = new File([JSON.stringify(json)], this.state.Address + "-workorder.rpni");
             FileSaver.saveAs(file);
         }
-        else if(this.state.Stage ==='3'){
+        else if (this.state.Stage === '3') {
             let json = {
                 invoice: this.state.Invoice,
                 billTo: this.state.BillTo,
@@ -551,7 +656,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     after: [...each.After ? each.After.map((picture) => picture.Src) : []]
                 })
             }
-            var file = new File([JSON.stringify(json)], this.state.Address+"-invoice.rpni");
+            var file = new File([JSON.stringify(json)], this.state.Address + "-invoice.rpni");
             FileSaver.saveAs(file);
         }
 
@@ -639,7 +744,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                                 width: '65px',
                                 height: '25px',
-                                backgroundColor:this.state.Item[index].Taxable==true ? 'red':'blue'
+                                backgroundColor: this.state.Item[index].Taxable == true ? 'red' : 'blue'
                             }}
                                 className={value.taxable ? "check" : "uncheck"} onClick={() => {
                                     let list = this.state.Item;
@@ -648,7 +753,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     this.setState({ Item: list });
                                 }} title="tax">Tax</button>
 
-                                <button style={{
+                            <button style={{
                                 marginTop: '10px',
                                 marginLeft: '10px',
                                 width: '65px',
@@ -657,16 +762,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             }}
                                 className="bigger" onClick={() => {
                                     let list = this.state.Item;
-                                    if(list[index].Process==='0'){
-                                        list[index].Process='1';
-                                        this.setState({Item:list});
+                                    if (list[index].Process === '0') {
+                                        list[index].Process = '1';
+                                        this.setState({ Item: list });
                                     }
-                                    else{
-                                        list[index].Process='0';
-                                        this.setState({Item:list});
+                                    else {
+                                        list[index].Process = '0';
+                                        this.setState({ Item: list });
                                     }
                                 }} title="process">Process</button>
-                                <button style={{
+                            <button style={{
                                 marginTop: '10px',
                                 marginLeft: '10px',
                                 width: '65px',
@@ -675,17 +780,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             }}
                                 className="bigger" onClick={() => {
                                     let list = this.state.Item;
-                                    if(list[index].Status==='0'){
-                                        list[index].Status='1';
-                                        this.setState({Item:list});
+                                    if (list[index].Status === '0') {
+                                        list[index].Status = '1';
+                                        this.setState({ Item: list });
                                     }
-                                    else if(list[index].Status==='1'){
-                                        list[index].Status='-1';
-                                        this.setState({Item:list});
+                                    else if (list[index].Status === '1') {
+                                        list[index].Status = '-1';
+                                        list[index].Process = '0';
+                                        this.setState({ Item: list });
                                     }
-                                    else{
-                                        list[index].Status='0';
-                                        this.setState({Item:list});
+                                    else {
+                                        list[index].Status = '0';
+                                        this.setState({ Item: list });
                                     }
                                 }} title="process">Status</button>
                         </div>
@@ -705,7 +811,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 let list = this.state.Item;
                                 //console.log(e.target.value);
-                                list[index].Item = parseInt(e.target.value);
+                                list[index].Item = parseInt(e.target.value)||0;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Description <textarea id='description' value={value.description}
@@ -723,7 +829,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <tr>QTY <input className="text" id='qty' value={value.Qty}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].Qty = parseInt(e.target.value);
+                                list[index].Qty = parseInt(e.target.value)||0;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -732,16 +838,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 list[index].UM = e.target.value;
                                 this.setState({ Item: list });
                             }} /></tr>
-                        <tr>PPU <input className="text" id='ppu' value={value.PPU}
+                        <tr>PPU <input type="number" id='ppu' value={value.PPU}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].PPU = parseFloat(e.target.value);
+                                list[index].PPU = parseFloat(e.target.value)||0;
                                 this.setState({ Item: list });
                             }} /></tr>
-                        <tr>Cost <input className="text" id='cost' value={value.Cost}
+                        <tr>Cost <input type="number" id='cost' value={value.Cost}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].Cost = parseFloat(e.target.value);
+                                list[index].Cost = parseFloat(e.target.value)||0;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>
@@ -754,25 +860,25 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     marginBottom: '5px',
 
                                 }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index)}}
-                                //onClick={e.target.value=null}
-                                //type="file" multiple id="beforefileupload" onClick={}
-                                />
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index) }}
+                            //onClick={e.target.value=null}
+                            //type="file" multiple id="beforefileupload" onClick={}
+                            />
                             {this.state.Item[index].Before.map(function (pic, key) {
                                 return (
                                     <React.Fragment>
-                                    <tr key={key}>
-                                        <td>{key + 1}:<button style={{
-                                            fontSize: '14px',
-                                        }} onClick={() => {
-                                            let list = this.state.Item;
-                                            list[index].Before.splice(key, 1);
-                                            this.setState({ Item: list });
-                                        }}
-                                        
-                                        >Del</button></td>
-                                        <td>{pic.Name}</td>
-                                    </tr>
+                                        <tr key={key}>
+                                            <td>{key + 1}:<button style={{
+                                                fontSize: '14px',
+                                            }} onClick={() => {
+                                                let list = this.state.Item;
+                                                list[index].Before.splice(key, 1);
+                                                this.setState({ Item: list });
+                                            }}
+
+                                            >Del</button></td>
+                                            <td>{pic.Name}</td>
+                                        </tr>
                                     </React.Fragment>
                                 )
                             }.bind(this))}
@@ -1083,9 +1189,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
-    protected mapShowItem(value, index){
-        const mapShowPicture = (picture , pIndex)=>{
-            this.count = this.count+1;
+    protected mapShowItem(value, index) {
+        const mapShowPicture = (picture, pIndex) => {
+            this.count = this.count + 1;
             return (
                 <div key={pIndex} style={{
                     flex: 1,
@@ -1102,7 +1208,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             // position: 'static',
                             width: '95%',
                             height: 'auto',
-                            marginLeft:'3px',
+                            marginLeft: '3px',
                             //marginTop:'0px',
                             border: '1px solid black',
                         }}
@@ -1110,13 +1216,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     />
                     <div>{this.count}</div>
                     <div>{this.state.Item[index].description}</div>
-                    
+
                 </div>
             );
         };
 
-        const buildShowPicture = (pictureE:any[])=>{
-            this.count=0;
+        const buildShowPicture = (pictureE: any[]) => {
+            this.count = 0;
             const picture = [...pictureE];
             let pictureList: any[] = [];
             let tempList: string[] = [];
@@ -1166,7 +1272,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 }}>{index + 1}.&nbsp;{value.description}</div>
             </td>
             <td style={{
-                
+
                 padding: '3px',
                 fontWeight: 'bold',
             }}>
@@ -1179,13 +1285,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </td>
         </tr>
             {value.before.length > 0 ?
-            
+
                 <React.Fragment>
                     <tr>
                         <td colSpan={2}>Before</td>
                     </tr>
                     {buildShowPicture(value.before)}
-                    
+
                 </React.Fragment>
                 : void 0}
             {value.during.length > 0 ?
@@ -1207,7 +1313,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 : void 0}
         </React.Fragment>);
 
-        
+
     }
 
     protected showTable() {
@@ -1259,11 +1365,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
                                 <th>Before </th>
-                                <tr>{this.mapPicture(item.Before,item.description)}</tr>
+                                <tr>{this.mapPicture(item.Before, item.description)}</tr>
                                 <th> During </th>
-                                <tr>{this.mapPicture(item.During,item.description)}</tr>
+                                <tr>{this.mapPicture(item.During, item.description)}</tr>
                                 <th> After </th>
-                                <tr>{this.mapPicture(item.After,item.description)}</tr>
+                                <tr>{this.mapPicture(item.After, item.description)}</tr>
 
                             </React.Fragment>
                         )
@@ -1308,11 +1414,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
                                 <th> Before </th>
-                                <tr>{this.mapPicture(item.Before,item.description)}</tr>
+                                <tr>{this.mapPicture(item.Before, item.description)}</tr>
                                 <th> During </th>
-                                <tr>{this.mapPicture(item.During,item.description)}</tr>
+                                <tr>{this.mapPicture(item.During, item.description)}</tr>
                                 <th> After </th>
-                                <tr>{this.mapPicture(item.After,item.description)}</tr>
+                                <tr>{this.mapPicture(item.After, item.description)}</tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -1327,7 +1433,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
                     <tr><td style={{ width: "25%" }}>Invoice Number</td> <td>{this.state.Invoice}</td></tr>
                     <tr><td style={{ width: "25%" }}>CompletionDate</td><td>{this.state.CompletionDate}</td></tr>
-                    <tr><td style={{ width: "25%" }}>Invoice Date</td><td>{this.state.DueDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Invoice Date</td><td>{this.state.InvoiceDate}</td></tr>
                     <tr><td style={{ width: "25%" }}>BillTo </td><td>{this.state.BillTo}</td></tr>
                 </table>
                 <table>
@@ -1353,11 +1459,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
                                 <th> Before </th>
-                                <tr>{this.mapPicture(item.Before,item.description)}</tr>
+                                <tr>{this.mapPicture(item.Before, item.description)}</tr>
                                 <th> During </th>
-                                <tr>{this.mapPicture(item.During,item.description)}</tr>
+                                <tr>{this.mapPicture(item.During, item.description)}</tr>
                                 <th> After </th>
-                                <tr>{this.mapPicture(item.After,item.description)}</tr>
+                                <tr>{this.mapPicture(item.After, item.description)}</tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -1373,7 +1479,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
     }
 
-    protected mapPicture(picture: any[],desc: string) {
+    protected mapPicture(picture: any[], desc: string) {
         return (
             picture.map(function (item, key) {
                 return (
@@ -1381,14 +1487,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <img style={{
                             width: '40%',
                             height: 'auto',
-                            
+
                             padding: '3px'
                         }}
                             src={item.Src} />
-                            {key+1}.{desc}
-                            
-                            </div>
-                    
+                        {key + 1}.{desc}
+
+                    </div>
+
 
 
 
@@ -1465,7 +1571,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         })
             .then(function callback(blob) {
 
-                FileSaver.saveAs(blob, "example.zip");
+                FileSaver.saveAs(blob, this.state.Address + "-Before.zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);
@@ -1539,7 +1645,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         })
             .then(function callback(blob) {
 
-                FileSaver.saveAs(blob, "example.zip");
+                FileSaver.saveAs(blob, this.state.Address + "-During.zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);
@@ -1611,7 +1717,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         })
             .then(function callback(blob) {
 
-                FileSaver.saveAs(blob, "example.zip");
+                FileSaver.saveAs(blob, this.state.Address + "-After.zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);
@@ -1634,7 +1740,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         if (value === '0') {
             return "Unknown";
         }
-        else if(value==='1'){
+        else if (value === '1') {
             return 'Approved';
         }
         else {
@@ -1667,7 +1773,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected changeStage(value) {
-        console.log(value);
+        //console.log(value);
+
         this.setState({
             Stage: value
         });
@@ -1871,6 +1978,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Year: this.state.Year,
                 asset_num: this.state.AssetNum,
                 upload_link: this.state.uploadLink,
+                Tax: this.state.Tax,
 
 
             }),
