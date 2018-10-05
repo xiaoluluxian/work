@@ -146,7 +146,7 @@ class PageGhotiDeluser extends React.Component<IProps, IState> {
             data: JSON.stringify({
             }),
             success: (function (result) {
-                //console.log(result);
+                this.props.history.push("/main");
             }).bind(this),
         });
     }

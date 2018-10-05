@@ -34,6 +34,8 @@ export interface IState {
 
 
 
+
+
 class PageGhotiLogin extends React.Component<IProps, IState> {
     public state: IState = {
         isPop: false,
@@ -133,74 +135,84 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                         </div>
                     </div> */}
                     <section className="login-block">
-                <div className="containner">
-                    <div className='row'>
-                        <div className="col-md-4 login-sec">
-                            <h2 className="text-center">Login</h2>
-                            <form className="login-form">
-                                <div className="form-group">
-                                    <label className="text-uppercase">Username</label>
-                                    <input type="text" id="UN" className="form-control" placeholder="" />
-                                </div>
-                                <div className="form-group">
-                                    <label className="text-uppercase">Password</label>
-                                    <input type="password" id="PW" className="form-control" placeholder="" />
-                                </div>
-                                
-                                    <button type="button" className="btn btn-login float-right" onClick={this.login}>LogIn</button>
-                                
-                            </form>
-                            <div className="copy-text"><div>© 2018 REPAIR AND PRESERVATION NETWORK.</div><div> All Rights Reserved1 <a href="http://www.rpncompany.com">rpncompany.com</a></div></div>
-                        </div>
-                        <div className="col-md-8 banner-sec">
-                            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                                <ol className="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                </ol>
-                                <div className="carousel-inner" role="listbox">
-                                    <div className="carousel-item active">
-                                        <img className="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide" />
-                                        <div className="carousel-caption d-none d-md-block">
-                                            <div className="banner-text">
-                                                <h2>Start From RPN</h2>
-                                                <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
-                                            </div>
+                        <div className="containner">
+                            <div className='row'>
+                                <div className="col-md-4 login-sec">
+                                    <h2 className="text-center">Login</h2>
+                                    <form className="login-form">
+                                        <div className="form-group">
+                                            <label className="text-uppercase">Username</label>
+                                            <input type="text" id="UN" className="form-control" placeholder="" />
                                         </div>
-                                    </div>
-                                    <div className="carousel-item">
-                                        <img className="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide" />
-                                        <div className="carousel-caption d-none d-md-block">
-                                            <div className="banner-text">
-                                                <h2>Start From RPN</h2>
-                                                <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
-                                            </div>
+                                        <div className="form-group">
+                                            <label className="text-uppercase">Password</label>
+                                            <input type="password" id="PW" className="form-control" placeholder="" />
+
                                         </div>
-                                    </div>
-                                    <div className="carousel-item">
-                                        <img className="d-block img-fluid" src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="First slide" />
-                                        <div className="carousel-caption d-none d-md-block">
-                                            <div className="banner-text">
-                                                <h2>Start From RPN</h2>
-                                                <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+
+
+                                        <button type="button"  className="btn btn-login float-right" onClick={this.login}>LogIn</button>
+                                        <div style={{
+                                            width: "50%",
+                                            visibility:"hidden",
+                                            //height: "40px"
+                                        }} className="alert alert-danger" role="alert"  id="errormsg" >
+                                            Wrong Username or Password
+                                            </div>
+                                    </form>
+                                    <div className="copy-text"><div>© 2018 REPAIR AND PRESERVATION NETWORK.</div><div> All Rights Reserved <a href="http://www.rpncompany.com">rpncompany.com</a></div></div>
+                                </div>
+                                <div className="col-md-8 banner-sec">
+                                    <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                                        <ol className="carousel-indicators">
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                        </ol>
+                                        <div className="carousel-inner" role="listbox">
+                                            <div className="carousel-item active">
+                                                <img className="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide" />
+                                                <div className="carousel-caption d-none d-md-block">
+                                                    <div className="banner-text">
+                                                        <h2>Start From RPN</h2>
+                                                        <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="carousel-item">
+                                                <img className="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide" />
+                                                <div className="carousel-caption d-none d-md-block">
+                                                    <div className="banner-text">
+                                                        <h2>Start From RPN</h2>
+                                                        <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="carousel-item">
+                                                <img className="d-block img-fluid" src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="First slide" />
+                                                <div className="carousel-caption d-none d-md-block">
+                                                    <div className="banner-text">
+                                                        <h2>Start From RPN</h2>
+                                                        <p>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
                 </div>
             </React.Fragment>
         );
     }
 
+
     protected login() {
         var temp;
-        
+        var toastr = "eee";
+
         $.ajax({
             url: 'https://rpntechserver.appspot.com/login',
             //url: 'http://localhost:8080/login',
@@ -218,9 +230,14 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                 //console.log(result);
                 localStorage.setItem('Token', result.Token);
                 localStorage.setItem('Authority', result.Authority);
-                localStorage.setItem('currUser',result.Username);
+                localStorage.setItem('currUser', result.Username);
                 this.props.history.push('/main');
             }).bind(this),
+            error: (function (jqXHR, textStatus, errorThrown) {
+                //console.log(msg);
+                $("#errormsg").css('visibility','visible');
+
+            }),
         });
 
     }

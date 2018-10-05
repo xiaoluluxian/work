@@ -74,3 +74,9 @@ Change stage display in main page
 3. Add stagefield in editpage
 4. number input fixed
 5. Add tax field
+
+### 1.0.7
+
+1. Show error message when wrong username or password
+2. Change the way of changing stage in editpage
+3. Slightly change the background color in editpage
