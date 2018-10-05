@@ -26,16 +26,16 @@ export interface IState {
 }
 
 class PageGhotiSettask extends React.Component<IProps, IState> {
-    state={
-        oldUser:'',
-        newUser:'',
-        stage:'',
-        alluser:[]
+    state = {
+        oldUser: '',
+        newUser: '',
+        stage: '',
+        alluser: []
     };
-    public componentDidMount(){
+    public componentDidMount() {
         var id;
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findTaskById?task_id='+localStorage.getItem("currTask"),
+            url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -52,7 +52,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         });
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllUsers',
-            
+
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -62,7 +62,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 //console.log(result);
-                this.setState({alluser:result});
+                this.setState({ alluser: result });
             }).bind(this),
         });
     }
@@ -73,7 +73,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         this.handleChange = this.handleChange.bind(this);
         this.findUserByName = this.findUserByName.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
-        
+
     }
 
     public render() {
@@ -139,32 +139,32 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                 </div></div>
-                <div style={{
-                    padding : '10px',
-                }}>
-                    <tr>User:  
-                    <select id= 'setUser' onChange={e=>this.UserChange(e.target.value)}>
-                    {this.state.alluser.map(function (item, key) {
-                    return (
-                        <option>{item.Firstname}</option>
-                    )}.bind(this))}
+            <div style={{
+                padding: '10px',
+            }}>
+                <tr>User:
+                    <select id='setUser' onChange={e => this.UserChange(e.target.value)}>
+                        {this.state.alluser.map(function (item, key) {
+                            return (
+                                <option>{item.Firstname}</option>
+                            )
+                        }.bind(this))}
                     </select>
-                    </tr>
-                    <tr>Stage: <input className="text" id = 'setStage' value={this.state.stage} 
-                    onChange={e=> this.StageChange(e.target.value)}/></tr>
-                    </div>
+                </tr>
+                <tr>Stage: <input className="text" id='setStage' value={this.state.stage}
+                    onChange={e => this.StageChange(e.target.value)} /></tr>
+            </div>
             <button
-            style={{
-                marginLeft:'10px',
-                width: '60px',
-                height: '25px',
-            }}
-            title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+                style={{
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                }}
+                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
         </div>);
 
     }
-    protected handleChange(selectorFiles: FileList)
-    {
+    protected handleChange(selectorFiles: FileList) {
         //var tmppath = URL.createObjectURL(selectorFiles[0]);
         let page = JSON.parse(selectorFiles[0].toString());
         // let temp = JSON.stringify(selectorFiles[0].toString());
@@ -172,55 +172,63 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         //console.log(page);
         // console.log(tmppath);
     }
-    protected UserChange(value){
+    protected UserChange(value) {
         this.setState({
             newUser: value
         })
     }
-    protected StageChange(value){
+    protected StageChange(value) {
         this.setState({
             stage: value
         })
     }
-    
-   
+
+
     protected logout() {
 
     }
     protected changeStatus() {
         this.props.history.push('/main');
     }
-    protected addTask(){
+    protected addTask() {
 
     }
-    protected findUserByName(name){
+    protected findUserByName(name) {
         //console.log(this.state.newUser); tim001
         //console.log(name);
-        for(let i=0;i<this.state.alluser.length;i++){
-            if(this.state.alluser[i].Firstname===name){
+        for (let i = 0; i < this.state.alluser.length; i++) {
+            if (this.state.alluser[i].Firstname === name) {
                 return this.state.alluser[i].Username;
-            }   
-            
+            }
+
         }
-        
+
     }
 
-    
-    protected submitTask(){
+
+    protected submitTask() {
         var fd = new FormData();
         var newname = this.findUserByName($('#setUser').val());
-        //console.log(this.state.oldUser[$('#setStage').val()]);
-        fd.append('userToRemove',this.state.oldUser[$('#setStage').val()]);
-        fd.append('userToAdd',newname);
-        fd.append('task_id',localStorage.getItem('currTask'));
-        fd.append('stage',$('#setStage').val());
+        if (this.state.oldUser[$('#setStage').val()] === undefined) {
+            console.log(this.state.oldUser[$('#setStage').val()]);
+            fd.append('userToAdd', newname);
+            fd.append('task_id', localStorage.getItem('currTask'));
+            fd.append('stage', $('#setStage').val());
+        }
+        else {
+            fd.append('userToRemove', this.state.oldUser[$('#setStage').val()]);
+            fd.append('userToAdd', newname);
+            fd.append('task_id', localStorage.getItem('currTask'));
+            fd.append('stage', $('#setStage').val());
+        }
+
         $.ajax({
             url: 'https://rpntechserver.appspot.com/addTaskToUser',
             //url: 'http://192.168.0.66:8080/addTaskToUserII?userToRemove='+this.state.oldUser+'&userToAdd='+$('#setUser').val()+'&task_id='+localStorage.getItem('currTask'),
             method: 'POST',
-            dataType:'json',
+            dataType: 'json',
             headers: {
-                Authorization:"Bearer " + localStorage.getItem('Token'),
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             cache: false,
             processData: false,

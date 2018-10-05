@@ -150,7 +150,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                                     <button type="button" className="btn btn-login float-right" onClick={this.login}>LogIn</button>
                                 
                             </form>
-                            <div className="copy-text"><div>© 2018 REPAIR AND PRESERVATION NETWORK.</div><div> All Rights Reserved <a href="http://www.rpncompany.com">rpncompany.com</a></div></div>
+                            <div className="copy-text"><div>© 2018 REPAIR AND PRESERVATION NETWORK.</div><div> All Rights Reserved1 <a href="http://www.rpncompany.com">rpncompany.com</a></div></div>
                         </div>
                         <div className="col-md-8 banner-sec">
                             <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
