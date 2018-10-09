@@ -85,7 +85,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                 }),
                 success: (function (result) {
-                    //console.log(result);
+                    console.log(result);
                     this.setState({ data: result });
 
                 }).bind(this),
@@ -377,6 +377,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <li>Bid: {void 0}</li>
                     <li>WorkOrder: {void 0}</li>
                     <li>Invoice: {void 0}</li>
+                    <li>Pending Account Review: {void 0}</li>
+                    <li>Complete: {void 0}</li>
+                    <li>Archived: {void 0}</li>
                 </React.Fragment>
             )
         }
@@ -387,6 +390,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <li>Bid: {username[1]}</li>
                     <li>WorkOrder: {void 0}</li>
                     <li>Invoice: {void 0}</li>
+                    <li>Pending Account Review: {void 0}</li>
+                    <li>Complete: {void 0}</li>
+                    <li>Archived: {void 0}</li>
                 </React.Fragment>
             )
         }
@@ -397,6 +403,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <li>Bid: {username[1]}</li>
                     <li>WorkOrder: {username[2]}</li>
                     <li>Invoice: {void 0}</li>
+                    <li>Pending Account Review: {void 0}</li>
+                    <li>Complete: {void 0}</li>
+                    <li>Archived: {void 0}</li>
                 </React.Fragment>
             )
         }
@@ -407,11 +416,48 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <li>Bid: {username[1]}</li>
                     <li>WorkOrder: {username[2]}</li>
                     <li>Invoice: {username[3]}</li>
+                    <li>Pending Account Review: {void 0}</li>
+                    <li>Complete: {void 0}</li>
+                    <li>Archived: {void 0}</li>
                 </React.Fragment>
             )
         }
-        else {
-            return
+        else if(username.length == 5){
+            return (
+                <React.Fragment>
+                    <li>Initial: {username[0]}</li>
+                    <li>Bid: {username[1]}</li>
+                    <li>WorkOrder: {username[2]}</li>
+                    <li>Invoice: {username[3]}</li>
+                    <li>Pending Account Review: {username[4]}</li>
+                    <li>Complete: {void 0}</li>
+                    <li>Archived: {void 0}</li>
+                </React.Fragment>
+            )
+        }
+        else if(username.length == 6){
+            return (
+                <React.Fragment>
+                    <li>Initial: {username[0]}</li>
+                    <li>Bid: {username[1]}</li>
+                    <li>WorkOrder: {username[2]}</li>
+                    <li>Invoice: {username[3]}</li>
+                    <li>Pending Account Review: {username[4]}</li>
+                    <li>Complete: {username[5]}</li>
+                    <li>Archived: {void 0}</li>
+                </React.Fragment>
+            )
+        }
+        else{
+            <React.Fragment>
+                    <li>Initial: {username[0]}</li>
+                    <li>Bid: {username[1]}</li>
+                    <li>WorkOrder: {username[2]}</li>
+                    <li>Invoice: {username[3]}</li>
+                    <li>Pending Account Review: {username[4]}</li>
+                    <li>Complete: {username[5]}</li>
+                    <li>Archived: {username[6]}</li>
+                </React.Fragment>
         }
     }
 

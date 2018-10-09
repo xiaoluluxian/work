@@ -65,7 +65,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Before: [],
         During: [],
         After: [],
-        Username:[],
+        Username: [],
         alluser: []
         //data: [],
     };
@@ -106,8 +106,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ Year: result.Year });
                 this.setState({ AssetNum: result.asset_num });
                 this.setState({ uploadLink: result.upload_link });
-                this.setState({ Tax: result.Tax});
-                this.setState({Username: result.Username});
+                this.setState({ Tax: result.Tax });
+                this.setState({ Username: result.Username });
                 console.log(result.ItemList);
                 //this.setState({ })                
 
@@ -205,6 +205,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.changeWindow = this.changeWindow.bind(this);
         this.UserChange = this.UserChange.bind(this);
         this.findUserByName = this.findUserByName.bind(this);
+        this.addWHP = this.addWHP.bind(this);
 
     }
 
@@ -329,46 +330,56 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <input
                         style={{
                             marginTop: '10px',
-                            marginLeft: '30px',
+                            marginLeft: '10px',
                             fontSize: '14px',
 
 
                         }}
                         type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
                     <div style={{
-                        marginLeft:"10px"
+                        marginLeft: "10px"
                     }}>
-                    <button
-                        style={{
-                            // paddingTop: '20px',
-                            // marginTop: '10px',
+                        <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
 
-                            width: '60px',
-                            height: '25px',
-                            fontSize: '14px',
-                        }}
-                        title="download before" onClick={this.downloadBefore}>Before</button>
-                    <button
-                        style={{
-                            // paddingTop: '20px',
-                            // marginTop: '10px',
-                            marginLeft: '10px',
-                            width: '60px',
-                            height: '25px',
-                            fontSize: '14px',
-                        }}
-                        title="download during" onClick={this.downloadDuring}>During</button>
-                    <button
-                        style={{
-                            // paddingTop: '20px',
-                            // marginTop: '10px',
-                            marginLeft: '10px',
-                            width: '60px',
-                            height: '25px',
-                            fontSize: '14px',
-                        }}
-                        title="download after" onClick={this.downloadAfter}>After</button>
-                    {/* <button
+                                width: '60px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="download before" onClick={this.downloadBefore}>Before</button>
+                        <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '60px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="download during" onClick={this.downloadDuring}>During</button>
+                        <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '60px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="download after" onClick={this.downloadAfter}>After</button>
+                        <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="download after" onClick={this.addWHP}>AddWHP</button>
+                        {/* <button
                         style={{
                             // paddingTop: '20px',
                             marginTop: '10px',
@@ -386,7 +397,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             height: '25px',
                         }}
                         title="delitem" onClick={this.deleteItem}>DelItem</button> */}
-                    {/* <button
+                        {/* <button
                         style={{
                             // paddingTop: '20px',
                             marginTop: '10px',
@@ -396,17 +407,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             fontSize: '14px',
                         }}
                         title="delitem" onClick={this.printPDF}>PrintPDF</button> */}
-                    <button
-                        style={{
-                            // paddingTop: '20px',
-                            marginTop: '10px',
-                            marginLeft: '10px',
-                            width: '85px',
-                            height: '25px',
-                            fontSize: '14px',
-                        }}
-                        title="delitem" onClick={this.exportJson}>ExportJson</button>
-                        </div>
+                        <button
+                            style={{
+                                // paddingTop: '20px',
+                                marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="delitem" onClick={this.exportJson}>ExportJson</button>
+                    </div>
                     <table>
                         <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
                             onChange={e => this.AddrChange(e.target.value)} /></tr>
@@ -432,7 +443,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => this.LBNumChange(e.target.value)} /></tr>
                         <tr>Note <div><textarea id='note' value={this.state.Note}
                             onChange={e => {
-                                this.setState({ Note:e.target.value });
+                                this.setState({ Note: e.target.value });
                             }}
                             style={{
                                 width: "425px",
@@ -466,24 +477,24 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="modal-content">
                             <span className="close">&times;</span>
                             <table>
-                                <tr><td style={{width:'20%'}}>UserToRemove</td><td>{this.state.Username[parseInt(this.state.Stage)]}</td></tr>
-                                <tr><td style={{width:'20%'}}>StageTo</td> <td>{this.showCurrStage()}</td></tr>
-                                <tr><td style={{width:'20%'}}>UserToSet</td><td><select id='setUser'>
-                        {this.state.alluser.map(function (item, key) {
-                            return (
-                                <option>{item.Firstname}</option>
-                            )
-                        }.bind(this))}
-                    </select></td> </tr>
-                                
+                                <tr><td style={{ width: '20%' }}>UserToRemove</td><td>{this.state.Username[parseInt(this.state.Stage)]}</td></tr>
+                                <tr><td style={{ width: '20%' }}>StageTo</td> <td>{this.showCurrStage()}</td></tr>
+                                <tr><td style={{ width: '20%' }}>UserToSet</td><td><select id='setUser'>
+                                    {this.state.alluser.map(function (item, key) {
+                                        return (
+                                            <option>{item.Firstname}</option>
+                                        )
+                                    }.bind(this))}
+                                </select></td> </tr>
+
                             </table>
                             <button style={{
-                                marginLeft:"10px",
-                                marginTop:"10px",
-                                width:"80px",
+                                marginLeft: "10px",
+                                marginTop: "10px",
+                                width: "80px",
                                 height: "35px"
                             }}
-                            title="sbmit" onClick={this.submitStage}>Submit</button>
+                                title="sbmit" onClick={this.submitStage}>Submit</button>
                         </div>
                     </div>
                     {/* <div id="myModal2" className="modal">
@@ -510,12 +521,51 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     {this.showTable()}
 
                 </div>
+                {window.onbeforeunload = (function(){
+                    return "asd"
+                })}
             </div>
 
         );
     }
 
-    protected UserChange(value){
+
+    protected remindLeave() {
+        $(function () {
+
+            $(window).unbind('beforeunload');
+
+            window.onbeforeunload = null;
+
+        })
+
+    }
+
+    protected addWHP() {
+        let list = this.state.Item;
+        let WHP = {
+            After: [],
+            Amount: 0,
+            During: [],
+            Process: '0',
+            Status: '0',
+            Tax: 0,
+            Taxable: true,
+            description: '',
+            Cate: 'WholeHousePhotos',
+            Comments: '',
+            Item: 0,
+            Qty: 0,
+            UM: '',
+            PPU: 0,
+            Cost: 0,
+            Before: []
+        }
+        list.push(WHP);
+        this.setState({ Item: list });
+    }
+
+    protected UserChange(value) {
 
     }
 
@@ -612,7 +662,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             )
         }
         else {
-            <div>?</div>
+            return(
+            <select id='setStage' onChange={e => this.changeWindow(e.target.value)}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6" >Archived</option>
+                    <option value="7" selected>Terminate</option>
+                </select>
+            )
         }
     }
 
@@ -852,7 +913,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 let list = this.state.Item;
                                 //console.log(e.target.value);
-                                list[index].Item = parseInt(e.target.value)||0;
+                                list[index].Item = parseInt(e.target.value) || 0;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Description <div> <textarea id='description' value={value.description}
@@ -870,7 +931,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <tr>QTY <input className="text" id='qty' value={value.Qty}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].Qty = parseInt(e.target.value)||0;
+                                list[index].Qty = parseInt(e.target.value) || 0;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -882,13 +943,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <tr>PPU <input type="number" id='ppu' value={value.PPU}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].PPU = parseFloat(e.target.value)||0;
+                                list[index].PPU = parseFloat(e.target.value) || 0;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Cost <input type="number" id='cost' value={value.Cost}
                             onChange={e => {
                                 let list = this.state.Item;
-                                list[index].Cost = parseFloat(e.target.value)||0;
+                                list[index].Cost = parseFloat(e.target.value) || 0;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>
@@ -1120,7 +1181,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
     }
 
-    
+
 
     protected submitStage() {
         var fd = new FormData();
@@ -1152,7 +1213,43 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             data: fd,
             success: function (data) {
                 //console.log(data);
-                window.location.reload();
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
+                    //url: 'http://localhost:8080/login',
+                    method: 'POST',
+                    datatype: "json",
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: JSON.stringify({
+                        Address: this.state.Address,
+                        Area: this.state.Area,
+                        billTo: this.state.BillTo,
+                        City: this.state.City,
+                        CompletionDate: this.state.CompletionDate,
+                        Desc: this.state.Desc,
+                        Invoice: this.state.Invoice,
+                        InvoiceDate: this.state.InvoiceDate,
+                        DueDate: this.state.DueDate,
+                        ItemList: this.state.Item,
+                        KeyCode: this.state.LBNum,
+                        Note: this.state.Note,
+                        //Stage: this.state.Stage,
+                        StartDate: this.state.StartDate,
+                        Stories: this.state.Stories,
+                        TotalCost: this.state.TotalCost,
+                        TotalImage: this.state.TotalImage,
+                        Year: this.state.Year,
+                        asset_num: this.state.AssetNum,
+                        upload_link: this.state.uploadLink,
+                        Tax: this.state.Tax,
+        
+        
+                    }),
+                    success: function (data) {
+                        window.location.reload();
+                    }.bind(this),
+                });
             }.bind(this),
         });
     }
@@ -1197,13 +1294,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         else if (this.state.Stage === '3') {
             return (<div>Invoice</div>);
         }
-        else if(this.state.Stage === '4'){
+        else if (this.state.Stage === '4') {
             return (<div>Pending Accounting Review </div>)
         }
-        else if (this.state.Stage === '5'){
+        else if (this.state.Stage === '5') {
             return (<div>Complete </div>)
         }
-        else if(this.state.Stage === '6'){
+        else if (this.state.Stage === '6') {
             return (<div>Archived</div>)
         }
         else {
@@ -1221,6 +1318,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
 
     }
+
 
 
     protected readJson(selectorFiles: FileList) {
@@ -1539,10 +1637,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         else if (this.state.Stage === '4') {
             <div>Pending Accounting Review</div>
         }
-        else if(this.state.Stage === '5'){
+        else if (this.state.Stage === '5') {
             <div>Complete</div>
         }
-        else if(this.state.Stage === '6'){
+        else if (this.state.Stage === '6') {
             <div>Archived</div>
         }
         else {
@@ -1856,7 +1954,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         modal.style.display = "block";
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
-            if (event.target == modal||event.target== span) {
+            if (event.target == modal || event.target == span) {
                 modal.style.display = "none";
             }
         }
@@ -2058,7 +2156,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 ItemList: this.state.Item,
                 KeyCode: this.state.LBNum,
                 Note: this.state.Note,
-                //Stage: this.state.Stage,
+                Stage: this.state.Stage,
                 StartDate: this.state.StartDate,
                 Stories: this.state.Stories,
                 TotalCost: this.state.TotalCost,
