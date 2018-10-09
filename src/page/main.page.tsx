@@ -185,11 +185,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="Register" onClick={this.register}><ins>Register</ins></button>
                     </div>
-                    <div style={{
+                    {/* <div style={{
                         padding: '10px',
                     }}>
                         <button className="link" title="Delete User" onClick={this.delUser}><ins>DelUser</ins></button>
-                    </div>
+                    </div> */}
                     <div style={{
                         padding: '10px',
                     }}>
@@ -253,7 +253,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     //fontSize: '12px',
                                 }}title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
                                     {this.showSetTask(item)}
-                                    <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button>
+                                    {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
                                 <td>{item.Address}</td>
                                 <td>{item.asset_num}</td>
@@ -537,6 +537,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
     protected editTask(item) {
         localStorage.setItem("currTask", item.TaskID);
+        localStorage.setItem("currStage", item.Stage);
         //console.log(item.TaskID);
         this.props.history.push('/edittask');
     }

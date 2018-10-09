@@ -697,7 +697,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 completionDate: this.state.CompletionDate,
                 invoiceDate: this.state.DueDate,
                 item: [],
-                tax: 0,
+                tax: this.state.Tax,
             }
             for (let each of this.state.Item) {
                 json.item.push({
@@ -743,7 +743,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 billTo: this.state.BillTo,
                 address: this.state.Address,
                 completionDate: this.state.CompletionDate,
-                invoiceDate: this.state.DueDate,
+                invoiceDate: this.state.InvoiceDate,
                 item: [],
                 tax: 0,
             }
@@ -1729,7 +1729,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var filename = url.replace(/.*\//g, "") + ".jpg";
             zip.file(filename, urlToPromise(url), { binary: true });
         });
-
+        var add = this.state.Address
         // when everything has been downloaded, we can trigger the dl
         zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
             var msg = "progression : " + metadata.percent.toFixed(2) + " %";
@@ -1739,8 +1739,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             showMessage(msg);
         })
             .then(function callback(blob) {
-
-                FileSaver.saveAs(blob, this.state.Address + "-Before.zip");
+                
+                FileSaver.saveAs(blob, add+"-Before.zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);
@@ -1803,7 +1803,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var filename = url.replace(/.*\//g, "") + ".jpg";
             zip.file(filename, urlToPromise(url), { binary: true });
         });
-
+        var add = this.state.Address;
         // when everything has been downloaded, we can trigger the dl
         zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
             var msg = "progression : " + metadata.percent.toFixed(2) + " %";
@@ -1814,7 +1814,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         })
             .then(function callback(blob) {
 
-                FileSaver.saveAs(blob, this.state.Address + "-During.zip");
+                FileSaver.saveAs(blob, add + "-During.zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);
@@ -1875,7 +1875,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var filename = url.replace(/.*\//g, "") + ".jpg";
             zip.file(filename, urlToPromise(url), { binary: true });
         });
-
+        var add = this.state.Address
         // when everything has been downloaded, we can trigger the dl
         zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
             var msg = "progression : " + metadata.percent.toFixed(2) + " %";
@@ -1886,7 +1886,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         })
             .then(function callback(blob) {
 
-                FileSaver.saveAs(blob, this.state.Address + "-After.zip");
+                FileSaver.saveAs(blob, add + "-After.zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);

@@ -47,6 +47,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             success: (function (result) {
                 //console.log(result);
                 this.setState({ oldUser: result.Username });
+                
                 //console.log(this.state.oldUser);
             }).bind(this),
         });
@@ -73,6 +74,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         this.handleChange = this.handleChange.bind(this);
         this.findUserByName = this.findUserByName.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
+        this.showStage = this.showStage.bind(this);
 
     }
 
@@ -142,7 +144,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             <div style={{
                 padding: '10px',
             }}>
-                <tr>User:
+                <div>User: 
                     <select id='setUser' onChange={e => this.UserChange(e.target.value)}>
                         {this.state.alluser.map(function (item, key) {
                             return (
@@ -150,9 +152,10 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
                             )
                         }.bind(this))}
                     </select>
-                </tr>
-                <tr>Stage: <input className="text" id='setStage' value={this.state.stage}
-                    onChange={e => this.StageChange(e.target.value)} /></tr>
+                </div>
+                <div>
+                    Stage: {this.showStage()}
+                </div>
             </div>
             <button
                 style={{
@@ -164,6 +167,114 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         </div>);
 
     }
+
+    protected showStage() {
+        this.state.stage = localStorage.getItem("currStage");
+        if (this.state.stage === '0') {
+            return (
+                <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0" selected>Initial</option>
+                    <option value="1">Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.stage === '1') {
+            return (
+                <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0">Initial</option>
+                    <option value="1" selected>Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.stage === '2') {
+            return (
+                <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0">Initial</option>
+                    <option value="1">Bid</option>
+                    <option value="2" selected>Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.stage === '3') {
+            return (
+                <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3" selected>Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.stage === '4') {
+            return (
+                <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4" selected>Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.stage === '5') {
+            return (
+                <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5" selected>Complete</option>
+                    <option value="6">Archived</option>
+                </select>
+            )
+        }
+        else if (this.state.stage === '6') {
+            return (
+                <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6" selected>Archived</option>
+                </select>
+            )
+        }
+        else {
+            return(
+            <select id='setStage' onChange={e => {this.state.stage=e.target.value}}>
+                    <option value="0">Initial</option>
+                    <option value="1" >Bid</option>
+                    <option value="2">Work Order</option>
+                    <option value="3">Invoice</option>
+                    <option value="4">Pending Accounting Review</option>
+                    <option value="5">Complete</option>
+                    <option value="6" >Archived</option>
+                    <option value="7" selected>Terminate</option>
+                </select>
+            )
+        }}
     protected handleChange(selectorFiles: FileList) {
         //var tmppath = URL.createObjectURL(selectorFiles[0]);
         let page = JSON.parse(selectorFiles[0].toString());
