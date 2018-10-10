@@ -53,6 +53,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.test = this.test.bind(this);
         this.delUser = this.delUser.bind(this);
         this.userProfile = this.userProfile.bind(this);
+        this.showStatus = this.showStatus.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
 
     }
 
@@ -222,14 +224,14 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     <div style={{
                         padding: '10px'
                     }}>
-                    <div>SortBy:
+                        <div>SortBy:
                     <select style={{
                                 width: "100px"
                             }}
                                 id='sorttask' onChange={e => this.sortTable(e.target.value)}>
                                 <option>Default</option>
                                 <option>DueDate</option>
-                                
+
                             </select>
                         </div>
                     </div>
@@ -243,6 +245,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                             <th>Due Date</th>
                             <th>User</th>
                             <th>CurrStage</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>{this.state.data.map(function (item, key) {
@@ -251,7 +254,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                             <tr key={key}>
                                 <td><button style={{
                                     //fontSize: '12px',
-                                }}title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                                }} title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
                                     {this.showSetTask(item)}
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
@@ -261,6 +264,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{this.showUsername(item.Username)}</td>
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
+                                <td>{this.showStatus(item.TaskStatus)}</td>
                             </tr>
                         )
                     }.bind(this))}</tbody>
@@ -270,7 +274,37 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             </div >);
     }
 
-    protected showTask(){
+    protected changeStatus(status){
+
+    }
+
+    protected showStatus(status) {
+        if (status === 0) {
+            return (
+                <button style={{
+                    color:"red"
+                }}
+                onClick={this.changeStatus.bind(this,status)}
+                >Incomplete</button>
+            )
+        }
+        else if (status === 1) {
+            return (<button style={{
+                color:"green"
+            }}
+            onClick={this.changeStatus}
+            >Complete</button>)
+        }
+        else {
+            return(
+                <button
+                onClick={this.changeStatus}
+                >?</button>
+            )
+        }
+    }
+
+    protected showTask() {
         window.location.reload();
     }
 
@@ -288,12 +322,12 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             return "Invoice"
         }
         else if (stage === "4") {
-            return "Pending Accointing Review"
+            return "Pending Accounting Review"
         }
         else if (stage === "5") {
             return "Complete"
         }
-        else if(stage==='6'){
+        else if (stage === '6') {
             return "Archived"
         }
         else {
@@ -305,7 +339,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.props.history.push("/userprofile");
     }
 
-    protected sortTable(value){
+    protected sortTable(value) {
         var table, rows, switching, i, x, y, shouldSwitch;
         table = document.getElementById("taskT");
         //console.log(table.rows);
@@ -313,39 +347,39 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         /*Make a loop that will continue until
         no switching has been done:*/
         while (switching) {
-          //start by saying: no switching is done:
-          switching = false;
-          rows = table.rows;
-          /*Loop through all table rows (except the
-          first, which contains table headers):*/
-          for (i = 1; i < (rows.length - 1); i++) {
-            //start by saying there should be no switching:
-            shouldSwitch = false;
-            /*Get the two elements you want to compare,
-            one from current row and one from the next:*/
-            x = rows[i].getElementsByTagName("TD")[3];
-            //console.log(rows[i].getElementsByTagName("TD")[1]);
-            y = rows[i + 1].getElementsByTagName("TD")[3];
-            //check if the two rows should switch place:
-            if (this.convertDate(x.innerHTML) > this.convertDate(y.innerHTML)) {
-              //if so, mark as a switch and break the loop:
-              shouldSwitch = true;
-              break;
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[3];
+                //console.log(rows[i].getElementsByTagName("TD")[1]);
+                y = rows[i + 1].getElementsByTagName("TD")[3];
+                //check if the two rows should switch place:
+                if (this.convertDate(x.innerHTML) > this.convertDate(y.innerHTML)) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
             }
-          }
-          if (shouldSwitch) {
-            /*If a switch has been marked, make the switch
-            and mark that a switch has been done:*/
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-          }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
         }
 
     }
-    protected convertDate(d){
+    protected convertDate(d) {
         var p = d.split("-");
-        return +(p[0]+p[1]+p[2]);
-      }
+        return +(p[0] + p[1] + p[2]);
+    }
 
     protected delUser() {
         this.props.history.push("/deluser");
@@ -422,7 +456,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 </React.Fragment>
             )
         }
-        else if(username.length == 5){
+        else if (username.length == 5) {
             return (
                 <React.Fragment>
                     <li>Initial: {username[0]}</li>
@@ -435,7 +469,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 </React.Fragment>
             )
         }
-        else if(username.length == 6){
+        else if (username.length == 6) {
             return (
                 <React.Fragment>
                     <li>Initial: {username[0]}</li>
@@ -448,16 +482,16 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 </React.Fragment>
             )
         }
-        else{
+        else {
             <React.Fragment>
-                    <li>Initial: {username[0]}</li>
-                    <li>Bid: {username[1]}</li>
-                    <li>WorkOrder: {username[2]}</li>
-                    <li>Invoice: {username[3]}</li>
-                    <li>Pending Account Review: {username[4]}</li>
-                    <li>Complete: {username[5]}</li>
-                    <li>Archived: {username[6]}</li>
-                </React.Fragment>
+                <li>Initial: {username[0]}</li>
+                <li>Bid: {username[1]}</li>
+                <li>WorkOrder: {username[2]}</li>
+                <li>Invoice: {username[3]}</li>
+                <li>Pending Account Review: {username[4]}</li>
+                <li>Complete: {username[5]}</li>
+                <li>Archived: {username[6]}</li>
+            </React.Fragment>
         }
     }
 
@@ -584,9 +618,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
 
-    protected changeStatus() {
-
-    }
     protected addTask() {
         this.props.history.push('/addTask');
     }

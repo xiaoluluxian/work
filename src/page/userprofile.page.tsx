@@ -13,7 +13,7 @@ import * as $ from "jquery";
 import Config from '../config/config';
 
 export interface IProps {
-
+    history:any
 }
 
 export interface IState {
@@ -26,20 +26,23 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
         Password:"",
         Email:"",
         Phone:"",
-        FirstName:"",
+        Firstname:"",
         Lastname:"",
-
+        Authority:"",
+        Background:"",
+        TaskIds:[],
 
     }
     public constructor(props) {
         super(props);
         this.changeStatus = this.changeStatus.bind(this);
+        this.submit = this.submit.bind(this);
     }
     
     public componentDidMount(){
         console.log(localStorage.getItem('currUser'));
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findUser?username='+localStorage.getItem('currUser'),
+            url: 'https://rpntechserver.appspot.com/findUserByUsername?username='+localStorage.getItem('currUser'),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -49,7 +52,16 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 console.log(result);
-                //this.setState({ alluser: result });
+                this.setState({Username:result.Username});
+                this.setState({Password: result.Password});
+                this.setState({Email: result.Email});
+                this.setState({Firstname: result.Firstname});
+                this.setState({Lastname: result.Lastname});
+                this.setState({Phone: result.Phone});
+                this.setState({Authority: result.Authority});
+                this.setState({Background: result.Background});
+                this.setState({TaskIds: result.TaskIds});
+
             }).bind(this),
         })
     }
@@ -101,20 +113,49 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                 </div>
                 <table>
                     <thead>
-                        <tr>Username: <input></input></tr>
-                        <tr>Password: <input></input></tr>
-                        <tr>Email: <input></input></tr>
-                        <tr>Phone: <input></input></tr>
-                        <tr>Firstname: <input></input></tr>
-                        <tr>Lastname: <input></input></tr>
+                        <tr>Username: <input value={this.state.Username} onChange={e=>{this.setState({Username:e.target.value})}}></input></tr>
+                        <tr>Password: <input value={this.state.Password} onChange={e=>{this.setState({Password:e.target.value})}}></input></tr>
+                        <tr>Email: <input value={this.state.Email} onChange={e=>{this.setState({Email:e.target.value})}}></input></tr>
+                        <tr>Phone: <input value={this.state.Phone} onChange={e=>{this.setState({Phone:e.target.value})}}></input></tr>
+                        <tr>Firstname: <input value={this.state.Firstname} onChange={e=>{this.setState({Firstname:e.target.value})}}></input></tr>
+                        <tr>Lastname: <input value={this.state.Lastname} onChange={e=>{this.setState({Lastname:e.target.value})}}></input></tr>
                     </thead>
                 </table>
+
+                <button style={{
+                    marginLeft:"10px",
+                    marginTop:"10px"
+                }} onClick={this.submit}>Submit</button>
                 
             </div>
         );
     }
     protected changeStatus(){
+        this.props.history.push("/main");
+    }
 
+    protected submit(){
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/updateUser',
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'POST',
+            datatype: "json",
+            data: JSON.stringify({
+                Username:this.state.Username,
+                Password:this.state.Password,
+                Authority: this.state.Authority,
+                Email: this.state.Email,
+                Phone: this.state.Phone,
+                Firstname: this.state.Firstname,
+                Lastname: this.state.Lastname,
+                Background: this.state.Background
+            }),
+            success: (function (result) {
+                this.props.history.push("/main");
+            }).bind(this),
+        });
     }
 }
 

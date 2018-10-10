@@ -80,3 +80,9 @@ Change stage display in main page
 1. Show error message when wrong username or password
 2. Change the way of changing stage in editpage
 3. Slightly change the background color in editpage
+
+### 1.0.8
+
+1. Automatically calculate tax and total
+2. Fixed show user for each stage
+3. Add status for each task

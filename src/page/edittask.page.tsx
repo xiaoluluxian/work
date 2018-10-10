@@ -61,7 +61,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Year: '',
         AssetNum: '',
         uploadLink: '',
-        Tax: 0,
+        Tax: '',
         Before: [],
         During: [],
         After: [],
@@ -108,7 +108,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ uploadLink: result.upload_link });
                 this.setState({ Tax: result.Tax });
                 this.setState({ Username: result.Username });
-                console.log(result.ItemList);
+                console.log(result.Username);
                 //this.setState({ })                
 
 
@@ -220,7 +220,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 taxTotal += (i.Amount ? i.Amount : 0);
             }
         }
-        tax = taxTotal * (this.state.Tax ? this.state.Tax : 0) * 0.01;
+        tax = taxTotal * (parseInt(this.state.Tax) ? parseInt(this.state.Tax) : 0) * 0.01;
         total += tax;
         return (
             <div className="main">
@@ -521,7 +521,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     {this.showTable()}
 
                 </div>
-                {window.onbeforeunload = (function(){
+                {window.onbeforeunload = (function () {
                     return "asd"
                 })}
             </div>
@@ -559,6 +559,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
+            WithTax:0,
+            Total:0,
             Before: []
         }
         list.push(WHP);
@@ -662,8 +664,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             )
         }
         else {
-            return(
-            <select id='setStage' onChange={e => this.changeWindow(e.target.value)}>
+            return (
+                <select id='setStage' onChange={e => this.changeWindow(e.target.value)}>
                     <option value="0">Initial</option>
                     <option value="1" >Bid</option>
                     <option value="2">Work Order</option>
@@ -795,6 +797,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
+            WithTax:0,
+            Total:0,
             Before: []
         }
     }
@@ -932,6 +936,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 let list = this.state.Item;
                                 list[index].Qty = parseInt(e.target.value) || 0;
+                                console.log()
+                                list[index].Cost = list[index].Qty*list[index].PPU;
+                                list[index].WithTax = list[index].Qty*list[index].PPU*(parseInt(this.state.Tax)/100);
+                                list[index].Total = list[index].WithTax+list[index].Cost;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -944,14 +952,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 let list = this.state.Item;
                                 list[index].PPU = parseFloat(e.target.value) || 0;
+                                list[index].Cost = list[index].Qty*list[index].PPU;
+                                list[index].WithTax = list[index].Qty*list[index].PPU*(parseInt(this.state.Tax)/100);
+                                list[index].Total = list[index].WithTax+list[index].Cost;
                                 this.setState({ Item: list });
                             }} /></tr>
-                        <tr>Cost <input type="number" id='cost' value={value.Cost}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].Cost = parseFloat(e.target.value) || 0;
-                                this.setState({ Item: list });
-                            }} /></tr>
+                        <tr>Cost: {value.Cost}</tr>
+                        <tr>Tax: {value.WithTax}</tr>
+                        <tr>Total: {value.Total}</tr>
                         <tr>
                             Before:
                             <input
@@ -1200,58 +1208,74 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
 
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/addTaskToUser',
-            //url: 'http://192.168.0.66:8080/addTaskToUserII?userToRemove='+this.state.oldUser+'&userToAdd='+$('#setUser').val()+'&task_id='+localStorage.getItem('currTask'),
+            url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
+            //url: 'http://localhost:8080/login',
             method: 'POST',
-            dataType: 'json',
+            datatype: "json",
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
-            cache: false,
-            processData: false,
-            contentType: false,
-            data: fd,
+            data: JSON.stringify({
+                Address: this.state.Address,
+                Area: this.state.Area,
+                billTo: this.state.BillTo,
+                City: this.state.City,
+                CompletionDate: this.state.CompletionDate,
+                Desc: this.state.Desc,
+                Invoice: this.state.Invoice,
+                InvoiceDate: this.state.InvoiceDate,
+                DueDate: this.state.DueDate,
+                ItemList: this.state.Item,
+                KeyCode: this.state.LBNum,
+                Note: this.state.Note,
+                Stage: this.state.Stage,
+                StartDate: this.state.StartDate,
+                Stories: this.state.Stories,
+                TotalCost: this.state.TotalCost,
+                TotalImage: this.state.TotalImage,
+                Year: this.state.Year,
+                asset_num: this.state.AssetNum,
+                upload_link: this.state.uploadLink,
+                Tax: this.state.Tax,
+                Username: this.state.Username
+            }),
             success: function (data) {
-                //console.log(data);
+                var fd = new FormData();
+                var newname = this.findUserByName($('#setUser').val());
+                if (this.state.Username[$('#setStage').val()] === undefined) {
+                    console.log(this.state.Username[$('#setStage').val()]);
+                    fd.append('userToAdd', newname);
+                    fd.append('task_id', localStorage.getItem('currTask'));
+                    fd.append('stage', $('#setStage').val());
+                }
+                else {
+                    fd.append('userToRemove', this.state.Username[$('#setStage').val()]);
+                    fd.append('userToAdd', newname);
+                    fd.append('task_id', localStorage.getItem('currTask'));
+                    fd.append('stage', $('#setStage').val());
+                }
+
                 $.ajax({
-                    url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
-                    //url: 'http://localhost:8080/login',
+                    url: 'https://rpntechserver.appspot.com/addTaskToUser',
+                    //url: 'http://192.168.0.66:8080/addTaskToUserII?userToRemove='+this.state.oldUser+'&userToAdd='+$('#setUser').val()+'&task_id='+localStorage.getItem('currTask'),
                     method: 'POST',
-                    datatype: "json",
+                    dataType: 'json',
                     headers: {
                         Authorization: "Bearer " + localStorage.getItem('Token'),
                     },
-                    data: JSON.stringify({
-                        Address: this.state.Address,
-                        Area: this.state.Area,
-                        billTo: this.state.BillTo,
-                        City: this.state.City,
-                        CompletionDate: this.state.CompletionDate,
-                        Desc: this.state.Desc,
-                        Invoice: this.state.Invoice,
-                        InvoiceDate: this.state.InvoiceDate,
-                        DueDate: this.state.DueDate,
-                        ItemList: this.state.Item,
-                        KeyCode: this.state.LBNum,
-                        Note: this.state.Note,
-                        //Stage: this.state.Stage,
-                        StartDate: this.state.StartDate,
-                        Stories: this.state.Stories,
-                        TotalCost: this.state.TotalCost,
-                        TotalImage: this.state.TotalImage,
-                        Year: this.state.Year,
-                        asset_num: this.state.AssetNum,
-                        upload_link: this.state.uploadLink,
-                        Tax: this.state.Tax,
-        
-        
-                    }),
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    data: fd,
                     success: function (data) {
-                        window.location.reload();
+                        //console.log(data);
+                        this.props.history.push('/main');
                     }.bind(this),
                 });
             }.bind(this),
         });
+
+
     }
 
     protected addItem() {
@@ -1739,8 +1763,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             showMessage(msg);
         })
             .then(function callback(blob) {
-                
-                FileSaver.saveAs(blob, add+"-Before.zip");
+
+                FileSaver.saveAs(blob, add + "-Before.zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);
@@ -2165,8 +2189,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 asset_num: this.state.AssetNum,
                 upload_link: this.state.uploadLink,
                 Tax: this.state.Tax,
-
-
+                Username: this.state.Username,
             }),
             success: function (data) {
                 console.log(JSON.parse(data));
