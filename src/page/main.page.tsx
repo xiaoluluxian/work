@@ -264,7 +264,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{this.showUsername(item.Username)}</td>
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
-                                <td>{this.showStatus(item.TaskStatus)}</td>
+                                <td>{this.showStatus(item)}</td>
                             </tr>
                         )
                     }.bind(this))}</tbody>
@@ -274,31 +274,109 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             </div >);
     }
 
-    protected changeStatus(status){
+    protected changeStatus(item){
+        console.log(item.TaskID)
+        if(item.TaskStatus === '0'){
+            var fd = new FormData();
+            var st = '1'
+            fd.append('task_id',item.TaskID);
+            fd.append('status',st);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/markTaskStatus',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'POST',
+                datatype: "json",
+                data: fd,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: (function (result) {
+                    $.ajax({
+                        url: 'https://rpntechserver.appspot.com/findAllTasks',
+                        //url: 'https://rpnserver.appspot.com/userProfile',
+                        //url: 'http://localhost:8080/login',
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem('Token'),
+                        },
+                        method: 'GET',
+                        datatype: "json",
+                        data: JSON.stringify({
+                        }),
+                        success: (function (result) {
+                            console.log(result);
+                            this.setState({ data: result });
+        
+                        }).bind(this),
+                    });
+                    
 
+                }).bind(this),
+            });
+        }
+        else{
+            var fd = new FormData();
+            var st = '0'
+            fd.append('task_id',item.TaskID);
+            fd.append('status',st);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/markTaskStatus',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'POST',
+                datatype: "json",
+                data: fd,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: (function (result) {
+                    $.ajax({
+                        url: 'https://rpntechserver.appspot.com/findAllTasks',
+                        //url: 'https://rpnserver.appspot.com/userProfile',
+                        //url: 'http://localhost:8080/login',
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem('Token'),
+                        },
+                        method: 'GET',
+                        datatype: "json",
+                        data: JSON.stringify({
+                        }),
+                        success: (function (result) {
+                            console.log(result);
+                            this.setState({ data: result });
+        
+                        }).bind(this),
+                    });
+                    
+
+                }).bind(this),
+            });
+        }
     }
 
-    protected showStatus(status) {
-        if (status === 0) {
+    protected showStatus(item) {
+        if (item.TaskStatus === '0') {
             return (
                 <button style={{
                     color:"red"
                 }}
-                onClick={this.changeStatus.bind(this,status)}
+                onClick={this.changeStatus.bind(this,item)}
                 >Incomplete</button>
             )
         }
-        else if (status === 1) {
+        else if (item.TaskStatus === '1') {
             return (<button style={{
                 color:"green"
             }}
-            onClick={this.changeStatus}
+            onClick={this.changeStatus.bind(this,item)}
             >Complete</button>)
         }
         else {
             return(
                 <button
-                onClick={this.changeStatus}
+                onClick={this.changeStatus.bind(this,item)}
                 >?</button>
             )
         }

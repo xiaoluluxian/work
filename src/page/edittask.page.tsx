@@ -66,7 +66,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         During: [],
         After: [],
         Username: [],
-        alluser: []
+        alluser: [],
+        TaskStatus:'',
+        
         //data: [],
     };
 
@@ -108,6 +110,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ uploadLink: result.upload_link });
                 this.setState({ Tax: result.Tax });
                 this.setState({ Username: result.Username });
+                this.setState({ TaskStatus: result.TaskStatus});
                 console.log(result.Username);
                 //this.setState({ })                
 
@@ -559,8 +562,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
-            WithTax:0,
-            Total:0,
+            WithTax: 0,
+            Total: 0,
             Before: []
         }
         list.push(WHP);
@@ -797,8 +800,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
-            WithTax:0,
-            Total:0,
+            WithTax: 0,
+            Total: 0,
             Before: []
         }
     }
@@ -850,7 +853,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                                 width: '65px',
                                 height: '25px',
-                                backgroundColor: this.state.Item[index].Taxable == true ? 'red' : 'blue'
+                                backgroundColor: this.state.Item[index].Taxable == true ? 'blue' : 'red'
                             }}
                                 className={value.taxable ? "check" : "uncheck"} onClick={() => {
                                     let list = this.state.Item;
@@ -937,9 +940,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 let list = this.state.Item;
                                 list[index].Qty = parseInt(e.target.value) || 0;
                                 console.log()
-                                list[index].Cost = list[index].Qty*list[index].PPU;
-                                list[index].WithTax = list[index].Qty*list[index].PPU*(parseInt(this.state.Tax)/100);
-                                list[index].Total = list[index].WithTax+list[index].Cost;
+                                list[index].Cost = list[index].Qty * list[index].PPU;
+                                list[index].WithTax = list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100);
+                                list[index].Total = list[index].WithTax + list[index].Cost;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -952,9 +955,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 let list = this.state.Item;
                                 list[index].PPU = parseFloat(e.target.value) || 0;
-                                list[index].Cost = list[index].Qty*list[index].PPU;
-                                list[index].WithTax = list[index].Qty*list[index].PPU*(parseInt(this.state.Tax)/100);
-                                list[index].Total = list[index].WithTax+list[index].Cost;
+                                list[index].Cost = list[index].Qty * list[index].PPU;
+                                list[index].WithTax = list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100);
+                                list[index].Total = list[index].WithTax + list[index].Cost;
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Cost: {value.Cost}</tr>
@@ -2039,10 +2042,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         After: [],
                         Amount: 0,
                         During: [],
-                        Process: '',
-                        Status: '',
+                        Process: '0',
+                        Status: '0',
                         Tax: 0,
-                        Taxable: false,
+                        Taxable: true,
                         description: '',
                         Cate: '',
                         Comments: '',
@@ -2051,6 +2054,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         UM: '',
                         PPU: 0,
                         Cost: 0,
+                        WithTax: 0,
+                        Total: 0,
                         Before: []
                     }
                     eachitem.Item = j + 1;
@@ -2190,6 +2195,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 upload_link: this.state.uploadLink,
                 Tax: this.state.Tax,
                 Username: this.state.Username,
+                TaskStatus: this.state.TaskStatus,
             }),
             success: function (data) {
                 console.log(JSON.parse(data));
