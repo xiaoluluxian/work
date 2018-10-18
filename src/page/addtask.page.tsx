@@ -122,8 +122,12 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                     <tr>Start Date      <input type="date" id= 'startdate'></input></tr>
                     <tr>Due Date <input type='date' id= 'duedate'></input></tr>
                     <tr>City      <input className="text" id= 'city'></input></tr>
-                    <tr>Description      <input className="text" id= 'description'></input></tr>
-                    <tr>Lock Box Number      <input className="text" id= 'lockboxnumber'></input></tr>
+                    <tr>Description      <textarea style={{
+                                width: "425px",
+                                height: "130px",
+                                resize: "none"
+                            }}className="text" id= 'description'></textarea></tr>
+                    <tr>Lock Box Number      <input  className="text" id= 'lockboxnumber'></input></tr>
                     <tr>Username 
                     <select id='username' onChange={e => this.UserChange(e.target.value)}>
                             <option>all</option>

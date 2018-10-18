@@ -86,3 +86,8 @@ Change stage display in main page
 1. Automatically calculate tax and total
 2. Fixed show user for each stage
 3. Add status for each task
+
+### 1.1.0
+
+1. Changed the organization of show picture in edittask
+2. fixed tax calculate

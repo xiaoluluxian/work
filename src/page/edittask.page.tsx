@@ -457,6 +457,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <tr>Tax <input className="text" id='tax' value={this.state.Tax}
                             onChange={e => {
                                 this.setState({ Tax: e.target.value });
+                                let tempi = this.state.Item;
+                                for(let i=0;i<tempi.length;i++){
+                                    tempi[i].WithTax = (tempi[i].Qty * tempi[i].PPU * (parseInt(e.target.value) / 100)).toFixed(2);
+                                    //console.log(parseFloat(tempi[i].WithTax) + parseFloat(tempi[i].Cost));
+                                    tempi[i].Total = (parseFloat(tempi[i].WithTax) + parseFloat(tempi[i].Cost)).toFixed(2);
+                                    
+                                }
+                                this.setState({Item: tempi});
+                                
                             }} /></tr>
 
                         <tr>BillTo <input className="text" id='assetnum' value={this.state.BillTo}
@@ -939,10 +948,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 let list = this.state.Item;
                                 list[index].Qty = parseInt(e.target.value) || 0;
-                                console.log()
                                 list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].WithTax = list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100);
-                                list[index].Total = list[index].WithTax + list[index].Cost;
+                                list[index].WithTax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
+                                list[index].Total = (list[index].WithTax + list[index].Cost);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -956,8 +964,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 let list = this.state.Item;
                                 list[index].PPU = parseFloat(e.target.value) || 0;
                                 list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].WithTax = list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100);
-                                list[index].Total = list[index].WithTax + list[index].Cost;
+                                list[index].WithTax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
+                                list[index].Total = (list[index].WithTax + list[index].Cost);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Cost: {value.Cost}</tr>
@@ -1554,12 +1562,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <th>Before </th>
-                                <tr>{this.mapPicture(item.Before, item.description)}</tr>
-                                <th> During </th>
-                                <tr>{this.mapPicture(item.During, item.description)}</tr>
-                                <th> After </th>
-                                <tr>{this.mapPicture(item.After, item.description)}</tr>
+                                <th colSpan={6}>Before </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <th colSpan={6}> During </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <th colSpan={6}> After </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
 
                             </React.Fragment>
                         )
@@ -1648,6 +1656,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
+                                {}
                                 <th> Before </th>
                                 <tr>{this.mapPicture(item.Before, item.description)}</tr>
                                 <th> During </th>
@@ -1680,14 +1689,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             picture.map(function (item, key) {
                 return (
                     <div>
+                        <div>
                         <img style={{
-                            width: '40%',
+                            width: '30%',
                             height: 'auto',
 
                             padding: '3px'
                         }}
                             src={item.Src} />
+                        </div>
+                        <div>
                         {key + 1}.{desc}
+                        </div>
 
                     </div>
 
