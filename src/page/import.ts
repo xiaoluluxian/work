@@ -13,6 +13,7 @@ import PageGhotiRegister from './register.page';
 import PageGhotiTest from './test.page';
 import PageGhotiDeluser from './deluser.page';
 import PageGhotiUserprofile from './userprofile.page';
+import PageGhotiOrdertask from './ordertask.page';
 export {
     PageGhotiMain as main,
     PageGhotiAddtask as addtask,
@@ -23,4 +24,5 @@ export {
     PageGhotiTest as test,
     PageGhotiDeluser as deluser,
     PageGhotiUserprofile as userprofile,
+    PageGhotiOrdertask as ordertask,
 };

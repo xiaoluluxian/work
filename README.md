@@ -91,3 +91,9 @@ Change stage display in main page
 
 1. Changed the organization of show picture in edittask
 2. fixed tax calculate
+
+### 1.1.1
+
+1. Changed main page view
+2. Add search task by stage
+3. Add partial ordertask

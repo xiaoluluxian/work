@@ -68,6 +68,12 @@ export default function (props) {
 
                 },
                 {
+                    component: Pages.ordertask,
+                    exact: true,
+                    path: '/ordertask',
+
+                },
+                {
                     component: () => <div>Path = /home</div>,
                     path: '/home',
                 },

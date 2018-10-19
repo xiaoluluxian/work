@@ -41,6 +41,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         data: [],
         alluser: [],
     };
+    //@{i=0}
     public constructor(props) {
         super(props);
         this.search = this.search.bind(this);
@@ -55,6 +56,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.userProfile = this.userProfile.bind(this);
         this.showStatus = this.showStatus.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
+        this.ordertask = this.ordertask.bind(this);
 
     }
 
@@ -187,6 +189,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="Register" onClick={this.register}><ins>Register</ins></button>
                     </div>
+                    <div style={{
+                        margin: '5px',
+                    }}>
+                        <button className="link" title="Ordertask" onClick={this.ordertask}><ins>OrderTask</ins></button>
+                    </div>
                     {/* <div style={{
                         padding: '10px',
                     }}>
@@ -235,9 +242,28 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                             </select>
                         </div>
                     </div>
+                    <div style={{
+                        padding: '10px'
+                    }}>
+                        <div>ShowOnly:
+                    <select style={{
+                                width: "100px"
+                            }}
+                                id='showbystage' onChange={e => this.showByStage(e.target.value)}>
+                                <option value="-1">All</option>
+                                <option value="0" >Initial</option>
+                                <option value="1">Bid</option>
+                                <option value="2">Work Order</option>
+                                <option value="3">Invoice</option>
+                                <option value="4">Pending Accounting Review</option>
+                                <option value="5">Complete</option>
+                                <option value="6">Archived</option>
+                            </select>
+                        </div>
+                    </div>
 
                 </div>
-                <table id='taskT'>
+                <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
                     <thead>
                         <tr><th>Action</th>
                             <th>Property Address</th>
@@ -249,19 +275,24 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         </tr>
                     </thead>
                     <tbody>{this.state.data.map(function (item, key) {
+                        let temp = '#'+key;
+                        let temp2=''+1
+                        // console.log(temp2);
+                        // console.log(temp);
                         return (
-
+                            
                             <tr key={key}>
                                 <td><button style={{
-                                    //fontSize: '12px',
-                                }} title="edit" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                                    marginRight: '5px',
+                                    marginTop: '5px'
+                                }} title="edit" className="btn btn-primary btn-sm" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
                                     {this.showSetTask(item)}
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
                                 <td>{item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
-                                <td>{this.showUsername(item.Username)}</td>
+                                <td><a data-toggle="collapse" href="#asd#currentRow#">Collapsible panel</a><div id="asd#currentRow#" className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td>
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
                                 <td>{this.showStatus(item)}</td>
@@ -274,13 +305,58 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             </div >);
     }
 
-    protected changeStatus(item){
+    protected showByStage(stage) {
+        // console.log($('#showbystage'));
+        if ($('#showbystage').val() === '-1') {
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                //url: 'https://rpnserver.appspot.com/userProfile',
+                //url: 'http://localhost:8080/login',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    //console.log(result);
+                    this.setState({ data: result });
+
+                }).bind(this),
+            })
+        }
+        else {
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findTaskByStage?stage=' + $('#showbystage').val(),
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ data: result });
+
+                }).bind(this),
+            })
+        }
+
+    }
+
+    protected ordertask() {
+        this.props.history.push("/ordertask");
+    }
+
+    protected changeStatus(item) {
         console.log(item.TaskID)
-        if(item.TaskStatus === '0'){
+        if (item.TaskStatus === '0') {
             var fd = new FormData();
             var st = '1'
-            fd.append('task_id',item.TaskID);
-            fd.append('status',st);
+            fd.append('task_id', item.TaskID);
+            fd.append('status', st);
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/markTaskStatus',
                 headers: {
@@ -307,19 +383,19 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         success: (function (result) {
                             console.log(result);
                             this.setState({ data: result });
-        
+
                         }).bind(this),
                     });
-                    
+
 
                 }).bind(this),
             });
         }
-        else{
+        else {
             var fd = new FormData();
             var st = '0'
-            fd.append('task_id',item.TaskID);
-            fd.append('status',st);
+            fd.append('task_id', item.TaskID);
+            fd.append('status', st);
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/markTaskStatus',
                 headers: {
@@ -346,10 +422,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         success: (function (result) {
                             console.log(result);
                             this.setState({ data: result });
-        
+
                         }).bind(this),
                     });
-                    
+
 
                 }).bind(this),
             });
@@ -359,24 +435,28 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     protected showStatus(item) {
         if (item.TaskStatus === '0') {
             return (
-                <button style={{
-                    color:"red"
-                }}
-                onClick={this.changeStatus.bind(this,item)}
+                <button
+                    style={{
+                        marginTop:"5px"
+                    }}
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={this.changeStatus.bind(this, item)}
                 >Incomplete</button>
             )
         }
         else if (item.TaskStatus === '1') {
-            return (<button style={{
-                color:"green"
-            }}
-            onClick={this.changeStatus.bind(this,item)}
+            return (<button
+                    style={{
+                    marginTop:"5px"
+                }}
+                className="btn btn-outline-success btn-sm"
+                onClick={this.changeStatus.bind(this, item)}
             >Complete</button>)
         }
         else {
-            return(
+            return (
                 <button
-                onClick={this.changeStatus.bind(this,item)}
+                    onClick={this.changeStatus.bind(this, item)}
                 >?</button>
             )
         }
@@ -631,7 +711,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
     protected showSetTask(item) {
         if (localStorage.getItem('Authority') === '2') {
-            return <button title="setTask" onClick={this.setTask.bind(this, item)}><ins>setTask</ins></button>
+            return <button style={{
+                marginRight: '5px',
+                marginTop: '5px'
+            }} title="setTask" className="btn btn-info btn-sm" onClick={this.setTask.bind(this, item)}><ins>setTask</ins></button>
         }
         else {
             return void 0;
