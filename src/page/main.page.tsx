@@ -292,7 +292,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
-                                <td><a data-toggle="collapse" href="#asd#currentRow#">Collapsible panel</a><div id="asd#currentRow#" className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td>
+                                <td><a data-toggle="collapse" href="#key">Show User</a><div id="key" className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td>
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
                                 <td>{this.showStatus(item)}</td>
