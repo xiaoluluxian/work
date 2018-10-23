@@ -459,9 +459,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 this.setState({ Tax: e.target.value });
                                 let tempi = this.state.Item;
                                 for (let i = 0; i < tempi.length; i++) {
-                                    tempi[i].Tax = (tempi[i].Qty * tempi[i].PPU * (parseInt(e.target.value) / 100)).toFixed(2);
-                                    //console.log(parseFloat(tempi[i].WithTax) + parseFloat(tempi[i].Cost));
-                                    tempi[i].Amount = (parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2);
+                                    tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
+                                    
+                                    tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
+                                    console.log(tempi[i].Amount);
 
                                 }
                                 this.setState({ Item: tempi });
@@ -947,8 +948,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 let list = this.state.Item;
                                 list[index].Qty = parseInt(e.target.value) || 0;
                                 list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].Tax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
-                                list[index].Amount = (list[index].Tax + list[index].Cost);
+                                list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
+                                list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -962,8 +963,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 let list = this.state.Item;
                                 list[index].PPU = parseFloat(e.target.value) || 0;
                                 list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].Tax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
-                                list[index].Amount = (list[index].Tax + list[index].Cost);
+                                list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
+                                list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Cost: {value.Cost}</tr>
@@ -2081,7 +2082,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         eachitem.UM = data.list[i].each[j].UM;
                         eachitem.PPU = data.list[i].each[j].PPU;
                         eachitem.Cost = data.list[i].each[j].cost;
-                        eachitem.Amount = data.list[i].each[j].cost;
+                        eachitem.Amount = data.list[i].each[j].cost0;
 
                         //console.log(data.list[i].each[j].image);
                         if (data.list[i].each[j].image !== undefined) {
@@ -2265,7 +2266,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
     protected submitTask() {
-        var temp;
+        console.log(this.state);
         $.ajax({
             url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
