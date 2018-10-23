@@ -2192,7 +2192,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ billTo: data.billTo?data.billTo:"" });
                 this.setState({ CompletionDate: data.completionDate?data.completionDate:"" });
                 this.setState({ InvoiceDate: data.invoiceDate?data.invoiceDate:"" });
-                this.setState({ Tax: data.tax });
+                this.setState({ Tax: data.tax+"" });
                 this.setState({ Item: allitem });
             }
 

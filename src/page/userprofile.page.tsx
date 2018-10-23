@@ -128,7 +128,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
                 </div>
-                <div>User:
+                {/* <div>User:
                     <select style={{
                                 width: "100px"
                             }}
@@ -139,7 +139,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                                     )
                                 }.bind(this))}
                             </select>
-                        </div>
+                        </div> */}
                 <table>
                     <thead>
                         <tr>Username: {this.state.Username}</tr>
@@ -148,7 +148,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         <tr>Phone: <input value={this.state.Phone} onChange={e=>{this.setState({Phone:e.target.value})}}></input></tr>
                         <tr>Firstname: <input value={this.state.Firstname} onChange={e=>{this.setState({Firstname:e.target.value})}}></input></tr>
                         <tr>Lastname: <input value={this.state.Lastname} onChange={e=>{this.setState({Lastname:e.target.value})}}></input></tr>
-                        <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr>
+                        {/* <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr> */}
                     </thead>
                 </table>
 

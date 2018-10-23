@@ -41,7 +41,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         data: [],
         alluser: [],
     };
-    //@{i=0}
     public constructor(props) {
         super(props);
         this.search = this.search.bind(this);
@@ -63,7 +62,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     public componentDidMount() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllUsers',
-
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -116,7 +114,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
 
     }
-    
+
 
     public render() {
 
@@ -276,12 +274,12 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         </tr>
                     </thead>
                     <tbody>{this.state.data.map(function (item, key) {
-                        let temp = '#'+key;
-                        let temp2=''+1
+                        let temp = '#' + key;
+                        let temp2 = '' + 1
                         // console.log(temp2);
                         // console.log(temp);
                         return (
-                            
+
                             <tr key={key}>
                                 <td><button style={{
                                     marginRight: '5px',
@@ -299,7 +297,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{this.showStatus(item)}</td>
                             </tr>
                         )
-                        
+
                     }.bind(this))}</tbody>
                 </table>
 
@@ -439,7 +437,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             return (
                 <button
                     style={{
-                        marginTop:"5px"
+                        marginTop: "5px"
                     }}
                     className="btn btn-outline-danger btn-sm"
                     onClick={this.changeStatus.bind(this, item)}
@@ -448,8 +446,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
         else if (item.TaskStatus === '1') {
             return (<button
-                    style={{
-                    marginTop:"5px"
+                style={{
+                    marginTop: "5px"
                 }}
                 className="btn btn-outline-success btn-sm"
                 onClick={this.changeStatus.bind(this, item)}

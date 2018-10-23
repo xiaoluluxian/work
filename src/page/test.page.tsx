@@ -79,8 +79,25 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     <td>Laughing Bacchus Winecellars</td>
                     <td>2018-08-24</td>
                 </tr>
-            </table></React.Fragment>
+            </table>
+            <tr>zipcode <input className="text" id = 'zipcode' ></input></tr>
+            <button onClick={this.weather}>go</button>
+            </React.Fragment>
         )
+    }
+
+    protected weather(){
+        $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/weather?zip='+$('#zipcode').val()+'&APPID=bbd1d9fee8d0b99c7470edd713a045f9',
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: function (data) {
+                console.log(data);
+                
+            }.bind(this),
+        })
     }
 
     protected sortTable() {
