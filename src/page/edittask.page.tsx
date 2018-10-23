@@ -67,8 +67,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         After: [],
         Username: [],
         alluser: [],
-        TaskStatus:'',
-        
+        TaskStatus: '',
+
         //data: [],
     };
 
@@ -86,7 +86,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 //let test: IPage=JSON.parse(result.toString);
-                //console.log(test);
+                // console.log(test);
                 console.log(result);
                 this.setState({ Address: result.Address });
                 this.setState({ Area: result.Area });
@@ -110,7 +110,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ uploadLink: result.upload_link });
                 this.setState({ Tax: result.Tax });
                 this.setState({ Username: result.Username });
-                this.setState({ TaskStatus: result.TaskStatus});
+                this.setState({ TaskStatus: result.TaskStatus });
                 console.log(result.Username);
                 //this.setState({ })                
 
@@ -458,14 +458,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 this.setState({ Tax: e.target.value });
                                 let tempi = this.state.Item;
-                                for(let i=0;i<tempi.length;i++){
-                                    tempi[i].WithTax = (tempi[i].Qty * tempi[i].PPU * (parseInt(e.target.value) / 100)).toFixed(2);
+                                for (let i = 0; i < tempi.length; i++) {
+                                    tempi[i].Tax = (tempi[i].Qty * tempi[i].PPU * (parseInt(e.target.value) / 100)).toFixed(2);
                                     //console.log(parseFloat(tempi[i].WithTax) + parseFloat(tempi[i].Cost));
-                                    tempi[i].Total = (parseFloat(tempi[i].WithTax) + parseFloat(tempi[i].Cost)).toFixed(2);
-                                    
+                                    tempi[i].Amount = (parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2);
+
                                 }
-                                this.setState({Item: tempi});
-                                
+                                this.setState({ Item: tempi });
+
                             }} /></tr>
 
                         <tr>BillTo <input className="text" id='assetnum' value={this.state.BillTo}
@@ -571,8 +571,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
-            WithTax: 0,
-            Total: 0,
+
             Before: []
         }
         list.push(WHP);
@@ -711,7 +710,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 completionDate: this.state.CompletionDate,
                 invoiceDate: this.state.DueDate,
                 item: [],
-                tax: this.state.Tax,
+                tax: parseFloat(this.state.Tax),
             }
             for (let each of this.state.Item) {
                 json.item.push({
@@ -735,7 +734,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 completionDate: this.state.CompletionDate,
                 invoiceDate: this.state.DueDate,
                 item: [],
-                tax: 0,
+                tax: parseFloat(this.state.Tax),
             }
             for (let each of this.state.Item) {
                 json.item.push({
@@ -759,7 +758,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 completionDate: this.state.CompletionDate,
                 invoiceDate: this.state.InvoiceDate,
                 item: [],
-                tax: 0,
+                tax: parseFloat(this.state.Tax),
             }
             for (let each of this.state.Item) {
                 json.item.push({
@@ -809,8 +808,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
-            WithTax: 0,
-            Total: 0,
+
             Before: []
         }
     }
@@ -949,8 +947,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 let list = this.state.Item;
                                 list[index].Qty = parseInt(e.target.value) || 0;
                                 list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].WithTax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
-                                list[index].Total = (list[index].WithTax + list[index].Cost);
+                                list[index].Tax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
+                                list[index].Amount = (list[index].Tax + list[index].Cost);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>UM <input className="text" id='um' value={value.UM}
@@ -964,13 +962,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 let list = this.state.Item;
                                 list[index].PPU = parseFloat(e.target.value) || 0;
                                 list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].WithTax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
-                                list[index].Total = (list[index].WithTax + list[index].Cost);
+                                list[index].Tax = (list[index].Qty * list[index].PPU * (parseInt(this.state.Tax) / 100));
+                                list[index].Amount = (list[index].Tax + list[index].Cost);
                                 this.setState({ Item: list });
                             }} /></tr>
                         <tr>Cost: {value.Cost}</tr>
-                        <tr>Tax: {value.WithTax}</tr>
-                        <tr>Total: {value.Total}</tr>
+                        <tr>Tax: {value.Tax}</tr>
+                        <tr>Total: {value.Amount}</tr>
                         <tr>
                             Before:
                             <input
@@ -1404,7 +1402,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <img
                         style={{
                             // position: 'static',
-                            width: '95%',
+                            width: '35%',
                             height: 'auto',
                             marginLeft: '3px',
                             //marginTop:'0px',
@@ -1558,10 +1556,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Cate}</td>
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
-                                    <td>{item.Cost}</td>
+                                    <td>{item.Amount}</td>
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
+                                {/* <td
+                                    style={{
+                                        border: "none",
+                                        borderCollapse: "collapse",
+                                    }}
+                                ></td> */}
                                 <th colSpan={6}>Before </th>
                                 <tr><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
                                 <th colSpan={6}> During </th>
@@ -1607,16 +1611,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Cate}</td>
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
-                                    <td>{item.Cost}</td>
+                                    <td>{item.Amount}</td>
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <th> Before </th>
-                                <tr>{this.mapPicture(item.Before, item.description)}</tr>
-                                <th> During </th>
-                                <tr>{this.mapPicture(item.During, item.description)}</tr>
-                                <th> After </th>
-                                <tr>{this.mapPicture(item.After, item.description)}</tr>
+                                <th colSpan={6}> Before </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <th colSpan={6}> During </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <th colSpan={6}> After </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -1652,17 +1656,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{item.Cate}</td>
                                     <td>{item.Item}</td>
                                     <td>{item.description}</td>
-                                    <td>{item.Cost}</td>
+                                    <td>{item.Amount}</td>
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                {}
-                                <th> Before </th>
-                                <tr>{this.mapPicture(item.Before, item.description)}</tr>
-                                <th> During </th>
-                                <tr>{this.mapPicture(item.During, item.description)}</tr>
-                                <th> After </th>
-                                <tr>{this.mapPicture(item.After, item.description)}</tr>
+                                <th colSpan={6}> Before </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <th colSpan={6}> During </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <th colSpan={6}> After </th>
+                                <tr><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -1671,13 +1674,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </div>
         }
         else if (this.state.Stage === '4') {
-            <div>Pending Accounting Review</div>
+            return <div>Pending Accounting Review</div>
         }
         else if (this.state.Stage === '5') {
-            <div>Complete</div>
+            return <div>Complete</div>
         }
         else if (this.state.Stage === '6') {
-            <div>Archived</div>
+            return <div>Archived</div>
         }
         else {
             return <div> Error! </div>
@@ -1690,16 +1693,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 return (
                     <div>
                         <div>
-                        <img style={{
-                            width: '30%',
-                            height: 'auto',
+                            <img style={{
+                                width: '25%',
+                                height: 'auto',
 
-                            padding: '3px'
-                        }}
-                            src={item.Src} />
+                                padding: '3px'
+                            }}
+                                src={item.Src} />
                         </div>
                         <div>
-                        {key + 1}.{desc}
+                            {key + 1}.{desc}
                         </div>
 
                     </div>
@@ -1938,7 +1941,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     protected showProcess(value) {
         if (value === '0') {
-            return (<div>Imcomplete</div>);
+            return (<div>Incomplete</div>);
         }
         else {
             return (<div>Complete</div>);
@@ -2044,13 +2047,75 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             //console.log(data);
             let allitem = [];
             let count = 0;
+            if (data.invoice === undefined) {
+                for (let i = 0; i < Object.keys(data.list).length; i++) {
+                    //console.log(data.list[i]);
+                    let cate = data.list[i].cate;
+                    //console.log(cate);
+                    for (let j = 0; j < Object.keys(data.list[i].each).length; j++) {
+                        //console.log(data.list[i].each[j])
+                        let eachitem = {
+                            After: [],
+                            Amount: 0,
+                            During: [],
+                            Process: '0',
+                            Status: '0',
+                            Tax: 0,
+                            Taxable: true,
+                            description: '',
+                            Cate: '',
+                            Comments: '',
+                            Item: 0,
+                            Qty: 0,
+                            UM: '',
+                            PPU: 0,
+                            Cost: 0,
 
-            for (let i = 0; i < Object.keys(data.list).length; i++) {
-                //console.log(data.list[i]);
-                let cate = data.list[i].cate;
-                //console.log(cate);
-                for (let j = 0; j < Object.keys(data.list[i].each).length; j++) {
-                    //console.log(data.list[i].each[j])
+                            Before: []
+                        }
+                        eachitem.Item = j + 1;
+                        eachitem.description = data.list[i].each[j].description;
+                        eachitem.Cate = cate;
+                        eachitem.Comments = data.list[i].each[j].comments;
+                        eachitem.Qty = data.list[i].each[j].qty;
+                        eachitem.UM = data.list[i].each[j].UM;
+                        eachitem.PPU = data.list[i].each[j].PPU;
+                        eachitem.Cost = data.list[i].each[j].cost;
+                        eachitem.Amount = data.list[i].each[j].cost;
+
+                        //console.log(data.list[i].each[j].image);
+                        if (data.list[i].each[j].image !== undefined) {
+                            for (let k = 0; k < Object.keys(data.list[i].each[j].image).length; k++) {
+                                let pic = {
+                                    Cate: '',
+                                    Name: '',
+                                    Src: '',
+                                    itemID: 0,
+                                    Format: ''
+                                }
+                                pic.Cate = cate;
+                                pic.Name = data.list[i].each[j].image[k].name;
+                                pic.Src = data.list[i].each[j].image[k].src;
+                                pic.itemID = j + 1;
+                                eachitem.Before.push(pic);
+                            }
+                        }
+                        allitem.push(eachitem);
+
+                    }
+                }
+                //console.log(allitem);
+                this.setState({ Address: data.address });
+                this.setState({ City: data.city });
+                this.setState({ Year: data.year });
+                this.setState({ Area: data.area });
+                this.setState({ TotalCost: data.totalCost });
+                this.setState({ Tax: '0' });
+                this.setState({ Item: allitem });
+            }
+            else {
+                let temptax = data.tax;
+                for (let i = 0; i < data.item.length; i++) {
                     let eachitem = {
                         After: [],
                         Amount: 0,
@@ -2060,28 +2125,21 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         Tax: 0,
                         Taxable: true,
                         description: '',
-                        Cate: '',
+                        Cate: 'Unknown',
                         Comments: '',
                         Item: 0,
                         Qty: 0,
                         UM: '',
                         PPU: 0,
                         Cost: 0,
-                        WithTax: 0,
-                        Total: 0,
                         Before: []
                     }
-                    eachitem.Item = j + 1;
-                    eachitem.description = data.list[i].each[j].description;
-                    eachitem.Cate = cate;
-                    eachitem.Comments = data.list[i].each[j].comments;
-                    eachitem.Qty = data.list[i].each[j].qty;
-                    eachitem.UM = data.list[i].each[j].UM;
-                    eachitem.PPU = data.list[i].each[j].PPU;
-                    eachitem.Cost = data.list[i].each[j].cost;
-                    //console.log(data.list[i].each[j].image);
-                    if (data.list[i].each[j].image !== undefined) {
-                        for (let k = 0; k < Object.keys(data.list[i].each[j].image).length; k++) {
+                    eachitem.Item = i + 1;
+                    eachitem.description = data.item[i].description;
+                    eachitem.Amount = data.item[i].amount;
+                    eachitem.Taxable = data.item[i].taxable;
+                    if (data.item[i].before !== undefined) {
+                        for (let k = 0; k < Object.keys(data.item[i].before).length; k++) {
                             let pic = {
                                 Cate: '',
                                 Name: '',
@@ -2089,24 +2147,55 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 itemID: 0,
                                 Format: ''
                             }
-                            pic.Cate = cate;
-                            pic.Name = data.list[i].each[j].image[k].name;
-                            pic.Src = data.list[i].each[j].image[k].src;
-                            pic.itemID = j + 1;
+                            pic.Cate = "Unknown";
+                            pic.Name = "Unknown";
+                            pic.Src = data.item[i].before[k];
+                            pic.itemID = i + 1;
                             eachitem.Before.push(pic);
                         }
                     }
+                    if (data.item[i].during !== undefined) {
+                        for (let k = 0; k < Object.keys(data.item[i].during).length; k++) {
+                            let pic = {
+                                Cate: '',
+                                Name: '',
+                                Src: '',
+                                itemID: 0,
+                                Format: ''
+                            }
+                            pic.Cate = "Unknown";
+                            pic.Name = "Unknown";
+                            pic.Src = data.item[i].during[k];
+                            pic.itemID = i + 1;
+                            eachitem.During.push(pic);
+                        }
+                    }
+                    if (data.item[i].after !== undefined) {
+                        for (let k = 0; k < Object.keys(data.item[i].after).length; k++) {
+                            let pic = {
+                                Cate: '',
+                                Name: '',
+                                Src: '',
+                                itemID: 0,
+                                Format: ''
+                            }
+                            pic.Cate = "Unknown";
+                            pic.Name = "Unknown";
+                            pic.Src = data.item[i].after[k];
+                            pic.itemID = i + 1;
+                            eachitem.After.push(pic);
+                        }
+                    }
                     allitem.push(eachitem);
-
                 }
+                this.setState({ Address: data.address?data.address:"" });
+                this.setState({ billTo: data.billTo?data.billTo:"" });
+                this.setState({ CompletionDate: data.completionDate?data.completionDate:"" });
+                this.setState({ InvoiceDate: data.invoiceDate?data.invoiceDate:"" });
+                this.setState({ Tax: data.tax });
+                this.setState({ Item: allitem });
             }
-            //console.log(allitem);
-            this.setState({ Address: data.address });
-            this.setState({ City: data.city });
-            this.setState({ Year: data.year });
-            this.setState({ Area: data.area });
-            this.setState({ TotalCost: data.totalCost });
-            this.setState({ Item: allitem });
+
             //console.log(this.state);
             let aata = JSON.stringify({
                 Address: this.state.Address,

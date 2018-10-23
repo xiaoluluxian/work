@@ -22,6 +22,7 @@ export interface IState {
 
 class PageGhotiUserprofile extends React.Component<IProps, IState> {
     state={
+        alluser:[],
         Username:"",
         Password:"",
         Email:"",
@@ -37,10 +38,26 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
         super(props);
         this.changeStatus = this.changeStatus.bind(this);
         this.submit = this.submit.bind(this);
+        this.changeUser = this.changeUser.bind(this);
     }
     
     public componentDidMount(){
-        console.log(localStorage.getItem('currUser'));
+        //console.log(localStorage.getItem('currUser'));
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllUsers',
+
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                this.setState({ alluser: result });
+            }).bind(this),
+        });
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findUserByUsername?username='+localStorage.getItem('currUser'),
             headers: {
@@ -111,14 +128,27 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
                 </div>
+                <div>User:
+                    <select style={{
+                                width: "100px"
+                            }}
+                                id='setUser' onChange={e => this.changeUser(e.target.value)}>
+                                {this.state.alluser.map(function (item, key) {
+                                    return (
+                                        <option key={key}>{item.Username}</option>
+                                    )
+                                }.bind(this))}
+                            </select>
+                        </div>
                 <table>
                     <thead>
-                        <tr>Username: <input value={this.state.Username} onChange={e=>{this.setState({Username:e.target.value})}}></input></tr>
+                        <tr>Username: {this.state.Username}</tr>
                         <tr>Password: <input value={this.state.Password} onChange={e=>{this.setState({Password:e.target.value})}}></input></tr>
                         <tr>Email: <input value={this.state.Email} onChange={e=>{this.setState({Email:e.target.value})}}></input></tr>
                         <tr>Phone: <input value={this.state.Phone} onChange={e=>{this.setState({Phone:e.target.value})}}></input></tr>
                         <tr>Firstname: <input value={this.state.Firstname} onChange={e=>{this.setState({Firstname:e.target.value})}}></input></tr>
                         <tr>Lastname: <input value={this.state.Lastname} onChange={e=>{this.setState({Lastname:e.target.value})}}></input></tr>
+                        <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr>
                     </thead>
                 </table>
 
@@ -129,6 +159,32 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                 
             </div>
         );
+    }
+
+    protected changeUser(user){
+        console.log(user);
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findUserByUsername?username='+user,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                this.setState({Username:result.Username});
+                this.setState({Password: result.Password});
+                this.setState({Email: result.Email});
+                this.setState({Firstname: result.Firstname});
+                this.setState({Lastname: result.Lastname});
+                this.setState({Phone: result.Phone});
+                this.setState({Authority: result.Authority});
+                this.setState({Background: result.Background});
+                this.setState({TaskIds: result.TaskIds});
+            }).bind(this),
+        })
     }
     protected changeStatus(){
         this.props.history.push("/main");

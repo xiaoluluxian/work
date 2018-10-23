@@ -116,6 +116,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
 
     }
+    
 
     public render() {
 
@@ -298,6 +299,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{this.showStatus(item)}</td>
                             </tr>
                         )
+                        
                     }.bind(this))}</tbody>
                 </table>
 
@@ -658,7 +660,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected UserChange(value) {
-        //console.log(value);
+        console.log(value);
         if (value === 'all') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',

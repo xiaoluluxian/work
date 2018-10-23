@@ -97,3 +97,9 @@ Change stage display in main page
 1. Changed main page view
 2. Add search task by stage
 3. Add partial ordertask
+
+### 1.1.2
+
+1. Fixed json name in tax, cost, qty, PPU
+2. Fixed calculation prblem in tax, cost, qty, PPU
+3. Able to import json from invoice with default unknown category
