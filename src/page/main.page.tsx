@@ -274,8 +274,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         </tr>
                     </thead>
                     <tbody>{this.state.data.map(function (item, key) {
-                        let temp = '#' + key;
-                        let temp2 = '' + 1
+                        let temp = '#a' + key;
+                        let temp2 = 'a' + key;
                         // console.log(temp2);
                         // console.log(temp);
                         return (
@@ -291,7 +291,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
-                                <td><a data-toggle="collapse" href="#key">Show User</a><div id="key" className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td>
+                                <td><a data-toggle="collapse" href={temp}>Show User</a><div id={temp2} className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td>
+                                {/* <td><button className="link collapsible">{this.clickShowUser}Show User</button><div id="content" style={{display: "none"}}>{this.showUsername(item.Username)}</div></td> */}
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
                                 <td>{this.showStatus(item)}</td>
@@ -303,6 +304,25 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
 
             </div >);
+    }
+
+    protected clickShowUser() {
+        var coll = document.getElementsByClassName("link collapsible");
+        // console.log(coll);
+        var i;
+        for (i = 0; i < coll.length; i++) {
+            console.log(coll[i]);
+            coll[i].addEventListener("onClick", function() {
+              this.classList.toggle("active");
+              var content = this.nextElementSibling;
+              console.log(content);
+              if (content.style.display === "block") {
+                content.style.display = "none";
+              } else {
+                content.style.display = "block";
+              }
+            });
+          }
     }
 
     protected showByStage(stage) {
