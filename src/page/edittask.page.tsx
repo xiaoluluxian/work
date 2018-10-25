@@ -23,7 +23,8 @@ import * as JSZipUtilsMin from "./jszip-utils.min.js";
 import * as JSZip from "./jszip.js";
 import * as jsPDF from "jspdf";
 import * as helper from "./helpers.js";
-import * as ReactToPrint from "react-to-print"
+import * as ReactToPrint from "react-to-print";
+import * as Cheerio from "cheerio";
 import 'bootstrap';
 import Config from '../config/config';
 
@@ -209,6 +210,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.UserChange = this.UserChange.bind(this);
         this.findUserByName = this.findUserByName.bind(this);
         this.addWHP = this.addWHP.bind(this);
+        this.importHTML = this.importHTML.bind(this);
 
     }
 
@@ -310,7 +312,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     </button> */}
                 </div>
                 <div className='edit'>
-                    <button
+                    <div style={{ marginTop: "10px" }}><button
                         style={{
                             // paddingTop: '20px',
                             // marginTop: '10px',
@@ -320,7 +322,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             fontSize: '14px',
 
                         }}
-                        title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+                        title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button></div>
                     {/* <input
                         style={{
 
@@ -330,7 +332,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                         }}
                         type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} /> */}
-                    <input
+                    <div style={{ marginLeft: "10px" }}>Import JSON:<input
                         style={{
                             marginTop: '10px',
                             marginLeft: '10px',
@@ -338,7 +340,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
                         }}
-                        type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+                        type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} /></div>
+                    <div style={{ marginLeft: "10px" }}>Import HTML:<input
+                        style={{
+                            marginTop: '10px',
+                            marginLeft: '10px',
+                            fontSize: '14px',
+
+
+                        }}
+                        type="file" id="htmlUpload" onChange={(e) => { this.importHTML(e.target.files) }} /></div>
                     <div style={{
                         marginLeft: "10px"
                     }}>
@@ -460,7 +471,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 let tempi = this.state.Item;
                                 for (let i = 0; i < tempi.length; i++) {
                                     tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
-                                    
+
                                     tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
                                     console.log(tempi[i].Amount);
 
@@ -540,6 +551,35 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </div>
 
         );
+    }
+
+    protected importHTML(selectorFiles: FileList) {
+        let data;
+        var file = selectorFiles[0];
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            let $ = Cheerio.load(event.target.result);
+            console.log($('#box-table-b').find('.tahoma12-gray').length);
+
+            let objList = $('.tahoma14-gold');
+            let a = $('table').first();
+            a = a.children().eq(0).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(0).children().eq(0).children().eq(3).children().eq(1).children().eq(0);
+            a = a.children(); // tobody outer with start perptory estimate
+            a = a.eq(1).children().eq(0).children().eq(0).children().eq(0).children(); // in side list
+            // a = a.eq(3); // first three tr are empty // NAMES
+            // a = a.eq(4); // 4 = edit estimate button, 5 = first title, 6 = first content
+            // 7 = second title, 8 = second content
+
+            a = a.eq(3).children().eq(2).children().eq(0).children().eq(0).children(); // name/ address/ shits
+            this.setState({ Address: a.eq(1).children().eq(1).text() });
+            this.setState({ City: a.eq(2).children().eq(1).text() });
+            this.setState({ Year: a.eq(3).children().eq(1).text() });
+            this.setState({ Stories: a.eq(4).children().eq(1).text() });
+            this.setState({ Area: a.eq(5).children().eq(1).text() });
+            this.setState({ TotalCost: a.eq(6).children().eq(1).text() });
+            //console.log(a.eq(0).children().eq(1).text());
+        }.bind(this);
+        reader.readAsText(file);
     }
 
 
@@ -2189,11 +2229,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     }
                     allitem.push(eachitem);
                 }
-                this.setState({ Address: data.address?data.address:"" });
-                this.setState({ billTo: data.billTo?data.billTo:"" });
-                this.setState({ CompletionDate: data.completionDate?data.completionDate:"" });
-                this.setState({ InvoiceDate: data.invoiceDate?data.invoiceDate:"" });
-                this.setState({ Tax: data.tax+"" });
+                this.setState({ Address: data.address ? data.address : "" });
+                this.setState({ billTo: data.billTo ? data.billTo : "" });
+                this.setState({ CompletionDate: data.completionDate ? data.completionDate : "" });
+                this.setState({ InvoiceDate: data.invoiceDate ? data.invoiceDate : "" });
+                this.setState({ Tax: data.tax + "" });
                 this.setState({ Item: allitem });
             }
 

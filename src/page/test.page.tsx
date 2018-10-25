@@ -10,6 +10,7 @@ import { IItem, IPage } from './interface';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import * as $ from "jquery";
+import * as Cheerio from "cheerio"
 
 import Config from '../config/config';
 import { bootstrap, button } from "bootstrap"
@@ -30,6 +31,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         super(props);
         this.readJson = this.readJson.bind(this);
         this.sortTable = this.sortTable.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
     }
 
@@ -80,22 +82,51 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     <td>2018-08-24</td>
                 </tr>
             </table>
-            <tr>zipcode <input className="text" id = 'zipcode' ></input></tr>
+            <tr>zipcode <input className="text" id='zipcode' ></input></tr>
             <button onClick={this.weather}>go</button>
-            </React.Fragment>
+            <input
+                style={{
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    fontSize: '14px',
+
+
+                }}
+                type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+        </React.Fragment>
         )
     }
 
-    protected weather(){
+    protected handleChange(selectorFiles: FileList) {
+        let data;
+        var file = selectorFiles[0];
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            let $ = Cheerio.load(event.target.result);
+            let a = $('table').first();
+            a = a.children().eq(0).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(0).children().eq(0).children().eq(3).children().eq(1).children().eq(0);
+            a = a.children(); // tobody outer with start perptory estimate
+            a = a.eq(1).children().eq(0).children().eq(0).children().eq(0).children(); // in side list
+            // a = a.eq(3); // first three tr are empty // NAMES
+            // a = a.eq(4); // 4 = edit estimate button, 5 = first title, 6 = first content
+            // 7 = second title, 8 = second content
+
+            a = a.eq(3).children().eq(2).children().eq(0).children().eq(0).children(); // name/ address/ shits
+            console.log(a.eq(0).children().eq(1).text());
+        }.bind(this);
+        reader.readAsText(file);
+    }
+
+    protected weather() {
         $.ajax({
-            url: 'http://api.openweathermap.org/data/2.5/weather?zip='+$('#zipcode').val()+'&APPID=bbd1d9fee8d0b99c7470edd713a045f9',
+            url: 'http://api.openweathermap.org/data/2.5/weather?zip=' + $('#zipcode').val() + '&APPID=bbd1d9fee8d0b99c7470edd713a045f9',
             method: 'GET',
             datatype: "json",
             data: JSON.stringify({
             }),
             success: function (data) {
                 console.log(data);
-                
+
             }.bind(this),
         })
     }
@@ -108,42 +139,42 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         /*Make a loop that will continue until
         no switching has been done:*/
         while (switching) {
-          //start by saying: no switching is done:
-          switching = false;
-          rows = table.rows;
-          /*Loop through all table rows (except the
-          first, which contains table headers):*/
-          for (i = 1; i < (rows.length - 1); i++) {
-            //start by saying there should be no switching:
-            shouldSwitch = false;
-            /*Get the two elements you want to compare,
-            one from current row and one from the next:*/
-            x = rows[i].getElementsByTagName("TD")[1];
-            //console.log(rows[i].getElementsByTagName("TD")[1].innerHTML);
-            //console.log(rows[i].getElementsByTagName("TD")[1]);
-            y = rows[i + 1].getElementsByTagName("TD")[1];
-            //check if the two rows should switch place:
-            if (this.convertDate(x.innerHTML) > this.convertDate(y.innerHTML)) {
-              //if so, mark as a switch and break the loop:
-              shouldSwitch = true;
-              break;
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[1];
+                //console.log(rows[i].getElementsByTagName("TD")[1].innerHTML);
+                //console.log(rows[i].getElementsByTagName("TD")[1]);
+                y = rows[i + 1].getElementsByTagName("TD")[1];
+                //check if the two rows should switch place:
+                if (this.convertDate(x.innerHTML) > this.convertDate(y.innerHTML)) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
             }
-          }
-          if (shouldSwitch) {
-            /*If a switch has been marked, make the switch
-            and mark that a switch has been done:*/
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-          }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
         }
-      }
+    }
 
-      protected convertDate(d){
+    protected convertDate(d) {
         var p = d.split("-");
-        return +(p[0]+p[1]+p[2]);
-      }
+        return +(p[0] + p[1] + p[2]);
+    }
 
-      
+
 
     protected readJson(Files: FileList) {
         var file = Files[0];
