@@ -216,17 +216,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
     public render() {
-        let tax: number = 0;
-        let taxTotal: number = 0;
-        let total: number = 0;
-        for (let i of this.state.Item) {
-            total += (i.Amount ? i.Amount : 0);
-            if (i.taxable) {
-                taxTotal += (i.Amount ? i.Amount : 0);
-            }
-        }
-        tax = taxTotal * (parseInt(this.state.Tax) ? parseInt(this.state.Tax) : 0) * 0.01;
-        total += tax;
+        // let tax: number = 0;
+        // let taxTotal: number = 0;
+        // let total: number = 0;
+        // for (let i of this.state.Item) {
+        //     total += (i.Amount ? i.Amount : 0);
+        //     if (i.taxable) {
+        //         taxTotal += (i.Amount ? i.Amount : 0);
+        //     }
+        // }
+        // tax = taxTotal * (parseInt(this.state.Tax) ? parseInt(this.state.Tax) : 0) * 0.01;
+        // total += tax;
         return (
             <div className="main">
                 <div className="title">
@@ -552,6 +552,89 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
         );
     }
+    protected getInner(element){
+        let stuffs=[];
+        let buffer={
+            After: [],
+            Amount: 0,
+            During: [],
+            Process: '0',
+            Status: '0',
+            Tax: 0,
+            Taxable: true,
+            description: '',
+            Cate: '',
+            Comments: '',
+            Item: 1,
+            Qty: 0,
+            UM: '',
+            PPU: 0,
+            Cost: 0,
+            Before: []
+        }
+        let next = 0;
+        for(let i=0;i<element.length;i++){
+            if (next === 6) {
+                next = 0;
+                stuffs.push(buffer);
+                buffer = {
+                    After: [],
+                    Amount: 0,
+                    During: [],
+                    Process: '0',
+                    Status: '0',
+                    Tax: 0,
+                    Taxable: true,
+                    description: '',
+                    Cate: '',
+                    Comments: '',
+                    Item: 1,
+                    Qty: 0,
+                    UM: '',
+                    PPU: 0,
+                    Cost: 0,
+                    Before: []
+                };
+            }
+            let current = element.eq(i).text();
+            switch (next) {
+                case 0:
+                    let num: number = parseFloat(current);
+                    if (num && current.length <= 3) {
+                        buffer.Item = num;
+                        next++;
+                    } else {
+                        if (stuffs.length > 0 && current.trim().substring(0, 1) !== '$' && current.trim().substring(0, 10) !== 'Area Total') {
+                            stuffs[stuffs.length - 1].Comments = current;
+                        }
+                    }
+                    break;
+                case 1:
+                    buffer.description = current;
+                    next++;
+                    break;
+                case 2:
+                    buffer.Qty = parseFloat(current);
+                    next++;
+                    break;
+                case 3:
+                    buffer.UM = current;
+                    next++;
+                    break;
+                case 4:
+                    buffer.PPU = parseFloat(current.substr(1).split(',').join(''));
+                    next++;
+                    break;
+                case 5:
+                    buffer.Cost = parseFloat(current.substr(1).split(',').join(''));
+                    buffer.Amount = parseFloat(current.substr(1).split(',').join(''));
+                    next++;
+                    break;
+            }
+        }
+        return stuffs;
+        // console.log(stuffs);
+    }
 
     protected importHTML(selectorFiles: FileList) {
         let data;
@@ -559,8 +642,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         var reader = new FileReader();
         reader.onload = function (event) {
             let $ = Cheerio.load(event.target.result);
-            console.log($('#box-table-b').find('.tahoma12-gray').length);
-
+            // console.log($('#box-table-b').find('.tahoma12-gray').length);
+            let entireList = this.getInner($('#box-table-b').find('.tahoma12-gray'));
             let objList = $('.tahoma14-gold');
             let a = $('table').first();
             a = a.children().eq(0).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(0).children().eq(0).children().eq(3).children().eq(1).children().eq(0);
@@ -577,6 +660,22 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             this.setState({ Stories: a.eq(4).children().eq(1).text() });
             this.setState({ Area: a.eq(5).children().eq(1).text() });
             this.setState({ TotalCost: a.eq(6).children().eq(1).text() });
+            if(entireList.length!=0){
+                let count=0;
+                entireList[0].Cate = objList.eq(0).text().trim();
+                for(let i=1;i<entireList.length;i++){
+                    if(entireList[i].Item==1){
+                        count++;
+                        entireList[i].Cate = objList.eq(count).text().trim();
+                    }
+                    else{
+                        entireList[i].Cate = objList.eq(count).text().trim();
+                    }
+                }
+            }
+            
+            this.setState({ Item:entireList});
+            // console.log(entireList);            
             //console.log(a.eq(0).children().eq(1).text());
         }.bind(this);
         reader.readAsText(file);
@@ -2122,7 +2221,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         eachitem.UM = data.list[i].each[j].UM;
                         eachitem.PPU = data.list[i].each[j].PPU;
                         eachitem.Cost = data.list[i].each[j].cost;
-                        eachitem.Amount = data.list[i].each[j].cost0;
+                        eachitem.Amount = data.list[i].each[j].cost;
 
                         //console.log(data.list[i].each[j].image);
                         if (data.list[i].each[j].image !== undefined) {
