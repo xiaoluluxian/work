@@ -269,7 +269,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         </div> */}
                     </div>
                 </div>
-                <div className="space">
+                {/* <div className="space">
                     <div style={{
                         alignItems: 'center',
                         textAlign: 'center',
@@ -277,8 +277,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         width: '100%',
                     }}>
                         Welcome to Repair and Preservation Network Company!
-            </div>
-                </div>
+            </div> */}
+                {/* </div> */}
                 <div className="menu">
                     <div style={{
                         margin: '15px',
@@ -312,6 +312,13 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     </button> */}
                 </div>
                 <div className='edit'>
+                <div style={{
+                    backgroundColor:"#D6DBDF",
+                    // overflow: "hidden",
+                    // position:"fixed"
+                    position: "absolute",
+                    width:"34%"
+                }}>
                     <div style={{ marginTop: "10px" }}><button
                         style={{
                             // paddingTop: '20px',
@@ -431,16 +438,56 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                             }}
                             title="delitem" onClick={this.exportJson}>ExportJson</button>
-                    </div>
-                    <table>
-                        <tr>Property Address <input className="text" id='propaddr' value={this.state.Address}
-                            onChange={e => this.AddrChange(e.target.value)} /></tr>
-                        <tr>Asset Number <input className="text" id='assetnum' value={this.state.AssetNum}
-                            onChange={e => this.AssetChange(e.target.value)} /></tr>
-                        <tr>Start Date      <input type="date" id='startdate' value={this.state.StartDate}
-                            onChange={e => this.StartDChange(e.target.value)} /></tr>
-                        <tr>Due Date      <input type="date" id='duedate' value={this.state.DueDate}
-                            onChange={e => this.IDateChange(e.target.value)} /></tr>
+                    </div></div>
+                    <div style={{
+                        marginLeft:"10px",
+                        marginTop:"10px"
+                    }}>
+                        
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>Property Address</span>
+                                <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
+                            id='propaddr' value={this.state.Address}
+                            onChange={e => this.AddrChange(e.target.value)} style={{color:"black"}}
+                            ></input>
+                            </div>
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>Asset Number</span>
+                                <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
+                            id='assetnumber' value={this.state.AssetNum}
+                            onChange={e => this.AssetChange(e.target.value)} style={{color:"black"}}
+                            ></input>
+                            </div>
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>Start Date</span>
+                                <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
+                            id='startdate' value={this.state.StartDate}
+                            onChange={e => this.StartDChange(e.target.value)} style={{color:"black"}}
+                            ></input>
+                            </div>
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>Due Date</span>
+                                <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
+                            id='duedate' value={this.state.DueDate}
+                            onChange={e => this.IDateChange(e.target.value)} style={{color:"black"}}
+                            ></input>
+                            </div>
                         <tr>Completion Date <input type="date" id='comdate' value={this.state.CompletionDate}
                             onChange={e => {
                                 this.setState({ CompletionDate: e.target.value });
@@ -495,7 +542,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             </textarea>
                         </tr>
 
-                    </table>
+                   </div>
 
                     <div id="myModal" className="modal">
                         <div className="modal-content">
@@ -552,9 +599,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
         );
     }
-    protected getInner(element){
-        let stuffs=[];
-        let buffer={
+    protected getInner(element) {
+        let stuffs = [];
+        let buffer = {
             After: [],
             Amount: 0,
             During: [],
@@ -573,7 +620,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             Before: []
         }
         let next = 0;
-        for(let i=0;i<element.length;i++){
+        for (let i = 0; i < element.length; i++) {
             if (next === 6) {
                 next = 0;
                 stuffs.push(buffer);
@@ -660,21 +707,21 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             this.setState({ Stories: a.eq(4).children().eq(1).text() });
             this.setState({ Area: a.eq(5).children().eq(1).text() });
             this.setState({ TotalCost: a.eq(6).children().eq(1).text() });
-            if(entireList.length!=0){
-                let count=0;
+            if (entireList.length != 0) {
+                let count = 0;
                 entireList[0].Cate = objList.eq(0).text().trim();
-                for(let i=1;i<entireList.length;i++){
-                    if(entireList[i].Item==1){
+                for (let i = 1; i < entireList.length; i++) {
+                    if (entireList[i].Item == 1) {
                         count++;
                         entireList[i].Cate = objList.eq(count).text().trim();
                     }
-                    else{
+                    else {
                         entireList[i].Cate = objList.eq(count).text().trim();
                     }
                 }
             }
-            
-            this.setState({ Item:entireList});
+
+            this.setState({ Item: entireList });
             // console.log(entireList);            
             //console.log(a.eq(0).children().eq(1).text());
         }.bind(this);

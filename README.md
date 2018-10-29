@@ -108,3 +108,7 @@ Change stage display in main page
 
 1. Able to import HTML without pictures
 2. Fixed show user for task in main
+
+### 1.1.4
+
+1. Working on beautify editpage(1)
