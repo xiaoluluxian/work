@@ -112,3 +112,7 @@ Change stage display in main page
 ### 1.1.4
 
 1. Working on beautify editpage(1)
+
+### 1.1.5
+
+1. WOrking on beautify editpage(2)

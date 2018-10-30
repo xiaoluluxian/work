@@ -295,76 +295,27 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     marginLeft: '10px',
                     marginTop: '10px',
                     marginBottom: '10px',
+                    // marginRight: "10px",
+                    
                     fontSize: '14px',
-                }}>
+                }}><button
+                style={{
+                    // paddingTop: '20px',
+                    // marginTop: '10px',
+                    // marginLeft: '10px',
+                    marginRight: '10px',
+                    width: '60px',
+                    height: '25px',
+                    fontSize: '14px',
+
+                }}
+                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
                     {this.showStage()}
-                </div>
-                <div>
-                    {/* <button style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '100px',
-                        height: '31px',
-                        fontSize: '14px',
-                        marginBottom: '5px'
-                    }}
-                        title="Submit Task" onClick={this.changeStage2}><ins>Next Stage</ins>
-                    </button> */}
-                </div>
-                <div className='edit'>
-                <div style={{
-                    backgroundColor:"#D6DBDF",
-                    // overflow: "hidden",
-                    // position:"fixed"
-                    position: "absolute",
-                    width:"34%"
-                }}>
-                    <div style={{ marginTop: "10px" }}><button
-                        style={{
-                            // paddingTop: '20px',
-                            // marginTop: '10px',
-                            marginLeft: '10px',
-                            width: '60px',
-                            height: '25px',
-                            fontSize: '14px',
-
-                        }}
-                        title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button></div>
-                    {/* <input
-                        style={{
-
-                            marginTop: '10px',
-                            marginLeft: '10px',
-                            marginRight: '10px',
-
-                        }}
-                        type="file" id="readJson" name="json" onChange={(e) => { this.readJson(e.target.files) }} /> */}
-                    <div style={{ marginLeft: "10px" }}>Import JSON:<input
-                        style={{
-                            marginTop: '10px',
-                            marginLeft: '10px',
-                            fontSize: '14px',
-
-
-                        }}
-                        type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} /></div>
-                    <div style={{ marginLeft: "10px" }}>Import HTML:<input
-                        style={{
-                            marginTop: '10px',
-                            marginLeft: '10px',
-                            fontSize: '14px',
-
-
-                        }}
-                        type="file" id="htmlUpload" onChange={(e) => { this.importHTML(e.target.files) }} /></div>
-                    <div style={{
-                        marginLeft: "10px"
-                    }}>
-                        <button
+                    <button
                             style={{
                                 // paddingTop: '20px',
                                 // marginTop: '10px',
-
+                                marginLeft: '10px',
                                 width: '60px',
                                 height: '25px',
                                 fontSize: '14px',
@@ -431,14 +382,46 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <button
                             style={{
                                 // paddingTop: '20px',
-                                marginTop: '10px',
+                                marginTop: '5px',
                                 marginLeft: '10px',
                                 width: '85px',
                                 height: '25px',
                                 fontSize: '14px',
                             }}
                             title="delitem" onClick={this.exportJson}>ExportJson</button>
-                    </div></div>
+                </div>
+                <div style={{ marginLeft: "10px" }}>Import JSON:<input
+                        style={{
+                            marginTop: '5px',
+                            marginLeft: '10px',
+                            fontSize: '14px',
+
+
+                        }}
+                        type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} /></div>
+                    <div style={{ marginLeft: "10px" }}>Import HTML:<input
+                        style={{
+                            marginTop: '10px',
+                            marginLeft: '10px',
+                            fontSize: '14px',
+
+
+                        }}
+                        type="file" id="htmlUpload" onChange={(e) => { this.importHTML(e.target.files) }} /></div>
+                <div>
+                    {/* <button style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '100px',
+                        height: '31px',
+                        fontSize: '14px',
+                        marginBottom: '5px'
+                    }}
+                        title="Submit Task" onClick={this.changeStage2}><ins>Next Stage</ins>
+                    </button> */}
+                </div>
+                <div className='edit'>
+                
                     <div style={{
                         marginLeft:"10px",
                         marginTop:"10px"
@@ -488,20 +471,59 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => this.IDateChange(e.target.value)} style={{color:"black"}}
                             ></input>
                             </div>
-                        <tr>Completion Date <input type="date" id='comdate' value={this.state.CompletionDate}
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>Complete Date</span>
+                                <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
+                            id='completiondate' value={this.state.CompletionDate}
                             onChange={e => {
                                 this.setState({ CompletionDate: e.target.value });
-                            }} />
-                        </tr>
-                        <tr>Invoice Date <input type="date" id='invdate' value={this.state.InvoiceDate}
+                            }} style={{color:"black"}}
+                            ></input>
+                            </div>
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>Invoice Date</span>
+                                <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
+                            id='invoicedate' value={this.state.InvoiceDate}
                             onChange={e => {
                                 this.setState({ InvoiceDate: e.target.value });
-                            }} />
-                        </tr>
-                        <tr>City/State/Zip Code      <input className="text" id='city' value={this.state.City}
-                            onChange={e => this.CityChange(e.target.value)} /></tr>
-                        <tr>Lock Box Number     <input className="text" id='lockboxnumber' value={this.state.LBNum}
-                            onChange={e => this.LBNumChange(e.target.value)} /></tr>
+                            }} style={{color:"black"}}
+                            ></input>
+                            </div>
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>City/State/Zip Code</span>
+                                <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
+                            id='city' value={this.state.City}
+                            onChange={e => {
+                                this.setState({ City: e.target.value });
+                            }} style={{color:"black"}}
+                            ></input>
+                            </div>
+                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
+                                <span className="input-group-text" id="basic-addon1" style={{
+                                    color:"black",
+                                    height:"31px"
+                                    // fontSize:'13px'
+                            }}>Lock Box Number</span>
+                                <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
+                            id='city' value={this.state.LBNum}
+                            onChange={e => {
+                                this.setState({ LBNum: e.target.value });
+                            }} style={{color:"black"}}
+                            ></input>
+                            </div>
+                        
                         <tr>Note <div><textarea id='note' value={this.state.Note}
                             onChange={e => {
                                 this.setState({ Note: e.target.value });
@@ -1464,8 +1486,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     contentType: false,
                     data: fd,
                     success: function (data) {
-                        //console.log(data);
-                        this.props.history.push('/main');
+                        window.location.reload();
                     }.bind(this),
                 });
             }.bind(this),
