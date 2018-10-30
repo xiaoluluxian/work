@@ -292,26 +292,31 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     </div> */}
                 </div>
                 <div style={{
-                    marginLeft: '10px',
-                    marginTop: '10px',
-                    marginBottom: '10px',
-                    // marginRight: "10px",
-                    
-                    fontSize: '14px',
-                }}><button
-                style={{
-                    // paddingTop: '20px',
-                    // marginTop: '10px',
-                    // marginLeft: '10px',
-                    marginRight: '10px',
-                    width: '60px',
-                    height: '25px',
-                    fontSize: '14px',
+                    backgroundColor: "silver"
+                }}>
+                    <div style={{
+                        marginLeft: '10px',
+                        // marginTop: '10px',
+                        marginBottom: '10px',
+                        // backgroundColor:"silver",
+                        // marginRight: "10px",
 
-                }}
-                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
-                    {this.showStage()}
-                    <button
+                        fontSize: '14px',
+                    }}><button
+                        style={{
+                            // paddingTop: '20px',
+                            // marginTop: '10px',
+                            // marginLeft: '10px',
+                            // backgroundColor:"silver",
+                            marginRight: '10px',
+                            width: '60px',
+                            height: '25px',
+                            fontSize: '14px',
+
+                        }}
+                        title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+                        {this.showStage()}
+                        <button
                             style={{
                                 // paddingTop: '20px',
                                 // marginTop: '10px',
@@ -350,7 +355,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 height: '25px',
                                 fontSize: '14px',
                             }}
-                            title="download after" onClick={this.addWHP}>AddWHP</button>
+                            title="ADD WHP" onClick={this.addWHP}>AddWHP</button>
                         {/* <button
                         style={{
                             // paddingTop: '20px',
@@ -388,9 +393,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 height: '25px',
                                 fontSize: '14px',
                             }}
-                            title="delitem" onClick={this.exportJson}>ExportJson</button>
-                </div>
-                <div style={{ marginLeft: "10px" }}>Import JSON:<input
+                            title="ExportJson" onClick={this.exportJson}>ExportJson</button>
+                    </div>
+                    <div style={{ marginLeft: "10px" }}>Import JSON:<input
                         style={{
                             marginTop: '5px',
                             marginLeft: '10px',
@@ -408,163 +413,182 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                         }}
                         type="file" id="htmlUpload" onChange={(e) => { this.importHTML(e.target.files) }} /></div>
-                <div>
-                    {/* <button style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '100px',
-                        height: '31px',
-                        fontSize: '14px',
-                        marginBottom: '5px'
-                    }}
-                        title="Submit Task" onClick={this.changeStage2}><ins>Next Stage</ins>
-                    </button> */}
                 </div>
                 <div className='edit'>
-                
+
                     <div style={{
-                        marginLeft:"10px",
-                        marginTop:"10px"
+                        marginLeft: "10px",
+                        marginTop: "10px"
                     }}>
-                        
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Property Address</span>
-                                <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
-                            id='propaddr' value={this.state.Address}
-                            onChange={e => this.AddrChange(e.target.value)} style={{color:"black"}}
+                            <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
+                                id='propaddr' value={this.state.Address}
+                                onChange={e => this.AddrChange(e.target.value)} style={{ color: "black" }}
                             ></input>
-                            </div>
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Asset Number</span>
-                                <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
-                            id='assetnumber' value={this.state.AssetNum}
-                            onChange={e => this.AssetChange(e.target.value)} style={{color:"black"}}
+                            <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
+                                id='assetnumber' value={this.state.AssetNum}
+                                onChange={e => this.AssetChange(e.target.value)} style={{ color: "black" }}
                             ></input>
-                            </div>
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Start Date</span>
-                                <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
-                            id='startdate' value={this.state.StartDate}
-                            onChange={e => this.StartDChange(e.target.value)} style={{color:"black"}}
+                            <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
+                                id='startdate' value={this.state.StartDate}
+                                onChange={e => this.StartDChange(e.target.value)} style={{ color: "black" }}
                             ></input>
-                            </div>
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Due Date</span>
-                                <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
-                            id='duedate' value={this.state.DueDate}
-                            onChange={e => this.IDateChange(e.target.value)} style={{color:"black"}}
+                            <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
+                                id='duedate' value={this.state.DueDate}
+                                onChange={e => this.IDateChange(e.target.value)} style={{ color: "black" }}
                             ></input>
-                            </div>
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Complete Date</span>
-                                <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
-                            id='completiondate' value={this.state.CompletionDate}
-                            onChange={e => {
-                                this.setState({ CompletionDate: e.target.value });
-                            }} style={{color:"black"}}
+                            <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
+                                id='completiondate' value={this.state.CompletionDate}
+                                onChange={e => {
+                                    this.setState({ CompletionDate: e.target.value });
+                                }} style={{ color: "black" }}
                             ></input>
-                            </div>
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Invoice Date</span>
-                                <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
-                            id='invoicedate' value={this.state.InvoiceDate}
-                            onChange={e => {
-                                this.setState({ InvoiceDate: e.target.value });
-                            }} style={{color:"black"}}
+                            <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
+                                id='invoicedate' value={this.state.InvoiceDate}
+                                onChange={e => {
+                                    this.setState({ InvoiceDate: e.target.value });
+                                }} style={{ color: "black" }}
                             ></input>
-                            </div>
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>City/State/Zip Code</span>
-                                <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
-                            id='city' value={this.state.City}
-                            onChange={e => {
-                                this.setState({ City: e.target.value });
-                            }} style={{color:"black"}}
+                            <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
+                                id='city' value={this.state.City}
+                                onChange={e => {
+                                    this.setState({ City: e.target.value });
+                                }} style={{ color: "black" }}
                             ></input>
-                            </div>
-                            <div className="input-group-prepend input-group-sm" style={{marginBottom:"2px"}}>
-                                <span className="input-group-text" id="basic-addon1" style={{
-                                    color:"black",
-                                    height:"31px"
-                                    // fontSize:'13px'
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Lock Box Number</span>
-                                <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
-                            id='city' value={this.state.LBNum}
-                            onChange={e => {
-                                this.setState({ LBNum: e.target.value });
-                            }} style={{color:"black"}}
+                            <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
+                                id='city' value={this.state.LBNum}
+                                onChange={e => {
+                                    this.setState({ LBNum: e.target.value });
+                                }} style={{ color: "black" }}
                             ></input>
-                            </div>
-                        
-                        <tr>Note <div><textarea id='note' value={this.state.Note}
-                            onChange={e => {
-                                this.setState({ Note: e.target.value });
-                            }}
-                            style={{
-                                width: "425px",
-                                height: "100px",
-                                resize: "none"
-                            }}>
-                        </textarea></div></tr>
-                        <tr>Tax <input className="text" id='tax' value={this.state.Tax}
-                            onChange={e => {
-                                this.setState({ Tax: e.target.value });
-                                let tempi = this.state.Item;
-                                for (let i = 0; i < tempi.length; i++) {
-                                    tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
-
-                                    tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
-                                    console.log(tempi[i].Amount);
-
-                                }
-                                this.setState({ Item: tempi });
-
-                            }} /></tr>
-
-                        <tr>BillTo <input className="text" id='assetnum' value={this.state.BillTo}
-                            onChange={e => {
-                                this.setState({ BillTo: e.target.value });
-                            }} /></tr>
-                        <tr>
-                            Description
-                            <textarea id='description' value={this.state.Desc}
-                                onChange={e => this.DescChange(e.target.value)} style={{
-                                    width: "425px",
-                                    height: "140px",
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "100px"
+                                // fontSize:'13px'
+                            }}>Note</span>
+                            <textarea className="form-control" placeholder="Noteeeeeeeeeeeee..." aria-label="Note" aria-describedby="basic-addon1"
+                                id='city' value={this.state.Note}
+                                onChange={e => {
+                                    this.setState({ Note: e.target.value });
+                                }} style={{
+                                    color: "black",
+                                    width: "100%",
+                                    height: "100px",
                                     resize: "none"
-                                }}>
-                            </textarea>
-                        </tr>
+                                }}
+                            ></textarea>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Tax</span>
+                            <input type="text" className="form-control" placeholder="Enter Tax Please..." aria-label="Tax" aria-describedby="basic-addon1"
+                                id='tax' value={this.state.Tax}
+                                onChange={e => {
+                                    this.setState({ Tax: e.target.value });
+                                    let tempi = this.state.Item;
+                                    for (let i = 0; i < tempi.length; i++) {
+                                        tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
 
-                   </div>
+                                        tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
+                                        // console.log(tempi[i].Amount);
+
+                                    }
+                                    this.setState({ Item: tempi });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>BillTo</span>
+                            <input type="text" className="form-control" placeholder="bill to..." aria-label="BillTo" aria-describedby="basic-addon1"
+                                id='billto' value={this.state.BillTo}
+                                onChange={e => {
+                                    this.setState({ BillTo: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "100px"
+                                // fontSize:'13px'
+                            }}>Description</span>
+                            <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
+                                id='city' value={this.state.Desc}
+                                onChange={e => {
+                                    this.setState({ Desc: e.target.value });
+                                }} style={{
+                                    color: "black",
+                                    width: "100%",
+                                    height: "100px",
+                                    resize: "none"
+                                }}
+                            ></textarea>
+                        </div>
+                    </div>
 
                     <div id="myModal" className="modal">
                         <div className="modal-content">
@@ -1074,7 +1098,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 className={value.taxable ? "check" : "uncheck"} onClick={() => {
                                     let list = this.state.Item;
                                     list[index].Taxable = !list[index].Taxable;
-                                    console.log(list[index].Taxable);
+                                    if (list[index].Taxable === true) {
+                                        list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
+                                        list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
+                                    }
+                                    else{
+                                        list[index].Tax = 0;
+                                        list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
+                                    }
+
+                                    // console.log(list[index].Taxable);
                                     this.setState({ Item: list });
                                 }} title="tax">Tax</button>
 
@@ -1774,12 +1807,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         borderCollapse: "collapse",
                                     }}
                                 ></td> */}
-                                <th colSpan={6}>Before </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <th colSpan={6}> During </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <th colSpan={6}> After </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD",}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
 
                             </React.Fragment>
                         )

@@ -115,4 +115,9 @@ Change stage display in main page
 
 ### 1.1.5
 
-1. WOrking on beautify editpage(2)
+1. Working on beautify editpage(2)
+
+### 1.1.6
+
+1. WOrking on beautify editpage(3)
+2. Fixed taxable change tax bug
