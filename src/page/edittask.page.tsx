@@ -448,6 +448,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 color: "black",
                                 height: "31px"
                                 // fontSize:'13px'
+                            }}>Invoice Number</span>
+                            <input type="text" className="form-control" placeholder="Invoice Number" aria-label="Invoice Number" aria-describedby="basic-addon1"
+                                id='invoicenumber' value={this.state.Invoice}
+                                onChange={e => {this.setState({ Invoice: e.target.value })}} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
                             }}>Start Date</span>
                             <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
                                 id='startdate' value={this.state.StartDate}
@@ -1856,12 +1867,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <th colSpan={6}> Before </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <th colSpan={6}> During </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <th colSpan={6}> After </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD",}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -1901,12 +1912,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <th colSpan={6}> Before </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <th colSpan={6}> During </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <th colSpan={6}> After </th>
-                                <tr><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{borderLeftColor:"#DDDDDD",}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
