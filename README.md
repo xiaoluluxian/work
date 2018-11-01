@@ -125,3 +125,7 @@ Change stage display in main page
 ### 1.1.7
 
 1. Working on beautify editpage(4)
+
+## 1.1.8
+
+1. Working on ordertask(2)

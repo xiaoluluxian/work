@@ -18,7 +18,7 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
-    history:any;
+    history: any;
 }
 
 export interface IState {
@@ -27,11 +27,29 @@ export interface IState {
 
 class PageGhotiOrdertask extends React.Component<IProps, IState> {
     state = {
-        alluser:[],
-        
+        data:[],
+        alluser: [],
+        currUser: '',
+
 
     };
     public componentDidMount() {
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllTasks',
+
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                //console.log(result);
+                this.setState({ data: result });
+            }).bind(this),
+        });
+
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllUsers',
 
@@ -52,8 +70,9 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
         this.submitTask = this.submitTask.bind(this);
-        this.handleChange = this.handleChange.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
+        this.changeUser = this.changeUser.bind(this);
+        this.editTask = this.editTask.bind(this);
 
     }
 
@@ -116,15 +135,46 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
                     <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div></div>
 
-            <table id="register">
-                <tr>Username <input className="text" id='username' ></input></tr>
-                <tr>Password      <input className="text" id='password'></input></tr>
-                <tr>Authority      <input className="text" id='authority'></input></tr>
-                <tr>Firstname <input className="text" id='firstname' ></input></tr>
-                <tr>LastName <input className="text" id='lastname' ></input></tr>
-                <tr>Email <input className="text" id='email' ></input></tr>
-                <tr>Phone <input className="text" id='phone' ></input></tr>
-            </table>
+            <div>User:
+                    <select id='setUser' onChange={e => { this.changeUser(e.target.value ) }}>
+                    <option>all</option>
+                    {this.state.alluser.map(function (item, key) {
+                        return (
+                            <option>{item.Username}</option>
+                        )
+                    }.bind(this))}
+                </select>
+            </div>
+            <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
+                    <thead>
+                        <tr>
+                            {/* <th></th> */}
+                            <th>Action</th>
+                            <th>Property Address</th>
+                            {/* <th>Asset Number</th>
+                            <th>Due Date</th>
+                            <th>User</th>
+                            <th>CurrStage</th>
+                            <th>Status</th> */}
+                        </tr>
+                    </thead>
+                    <tbody>{this.state.data.map(function (item, key) {
+                        return(
+                            <tr key={key}>
+                                <td><button style={{
+                                    marginRight: '5px',
+                                    marginTop: '5px'
+                                }} title="edit" className="btn btn-primary btn-sm" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                                    
+                                </td>
+                                <td>{item.Address}</td>
+                                
+                            </tr>
+                        )
+                    }.bind(this))
+                }
+                </tbody>
+                </table>
             <button
                 style={{
                     marginLeft: '10px',
@@ -146,49 +196,19 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
         </div>);
 
     }
-    protected handleChange(selectorFiles: FileList) {
-        //var tmppath = URL.createObjectURL(selectorFiles[0]);
-        let page = JSON.parse(selectorFiles[0].toString());
-        // let temp = JSON.stringify(selectorFiles[0].toString());
-        // let page = JSON.parse(temp);
-        console.log(page);
-        // console.log(tmppath);
-    }
-    protected AddrChange(value) {
-        this.setState({
-            Address: value
-        });
-    }
-    protected AssetChange(value) {
-        this.setState({
-            AssetNum: value
-        });
-    }
-    protected StartDChange(value) {
-        this.setState({
-            StartDate: value
-        });
-    }
-    protected StageChange(value) {
-        this.setState({
-            Stage: value
-        });
-    }
-    protected CityChange(value) {
-        this.setState({
-            City: value
-        });
-    }
-    protected logout() {
+
+    protected editTask(item){
 
     }
+
+    protected changeUser(user){
+
+    }
+    
     protected changeStatus() {
         this.props.history.push('/main');
     }
-    protected addTask() {
-
-    }
-
+    
 
     protected submitTask() {
         $.ajax({
@@ -197,16 +217,16 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
             method: 'POST',
             datatype: "json",
             headers: {
-                Authorization:"Bearer " + localStorage.getItem('Token'),
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             data: JSON.stringify({
-                username:$('#username').val(),
-                password:$('#password').val(),
-                authority:$('#authority').val(),
-                firstname:$('#firstname').val(),
-                lastname:$('#lastname').val(),
-                email:$('#email').val(),
-                phone:$('#phone').val(),
+                username: $('#username').val(),
+                password: $('#password').val(),
+                authority: $('#authority').val(),
+                firstname: $('#firstname').val(),
+                lastname: $('#lastname').val(),
+                email: $('#email').val(),
+                phone: $('#phone').val(),
             }),
             success: function (data) {
                 console.log(data);
