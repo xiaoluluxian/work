@@ -100,15 +100,6 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
                     }}>
                         Repair and Preservation Network, LLC
             </div>
-                    <div style={{
-                        marginTop: '20px',
-                        marginRight: '20px',
-                        textAlign: 'center',
-                        width: '30%'
-
-                    }}>
-                        <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
-                    </div>
                     {/* <div style={{
                         marginTop: '20px',
                         marginRight: '10px',

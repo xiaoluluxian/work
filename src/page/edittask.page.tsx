@@ -69,6 +69,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Username: [],
         alluser: [],
         TaskStatus: '',
+        Client:''
 
         //data: [],
     };
@@ -111,6 +112,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ uploadLink: result.upload_link });
                 this.setState({ Tax: result.Tax });
                 this.setState({ Username: result.Username });
+                this.setState({Client: result.Client});
                 this.setState({ TaskStatus: result.TaskStatus });
                 console.log(result.Username);
                 //this.setState({ })                
@@ -525,6 +527,19 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 id='city' value={this.state.LBNum}
                                 onChange={e => {
                                     this.setState({ LBNum: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Client</span>
+                            <input type="text" className="form-control" placeholder="client..." aria-label="Client" aria-describedby="basic-addon1"
+                                id='client' value={this.state.Client}
+                                onChange={e => {
+                                    this.setState({ Client: e.target.value });
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
@@ -2550,6 +2565,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Tax: this.state.Tax,
                 Username: this.state.Username,
                 TaskStatus: this.state.TaskStatus,
+                Client: this.state.Client,
             }),
             success: function (data) {
                 console.log(JSON.parse(data));

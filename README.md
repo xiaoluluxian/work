@@ -129,3 +129,7 @@ Change stage display in main page
 ## 1.1.8
 
 1. Working on ordertask(2)
+
+### 1.1.9
+
+1. Add client

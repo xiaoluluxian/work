@@ -128,6 +128,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                                 resize: "none"
                             }}className="text" id= 'description'></textarea></tr>
                     <tr>Lock Box Number      <input  className="text" id= 'lockboxnumber'></input></tr>
+                    <tr>Client      <input  className="text" id= 'client'></input></tr>
                     <tr>Username 
                     <select id='username' onChange={e => this.UserChange(e.target.value)}>
                             <option>all</option>
@@ -199,6 +200,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 Address:$('#propaddr').val(),
                 Desc: $('#description').val(),
                 keycode: $('#lockboxnumber').val(),
+                client: $('#client').val(),
                 Username: name,
                 //stage:$('#stage').val()
             }),
