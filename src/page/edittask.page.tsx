@@ -69,7 +69,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Username: [],
         alluser: [],
         TaskStatus: '',
-        Client:''
+        Client: ''
 
         //data: [],
     };
@@ -112,7 +112,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ uploadLink: result.upload_link });
                 this.setState({ Tax: result.Tax });
                 this.setState({ Username: result.Username });
-                this.setState({Client: result.Client});
+                this.setState({ Client: result.Client });
                 this.setState({ TaskStatus: result.TaskStatus });
                 console.log(result.Username);
                 //this.setState({ })                
@@ -453,7 +453,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             }}>Invoice Number</span>
                             <input type="text" className="form-control" placeholder="Invoice Number" aria-label="Invoice Number" aria-describedby="basic-addon1"
                                 id='invoicenumber' value={this.state.Invoice}
-                                onChange={e => {this.setState({ Invoice: e.target.value })}} style={{ color: "black" }}
+                                onChange={e => { this.setState({ Invoice: e.target.value }) }} style={{ color: "black" }}
                             ></input>
                         </div>
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
@@ -1128,7 +1128,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
                                         list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
                                     }
-                                    else{
+                                    else {
                                         list[index].Tax = 0;
                                         list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
                                     }
@@ -1247,7 +1247,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     marginBottom: '5px',
 
                                 }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index) }}
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index, 0) }}
                             //onClick={e.target.value=null}
                             //type="file" multiple id="beforefileupload" onClick={}
                             />
@@ -1280,7 +1280,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     marginBottom: '5px',
 
                                 }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addDuringPicture(e.target.files, index) }} />
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addDuringPicture(e.target.files, index,0) }} />
                             {this.state.Item[index].During.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
@@ -1307,7 +1307,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     marginBottom: '5px',
 
                                 }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addAfterPicture(e.target.files, index) }} />
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addAfterPicture(e.target.files, index, 0) }} />
                             {this.state.Item[index].After.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
@@ -1331,108 +1331,202 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </div>
         )
     }
-    protected addAfterPicture(Files: FileList, index: number) {
+    protected addAfterPicture(Files: FileList, index: number, temp:number) {
 
-        for (let i = 0; i < Files.length; i++) {
+        if(Files.length==(temp+1)){
             var formData = new FormData();
-            formData.append('image', Files[i]);
-            $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
-                method: 'POST',
-                enctype: 'multipart/form-data',
-                dataType: 'json',
-                fileElementId: 'file-input',
-                cache: false,
-                processData: false,
-                contentType: false,
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem('Token'),
-                },
-                data: formData,
-                success: function (result) {
-                    console.log(result);
-                    let list = this.state.Item;
-                    list[index].After.push({
-                        Name: Files[i].name,
-                        Format: '',
-                        Cate: list[index].Cate,
-                        itemId: list[index].Item,
-                        Src: result
-                    });
-                    this.setState({ Item: list });
-                }.bind(this),
-            });
+                formData.append('image', Files[temp]);
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/uploadImage',
+                    method: 'POST',
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    fileElementId: 'file-input',
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: formData,
+                    success: function (result) {
+                        // console.log(result);
+                        let list = this.state.Item;
+                        list[index].After.push({
+                            Name: Files[temp].name,
+                            Format: '',
+                            Cate: list[index].Cate,
+                            itemId: list[index].Item,
+                            Src: result
+                        });
+                        this.setState({ Item: list });
+                    }.bind(this),
+                });
+        }
+        else{
+            var formData = new FormData();
+                formData.append('image', Files[temp]);
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/uploadImage',
+                    method: 'POST',
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    fileElementId: 'file-input',
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: formData,
+                    success: function (result) {
+                        // console.log(result);
+                        let list = this.state.Item;
+                        list[index].After.push({
+                            Name: Files[temp].name,
+                            Format: '',
+                            Cate: list[index].Cate,
+                            itemId: list[index].Item,
+                            Src: result
+                        });
+                        this.setState({ Item: list });
+                        this.addAfterPicture(Files,index,temp+1);
+                    }.bind(this),
+                });
         }
 
     }
 
-    protected addDuringPicture(Files: FileList, index: number) {
-
-        for (let i = 0; i < Files.length; i++) {
+    protected addDuringPicture(Files: FileList, index: number, temp:number) {
+        // console.log(Files);
+        if(Files.length==(temp+1)){
             var formData = new FormData();
-            formData.append('image', Files[i]);
-            $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
-                method: 'POST',
-                enctype: 'multipart/form-data',
-                dataType: 'json',
-                fileElementId: 'file-input',
-                cache: false,
-                processData: false,
-                contentType: false,
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem('Token'),
-                },
-                data: formData,
-                success: function (result) {
-                    console.log(result);
-                    let list = this.state.Item;
-                    list[index].During.push({
-                        Name: Files[i].name,
-                        Format: '',
-                        Cate: list[index].Cate,
-                        itemId: list[index].Item,
-                        Src: result
-                    });
-                    this.setState({ Item: list });
-                }.bind(this),
-            });
+                formData.append('image', Files[temp]);
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/uploadImage',
+                    method: 'POST',
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    fileElementId: 'file-input',
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: formData,
+                    success: function (result) {
+                        // console.log(result);
+                        let list = this.state.Item;
+                        list[index].During.push({
+                            Name: Files[temp].name,
+                            Format: '',
+                            Cate: list[index].Cate,
+                            itemId: list[index].Item,
+                            Src: result
+                        });
+                        this.setState({ Item: list });
+                    }.bind(this),
+                });
         }
-
+        else{
+            var formData = new FormData();
+                formData.append('image', Files[temp]);
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/uploadImage',
+                    method: 'POST',
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    fileElementId: 'file-input',
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: formData,
+                    success: function (result) {
+                        // console.log(result);
+                        let list = this.state.Item;
+                        list[index].During.push({
+                            Name: Files[temp].name,
+                            Format: '',
+                            Cate: list[index].Cate,
+                            itemId: list[index].Item,
+                            Src: result
+                        });
+                        this.setState({ Item: list });
+                        this.addDuringPicture(Files,index,temp+1);
+                    }.bind(this),
+                });
+        }
+            
+                
+        
     }
 
-    protected addBeforePicture(Files: FileList, index: number) {
+    protected addBeforePicture(Files: FileList, index: number, temp:number) {
 
-        for (let i = 0; i < Files.length; i++) {
+        if(Files.length==(temp+1)){
             var formData = new FormData();
-            formData.append('image', Files[i]);
-            //console.log(Files[i].name);
-            $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
-                method: 'POST',
-                enctype: 'multipart/form-data',
-                dataType: 'json',
-                fileElementId: 'file-input',
-                cache: false,
-                processData: false,
-                contentType: false,
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem('Token'),
-                },
-                data: formData,
-                success: function (result) {
-                    //console.log(Files[i].name);
-                    let list = this.state.Item;
-                    list[index].Before.push({
-                        Name: Files[i].name,
-                        Format: '',
-                        Cate: list[index].Cate,
-                        itemId: list[index].Item,
-                        Src: result
-                    });
-                    this.setState({ Item: list });
-                }.bind(this),
-            });
+                formData.append('image', Files[temp]);
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/uploadImage',
+                    method: 'POST',
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    fileElementId: 'file-input',
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: formData,
+                    success: function (result) {
+                        // console.log(result);
+                        let list = this.state.Item;
+                        list[index].Before.push({
+                            Name: Files[temp].name,
+                            Format: '',
+                            Cate: list[index].Cate,
+                            itemId: list[index].Item,
+                            Src: result
+                        });
+                        this.setState({ Item: list });
+                    }.bind(this),
+                });
+        }
+        else{
+            var formData = new FormData();
+                formData.append('image', Files[temp]);
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/uploadImage',
+                    method: 'POST',
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    fileElementId: 'file-input',
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: formData,
+                    success: function (result) {
+                        // console.log(result);
+                        let list = this.state.Item;
+                        list[index].Before.push({
+                            Name: Files[temp].name,
+                            Format: '',
+                            Cate: list[index].Cate,
+                            itemId: list[index].Item,
+                            Src: result
+                        });
+                        this.setState({ Item: list });
+                        this.addBeforePicture(Files,index,temp+1);
+                    }.bind(this),
+                });
         }
 
     }
@@ -1833,12 +1927,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         borderCollapse: "collapse",
                                     }}
                                 ></td> */}
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD",}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
 
                             </React.Fragment>
                         )
@@ -1882,12 +1976,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD",}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
                             </React.Fragment>
                         )
                     }.bind(this))}
@@ -1927,12 +2021,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <td>{this.showProcess(item.Process)}</td>
                                     <td>{this.showStatus(item.Status)}</td>
                                 </tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD", borderBottomColor:"#DDDDDD"}}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                <tr><td style={{borderLeftColor:"#DDDDDD",}}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
                             </React.Fragment>
                         )
                     }.bind(this))}

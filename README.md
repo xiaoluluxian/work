@@ -133,3 +133,7 @@ Change stage display in main page
 ### 1.1.9
 
 1. Add client
+
+### 1.1.10
+
+1. Fixed upload image order

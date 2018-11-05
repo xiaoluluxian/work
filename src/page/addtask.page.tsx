@@ -200,7 +200,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 Address:$('#propaddr').val(),
                 Desc: $('#description').val(),
                 keycode: $('#lockboxnumber').val(),
-                client: $('#client').val(),
+                client: "WF",
                 Username: name,
                 //stage:$('#stage').val()
             }),

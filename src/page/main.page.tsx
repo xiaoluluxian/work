@@ -74,7 +74,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 this.setState({ alluser: result });
             }).bind(this),
         });
-        if (localStorage.getItem('Authority') === '2') {
+        if (localStorage.getItem('Authority') === ('2'||'3')) {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',
                 //url: 'https://rpnserver.appspot.com/userProfile',
