@@ -128,7 +128,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
                 </div>
-                {/* <div>User:
+                <div>User:
                     <select style={{
                                 width: "100px"
                             }}
@@ -139,7 +139,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                                     )
                                 }.bind(this))}
                             </select>
-                        </div> */}
+                        </div>
                 <table>
                     <thead>
                         <tr>Username: {this.state.Username}</tr>
@@ -206,7 +206,8 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                 Phone: this.state.Phone,
                 Firstname: this.state.Firstname,
                 Lastname: this.state.Lastname,
-                Background: this.state.Background
+                Background: this.state.Background,
+                TaskIds: this.state.TaskIds
             }),
             success: (function (result) {
                 this.props.history.push("/main");

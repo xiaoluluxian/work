@@ -137,3 +137,7 @@ Change stage display in main page
 ### 1.1.10
 
 1. Fixed upload image order
+
+### 1.2.0
+
+1. Working on ordertask DONE!

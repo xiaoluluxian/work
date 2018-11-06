@@ -27,9 +27,23 @@ export interface IState {
 
 class PageGhotiOrdertask extends React.Component<IProps, IState> {
     state = {
-        data:[],
+        data: [],
         alluser: [],
         currUser: '',
+        delStatus: '0',
+        delProperty: [],
+        delAddress:"",
+        delTaskID:"",
+
+        Username: "",
+        Password: "",
+        Email: "",
+        Phone: "",
+        Firstname: "",
+        Lastname: "",
+        Authority: "",
+        Background: "",
+        TaskIds: [],
 
 
     };
@@ -65,6 +79,7 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
                 this.setState({ alluser: result });
             }).bind(this),
         });
+        
     }
 
     public constructor(props) {
@@ -72,7 +87,8 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
         this.submitTask = this.submitTask.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
         this.changeUser = this.changeUser.bind(this);
-        this.editTask = this.editTask.bind(this);
+        this.delTask = this.delTask.bind(this);
+        this.addTask = this.addTask.bind(this)
 
     }
 
@@ -100,13 +116,6 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
                     }}>
                         Repair and Preservation Network, LLC
             </div>
-                    {/* <div style={{
-                        marginTop: '20px',
-                        marginRight: '10px',
-                        textAlign: 'right',
-                    }}>
-                        <button className='link' title='Log out' onClick={this.logout}><ins>Log Out</ins></button>
-                    </div> */}
                 </div>
             </div>
             <div className="space">
@@ -126,8 +135,12 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
                     <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div></div>
 
-            <div>User:
-                    <select id='setUser' onChange={e => { this.changeUser(e.target.value ) }}>
+            <div style={{
+                marginLeft: '10px',
+                marginTop: '5px'
+                // marginRight:'10px'
+            }}>User:
+                    <select style={{ marginLeft: '10px' }} id='setUser' onChange={e => { this.changeUser(e.target.value) }}>
                     <option>all</option>
                     {this.state.alluser.map(function (item, key) {
                         return (
@@ -136,36 +149,61 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
                     }.bind(this))}
                 </select>
             </div>
+            <div style={{
+                marginLeft: '10px',
+                marginTop: '5px'
+                // marginRight:'10px'
+            }}>Address To Change:{this.state.delAddress}</div>
             <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
-                    <thead>
-                        <tr>
-                            {/* <th></th> */}
-                            <th>Action</th>
-                            <th>Property Address</th>
-                            {/* <th>Asset Number</th>
+                <thead>
+                    <tr>
+                        {/* <th></th> */}
+                        <th>Action</th>
+                        <th>Property Address</th>
+                        <th>key</th>
+                        {/* <th>Asset Number</th>
                             <th>Due Date</th>
                             <th>User</th>
                             <th>CurrStage</th>
                             <th>Status</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>{this.state.data.map(function (item, key) {
-                        return(
+                    </tr>
+                </thead>
+                <tbody>{this.state.data.map(function (item, key) {
+
+                    if (this.state.delStatus === '0') {
+                        return (
                             <tr key={key}>
                                 <td><button style={{
                                     marginRight: '5px',
                                     marginTop: '5px'
-                                }} title="edit" className="btn btn-primary btn-sm" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
-                                    
+                                }} title="del" className="btn btn-primary btn-sm" onClick={this.delTask.bind(this, item,key)}><ins>Del</ins></button>
+
                                 </td>
                                 <td>{item.Address}</td>
-                                
+                                <td>{key}</td>
+
                             </tr>
                         )
-                    }.bind(this))
+                    }
+                    else {
+                        return (
+                            <tr key={key}>
+                                <td><button style={{
+                                    marginRight: '5px',
+                                    marginTop: '5px'
+                                }} title="add" className="btn btn-primary btn-sm" onClick={this.addTask.bind(this, item, key)}><ins>Add</ins></button>
+
+                                </td>
+                                <td>{item.Address}</td>
+                                <td>{key}</td>
+
+                            </tr>
+                        )
+                    }
+                }.bind(this))
                 }
                 </tbody>
-                </table>
+            </table>
             <button
                 style={{
                     marginLeft: '10px',
@@ -188,41 +226,128 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
 
     }
 
-    protected editTask(item){
-
+    protected addTask(item,key) {
+        let tasks = this.state.data;
+        let taskid = this.state.TaskIds;
+        tasks.splice(key,0,this.state.delProperty);
+        taskid.splice(key,0,this.state.delTaskID);
+        this.setState({data:tasks});
+        this.setState({TaskIds:taskid});
+        this.setState({delStatus:'0'});
+        this.setState({delProperty:[]});
+        this.setState({delAddress:""});
+        console.log(this.state.TaskIds);
     }
 
-    protected changeUser(user){
-
+    protected delTask(item,key) {
+        console.log(item);
+        this.setState({delProperty:item});
+        this.setState({delAddress:item.Address});
+        this.setState({delTaskID:item.TaskID});
+        let tasks = this.state.data;
+        let taskid = this.state.TaskIds;
+        tasks.splice(key,1);
+        taskid.splice(key,1);
+        this.setState({data:tasks});
+        this.setState({delStatus:'1'});
+        this.setState({TaskIds:taskid});
+        // console.log(item);
     }
+
+    protected changeUser(user) {
+        // console.log(user);
+        this.setState({delStatus:'0'});
+        this.setState({delProperty:[]});
+        this.setState({delAddress:""});
+        this.setState({currUser:user});
+        if(user==="all"){
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findAllTasks',
     
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    //console.log(result);
+                    this.setState({ data: result });
+                }).bind(this),
+            });
+        }
+        else{
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findUserByUsername?username=' + user,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result.TaskIds);
+                    this.setState({ Username: result.Username });
+                    this.setState({ Password: result.Password });
+                    this.setState({ Email: result.Email });
+                    this.setState({ Firstname: result.Firstname });
+                    this.setState({ Lastname: result.Lastname });
+                    this.setState({ Phone: result.Phone });
+                    this.setState({ Authority: result.Authority });
+                    this.setState({ Background: result.Background });
+                    this.setState({ TaskIds: result.TaskIds });
+    
+                }).bind(this),
+            });
+            $.ajax({
+                //url: 'https://rpntechserver.appspot.com/userProfile',
+                url: 'http://rpntechserver.appspot.com/getTasksByUser?username=' + user,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    //console.log(result);
+                    this.setState({ data: result });
+    
+                }).bind(this),
+            });
+        }
+        
+    }
+
     protected changeStatus() {
         this.props.history.push('/main');
     }
-    
+
 
     protected submitTask() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/register',
-            //url: 'http://localhost:8080/login',
-            method: 'POST',
-            datatype: "json",
+            url: 'https://rpntechserver.appspot.com/updateUser',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
+            method: 'POST',
+            datatype: "json",
             data: JSON.stringify({
-                username: $('#username').val(),
-                password: $('#password').val(),
-                authority: $('#authority').val(),
-                firstname: $('#firstname').val(),
-                lastname: $('#lastname').val(),
-                email: $('#email').val(),
-                phone: $('#phone').val(),
+                Username:this.state.currUser,
+                Password:this.state.Password,
+                Authority: this.state.Authority,
+                Email: this.state.Email,
+                Phone: this.state.Phone,
+                Firstname: this.state.Firstname,
+                Lastname: this.state.Lastname,
+                Background: this.state.Background,
+                TaskIds: this.state.TaskIds
             }),
-            success: function (data) {
-                console.log(data);
-                this.props.history.push('/main');
-            }.bind(this),
+            success: (function (result) {
+                this.props.history.push("/main");
+            }).bind(this),
         });
     }
 }
