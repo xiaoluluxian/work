@@ -148,6 +148,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         <tr>Phone: <input value={this.state.Phone} onChange={e=>{this.setState({Phone:e.target.value})}}></input></tr>
                         <tr>Firstname: <input value={this.state.Firstname} onChange={e=>{this.setState({Firstname:e.target.value})}}></input></tr>
                         <tr>Lastname: <input value={this.state.Lastname} onChange={e=>{this.setState({Lastname:e.target.value})}}></input></tr>
+                        <tr>Background: {this.state.Background}</tr>
                         {/* <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr> */}
                     </thead>
                 </table>

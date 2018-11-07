@@ -112,6 +112,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 <tr>LastName <input className="text" id='lastname' ></input></tr>
                 <tr>Email <input className="text" id='email' ></input></tr>
                 <tr>Phone <input className="text" id='phone' ></input></tr>
+                <tr>Background <input className="text" id='background' ></input></tr>
             </table>
             <button
                 style={{
@@ -195,6 +196,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 lastname:$('#lastname').val(),
                 email:$('#email').val(),
                 phone:$('#phone').val(),
+                background:$('#background').val(),
             }),
             success: function (data) {
                 console.log(data);

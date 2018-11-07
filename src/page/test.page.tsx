@@ -54,8 +54,12 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     <td>2018-05-03</td>
                 </tr>
                 <tr>
+                    <td>Berglunds snabbkop</td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>North/South</td>
-                    <td>2017-03-16</td>
+                    <td>2017/03-16</td>
                 </tr>
                 <tr>
                     <td>Alfreds Futterkiste</td>
@@ -210,7 +214,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             data: JSON.stringify({
             }),
             success: function (data) {
-                console.log(data);
+                console.log(data.weather[0].description);
 
             }.bind(this),
         })
@@ -256,7 +260,12 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
     protected convertDate(d) {
         var p = d.split("-");
-        return +(p[0] + p[1] + p[2]);
+        if(d.indexOf("/")==-1&&d!=""){
+            return +(p[0] + p[1] + p[2]);
+        }
+        else{
+            return 99999999;
+        }
     }
 
 

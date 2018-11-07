@@ -9,6 +9,7 @@ import * as Component from '../component/import';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from "./logo";
+import wflogo from "./wflogo";
 import { IItem, IPage } from './interface';
 import * as $ from 'jquery';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
@@ -56,6 +57,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.showStatus = this.showStatus.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
         this.ordertask = this.ordertask.bind(this);
+        this.showOperation = this.showOperation.bind(this);
 
     }
 
@@ -74,7 +76,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 this.setState({ alluser: result });
             }).bind(this),
         });
-        if (localStorage.getItem('Authority') === ('2'||'3')) {
+        if (localStorage.getItem('Authority') === '2' || '3') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',
                 //url: 'https://rpnserver.appspot.com/userProfile',
@@ -178,36 +180,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="Show Task" onClick={this.showTask}><ins>Show Task</ins></button>
                     </div>
-                    <div style={{
-                        margin: '5px',
-                    }}>
-                        <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
-                    </div>
-                    <div style={{
-                        margin: '5px',
-                    }}>
-                        <button className="link" title="Register" onClick={this.register}><ins>Register</ins></button>
-                    </div>
-                    <div style={{
-                        margin: '5px',
-                    }}>
-                        <button className="link" title="Ordertask" onClick={this.ordertask}><ins>OrderTask</ins></button>
-                    </div>
-                    {/* <div style={{
-                        padding: '10px',
-                    }}>
-                        <button className="link" title="Delete User" onClick={this.delUser}><ins>DelUser</ins></button>
-                    </div> */}
-                    <div style={{
-                        padding: '10px',
-                    }}>
-                        <button className="link" title="UserProfile" onClick={this.userProfile}><ins>Profile</ins></button>
-                    </div>
-                    <div style={{
-                        padding: '10px',
-                    }}>
-                        <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
-                    </div>
+                    {this.showOperation()}
+
 
                     <div style={{
                         padding: '10px',
@@ -288,7 +262,12 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     {this.showSetTask(item)}
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
-                                <td>{item.Address}</td>
+                                <td>
+                                    <img src={wflogo} alt="wflogo"
+                                        style={{
+                                            marginRight:"3px"
+                                        }} />
+                                    {item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
                                 <td><a data-toggle="collapse" href={temp}>Show User</a><div id={temp2} className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td>
@@ -306,23 +285,65 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             </div >);
     }
 
+    protected showOperation() {
+        if (localStorage.getItem("Authority") === '3') {
+            return
+        }
+        else {
+            return (
+                <React.Fragment>
+                    <div style={{
+                        margin: '5px',
+                    }}>
+                        <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
+                    </div>
+                    <div style={{
+                        margin: '5px',
+                    }}>
+                        <button className="link" title="Register" onClick={this.register}><ins>Register</ins></button>
+                    </div>
+                    <div style={{
+                        margin: '5px',
+                    }}>
+                        <button className="link" title="Ordertask" onClick={this.ordertask}><ins>OrderTask</ins></button>
+                    </div>
+                    {/* <div style={{
+                        padding: '10px',
+                    }}>
+                        <button className="link" title="Delete User" onClick={this.delUser}><ins>DelUser</ins></button>
+                    </div> */}
+                    <div style={{
+                        padding: '10px',
+                    }}>
+                        <button className="link" title="UserProfile" onClick={this.userProfile}><ins>Profile</ins></button>
+                    </div>
+                    <div style={{
+                        padding: '10px',
+                    }}>
+                        <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
+                    </div>
+                </React.Fragment>
+            )
+        }
+    }
+
     protected clickShowUser() {
         var coll = document.getElementsByClassName("link collapsible");
         // console.log(coll);
         var i;
         for (i = 0; i < coll.length; i++) {
             console.log(coll[i]);
-            coll[i].addEventListener("onClick", function() {
-              this.classList.toggle("active");
-              var content = this.nextElementSibling;
-              console.log(content);
-              if (content.style.display === "block") {
-                content.style.display = "none";
-              } else {
-                content.style.display = "block";
-              }
+            coll[i].addEventListener("onClick", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                console.log(content);
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
             });
-          }
+        }
     }
 
     protected showByStage(stage) {
@@ -556,7 +577,12 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
     protected convertDate(d) {
         var p = d.split("-");
-        return +(p[0] + p[1] + p[2]);
+        if (d.indexOf("/") == -1 && d != "") {
+            return +(p[0] + p[1] + p[2]);
+        }
+        else {
+            return 99999999;
+        }
     }
 
     protected delUser() {

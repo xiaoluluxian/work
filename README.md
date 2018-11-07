@@ -141,3 +141,10 @@ Change stage display in main page
 ### 1.2.0
 
 1. Working on ordertask DONE!
+
+### 1.2.1
+
+1. Fixed sort by duedate
+2. Add background to register and userprofile
+3. Add authority different to client
+4. Add Wells Fargo icon before address

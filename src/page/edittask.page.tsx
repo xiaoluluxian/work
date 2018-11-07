@@ -293,6 +293,29 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <button className="link" title="Add Task" onClick={this.addTask}><ins>Add Task</ins></button>
                     </div> */}
                 </div>
+                {this.showOperation()}
+                {this.showEdit()}
+                
+
+                {this.showTable()}
+                {/* <div id='show' className='page'>
+                    {this.showTable()}
+
+                </div> */}
+                {window.onbeforeunload = (function () {
+                    return "asd"
+                })}
+            </div>
+
+        );
+    }
+
+    protected showOperation(){
+        if(localStorage.getItem("Authority")==='3'){
+            return
+        }
+        else{
+            return(
                 <div style={{
                     backgroundColor: "silver"
                 }}>
@@ -416,261 +439,264 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         }}
                         type="file" id="htmlUpload" onChange={(e) => { this.importHTML(e.target.files) }} /></div>
                 </div>
+            )
+        }
+    }
+
+    protected showEdit(){
+        if(localStorage.getItem("Authority")==='3'){
+            return
+        }
+        else{
+            return(
                 <div className='edit'>
 
-                    <div style={{
-                        marginLeft: "10px",
-                        marginTop: "10px"
-                    }}>
+                <div style={{
+                    marginLeft: "10px",
+                    marginTop: "10px"
+                }}>
 
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Property Address</span>
-                            <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
-                                id='propaddr' value={this.state.Address}
-                                onChange={e => this.AddrChange(e.target.value)} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Asset Number</span>
-                            <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
-                                id='assetnumber' value={this.state.AssetNum}
-                                onChange={e => this.AssetChange(e.target.value)} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Invoice Number</span>
-                            <input type="text" className="form-control" placeholder="Invoice Number" aria-label="Invoice Number" aria-describedby="basic-addon1"
-                                id='invoicenumber' value={this.state.Invoice}
-                                onChange={e => { this.setState({ Invoice: e.target.value }) }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Start Date</span>
-                            <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
-                                id='startdate' value={this.state.StartDate}
-                                onChange={e => this.StartDChange(e.target.value)} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Due Date</span>
-                            <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
-                                id='duedate' value={this.state.DueDate}
-                                onChange={e => this.IDateChange(e.target.value)} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Complete Date</span>
-                            <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
-                                id='completiondate' value={this.state.CompletionDate}
-                                onChange={e => {
-                                    this.setState({ CompletionDate: e.target.value });
-                                }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Invoice Date</span>
-                            <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
-                                id='invoicedate' value={this.state.InvoiceDate}
-                                onChange={e => {
-                                    this.setState({ InvoiceDate: e.target.value });
-                                }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>City/State/Zip Code</span>
-                            <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
-                                id='city' value={this.state.City}
-                                onChange={e => {
-                                    this.setState({ City: e.target.value });
-                                }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Lock Box Number</span>
-                            <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
-                                id='city' value={this.state.LBNum}
-                                onChange={e => {
-                                    this.setState({ LBNum: e.target.value });
-                                }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Client</span>
-                            <input type="text" className="form-control" placeholder="client..." aria-label="Client" aria-describedby="basic-addon1"
-                                id='client' value={this.state.Client}
-                                onChange={e => {
-                                    this.setState({ Client: e.target.value });
-                                }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "100px"
-                                // fontSize:'13px'
-                            }}>Note</span>
-                            <textarea className="form-control" placeholder="Noteeeeeeeeeeeee..." aria-label="Note" aria-describedby="basic-addon1"
-                                id='city' value={this.state.Note}
-                                onChange={e => {
-                                    this.setState({ Note: e.target.value });
-                                }} style={{
-                                    color: "black",
-                                    width: "100%",
-                                    height: "100px",
-                                    resize: "none"
-                                }}
-                            ></textarea>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>Tax</span>
-                            <input type="text" className="form-control" placeholder="Enter Tax Please..." aria-label="Tax" aria-describedby="basic-addon1"
-                                id='tax' value={this.state.Tax}
-                                onChange={e => {
-                                    this.setState({ Tax: e.target.value });
-                                    let tempi = this.state.Item;
-                                    for (let i = 0; i < tempi.length; i++) {
-                                        tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
-
-                                        tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
-                                        // console.log(tempi[i].Amount);
-
-                                    }
-                                    this.setState({ Item: tempi });
-                                }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "31px"
-                                // fontSize:'13px'
-                            }}>BillTo</span>
-                            <input type="text" className="form-control" placeholder="bill to..." aria-label="BillTo" aria-describedby="basic-addon1"
-                                id='billto' value={this.state.BillTo}
-                                onChange={e => {
-                                    this.setState({ BillTo: e.target.value });
-                                }} style={{ color: "black" }}
-                            ></input>
-                        </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                            <span className="input-group-text" id="basic-addon1" style={{
-                                color: "black",
-                                height: "100px"
-                                // fontSize:'13px'
-                            }}>Description</span>
-                            <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
-                                id='city' value={this.state.Desc}
-                                onChange={e => {
-                                    this.setState({ Desc: e.target.value });
-                                }} style={{
-                                    color: "black",
-                                    width: "100%",
-                                    height: "100px",
-                                    resize: "none"
-                                }}
-                            ></textarea>
-                        </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Property Address</span>
+                        <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
+                            id='propaddr' value={this.state.Address}
+                            onChange={e => this.AddrChange(e.target.value)} style={{ color: "black" }}
+                        ></input>
                     </div>
-
-                    <div id="myModal" className="modal">
-                        <div className="modal-content">
-                            <span className="close">&times;</span>
-                            <table>
-                                <tr><td style={{ width: '20%' }}>UserToRemove</td><td>{this.state.Username[parseInt(this.state.Stage)]}</td></tr>
-                                <tr><td style={{ width: '20%' }}>StageTo</td> <td>{this.showCurrStage()}</td></tr>
-                                <tr><td style={{ width: '20%' }}>UserToSet</td><td><select id='setUser'>
-                                    {this.state.alluser.map(function (item, key) {
-                                        return (
-                                            <option>{item.Firstname}</option>
-                                        )
-                                    }.bind(this))}
-                                </select></td> </tr>
-
-                            </table>
-                            <button style={{
-                                marginLeft: "10px",
-                                marginTop: "10px",
-                                width: "80px",
-                                height: "35px"
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Asset Number</span>
+                        <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
+                            id='assetnumber' value={this.state.AssetNum}
+                            onChange={e => this.AssetChange(e.target.value)} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Invoice Number</span>
+                        <input type="text" className="form-control" placeholder="Invoice Number" aria-label="Invoice Number" aria-describedby="basic-addon1"
+                            id='invoicenumber' value={this.state.Invoice}
+                            onChange={e => { this.setState({ Invoice: e.target.value }) }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Start Date</span>
+                        <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
+                            id='startdate' value={this.state.StartDate}
+                            onChange={e => this.StartDChange(e.target.value)} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Due Date</span>
+                        <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
+                            id='duedate' value={this.state.DueDate}
+                            onChange={e => this.IDateChange(e.target.value)} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Complete Date</span>
+                        <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
+                            id='completiondate' value={this.state.CompletionDate}
+                            onChange={e => {
+                                this.setState({ CompletionDate: e.target.value });
+                            }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Invoice Date</span>
+                        <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
+                            id='invoicedate' value={this.state.InvoiceDate}
+                            onChange={e => {
+                                this.setState({ InvoiceDate: e.target.value });
+                            }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>City/State/Zip Code</span>
+                        <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
+                            id='city' value={this.state.City}
+                            onChange={e => {
+                                this.setState({ City: e.target.value });
+                            }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Lock Box Number</span>
+                        <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
+                            id='city' value={this.state.LBNum}
+                            onChange={e => {
+                                this.setState({ LBNum: e.target.value });
+                            }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Client</span>
+                        <input type="text" className="form-control" placeholder="client..." aria-label="Client" aria-describedby="basic-addon1"
+                            id='client' value={this.state.Client}
+                            onChange={e => {
+                                this.setState({ Client: e.target.value });
+                            }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "100px"
+                            // fontSize:'13px'
+                        }}>Note</span>
+                        <textarea className="form-control" placeholder="Noteeeeeeeeeeeee..." aria-label="Note" aria-describedby="basic-addon1"
+                            id='city' value={this.state.Note}
+                            onChange={e => {
+                                this.setState({ Note: e.target.value });
+                            }} style={{
+                                color: "black",
+                                width: "100%",
+                                height: "100px",
+                                resize: "none"
                             }}
-                                title="sbmit" onClick={this.submitStage}>Submit</button>
-                        </div>
+                        ></textarea>
                     </div>
-                    {/* <div id="myModal2" className="modal">
-                        <div className="modal-content">
-                            <span className="close">&times;</span>
-                            <table>
-                                <tr>Category <input className="text" id='delcate' /></tr>
-                                <tr>Item <input className="text" id='delitem' /></tr>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Tax</span>
+                        <input type="text" className="form-control" placeholder="Enter Tax Please..." aria-label="Tax" aria-describedby="basic-addon1"
+                            id='tax' value={this.state.Tax}
+                            onChange={e => {
+                                this.setState({ Tax: e.target.value });
+                                let tempi = this.state.Item;
+                                for (let i = 0; i < tempi.length; i++) {
+                                    tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
 
-                            </table>
-                            <button title="submit" onClick={this.confirmDel}>Submit</button>
-                        </div>
-                    </div> */}
-                    {this.state.Item.map(this.mapItem)}
-                    <button style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '430px',
-                        height: '27px',
-                        fontSize: '14px',
-                    }} onClick={this.addaddItem} title="add item">AddItem</button>
-                </div>
-                <div id='show' className='page'>
-                    {this.showTable()}
+                                    tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
+                                    // console.log(tempi[i].Amount);
 
+                                }
+                                this.setState({ Item: tempi });
+                            }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>BillTo</span>
+                        <input type="text" className="form-control" placeholder="bill to..." aria-label="BillTo" aria-describedby="basic-addon1"
+                            id='billto' value={this.state.BillTo}
+                            onChange={e => {
+                                this.setState({ BillTo: e.target.value });
+                            }} style={{ color: "black" }}
+                        ></input>
+                    </div>
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "100px"
+                            // fontSize:'13px'
+                        }}>Description</span>
+                        <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
+                            id='city' value={this.state.Desc}
+                            onChange={e => {
+                                this.setState({ Desc: e.target.value });
+                            }} style={{
+                                color: "black",
+                                width: "100%",
+                                height: "100px",
+                                resize: "none"
+                            }}
+                        ></textarea>
+                    </div>
                 </div>
-                {window.onbeforeunload = (function () {
-                    return "asd"
-                })}
+
+                <div id="myModal" className="modal">
+                    <div className="modal-content">
+                        <span className="close">&times;</span>
+                        <table>
+                            <tr><td style={{ width: '20%' }}>UserToRemove</td><td>{this.state.Username[parseInt(this.state.Stage)]}</td></tr>
+                            <tr><td style={{ width: '20%' }}>StageTo</td> <td>{this.showCurrStage()}</td></tr>
+                            <tr><td style={{ width: '20%' }}>UserToSet</td><td><select id='setUser'>
+                                {this.state.alluser.map(function (item, key) {
+                                    return (
+                                        <option>{item.Firstname}</option>
+                                    )
+                                }.bind(this))}
+                            </select></td> </tr>
+
+                        </table>
+                        <button style={{
+                            marginLeft: "10px",
+                            marginTop: "10px",
+                            width: "80px",
+                            height: "35px"
+                        }}
+                            title="sbmit" onClick={this.submitStage}>Submit</button>
+                    </div>
+                </div>
+                {/* <div id="myModal2" className="modal">
+                    <div className="modal-content">
+                        <span className="close">&times;</span>
+                        <table>
+                            <tr>Category <input className="text" id='delcate' /></tr>
+                            <tr>Item <input className="text" id='delitem' /></tr>
+
+                        </table>
+                        <button title="submit" onClick={this.confirmDel}>Submit</button>
+                    </div>
+                </div> */}
+                {this.state.Item.map(this.mapItem)}
+                <button style={{
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    width: '430px',
+                    height: '27px',
+                    fontSize: '14px',
+                }} onClick={this.addaddItem} title="add item">AddItem</button>
             </div>
-
-        );
+            )
+        }
     }
+
     protected getInner(element) {
         let stuffs = [];
         let buffer = {
@@ -1608,7 +1634,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 asset_num: this.state.AssetNum,
                 upload_link: this.state.uploadLink,
                 Tax: this.state.Tax,
-                Username: this.state.Username
+                Username: this.state.Username,
+                TaskStatus: this.state.TaskStatus,
+                Client: this.state.Client,
             }),
             success: function (data) {
                 var fd = new FormData();
@@ -1874,178 +1902,355 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected showTable() {
-        if (this.state.Stage === '0') {
-            return <div><table id="stage0">
-                <tr ><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
-                <tr><td style={{ width: "25%" }}>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
-                <tr><td style={{ width: "25%" }}>Start Date</td><td>{this.state.StartDate}</td></tr>
-                <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
-                <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
-                <tr><td style={{ width: "25%" }}>Description </td><td>{this.state.Desc}</td></tr>
-                <tr><td style={{ width: "25%" }}>Lock Box Number</td> <td>{this.state.LBNum}</td></tr>
-            </table>
-            </div>
-        }
-        else if (this.state.Stage === '1') {
-            return <div><table id="stage1" style={{
-                tableLayout: "fixed",
-                wordWrap: "break-word"
-            }}>
-                <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
-                <tr><td style={{ width: "25%" }}>Asset Number:</td> <td>{this.state.AssetNum}</td></tr>
-                <tr><td style={{ width: "25%" }}>Start Date:</td><td>{this.state.StartDate}</td></tr>
-                <tr><td style={{ width: "25%" }}>Due Date:</td><td>{this.state.DueDate}</td></tr>
-                <tr><td style={{ width: "25%" }}>City/State/Zip Code: </td><td>{this.state.City}</td></tr>
-                <tr><td style={{ width: "25%" }}> Description:</td><td>{this.state.Desc}</td></tr>
-                <tr><td style={{ width: "25%" }}>Lock Box Number:</td> <td>{this.state.LBNum}</td></tr>
-            </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Item</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Process</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>{this.state.Item.map(function (item, key) {
-                        return (
-                            <React.Fragment key={key}>
-                                <tr>
-                                    <td>{item.Cate}</td>
-                                    <td>{item.Item}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.Amount}</td>
-                                    <td>{this.showProcess(item.Process)}</td>
-                                    <td>{this.showStatus(item.Status)}</td>
-                                </tr>
-                                {/* <td
-                                    style={{
-                                        border: "none",
-                                        borderCollapse: "collapse",
-                                    }}
-                                ></td> */}
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
-
-                            </React.Fragment>
-                        )
-                    }.bind(this))}
-                    </tbody>
-                    {/* <tbody>
-                        {this.state.Item.map(this.mapShowItem)}
-                    </tbody> */}
-                </table>
-            </div>
-        }
-        else if (this.state.Stage === '2') {
-            return <div style={{
-            }}>
-                <table id="stage2">
-                    <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
-                    <tr><td style={{ width: "25%" }}>KeyCode/LockBoxNum</td><td>{this.state.LBNum}</td></tr>
+        if(localStorage.getItem("Authority")==='3'){
+            if (this.state.Stage === '0') {
+                return <div className="page2"><table id="stage0">
+                    <tr ><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Start Date</td><td>{this.state.StartDate}</td></tr>
                     <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
                     <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
-                    <tr><td style={{ width: "25%" }}>UploadLink</td><td>{this.state.uploadLink}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Description </td><td>{this.state.Desc}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Lock Box Number</td> <td>{this.state.LBNum}</td></tr>
                 </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Item</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Process</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>{this.state.Item.map(function (item, key) {
-                        return (
-                            <React.Fragment>
-                                <tr key={key}>
-                                    <td>{item.Cate}</td>
-                                    <td>{item.Item}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.Amount}</td>
-                                    <td>{this.showProcess(item.Process)}</td>
-                                    <td>{this.showStatus(item.Status)}</td>
-                                </tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
-                            </React.Fragment>
-                        )
-                    }.bind(this))}
-                    </tbody>
-                </table>
-            </div>
-        }
-        else if (this.state.Stage === '3') {
-            return <div style={{
-            }}>
-                <table id="stage3">
+                </div>
+            }
+            else if (this.state.Stage === '1') {
+                return <div className="page2"><table id="stage1" style={{
+                    tableLayout: "fixed",
+                    wordWrap: "break-word"
+                }}>
                     <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
-                    <tr><td style={{ width: "25%" }}>Invoice Number</td> <td>{this.state.Invoice}</td></tr>
-                    <tr><td style={{ width: "25%" }}>CompletionDate</td><td>{this.state.CompletionDate}</td></tr>
-                    <tr><td style={{ width: "25%" }}>Invoice Date</td><td>{this.state.InvoiceDate}</td></tr>
-                    <tr><td style={{ width: "25%" }}>BillTo </td><td>{this.state.BillTo}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Asset Number:</td> <td>{this.state.AssetNum}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Start Date:</td><td>{this.state.StartDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Due Date:</td><td>{this.state.DueDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>City/State/Zip Code: </td><td>{this.state.City}</td></tr>
+                    <tr><td style={{ width: "25%" }}> Description:</td><td>{this.state.Desc}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Lock Box Number:</td> <td>{this.state.LBNum}</td></tr>
                 </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Item</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Process</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>{this.state.Item.map(function (item, key) {
-                        return (
-                            <React.Fragment>
-                                <tr key={key}>
-                                    <td>{item.Cate}</td>
-                                    <td>{item.Item}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.Amount}</td>
-                                    <td>{this.showProcess(item.Process)}</td>
-                                    <td>{this.showStatus(item.Status)}</td>
-                                </tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
-                            </React.Fragment>
-                        )
-                    }.bind(this))}
-                    </tbody>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Process</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.state.Item.map(function (item, key) {
+                            return (
+                                <React.Fragment key={key}>
+                                    <tr>
+                                        <td>{item.Cate}</td>
+                                        <td>{item.Item}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.Amount}</td>
+                                        <td>{this.showProcess(item.Process)}</td>
+                                        <td>{this.showStatus(item.Status)}</td>
+                                    </tr>
+                                    {/* <td
+                                        style={{
+                                            border: "none",
+                                            borderCollapse: "collapse",
+                                        }}
+                                    ></td> */}
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+    
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        </tbody>
+                        {/* <tbody>
+                            {this.state.Item.map(this.mapShowItem)}
+                        </tbody> */}
+                    </table>
+                </div>
+            }
+            else if (this.state.Stage === '2') {
+                return <div className="page2" style={{
+                }}>
+                    <table id="stage2">
+                        <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                        <tr><td style={{ width: "25%" }}>KeyCode/LockBoxNum</td><td>{this.state.LBNum}</td></tr>
+                        <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
+                        <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
+                        <tr><td style={{ width: "25%" }}>UploadLink</td><td>{this.state.uploadLink}</td></tr>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Process</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.state.Item.map(function (item, key) {
+                            return (
+                                <React.Fragment>
+                                    <tr key={key}>
+                                        <td>{item.Cate}</td>
+                                        <td>{item.Item}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.Amount}</td>
+                                        <td>{this.showProcess(item.Process)}</td>
+                                        <td>{this.showStatus(item.Status)}</td>
+                                    </tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else if (this.state.Stage === '3') {
+                return <div className="page2" style={{
+                }}>
+                    <table id="stage3">
+                        <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                        <tr><td style={{ width: "25%" }}>Invoice Number</td> <td>{this.state.Invoice}</td></tr>
+                        <tr><td style={{ width: "25%" }}>CompletionDate</td><td>{this.state.CompletionDate}</td></tr>
+                        <tr><td style={{ width: "25%" }}>Invoice Date</td><td>{this.state.InvoiceDate}</td></tr>
+                        <tr><td style={{ width: "25%" }}>BillTo </td><td>{this.state.BillTo}</td></tr>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Process</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.state.Item.map(function (item, key) {
+                            return (
+                                <React.Fragment>
+                                    <tr key={key}>
+                                        <td>{item.Cate}</td>
+                                        <td>{item.Item}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.Amount}</td>
+                                        <td>{this.showProcess(item.Process)}</td>
+                                        <td>{this.showStatus(item.Status)}</td>
+                                    </tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else if (this.state.Stage === '4') {
+                return <div className="page2">Pending Accounting Review</div>
+            }
+            else if (this.state.Stage === '5') {
+                return <div className="page2">Complete</div>
+            }
+            else if (this.state.Stage === '6') {
+                return <div className="page2">Archived</div>
+            }
+            else {
+                return <div className="page2"> Error! </div>
+            }
+        }
+        else{
+            if (this.state.Stage === '0') {
+                return <div className="page"><table id="stage0">
+                    <tr ><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Asset Number</td> <td>{this.state.AssetNum}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Start Date</td><td>{this.state.StartDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Description </td><td>{this.state.Desc}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Lock Box Number</td> <td>{this.state.LBNum}</td></tr>
                 </table>
-            </div>
+                </div>
+            }
+            else if (this.state.Stage === '1') {
+                return <div className="page"><table id="stage1" style={{
+                    tableLayout: "fixed",
+                    wordWrap: "break-word"
+                }}>
+                    <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Asset Number:</td> <td>{this.state.AssetNum}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Start Date:</td><td>{this.state.StartDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Due Date:</td><td>{this.state.DueDate}</td></tr>
+                    <tr><td style={{ width: "25%" }}>City/State/Zip Code: </td><td>{this.state.City}</td></tr>
+                    <tr><td style={{ width: "25%" }}> Description:</td><td>{this.state.Desc}</td></tr>
+                    <tr><td style={{ width: "25%" }}>Lock Box Number:</td> <td>{this.state.LBNum}</td></tr>
+                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Process</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.state.Item.map(function (item, key) {
+                            return (
+                                <React.Fragment key={key}>
+                                    <tr>
+                                        <td>{item.Cate}</td>
+                                        <td>{item.Item}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.Amount}</td>
+                                        <td>{this.showProcess(item.Process)}</td>
+                                        <td>{this.showStatus(item.Status)}</td>
+                                    </tr>
+                                    {/* <td
+                                        style={{
+                                            border: "none",
+                                            borderCollapse: "collapse",
+                                        }}
+                                    ></td> */}
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+    
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        </tbody>
+                        {/* <tbody>
+                            {this.state.Item.map(this.mapShowItem)}
+                        </tbody> */}
+                    </table>
+                </div>
+            }
+            else if (this.state.Stage === '2') {
+                return <div className="page" style={{
+                }}>
+                    <table id="stage2">
+                        <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                        <tr><td style={{ width: "25%" }}>KeyCode/LockBoxNum</td><td>{this.state.LBNum}</td></tr>
+                        <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
+                        <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
+                        <tr><td style={{ width: "25%" }}>UploadLink</td><td>{this.state.uploadLink}</td></tr>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Process</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.state.Item.map(function (item, key) {
+                            return (
+                                <React.Fragment>
+                                    <tr key={key}>
+                                        <td>{item.Cate}</td>
+                                        <td>{item.Item}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.Amount}</td>
+                                        <td>{this.showProcess(item.Process)}</td>
+                                        <td>{this.showStatus(item.Status)}</td>
+                                    </tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else if (this.state.Stage === '3') {
+                return <div className="page" style={{
+                }}>
+                    <table id="stage3">
+                        <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                        <tr><td style={{ width: "25%" }}>Invoice Number</td> <td>{this.state.Invoice}</td></tr>
+                        <tr><td style={{ width: "25%" }}>CompletionDate</td><td>{this.state.CompletionDate}</td></tr>
+                        <tr><td style={{ width: "25%" }}>Invoice Date</td><td>{this.state.InvoiceDate}</td></tr>
+                        <tr><td style={{ width: "25%" }}>BillTo </td><td>{this.state.BillTo}</td></tr>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Process</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.state.Item.map(function (item, key) {
+                            return (
+                                <React.Fragment>
+                                    <tr key={key}>
+                                        <td>{item.Cate}</td>
+                                        <td>{item.Item}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.Amount}</td>
+                                        <td>{this.showProcess(item.Process)}</td>
+                                        <td>{this.showStatus(item.Status)}</td>
+                                    </tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else if (this.state.Stage === '4') {
+                return <div className="page">Pending Accounting Review</div>
+            }
+            else if (this.state.Stage === '5') {
+                return <div className="page">Complete</div>
+            }
+            else if (this.state.Stage === '6') {
+                return <div className="page">Archived</div>
+            }
+            else {
+                return <div className="page2"> Error! </div>
+            }
         }
-        else if (this.state.Stage === '4') {
-            return <div>Pending Accounting Review</div>
-        }
-        else if (this.state.Stage === '5') {
-            return <div>Complete</div>
-        }
-        else if (this.state.Stage === '6') {
-            return <div>Archived</div>
-        }
-        else {
-            return <div> Error! </div>
-        }
+        
     }
 
     protected mapPicture(picture: any[], desc: string) {
