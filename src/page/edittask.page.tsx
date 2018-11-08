@@ -90,6 +90,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 //let test: IPage=JSON.parse(result.toString);
                 // console.log(test);
                 console.log(result);
+                // console.log(JSON.stringify(result));
                 this.setState({ Address: result.Address });
                 this.setState({ Area: result.Area });
                 this.setState({ BillTo: result.BillTo });
@@ -114,7 +115,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ Username: result.Username });
                 this.setState({ Client: result.Client });
                 this.setState({ TaskStatus: result.TaskStatus });
-                console.log(result.Username);
+                // console.log(result.Username);
                 //this.setState({ })                
 
 
@@ -128,7 +129,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             method: 'GET',
             datatype: "json",
             success: (function (result) {
-                //console.log(result);
+                // console.log(JSON.stringify(result));
                 this.setState({ Before: result });
             }).bind(this),
         });
@@ -141,6 +142,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             datatype: "json",
             success: (function (result) {
                 //console.log(result);
+                // console.log(JSON.stringify(result));
                 this.setState({ During: result });
             }).bind(this),
         });
@@ -153,6 +155,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             datatype: "json",
             success: (function (result) {
                 //console.log(result);
+                // console.log(JSON.stringify(result));
                 this.setState({ After: result });
             }).bind(this),
         });
@@ -213,6 +216,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.findUserByName = this.findUserByName.bind(this);
         this.addWHP = this.addWHP.bind(this);
         this.importHTML = this.importHTML.bind(this);
+        this.downloadwtfBefore = this.downloadwtfBefore.bind(this);
+        this.downloadwtfAfter = this.downloadwtfAfter.bind(this);
+        this.downloadwtfDuring = this.downloadwtfDuring.bind(this);
 
     }
 
@@ -381,6 +387,36 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                             }}
                             title="ADD WHP" onClick={this.addWHP}>AddWHP</button>
+                            {/* <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="ADD WHP" onClick={this.downloadwtfBefore}>WTFBefore</button>
+                            <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="ADD WHP" onClick={this.downloadwtfDuring}>WTFDuring</button>
+                            <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="ADD WHP" onClick={this.downloadwtfAfter}>WTFAfter</button> */}
                         {/* <button
                         style={{
                             // paddingTop: '20px',
@@ -441,6 +477,62 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 </div>
             )
         }
+    }
+
+    protected downloadwtfBefore(){
+
+    }
+
+    protected downloadwtfDuring(){
+
+    }
+
+    protected downloadwtfAfter(){
+        function urlToPromise(url) {
+            console.log(url)
+            return new Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+        
+        var zip = new JSZip();
+        var urls = this.state.After;
+        for(let i=0;i<urls.length;i++){
+            while(urls[i].includes("+")){
+                urls[i].replace("+","%20");
+            }
+        }
+        console.log(urls);
+        // find every checked item
+        urls.forEach(function (url) {
+            console.log(url);
+            var filename = url.replace(/.*\//g, "") + ".jpg";
+            zip.file(filename, urlToPromise(url), { binary: true });
+        });
+        var add = this.state.Address
+        // when everything has been downloaded, we can trigger the dl
+        zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
+            var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+            if (metadata.currentFile) {
+                msg += ", current file = " + metadata.currentFile;
+            }
+            
+        })
+            .then(function callback(blob) {
+
+                FileSaver.saveAs(blob, add + "-After.zip");
+                
+            }, function (e) {
+                
+            });
+
+        return false;
     }
 
     protected showEdit(){
@@ -2679,6 +2771,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ Tax: '0' });
                 this.setState({ Item: allitem });
             }
+            // else if(data.TaskStatus!=undefined){
+
+            // }
             else {
                 let temptax = data.tax;
                 for (let i = 0; i < data.item.length; i++) {

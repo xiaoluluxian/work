@@ -148,3 +148,8 @@ Change stage display in main page
 2. Add background to register and userprofile
 3. Add authority different to client
 4. Add Wells Fargo icon before address
+
+### 1.2.2
+
+1. Add function in test for download image with wrong url
+2. Fixed user in userprofile

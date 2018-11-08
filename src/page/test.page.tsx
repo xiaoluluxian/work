@@ -14,6 +14,15 @@ import * as Cheerio from "cheerio"
 
 import Config from '../config/config';
 import { bootstrap, button } from "bootstrap"
+import * as FileSaver from 'file-saver';
+// import * as downloadi from "images-downloader";
+// import * as request from 'request';
+import * as JSZipUtils from "./jszip-utils.js";
+import * as JSZipUtilsMin from "./jszip-utils.min.js";
+//import * as saveas from "./FileSaver.js";
+import * as JSZip from "./jszip.js";
+import * as jsPDF from "jspdf";
+import * as helper from "./helpers.js";
 
 export interface IProps {
     page: IPage;
@@ -26,12 +35,16 @@ export interface IState {
 class PageGhotiTest extends React.Component<IProps, IState> {
     state = {
         page: null,
+        pic:[],
+        
     }
     public constructor(props) {
         super(props);
         this.readJson = this.readJson.bind(this);
         this.sortTable = this.sortTable.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangebefore = this.handleChangebefore.bind(this);
+        this.downloadBefore = this.downloadBefore.bind(this);
 
     }
 
@@ -97,9 +110,87 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
                 }}
                 type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+                <div style={{ marginLeft: "10px" }}>Import BeforeJSON:<input
+                        style={{
+                            marginTop: '5px',
+                            marginLeft: '10px',
+                            fontSize: '14px',
+
+
+                        }}
+                        type="file" id="fileUpload" onChange={(e) => { this.handleChangebefore(e.target.files) }} /></div>
+                        
+                    <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                width: '60px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="download before" onClick={this.downloadBefore}>Before</button>
+                        
         </React.Fragment>
         )
     }
+
+    protected downloadBefore(){
+        function urlToPromise(url) {
+            console.log(url)
+            return new Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+        
+        var zip = new JSZip();
+        var urls = this.state.pic;
+        console.log(this.state.pic);
+        // find every checked item
+        urls.forEach(function (url) {
+            console.log(url);
+            var filename = url.replace(/.*\//g, "") + ".jpg";
+            zip.file(filename, urlToPromise(url), { binary: true });
+        });
+        
+        // when everything has been downloaded, we can trigger the dl
+        zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
+            var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+            if (metadata.currentFile) {
+                msg += ", current file = " + metadata.currentFile;
+            }
+            
+        })
+            .then(function callback(blob) {
+
+                FileSaver.saveAs(blob, "-Before.zip");
+                
+            }, function (e) {
+                
+            });
+
+        return false;
+    }
+
+    
+
+    protected handleChangebefore(selectorFiles: FileList){
+        var data;
+        var file = selectorFiles[0];
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            data = JSON.parse(event.target.result);
+            this.setState({pic:data})
+        }.bind(this);
+        reader.readAsText(file);
+    }
+    
     protected getInner(element){
         let stuffs=[];
         let buffer={
