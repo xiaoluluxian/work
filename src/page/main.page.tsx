@@ -463,7 +463,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         success: (function (result) {
                             console.log(result);
                             this.setState({ data: result });
-
                         }).bind(this),
                     });
 
