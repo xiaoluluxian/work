@@ -18,7 +18,7 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
-    history:any;
+    history: any;
 }
 
 export interface IState {
@@ -31,6 +31,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         Name: '',
         Password: '',
         Authority: '',
+        currStage: '0',
 
     };
     public componentDidMount() {
@@ -42,6 +43,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         this.submitTask = this.submitTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
+        this.showTable = this.showTable.bind(this);
 
     }
 
@@ -103,17 +105,19 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div></div>
+            <div style={{ marginLeft: '10px', marginTop: '5px' }}>
+                <select style={{
+                    width: "100px"
+                }}
+                    id='showbystage' onChange={e => {
+                        this.setState({ currStage: e.target.value });
+                    }}>
+                    <option value="0">User</option>
+                    <option value="1">Client</option>
+                </select>
+            </div>
+            {this.showTable()}
 
-            <table id="register">
-                <tr>Username <input className="text" id='username' ></input></tr>
-                <tr>Password      <input className="text" id='password'></input></tr>
-                <tr>Authority      <input className="text" id='authority'></input></tr>
-                <tr>Firstname <input className="text" id='firstname' ></input></tr>
-                <tr>LastName <input className="text" id='lastname' ></input></tr>
-                <tr>Email <input className="text" id='email' ></input></tr>
-                <tr>Phone <input className="text" id='phone' ></input></tr>
-                <tr>Background <input className="text" id='background' ></input></tr>
-            </table>
             <button
                 style={{
                     marginLeft: '10px',
@@ -134,6 +138,32 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} /> */}
         </div>);
 
+    }
+
+    protected showTable() {
+        if (this.state.currStage === '0') {
+            return (
+                <table id="user">
+                    <tr>Username <input className="text" id='username' ></input></tr>
+                    <tr>Password <input className="text" id='password'></input></tr>
+                    <tr>Authority <input className="text" id='authority'></input></tr>
+                    <tr>Firstname <input className="text" id='firstname' ></input></tr>
+                    <tr>LastName <input className="text" id='lastname' ></input></tr>
+                    <tr>Email <input className="text" id='email' ></input></tr>
+                    <tr>Phone <input className="text" id='phone' ></input></tr>
+                    <tr>Background <input className="text" id='background' ></input></tr>
+                </table>
+            )
+        }
+        else {
+            return (
+                <table id="client">
+                    <tr>Company <input className="text" id='company' ></input></tr>
+                    <tr>Address <input className="text" id='address'></input></tr>
+                    <tr>check_list <input className="text" id='checklist' ></input></tr>
+                </table>
+            )
+        }
     }
     protected handleChange(selectorFiles: FileList) {
         //var tmppath = URL.createObjectURL(selectorFiles[0]);
@@ -180,29 +210,34 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
 
 
     protected submitTask() {
-        $.ajax({
-            url: 'https://rpntechserver.appspot.com/register',
-            //url: 'http://localhost:8080/login',
-            method: 'POST',
-            datatype: "json",
-            headers: {
-                Authorization:"Bearer " + localStorage.getItem('Token'),
-            },
-            data: JSON.stringify({
-                username:$('#username').val(),
-                password:$('#password').val(),
-                authority:$('#authority').val(),
-                firstname:$('#firstname').val(),
-                lastname:$('#lastname').val(),
-                email:$('#email').val(),
-                phone:$('#phone').val(),
-                background:$('#background').val(),
-            }),
-            success: function (data) {
-                console.log(data);
-                this.props.history.push('/main');
-            }.bind(this),
-        });
+        if(this.state.currStage==='0'){
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/register',
+                //url: 'http://localhost:8080/login',
+                method: 'POST',
+                datatype: "json",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: JSON.stringify({
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                    authority: $('#authority').val(),
+                    firstname: $('#firstname').val(),
+                    lastname: $('#lastname').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    background: $('#background').val(),
+                }),
+                success: function (data) {
+                    console.log(data);
+                    this.props.history.push('/main');
+                }.bind(this),
+            });
+        }
+        else{
+
+        }
     }
 }
 

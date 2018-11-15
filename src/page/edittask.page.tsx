@@ -129,7 +129,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             method: 'GET',
             datatype: "json",
             success: (function (result) {
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 this.setState({ Before: result });
             }).bind(this),
         });
@@ -142,7 +142,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             datatype: "json",
             success: (function (result) {
                 //console.log(result);
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 this.setState({ During: result });
             }).bind(this),
         });
@@ -155,7 +155,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             datatype: "json",
             success: (function (result) {
                 //console.log(result);
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 this.setState({ After: result });
             }).bind(this),
         });
@@ -170,7 +170,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             data: JSON.stringify({
             }),
             success: (function (result) {
-                //console.log(result);
+                // console.log(result);
                 this.setState({ alluser: result });
             }).bind(this),
         });
@@ -235,6 +235,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         // }
         // tax = taxTotal * (parseInt(this.state.Tax) ? parseInt(this.state.Tax) : 0) * 0.01;
         // total += tax;
+        let taxTotal = 0;
+        let TotalAmount = 0;
+        for(let i of this.state.Item){
+            TotalAmount+=(i.Amount?i.Amount:0);
+            taxTotal+=(i.Tax?i.Tax:0);
+        }
+        
+        
         return (
             <div className="main">
                 <div className="title">
@@ -303,7 +311,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 {this.showEdit()}
                 
 
-                {this.showTable()}
+                {this.showTable(taxTotal, TotalAmount)}
                 {/* <div id='show' className='page'>
                     {this.showTable()}
 
@@ -834,6 +842,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 };
             }
             let current = element.eq(i).text();
+            // console.log(current);
             switch (next) {
                 case 0:
                     let num: number = parseFloat(current);
@@ -847,6 +856,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     }
                     break;
                 case 1:
+                    // if(stuffs[stuffs.length - 1].Comments===undefined){
+                    //     buffer.description = current
+                    // }
+                    // else{
+                    //     buffer.description = current+" - "+stuffs[stuffs.length - 1].Comments;
+                    // }
                     buffer.description = current;
                     next++;
                     break;
@@ -867,6 +882,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     buffer.Amount = parseFloat(current.substr(1).split(',').join(''));
                     next++;
                     break;
+                    
             }
         }
         return stuffs;
@@ -1091,7 +1107,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }
             for (let each of this.state.Item) {
                 json.item.push({
-                    description: each.description,
+                    description: each.description+" - "+each.Comments,
                     unique: uniqueIdSmall(),
                     amount: each.Cost,
                     taxable: each.Taxable,
@@ -1115,7 +1131,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }
             for (let each of this.state.Item) {
                 json.item.push({
-                    description: each.description,
+                    description: each.description+" - "+each.Comments,
                     unique: uniqueIdSmall(),
                     amount: each.Cost,
                     taxable: each.Taxable,
@@ -1139,7 +1155,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }
             for (let each of this.state.Item) {
                 json.item.push({
-                    description: each.description,
+                    description: each.description+" - "+each.Comments,
                     unique: uniqueIdSmall(),
                     amount: each.Cost,
                     taxable: each.Taxable,
@@ -1325,6 +1341,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             style={{
                                 width: "425px",
                                 height: "100px",
+                                resize: "none"
+                            }}>
+                        </textarea></div></tr>
+                        <tr>Comments <div> <textarea id='description' value={value.Comments}
+                            onChange={e => {
+                                let list = this.state.Item;
+                                list[index].Comments = e.target.value;
+                                this.setState({ Item: list });
+                            }}
+                            style={{
+                                width: "425px",
+                                height: "65px",
                                 resize: "none"
                             }}>
                         </textarea></div></tr>
@@ -1993,7 +2021,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
-    protected showTable() {
+    protected showTable(taxTotal, TotalAmount) {
         if(localStorage.getItem("Authority")==='3'){
             if (this.state.Stage === '0') {
                 return <div className="page2"><table id="stage0">
@@ -2037,8 +2065,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.Amount}</td>
+                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
@@ -2058,6 +2086,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                         {/* <tbody>
                             {this.state.Item.map(this.mapShowItem)}
@@ -2092,8 +2122,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr key={key}>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.Amount}</td>
+                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
@@ -2106,6 +2136,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2137,8 +2169,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr key={key}>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.Amount}</td>
+                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
@@ -2151,6 +2183,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2211,8 +2245,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.Amount}</td>
+                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
@@ -2232,6 +2266,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal.toFixed(2)}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount.toFixed(2)} </td></tr>
                         </tbody>
                         {/* <tbody>
                             {this.state.Item.map(this.mapShowItem)}
@@ -2266,8 +2302,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr key={key}>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.Amount}</td>
+                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
@@ -2280,6 +2316,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2311,8 +2349,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr key={key}>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.Amount}</td>
+                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
@@ -2325,6 +2363,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>

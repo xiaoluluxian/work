@@ -153,3 +153,9 @@ Change stage display in main page
 
 1. Add function in test for download image with wrong url
 2. Fixed user in userprofile
+
+### 1.2.3
+
+1. Add comments to edittask
+2. Add totaltax and totalamount to edittask
+3. Partial add client in register
