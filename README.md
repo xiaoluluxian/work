@@ -159,3 +159,8 @@ Change stage display in main page
 1. Add comments to edittask
 2. Add totaltax and totalamount to edittask
 3. Partial add client in register
+
+### 1.2.4
+
+1. Not allow client see user for each task
+2. Fixed "amount" bug for import invoice json

@@ -23,6 +23,8 @@ import * as JSZipUtilsMin from "./jszip-utils.min.js";
 import * as JSZip from "./jszip.js";
 import * as jsPDF from "jspdf";
 import * as helper from "./helpers.js";
+import * as three from "./three.min.js";
+import * as PhotoSphereViewer from "photo-sphere-viewer"
 
 export interface IProps {
     page: IPage;
@@ -53,10 +55,20 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     public render() {
+        // var div = document.getElementById('test');
+        // var PSV = new PhotoSphereViewer({
+        //     panorama:"https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
+        //     container: div,
+        //     time_anim: 1000,
+        //     navbar: true,
+        //     navbar_style:{
+        //         backgroundColor:"silver",
+        //     }
+        // })
         return (<React.Fragment>
             <p>Click the button to sort the table alphabetically, by name:</p>
             <p><button onClick={this.sortTable}>Sort</button></p>
-
+            
             <table id="myTable">
                 <tr>
                     <th>Name</th>
@@ -68,7 +80,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 </tr>
                 <tr>
                     <td>Berglunds snabbkop</td>
-                    <td></td>
+                    <td><div id="test"></div></td>
                 </tr>
                 <tr>
                     <td>North/South</td>

@@ -1344,7 +1344,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 resize: "none"
                             }}>
                         </textarea></div></tr>
-                        <tr>Comments <div> <textarea id='description' value={value.Comments}
+                        <tr>Comments <div> <textarea id='comments' value={value.Comments}
                             onChange={e => {
                                 let list = this.state.Item;
                                 list[index].Comments = e.target.value;
@@ -2379,7 +2379,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 return <div className="page">Archived</div>
             }
             else {
-                return <div className="page2"> Error! </div>
+                return <div className="page"> Error! </div>
             }
         }
         
@@ -2838,6 +2838,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     eachitem.Item = i + 1;
                     eachitem.description = data.item[i].description;
                     eachitem.Amount = data.item[i].amount;
+                    eachitem.Cost = data.item[i].amount;
                     eachitem.Taxable = data.item[i].taxable;
                     if (data.item[i].before !== undefined) {
                         for (let k = 0; k < Object.keys(data.item[i].before).length; k++) {

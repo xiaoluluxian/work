@@ -58,6 +58,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.changeStatus = this.changeStatus.bind(this);
         this.ordertask = this.ordertask.bind(this);
         this.showOperation = this.showOperation.bind(this);
+        this.showTable = this.showTable.bind(this);
 
     }
 
@@ -236,6 +237,64 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     </div>
 
                 </div>
+                {this.showTable()}
+                
+
+
+            </div >);
+    }
+
+    protected showTable(){
+        if (localStorage.getItem("Authority") === '3') {
+            return(
+                <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
+                    <thead>
+                        <tr><th>Action</th>
+                            <th>Property Address</th>
+                            <th>Asset Number</th>
+                            <th>Due Date</th>
+                            
+                            <th>CurrStage</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>{this.state.data.map(function (item, key) {
+                        let temp = '#a' + key;
+                        let temp2 = 'a' + key;
+                        // console.log(temp2);
+                        // console.log(temp);
+                        return (
+
+                            <tr key={key}>
+                                <td><button style={{
+                                    marginRight: '5px',
+                                    marginTop: '5px'
+                                }} title="edit" className="btn btn-primary btn-sm" onClick={this.editTask.bind(this, item)}><ins>Edit</ins></button>
+                                    {this.showSetTask(item)}
+                                    {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
+                                </td>
+                                <td>
+                                    <img src={wflogo} alt="wflogo"
+                                        style={{
+                                            marginRight:"3px"
+                                        }} />
+                                    {item.Address}</td>
+                                <td>{item.asset_num}</td>
+                                <td>{item.DueDate}</td>
+                                {/* <td><a data-toggle="collapse" href={temp}>Show User</a><div id={temp2} className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td> */}
+                                {/* <td><button className="link collapsible">{this.clickShowUser}Show User</button><div id="content" style={{display: "none"}}>{this.showUsername(item.Username)}</div></td> */}
+                                {/* <td>{item.Stage}</td> */}
+                                <td>{this.showStage(item.Stage)}</td>
+                                <td>{this.showStatus(item)}</td>
+                            </tr>
+                        )
+
+                    }.bind(this))}</tbody>
+                </table>
+            )
+        }
+        else{
+            return(
                 <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
                     <thead>
                         <tr><th>Action</th>
@@ -280,9 +339,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
                     }.bind(this))}</tbody>
                 </table>
-
-
-            </div >);
+            )
+        }
     }
 
     protected showOperation() {
