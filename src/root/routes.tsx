@@ -73,6 +73,12 @@ export default function (props) {
                     path: '/ordertask',
 
                 },
+                // {
+                //     component: "photo.html",
+                //     exact: true,
+                //     path: '/photo',
+
+                // },
                 {
                     component: () => <div>Path = /home</div>,
                     path: '/home',

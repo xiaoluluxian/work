@@ -23,8 +23,10 @@ import * as JSZipUtilsMin from "./jszip-utils.min.js";
 import * as JSZip from "./jszip.js";
 import * as jsPDF from "jspdf";
 import * as helper from "./helpers.js";
-import * as three from "./three.min.js";
+// import page from "./photo.html";
+import * as Three from "./three.min.js";
 import * as PhotoSphereViewer from "photo-sphere-viewer"
+// import * as THREE from "three"
 
 export interface IProps {
     page: IPage;
@@ -37,8 +39,8 @@ export interface IState {
 class PageGhotiTest extends React.Component<IProps, IState> {
     state = {
         page: null,
-        pic:[],
-        
+        pic: [],
+
     }
     public constructor(props) {
         super(props);
@@ -55,18 +57,10 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     public render() {
-        // var div = document.getElementById('test');
-        // var PSV = new PhotoSphereViewer({
-        //     panorama:"https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
-        //     container: div,
-        //     time_anim: 1000,
-        //     navbar: true,
-        //     navbar_style:{
-        //         backgroundColor:"silver",
-        //     }
-        // })
+
         return (<React.Fragment>
-            <p>Click the button to sort the table alphabetically, by name:</p>
+            <a href="http://localhost:8080/photo.html">asd</a>
+            {/* <p>Click the button to sort the table alphabetically, by name:</p>
             <p><button onClick={this.sortTable}>Sort</button></p>
             
             <table id="myTable">
@@ -80,7 +74,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 </tr>
                 <tr>
                     <td>Berglunds snabbkop</td>
-                    <td><div id="test"></div></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>North/South</td>
@@ -110,8 +104,15 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     <td>Laughing Bacchus Winecellars</td>
                     <td>2018-08-24</td>
                 </tr>
-            </table>
-            <tr>zipcode <input className="text" id='zipcode' ></input></tr>
+            </table> */}
+            <div className="container1" id="container1"
+                style={{
+                    width: "50%",
+                    height: "50%",
+                }}></div>
+            <button onClick={this.convert360}>convert360</button>
+            {/* {this.convert360()} */}
+            {/* <tr>zipcode <input className="text" id='zipcode' ></input></tr>
             <button onClick={this.weather}>go</button>
             <input
                 style={{
@@ -141,13 +142,50 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                                 height: '25px',
                                 fontSize: '14px',
                             }}
-                            title="download before" onClick={this.downloadBefore}>Before</button>
-                        
+                            title="download before" onClick={this.downloadBefore}>Before</button> */}
+            <div>
+                <button onClick={this.printClient}>printClient</button>
+            </div>
+
         </React.Fragment>
         )
     }
 
-    protected downloadBefore(){
+    protected printClient(){
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllClient',
+            method: 'GET',
+            datatype: "json",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            data: JSON.stringify({
+            }),
+            success: function (data) {
+                console.log(data);
+
+            }.bind(this),
+        })
+    }
+
+    protected testfunc() {
+        console.log(document.getElementById('container1') as HTMLElement);
+    }
+
+    protected convert360() {
+        let div = document.getElementById('container1');
+        var PSV = new PhotoSphereViewer({
+            panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
+            container: div,
+            time_anim: 1000,
+            navbar: true,
+            navbar_style: {
+                backgroundColor: "silver",
+            }
+        })
+    }
+
+    protected downloadBefore() {
         function urlToPromise(url) {
             console.log(url)
             return new Promise(function (resolve, reject) {
@@ -160,7 +198,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 });
             });
         }
-        
+
         var zip = new JSZip();
         var urls = this.state.pic;
         console.log(this.state.pic);
@@ -170,42 +208,42 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             var filename = url.replace(/.*\//g, "") + ".jpg";
             zip.file(filename, urlToPromise(url), { binary: true });
         });
-        
+
         // when everything has been downloaded, we can trigger the dl
         zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
             var msg = "progression : " + metadata.percent.toFixed(2) + " %";
             if (metadata.currentFile) {
                 msg += ", current file = " + metadata.currentFile;
             }
-            
+
         })
             .then(function callback(blob) {
 
                 FileSaver.saveAs(blob, "-Before.zip");
-                
+
             }, function (e) {
-                
+
             });
 
         return false;
     }
 
-    
 
-    protected handleChangebefore(selectorFiles: FileList){
+
+    protected handleChangebefore(selectorFiles: FileList) {
         var data;
         var file = selectorFiles[0];
         var reader = new FileReader();
         reader.onload = function (event) {
             data = JSON.parse(event.target.result);
-            this.setState({pic:data})
+            this.setState({ pic: data })
         }.bind(this);
         reader.readAsText(file);
     }
-    
-    protected getInner(element){
-        let stuffs=[];
-        let buffer={
+
+    protected getInner(element) {
+        let stuffs = [];
+        let buffer = {
             After: [],
             Amount: 0,
             During: [],
@@ -224,7 +262,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             Before: []
         }
         let next = 0;
-        for(let i=0;i<element.length;i++){
+        for (let i = 0; i < element.length; i++) {
             if (next === 6) {
                 next = 0;
                 stuffs.push(buffer);
@@ -304,7 +342,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
             a = a.eq(3).children().eq(2).children().eq(0).children().eq(0).children(); // name/ address/ shits
             // console.log(a.eq(0).children().eq(1).text());
-            
+
         }.bind(this);
         reader.readAsText(file);
     }
@@ -363,10 +401,10 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
     protected convertDate(d) {
         var p = d.split("-");
-        if(d.indexOf("/")==-1&&d!=""){
+        if (d.indexOf("/") == -1 && d != "") {
             return +(p[0] + p[1] + p[2]);
         }
-        else{
+        else {
             return 99999999;
         }
     }

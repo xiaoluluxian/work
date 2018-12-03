@@ -273,7 +273,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     {this.showSetTask(item)}
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
-                                <td>
+                                <td>{this.showLogo}
                                     <img src={wflogo} alt="wflogo"
                                         style={{
                                             marginRight:"3px"
@@ -343,6 +343,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
     }
 
+    protected showLogo(){
+        
+    }
+
     protected showOperation() {
         if (localStorage.getItem("Authority") === '3') {
             return
@@ -380,6 +384,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
                     </div>
+
                 </React.Fragment>
             )
         }

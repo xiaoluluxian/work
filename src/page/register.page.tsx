@@ -236,7 +236,28 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
             });
         }
         else{
-
+            // console.log( $('#company').val(),
+            // $('#address').val(),
+            // $('#checklist').val(),);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/createClient',
+                //url: 'http://localhost:8080/login',
+                method: 'POST',
+                datatype: "json",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: JSON.stringify({
+                    company: $('#company').val(),
+                    address: $('#address').val(),
+                    check_list: [],
+                    
+                }),
+                success: function (data) {
+                    console.log(data);
+                    this.props.history.push('/main');
+                }.bind(this),
+            });
         }
     }
 }
