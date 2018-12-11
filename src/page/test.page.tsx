@@ -173,16 +173,15 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     protected convert360() {
-        let div = document.getElementById('container1');
-        var PSV = new PhotoSphereViewer({
-            panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
-            container: div,
-            time_anim: 1000,
-            navbar: true,
-            navbar_style: {
-                backgroundColor: "silver",
-            }
-        })
+        setTimeout(()=>new PhotoSphereViewer({
+                panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
+                container: 'container1',
+                time_anim: 1000,
+                navbar: true,
+                navbar_style: {
+                    backgroundColor: "silver",
+                }
+            }), 100);
     }
 
     protected downloadBefore() {
