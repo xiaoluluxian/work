@@ -164,3 +164,7 @@ Change stage display in main page
 
 1. Not allow client see user for each task
 2. Fixed "amount" bug for import invoice json
+
+### 1.2.5
+
+1. Create Client 

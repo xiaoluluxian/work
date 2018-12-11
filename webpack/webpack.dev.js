@@ -13,6 +13,8 @@ const APP_DIR = path.resolve(__dirname, '..', 'src');
 const PUBLIC_DIR = path.resolve(__dirname, '..', 'public', 'template.html');
 const FAVICON_DIR = path.resolve(__dirname, '..', 'public', 'favicon.png');
 const MANIFEST_DIR = path.resolve(__dirname, '..', 'public', 'manifest.json');
+const A = path.resolve(__dirname, '..', 'public', 'photo-sphere-viewer.min.js');
+const B = path.resolve(__dirname, '..', 'public', 'three.min.js');
 
 let config = {
     devtool: 'cheap-module-eval-source-map',
@@ -69,6 +71,12 @@ let config = {
             to: BUILD_DIR,
         }, {
             from: MANIFEST_DIR,
+            to: BUILD_DIR,
+        },{
+            from: A,
+            to: BUILD_DIR,
+        },{
+            from: B,
             to: BUILD_DIR,
         }], {}),
         new webpack.DefinePlugin({

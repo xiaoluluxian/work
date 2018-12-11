@@ -23,10 +23,16 @@ import * as JSZipUtilsMin from "./jszip-utils.min.js";
 import * as JSZip from "./jszip.js";
 import * as jsPDF from "jspdf";
 import * as helper from "./helpers.js";
-// import page from "./photo.html";
-import * as Three from "./three.min.js";
-import * as PhotoSphereViewer from "photo-sphere-viewer"
-// import * as THREE from "three"
+// import  "./photo.html";
+// import * as THREE from "./three.min.js";
+// import * as PhotoSphereViewer from "./photo-sphere-viewer.min.js";
+// import * as THREE from "three";
+// import * as DOT from "dot";
+// import * as uEvent from "uevent";
+// import * as D from "d.js";
+
+
+declare const PhotoSphereViewer: any;
 
 export interface IProps {
     page: IPage;
@@ -54,12 +60,22 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
     public componentDidMount() {
 
+        const script = document.createElement("script");
+
+        script.src = "photo-sphere-viewer.min.js";
+        script.async = true;
+
+        document.body.appendChild(script);
     }
 
     public render() {
+        // console.log(PhotoSphereViewer);
+        // <Route path/>
+        
 
         return (<React.Fragment>
-            <a href="http://localhost:8080/photo.html">asd</a>
+            {/* <script src="lib/photo-sphere-viewer.min.js"></script> */}
+            {/* <a href="http://localhost:8080/photo.html">asd</a> */}
             {/* <p>Click the button to sort the table alphabetically, by name:</p>
             <p><button onClick={this.sortTable}>Sort</button></p>
             
@@ -107,12 +123,12 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             </table> */}
             <div className="container1" id="container1"
                 style={{
-                    width: "50%",
-                    height: "50%",
+                    width: "100%",
+                    height: "100%",
                 }}></div>
             <button onClick={this.convert360}>convert360</button>
             {/* {this.convert360()} */}
-            {/* <tr>zipcode <input className="text" id='zipcode' ></input></tr>
+            <tr>zipcode <input className="text" id='zipcode' ></input></tr>
             <button onClick={this.weather}>go</button>
             <input
                 style={{
@@ -142,7 +158,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                                 height: '25px',
                                 fontSize: '14px',
                             }}
-                            title="download before" onClick={this.downloadBefore}>Before</button> */}
+                            title="download before" onClick={this.downloadBefore}>Before</button>
             <div>
                 <button onClick={this.printClient}>printClient</button>
             </div>
@@ -151,7 +167,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         )
     }
 
-    protected printClient(){
+    protected printClient() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllClient',
             method: 'GET',
@@ -173,6 +189,10 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     protected convert360() {
+        // var photoSphereViewer = require('./lib/photo-sphere-viewer.min.js');
+        // photoSphereViewer.panorama="https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media";
+        // photoSphereViewer.container = "container1";
+        
         let div = document.getElementById('container1');
         var PSV = new PhotoSphereViewer({
             panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
@@ -183,6 +203,13 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 backgroundColor: "silver",
             }
         })
+
+        // $.getScript("lib/photo-sphere-viewer.min.js", function () {
+        //     const capturer = new PhotoSphereViewer({
+        //         framerate: 60,
+        //         verbose: true
+        //     });
+        // });
     }
 
     protected downloadBefore() {
