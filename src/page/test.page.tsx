@@ -127,7 +127,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     height: "100%",
                 }}></div>
             <button onClick={this.convert360}>convert360</button>
-            {/* {this.convert360()} */}
+            {/* {this.convert360} */}
             <tr>zipcode <input className="text" id='zipcode' ></input></tr>
             <button onClick={this.weather}>go</button>
             <input

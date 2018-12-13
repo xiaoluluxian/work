@@ -28,6 +28,8 @@ import * as Cheerio from "cheerio";
 import 'bootstrap';
 import Config from '../config/config';
 
+declare const PhotoSphereViewer: any;
+
 export interface IProps {
     page: IPage;
     updatePage: (page: IPage, next?: () => void) => void;
@@ -129,7 +131,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             method: 'GET',
             datatype: "json",
             success: (function (result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 this.setState({ Before: result });
             }).bind(this),
         });
@@ -142,7 +144,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             datatype: "json",
             success: (function (result) {
                 //console.log(result);
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 this.setState({ During: result });
             }).bind(this),
         });
@@ -155,7 +157,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             datatype: "json",
             success: (function (result) {
                 //console.log(result);
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 this.setState({ After: result });
             }).bind(this),
         });
@@ -219,6 +221,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.downloadwtfBefore = this.downloadwtfBefore.bind(this);
         this.downloadwtfAfter = this.downloadwtfAfter.bind(this);
         this.downloadwtfDuring = this.downloadwtfDuring.bind(this);
+        this.convert360 = this.convert360.bind(this);
 
     }
 
@@ -771,6 +774,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             height: "35px"
                         }}
                             title="sbmit" onClick={this.submitStage}>Submit</button>
+                    </div>
+                </div>
+                <div id="sphere" className="sphere">
+                    <div className="sphere-content">
+                        <span className="close">&times;</span>
+                        <div id="spherepic" style={{
+                            width:"100%",
+                            height:"90%"
+                        }}></div>
+                        
                     </div>
                 </div>
                 {/* <div id="myModal2" className="modal">
@@ -1894,6 +1907,37 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
+    protected convert360(pic){
+        console.log(pic);
+        var modal = document.getElementById('sphere');
+
+        // Get the button that opens the modal
+        
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        modal.style.display = "block";
+
+        let div = document.getElementById('spherepic');
+        var PSV = new PhotoSphereViewer({
+            panorama: pic,
+            container: div,
+            time_anim: 1000,
+            navbar: true,
+            navbar_style: {
+                backgroundColor: "silver",
+            }
+        })
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal || event.target == span) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
     protected mapShowItem(value, index) {
         const mapShowPicture = (picture, pIndex) => {
             this.count = this.count + 1;
@@ -1918,6 +1962,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             border: '1px solid black',
                         }}
                         src={picture}
+                        onClick={this.convert360.bind(this, picture)}
                     />
                     <div>{this.count}</div>
                     <div>{this.state.Item[index].description}</div>
@@ -2397,7 +2442,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                                 padding: '3px'
                             }}
-                                src={item.Src} />
+                                src={item.Src} 
+                                onClick={this.convert360.bind(this, item.Src)}
+                                />
                         </div>
                         <div>
                             {key + 1}.{desc}

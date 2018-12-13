@@ -168,3 +168,11 @@ Change stage display in main page
 ### 1.2.5
 
 1. Create Client 
+
+### 1.2.6
+
+1. Functionally done 360 photo convert in test
+
+### 1.3.0
+
+1. Implement show 360 photo in edittask
