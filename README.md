@@ -176,3 +176,7 @@ Change stage display in main page
 ### 1.3.0
 
 1. Implement show 360 photo in edittask
+
+### 1.3.1
+
+1. Fixed photosphereviewer package import(1)
