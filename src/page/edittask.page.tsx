@@ -778,7 +778,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 </div>
                 <div id="sphere" className="sphere">
                     <div className="sphere-content">
-                        <span className="close">&times;</span>
+                        <span className="closep">&times;</span>
                         <div id="spherepic" style={{
                             width:"100%",
                             height:"90%"
@@ -1915,7 +1915,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        var span = document.getElementsByClassName("closep")[0];
 
         // When the user clicks the button, open the modal 
         modal.style.display = "block";
@@ -1932,7 +1932,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         })
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
-            if (event.target == modal || event.target == span) {
+            if (event.target == span) {
                 modal.style.display = "none";
             }
         }

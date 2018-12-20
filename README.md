@@ -180,3 +180,7 @@ Change stage display in main page
 ### 1.3.1
 
 1. Fixed photosphereviewer package import(1)
+
+### 1.3.2
+
+1. Fixed 360photo block close problem
