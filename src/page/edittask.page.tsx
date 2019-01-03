@@ -74,7 +74,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Username: [],
         alluser: [],
         TaskStatus: '',
-        Client: ''
+        Client: '',
+        test: 'test',
 
         //data: [],
     };
@@ -225,6 +226,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.downloadwtfAfter = this.downloadwtfAfter.bind(this);
         this.downloadwtfDuring = this.downloadwtfDuring.bind(this);
         this.convert360 = this.convert360.bind(this);
+        this.edit360marker = this.edit360marker.bind(this);
 
     }
 
@@ -243,12 +245,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         // total += tax;
         let taxTotal = 0;
         let TotalAmount = 0;
-        for(let i of this.state.Item){
-            TotalAmount+=(i.Amount?i.Amount:0);
-            taxTotal+=(i.Tax?i.Tax:0);
+        for (let i of this.state.Item) {
+            TotalAmount += (i.Amount ? i.Amount : 0);
+            taxTotal += (i.Tax ? i.Tax : 0);
         }
-        
-        
+
+
         return (
             <div className="main">
                 <div className="title">
@@ -315,7 +317,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 </div>
                 {this.showOperation()}
                 {this.showEdit()}
-                
+
 
                 {this.showTable(taxTotal, TotalAmount)}
                 {/* <div id='show' className='page'>
@@ -330,12 +332,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         );
     }
 
-    protected showOperation(){
-        if(localStorage.getItem("Authority")==='3'){
+    protected showOperation() {
+        if (localStorage.getItem("Authority") === '3') {
             return
         }
-        else{
-            return(
+        else {
+            return (
                 <div style={{
                     backgroundColor: "silver"
                 }}>
@@ -401,7 +403,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                             }}
                             title="ADD WHP" onClick={this.addWHP}>AddWHP</button>
-                            {/* <button
+                        {/* <button
                             style={{
                                 // paddingTop: '20px',
                                 // marginTop: '10px',
@@ -493,15 +495,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
     }
 
-    protected downloadwtfBefore(){
+    protected downloadwtfBefore() {
 
     }
 
-    protected downloadwtfDuring(){
+    protected downloadwtfDuring() {
 
     }
 
-    protected downloadwtfAfter(){
+    protected downloadwtfAfter() {
         function urlToPromise(url) {
             console.log(url)
             return new Promise(function (resolve, reject) {
@@ -514,12 +516,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 });
             });
         }
-        
+
         var zip = new JSZip();
         var urls = this.state.After;
-        for(let i=0;i<urls.length;i++){
-            while(urls[i].includes("+")){
-                urls[i].replace("+","%20");
+        for (let i = 0; i < urls.length; i++) {
+            while (urls[i].includes("+")) {
+                urls[i].replace("+", "%20");
             }
         }
         console.log(urls);
@@ -536,260 +538,260 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             if (metadata.currentFile) {
                 msg += ", current file = " + metadata.currentFile;
             }
-            
+
         })
             .then(function callback(blob) {
 
                 FileSaver.saveAs(blob, add + "-After.zip");
-                
+
             }, function (e) {
-                
+
             });
 
         return false;
     }
 
-    protected showEdit(){
-        if(localStorage.getItem("Authority")==='3'){
+    protected showEdit() {
+        if (localStorage.getItem("Authority") === '3') {
             return
         }
-        else{
-            return(
+        else {
+            return (
                 <div className='edit'>
 
-                <div style={{
-                    marginLeft: "10px",
-                    marginTop: "10px"
-                }}>
+                    <div style={{
+                        marginLeft: "10px",
+                        marginTop: "10px"
+                    }}>
 
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Property Address</span>
-                        <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
-                            id='propaddr' value={this.state.Address}
-                            onChange={e => this.AddrChange(e.target.value)} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Asset Number</span>
-                        <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
-                            id='assetnumber' value={this.state.AssetNum}
-                            onChange={e => this.AssetChange(e.target.value)} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Invoice Number</span>
-                        <input type="text" className="form-control" placeholder="Invoice Number" aria-label="Invoice Number" aria-describedby="basic-addon1"
-                            id='invoicenumber' value={this.state.Invoice}
-                            onChange={e => { this.setState({ Invoice: e.target.value }) }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Start Date</span>
-                        <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
-                            id='startdate' value={this.state.StartDate}
-                            onChange={e => this.StartDChange(e.target.value)} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Due Date</span>
-                        <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
-                            id='duedate' value={this.state.DueDate}
-                            onChange={e => this.IDateChange(e.target.value)} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Complete Date</span>
-                        <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
-                            id='completiondate' value={this.state.CompletionDate}
-                            onChange={e => {
-                                this.setState({ CompletionDate: e.target.value });
-                            }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Invoice Date</span>
-                        <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
-                            id='invoicedate' value={this.state.InvoiceDate}
-                            onChange={e => {
-                                this.setState({ InvoiceDate: e.target.value });
-                            }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>City/State/Zip Code</span>
-                        <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
-                            id='city' value={this.state.City}
-                            onChange={e => {
-                                this.setState({ City: e.target.value });
-                            }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Lock Box Number</span>
-                        <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
-                            id='city' value={this.state.LBNum}
-                            onChange={e => {
-                                this.setState({ LBNum: e.target.value });
-                            }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Client</span>
-                        <input type="text" className="form-control" placeholder="client..." aria-label="Client" aria-describedby="basic-addon1"
-                            id='client' value={this.state.Client}
-                            onChange={e => {
-                                this.setState({ Client: e.target.value });
-                            }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "100px"
-                            // fontSize:'13px'
-                        }}>Note</span>
-                        <textarea className="form-control" placeholder="Noteeeeeeeeeeeee..." aria-label="Note" aria-describedby="basic-addon1"
-                            id='city' value={this.state.Note}
-                            onChange={e => {
-                                this.setState({ Note: e.target.value });
-                            }} style={{
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                width: "100%",
-                                height: "100px",
-                                resize: "none"
-                            }}
-                        ></textarea>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>Tax</span>
-                        <input type="text" className="form-control" placeholder="Enter Tax Please..." aria-label="Tax" aria-describedby="basic-addon1"
-                            id='tax' value={this.state.Tax}
-                            onChange={e => {
-                                this.setState({ Tax: e.target.value });
-                                let tempi = this.state.Item;
-                                for (let i = 0; i < tempi.length; i++) {
-                                    tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
-
-                                    tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
-                                    // console.log(tempi[i].Amount);
-
-                                }
-                                this.setState({ Item: tempi });
-                            }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "31px"
-                            // fontSize:'13px'
-                        }}>BillTo</span>
-                        <input type="text" className="form-control" placeholder="bill to..." aria-label="BillTo" aria-describedby="basic-addon1"
-                            id='billto' value={this.state.BillTo}
-                            onChange={e => {
-                                this.setState({ BillTo: e.target.value });
-                            }} style={{ color: "black" }}
-                        ></input>
-                    </div>
-                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
-                        <span className="input-group-text" id="basic-addon1" style={{
-                            color: "black",
-                            height: "100px"
-                            // fontSize:'13px'
-                        }}>Description</span>
-                        <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
-                            id='city' value={this.state.Desc}
-                            onChange={e => {
-                                this.setState({ Desc: e.target.value });
-                            }} style={{
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Property Address</span>
+                            <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
+                                id='propaddr' value={this.state.Address}
+                                onChange={e => this.AddrChange(e.target.value)} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                width: "100%",
-                                height: "100px",
-                                resize: "none"
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Asset Number</span>
+                            <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
+                                id='assetnumber' value={this.state.AssetNum}
+                                onChange={e => this.AssetChange(e.target.value)} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Invoice Number</span>
+                            <input type="text" className="form-control" placeholder="Invoice Number" aria-label="Invoice Number" aria-describedby="basic-addon1"
+                                id='invoicenumber' value={this.state.Invoice}
+                                onChange={e => { this.setState({ Invoice: e.target.value }) }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Start Date</span>
+                            <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
+                                id='startdate' value={this.state.StartDate}
+                                onChange={e => this.StartDChange(e.target.value)} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Due Date</span>
+                            <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
+                                id='duedate' value={this.state.DueDate}
+                                onChange={e => this.IDateChange(e.target.value)} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Complete Date</span>
+                            <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
+                                id='completiondate' value={this.state.CompletionDate}
+                                onChange={e => {
+                                    this.setState({ CompletionDate: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Invoice Date</span>
+                            <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
+                                id='invoicedate' value={this.state.InvoiceDate}
+                                onChange={e => {
+                                    this.setState({ InvoiceDate: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>City/State/Zip Code</span>
+                            <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
+                                id='city' value={this.state.City}
+                                onChange={e => {
+                                    this.setState({ City: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Lock Box Number</span>
+                            <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
+                                id='city' value={this.state.LBNum}
+                                onChange={e => {
+                                    this.setState({ LBNum: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Client</span>
+                            <input type="text" className="form-control" placeholder="client..." aria-label="Client" aria-describedby="basic-addon1"
+                                id='client' value={this.state.Client}
+                                onChange={e => {
+                                    this.setState({ Client: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "100px"
+                                // fontSize:'13px'
+                            }}>Note</span>
+                            <textarea className="form-control" placeholder="Noteeeeeeeeeeeee..." aria-label="Note" aria-describedby="basic-addon1"
+                                id='city' value={this.state.Note}
+                                onChange={e => {
+                                    this.setState({ Note: e.target.value });
+                                }} style={{
+                                    color: "black",
+                                    width: "100%",
+                                    height: "100px",
+                                    resize: "none"
+                                }}
+                            ></textarea>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>Tax</span>
+                            <input type="text" className="form-control" placeholder="Enter Tax Please..." aria-label="Tax" aria-describedby="basic-addon1"
+                                id='tax' value={this.state.Tax}
+                                onChange={e => {
+                                    this.setState({ Tax: e.target.value });
+                                    let tempi = this.state.Item;
+                                    for (let i = 0; i < tempi.length; i++) {
+                                        tempi[i].Tax = parseFloat((tempi[i].Qty * tempi[i].PPU * (parseFloat(e.target.value) / 100)).toFixed(2));
+
+                                        tempi[i].Amount = parseFloat((parseFloat(tempi[i].Tax) + parseFloat(tempi[i].Cost)).toFixed(2));
+                                        // console.log(tempi[i].Amount);
+
+                                    }
+                                    this.setState({ Item: tempi });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "31px"
+                                // fontSize:'13px'
+                            }}>BillTo</span>
+                            <input type="text" className="form-control" placeholder="bill to..." aria-label="BillTo" aria-describedby="basic-addon1"
+                                id='billto' value={this.state.BillTo}
+                                onChange={e => {
+                                    this.setState({ BillTo: e.target.value });
+                                }} style={{ color: "black" }}
+                            ></input>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "100px"
+                                // fontSize:'13px'
+                            }}>Description</span>
+                            <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
+                                id='city' value={this.state.Desc}
+                                onChange={e => {
+                                    this.setState({ Desc: e.target.value });
+                                }} style={{
+                                    color: "black",
+                                    width: "100%",
+                                    height: "100px",
+                                    resize: "none"
+                                }}
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div id="myModal" className="modal">
+                        <div className="modal-content">
+                            <span className="close">&times;</span>
+                            <table>
+                                <tr><td style={{ width: '20%' }}>UserToRemove</td><td>{this.state.Username[parseInt(this.state.Stage)]}</td></tr>
+                                <tr><td style={{ width: '20%' }}>StageTo</td> <td>{this.showCurrStage()}</td></tr>
+                                <tr><td style={{ width: '20%' }}>UserToSet</td><td><select id='setUser'>
+                                    {this.state.alluser.map(function (item, key) {
+                                        return (
+                                            <option>{item.Firstname}</option>
+                                        )
+                                    }.bind(this))}
+                                </select></td> </tr>
+
+                            </table>
+                            <button style={{
+                                marginLeft: "10px",
+                                marginTop: "10px",
+                                width: "80px",
+                                height: "35px"
                             }}
-                        ></textarea>
+                                title="sbmit" onClick={this.submitStage}>Submit</button>
+                        </div>
                     </div>
-                </div>
+                    <div id="sphere" className="sphere">
+                        <div className="sphere-content">
+                            <span className="closep">&times;</span>
+                            <div id="spherepic" style={{
+                                width: "100%",
+                                height: "90%"
+                            }}></div>
 
-                <div id="myModal" className="modal">
-                    <div className="modal-content">
-                        <span className="close">&times;</span>
-                        <table>
-                            <tr><td style={{ width: '20%' }}>UserToRemove</td><td>{this.state.Username[parseInt(this.state.Stage)]}</td></tr>
-                            <tr><td style={{ width: '20%' }}>StageTo</td> <td>{this.showCurrStage()}</td></tr>
-                            <tr><td style={{ width: '20%' }}>UserToSet</td><td><select id='setUser'>
-                                {this.state.alluser.map(function (item, key) {
-                                    return (
-                                        <option>{item.Firstname}</option>
-                                    )
-                                }.bind(this))}
-                            </select></td> </tr>
-
-                        </table>
-                        <button style={{
-                            marginLeft: "10px",
-                            marginTop: "10px",
-                            width: "80px",
-                            height: "35px"
-                        }}
-                            title="sbmit" onClick={this.submitStage}>Submit</button>
+                        </div>
                     </div>
-                </div>
-                <div id="sphere" className="sphere">
-                    <div className="sphere-content">
-                        <span className="closep">&times;</span>
-                        <div id="spherepic" style={{
-                            width:"100%",
-                            height:"90%"
-                        }}></div>
-                        
-                    </div>
-                </div>
-                {/* <div id="myModal2" className="modal">
+                    {/* <div id="myModal2" className="modal">
                     <div className="modal-content">
                         <span className="close">&times;</span>
                         <table>
@@ -800,15 +802,15 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <button title="submit" onClick={this.confirmDel}>Submit</button>
                     </div>
                 </div> */}
-                {this.state.Item.map(this.mapItem)}
-                <button style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '430px',
-                    height: '27px',
-                    fontSize: '14px',
-                }} onClick={this.addaddItem} title="add item">AddItem</button>
-            </div>
+                    {this.state.Item.map(this.mapItem)}
+                    <button style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '430px',
+                        height: '27px',
+                        fontSize: '14px',
+                    }} onClick={this.addaddItem} title="add item">AddItem</button>
+                </div>
             )
         }
     }
@@ -898,7 +900,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     buffer.Amount = parseFloat(current.substr(1).split(',').join(''));
                     next++;
                     break;
-                    
+
             }
         }
         return stuffs;
@@ -1123,7 +1125,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }
             for (let each of this.state.Item) {
                 json.item.push({
-                    description: each.description+" - "+each.Comments,
+                    description: each.description + " - " + each.Comments,
                     unique: uniqueIdSmall(),
                     amount: each.Cost,
                     taxable: each.Taxable,
@@ -1147,7 +1149,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }
             for (let each of this.state.Item) {
                 json.item.push({
-                    description: each.description+" - "+each.Comments,
+                    description: each.description + " - " + each.Comments,
                     unique: uniqueIdSmall(),
                     amount: each.Cost,
                     taxable: each.Taxable,
@@ -1171,7 +1173,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }
             for (let each of this.state.Item) {
                 json.item.push({
-                    description: each.description+" - "+each.Comments,
+                    description: each.description + " - " + each.Comments,
                     unique: uniqueIdSmall(),
                     amount: each.Cost,
                     taxable: each.Taxable,
@@ -1442,7 +1444,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     marginBottom: '5px',
 
                                 }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addDuringPicture(e.target.files, index,0) }} />
+                                type="file" multiple id="fileUpload" onChange={(e) => { this.addDuringPicture(e.target.files, index, 0) }} />
                             {this.state.Item[index].During.map(function (pic, key) {
                                 return (
                                     <tr key={key}>
@@ -1493,202 +1495,202 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             </div>
         )
     }
-    protected addAfterPicture(Files: FileList, index: number, temp:number) {
+    protected addAfterPicture(Files: FileList, index: number, temp: number) {
 
-        if(Files.length==(temp+1)){
+        if (Files.length == (temp + 1)) {
             var formData = new FormData();
-                formData.append('image', Files[temp]);
-                $.ajax({
-                    url: 'https://rpntechserver.appspot.com/uploadImage',
-                    method: 'POST',
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    fileElementId: 'file-input',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem('Token'),
-                    },
-                    data: formData,
-                    success: function (result) {
-                        // console.log(result);
-                        let list = this.state.Item;
-                        list[index].After.push({
-                            Name: Files[temp].name,
-                            Format: '',
-                            Cate: list[index].Cate,
-                            itemId: list[index].Item,
-                            Src: result
-                        });
-                        this.setState({ Item: list });
-                    }.bind(this),
-                });
+            formData.append('image', Files[temp]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    // console.log(result);
+                    let list = this.state.Item;
+                    list[index].After.push({
+                        Name: Files[temp].name,
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                }.bind(this),
+            });
         }
-        else{
+        else {
             var formData = new FormData();
-                formData.append('image', Files[temp]);
-                $.ajax({
-                    url: 'https://rpntechserver.appspot.com/uploadImage',
-                    method: 'POST',
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    fileElementId: 'file-input',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem('Token'),
-                    },
-                    data: formData,
-                    success: function (result) {
-                        // console.log(result);
-                        let list = this.state.Item;
-                        list[index].After.push({
-                            Name: Files[temp].name,
-                            Format: '',
-                            Cate: list[index].Cate,
-                            itemId: list[index].Item,
-                            Src: result
-                        });
-                        this.setState({ Item: list });
-                        this.addAfterPicture(Files,index,temp+1);
-                    }.bind(this),
-                });
+            formData.append('image', Files[temp]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    // console.log(result);
+                    let list = this.state.Item;
+                    list[index].After.push({
+                        Name: Files[temp].name,
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                    this.addAfterPicture(Files, index, temp + 1);
+                }.bind(this),
+            });
         }
 
     }
 
-    protected addDuringPicture(Files: FileList, index: number, temp:number) {
+    protected addDuringPicture(Files: FileList, index: number, temp: number) {
         // console.log(Files);
-        if(Files.length==(temp+1)){
+        if (Files.length == (temp + 1)) {
             var formData = new FormData();
-                formData.append('image', Files[temp]);
-                $.ajax({
-                    url: 'https://rpntechserver.appspot.com/uploadImage',
-                    method: 'POST',
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    fileElementId: 'file-input',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem('Token'),
-                    },
-                    data: formData,
-                    success: function (result) {
-                        // console.log(result);
-                        let list = this.state.Item;
-                        list[index].During.push({
-                            Name: Files[temp].name,
-                            Format: '',
-                            Cate: list[index].Cate,
-                            itemId: list[index].Item,
-                            Src: result
-                        });
-                        this.setState({ Item: list });
-                    }.bind(this),
-                });
+            formData.append('image', Files[temp]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    // console.log(result);
+                    let list = this.state.Item;
+                    list[index].During.push({
+                        Name: Files[temp].name,
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                }.bind(this),
+            });
         }
-        else{
+        else {
             var formData = new FormData();
-                formData.append('image', Files[temp]);
-                $.ajax({
-                    url: 'https://rpntechserver.appspot.com/uploadImage',
-                    method: 'POST',
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    fileElementId: 'file-input',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem('Token'),
-                    },
-                    data: formData,
-                    success: function (result) {
-                        // console.log(result);
-                        let list = this.state.Item;
-                        list[index].During.push({
-                            Name: Files[temp].name,
-                            Format: '',
-                            Cate: list[index].Cate,
-                            itemId: list[index].Item,
-                            Src: result
-                        });
-                        this.setState({ Item: list });
-                        this.addDuringPicture(Files,index,temp+1);
-                    }.bind(this),
-                });
+            formData.append('image', Files[temp]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    // console.log(result);
+                    let list = this.state.Item;
+                    list[index].During.push({
+                        Name: Files[temp].name,
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                    this.addDuringPicture(Files, index, temp + 1);
+                }.bind(this),
+            });
         }
-            
-                
-        
+
+
+
     }
 
-    protected addBeforePicture(Files: FileList, index: number, temp:number) {
+    protected addBeforePicture(Files: FileList, index: number, temp: number) {
 
-        if(Files.length==(temp+1)){
+        if (Files.length == (temp + 1)) {
             var formData = new FormData();
-                formData.append('image', Files[temp]);
-                $.ajax({
-                    url: 'https://rpntechserver.appspot.com/uploadImage',
-                    method: 'POST',
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    fileElementId: 'file-input',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem('Token'),
-                    },
-                    data: formData,
-                    success: function (result) {
-                        // console.log(result);
-                        let list = this.state.Item;
-                        list[index].Before.push({
-                            Name: Files[temp].name,
-                            Format: '',
-                            Cate: list[index].Cate,
-                            itemId: list[index].Item,
-                            Src: result
-                        });
-                        this.setState({ Item: list });
-                    }.bind(this),
-                });
+            formData.append('image', Files[temp]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    // console.log(result);
+                    let list = this.state.Item;
+                    list[index].Before.push({
+                        Name: Files[temp].name,
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                }.bind(this),
+            });
         }
-        else{
+        else {
             var formData = new FormData();
-                formData.append('image', Files[temp]);
-                $.ajax({
-                    url: 'https://rpntechserver.appspot.com/uploadImage',
-                    method: 'POST',
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    fileElementId: 'file-input',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem('Token'),
-                    },
-                    data: formData,
-                    success: function (result) {
-                        // console.log(result);
-                        let list = this.state.Item;
-                        list[index].Before.push({
-                            Name: Files[temp].name,
-                            Format: '',
-                            Cate: list[index].Cate,
-                            itemId: list[index].Item,
-                            Src: result
-                        });
-                        this.setState({ Item: list });
-                        this.addBeforePicture(Files,index,temp+1);
-                    }.bind(this),
-                });
+            formData.append('image', Files[temp]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    // console.log(result);
+                    let list = this.state.Item;
+                    list[index].Before.push({
+                        Name: Files[temp].name,
+                        Format: '',
+                        Cate: list[index].Cate,
+                        itemId: list[index].Item,
+                        Src: result
+                    });
+                    this.setState({ Item: list });
+                    this.addBeforePicture(Files, index, temp + 1);
+                }.bind(this),
+            });
         }
 
     }
@@ -1910,12 +1912,20 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
-    protected convert360(pic){
-        console.log(pic);
+    protected edit360marker() {
+        return (
+            <div>
+                Description<textarea></textarea>
+            </div>
+        )
+    }
+
+    protected convert360(pic) {
+        
         var modal = document.getElementById('sphere');
 
         // Get the button that opens the modal
-        
+
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("closep")[0];
@@ -1933,38 +1943,38 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             navbar_style: {
                 backgroundColor: "silver",
             },
-            markers:[],
+            markers: [],
         })
-        PSV.on('click', function(e) {
+        let a = this.state.test;
+        PSV.on('click', function (e) {
+            // console.log(a)
             PSV.addMarker({
                 id: '#' + Math.random(),
                 tooltip: 'Generated marker',
                 longitude: e.longitude,
                 latitude: e.latitude,
-                scale: [0.5, 1.5],
-                circle: 20,
-                svgStyle: {
-                    fill: 'red',
-                    stroke: 'red',
-                    
-                  },
+                image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
+                content: a,
+                // content:this.edit360marker(),
+                width: 32,
+                height: 32,
                 anchor: 'bottom center',
                 data: {
-                  generated: true
+                    generated: true
                 }
             });
-          });
-          
-          /**
-           * Delete a generated marker when the user clicks on it
-           */
-          PSV.on('select-marker', function(marker,dblclick) {
+        });
+
+        /**
+         * Delete a generated marker when the user clicks on it
+         */
+        PSV.on('select-marker', function (marker, dblclick) {
             if (marker.data && marker.data.generated) {
                 if (dblclick) {
                     PSV.removeMarker(marker);
-                  }
+                }
             }
-          });
+        });
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == span) {
@@ -2103,7 +2113,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected showTable(taxTotal, TotalAmount) {
-        if(localStorage.getItem("Authority")==='3'){
+        if (localStorage.getItem("Authority") === '3') {
             if (this.state.Stage === '0') {
                 return <div className="page2"><table id="stage0">
                     <tr ><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
@@ -2163,12 +2173,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
-    
+
                                 </React.Fragment>
                             )
                         }.bind(this))}
-                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
-                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
+                            <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                            <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                         {/* <tbody>
                             {this.state.Item.map(this.mapShowItem)}
@@ -2217,8 +2227,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
-                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
-                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
+                            <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                            <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2264,8 +2274,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
-                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
-                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
+                            <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                            <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2283,7 +2293,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 return <div className="page2"> Error! </div>
             }
         }
-        else{
+        else {
             if (this.state.Stage === '0') {
                 return <div className="page"><table id="stage0">
                     <tr ><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
@@ -2343,12 +2353,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
-    
+
                                 </React.Fragment>
                             )
                         }.bind(this))}
-                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal.toFixed(2)}</td></tr>
-                        <tr><td colSpan={6}>Total Amount: ${TotalAmount.toFixed(2)} </td></tr>
+                            <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal.toFixed(2)}</td></tr>
+                            <tr><td colSpan={6}>Total Amount: ${TotalAmount.toFixed(2)} </td></tr>
                         </tbody>
                         {/* <tbody>
                             {this.state.Item.map(this.mapShowItem)}
@@ -2397,8 +2407,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
-                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
-                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
+                            <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                            <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2444,8 +2454,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 </React.Fragment>
                             )
                         }.bind(this))}
-                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
-                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
+                            <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                            <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2463,7 +2473,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 return <div className="page"> Error! </div>
             }
         }
-        
+
     }
 
     protected mapPicture(picture: any[], desc: string) {
@@ -2478,9 +2488,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                                 padding: '3px'
                             }}
-                                src={item.Src} 
+                                src={item.Src}
                                 onClick={this.convert360.bind(this, item.Src)}
-                                />
+                            />
                         </div>
                         <div>
                             {key + 1}.{desc}

@@ -188,3 +188,7 @@ Change stage display in main page
 ### 1.3.3
 
 1. Add marker to 360 photo
+
+### 1.3.4
+
+1. Change marker image and add test content to marker
