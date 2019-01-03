@@ -19,20 +19,21 @@ import * as FileSaver from 'file-saver';
 // import * as request from 'request';
 import * as JSZipUtils from "./jszip-utils.js";
 import * as JSZipUtilsMin from "./jszip-utils.min.js";
+import wflogo from "./wflogo";
 //import * as saveas from "./FileSaver.js";
 import * as JSZip from "./jszip.js";
 import * as jsPDF from "jspdf";
 import * as helper from "./helpers.js";
 // import  "./photo.html";
 // import * as THREE from "./three.min.js";
-// import * as PhotoSphereViewer from "./photo-sphere-viewer.min.js";
+import * as PhotoSphereViewer from "photo-sphere-viewer";
 // import * as THREE from "three";
 // import * as DOT from "dot";
 // import * as uEvent from "uevent";
 // import * as D from "d.js";
 
 
-declare const PhotoSphereViewer: any;
+// declare const PhotoSphereViewer: any;
 
 export interface IProps {
     page: IPage;
@@ -60,12 +61,12 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
     public componentDidMount() {
 
-        const script = document.createElement("script");
+        // const script = document.createElement("script");
 
-        script.src = "photo-sphere-viewer.min.js";
-        script.async = true;
+        // script.src = "photo-sphere-viewer.min.js";
+        // script.async = true;
 
-        document.body.appendChild(script);
+        // document.body.appendChild(script);
     }
 
     public render() {
@@ -194,22 +195,94 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         // photoSphereViewer.container = "container1";
         
         let div = document.getElementById('container1');
-        var PSV = new PhotoSphereViewer({
+        let PSV;
+        PSV= new PhotoSphereViewer({
             panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
             container: div,
-            time_anim: 1000,
-            navbar: true,
+            time_anim: false,
+            navbar:true,
             navbar_style: {
                 backgroundColor: "silver",
-            }
-        })
+            },
+            markers:[
+                {
+                    id: 'text',
+                    longitude: 0,
+                    latitude: 0,
+                    html: 'HTML <b>marker</b> &hearts;',
+                    anchor: 'bottom right',
+                    scale: [0.5, 1.5],
+                    style: {
+                      maxWidth: '100px',
+                      color: 'white',
+                      fontSize: '20px',
+                      fontFamily: 'Helvetica, sans-serif',
+                      textAlign: 'center'
+                    },
+                    tooltip: {
+                      content: 'An HTML marker',
+                      position: 'right'
+                    }
+                }
+            ]
+            // markers:[
+            //     {
+            //         // html marker with custom style
+            //         id: 'text',
+            //         longitude: 0,
+            //         latitude: 0,
+            //         html: 'HTML <b>marker</b> &hearts;',
+            //         anchor: 'bottom right',
+            //         scale: [0.5, 1.5],
+            //         style: {
+            //           maxWidth: '100px',
+            //           color: 'white',
+            //           fontSize: '20px',
+            //           fontFamily: 'Helvetica, sans-serif',
+            //           textAlign: 'center'
+            //         },
+            //         tooltip: {
+            //           content: 'An HTML marker',
+            //           position: 'right'
+            //         }
+            //       },
+            // ]
+        });
 
-        // $.getScript("lib/photo-sphere-viewer.min.js", function () {
-        //     const capturer = new PhotoSphereViewer({
-        //         framerate: 60,
-        //         verbose: true
-        //     });
-        // });
+        
+        PSV.on('click', function(e) {
+            PSV.addMarker({
+              id: '#' + Math.random(),
+              longitude: e.longitude,
+              latitude: e.latitude,
+              html: '&hearts;',
+              anchor: 'bottom right',
+              style: {
+                  widht:"60px",
+                  height:"60px",
+                  color: 'green',
+                
+              },
+              scale: [0.5, 1.5],
+              width: 32,
+              height: 32,
+              tooltip: 'Generated pin',
+              data: {
+                generated: true
+              }
+            });
+          });
+          
+          /**
+           * Delete a generated marker when the user clicks on it
+           */
+          PSV.on('select-marker', function(marker,dblclick) {
+            if (marker.data && marker.data.generated) {
+                if (dblclick) {
+                    PSV.removeMarker(marker);
+                  }
+            }
+          });
     }
 
     protected downloadBefore() {

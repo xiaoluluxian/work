@@ -120,6 +120,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
 
     public render() {
+        
 
         return (
             <div className="main">
@@ -872,6 +873,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
+        
         table = document.getElementById("taskT");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {

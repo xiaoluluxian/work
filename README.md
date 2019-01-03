@@ -184,3 +184,7 @@ Change stage display in main page
 ### 1.3.2
 
 1. Fixed 360photo block close problem
+
+### 1.3.3
+
+1. Add marker to 360 photo

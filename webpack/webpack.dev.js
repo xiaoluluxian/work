@@ -13,9 +13,11 @@ const APP_DIR = path.resolve(__dirname, '..', 'src');
 const PUBLIC_DIR = path.resolve(__dirname, '..', 'public', 'template.html');
 const FAVICON_DIR = path.resolve(__dirname, '..', 'public', 'favicon.png');
 const MANIFEST_DIR = path.resolve(__dirname, '..', 'public', 'manifest.json');
-const A = path.resolve(__dirname, '..', 'public', 'photo-sphere-viewer.min.js');
+// const A = path.resolve(__dirname, '..', 'public', 'photo-sphere-viewer.min.js');
 const B = path.resolve(__dirname, '..', 'public', 'three.min.js');
-
+const C = path.resolve(__dirname, '..', 'public', 'D.min.js');
+const D = path.resolve(__dirname, '..', 'public', 'doT.min.js');
+const E = path.resolve(__dirname, '..', 'public', 'uevent.min.js');
 let config = {
     devtool: 'cheap-module-eval-source-map',
     entry: [
@@ -72,13 +74,26 @@ let config = {
         }, {
             from: MANIFEST_DIR,
             to: BUILD_DIR,
-        },{
-            from: A,
-            to: BUILD_DIR,
-        },{
+        },
+        // {
+        //     from: A,
+        //     to: BUILD_DIR,
+        // },
+        {
             from: B,
             to: BUILD_DIR,
-        }], {}),
+        },
+        {
+            from: C,
+            to: BUILD_DIR,
+        },{
+            from: D,
+            to: BUILD_DIR,
+        },{
+            from: E,
+            to: BUILD_DIR,
+        }
+    ], {}),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         }),

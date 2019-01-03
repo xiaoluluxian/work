@@ -9,6 +9,8 @@ import * as Component from '../component/import';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import logo from './logo';
+
+import wflogo from './wflogo'
 import { IItem, IPage } from './interface';
 import * as $ from "jquery";
 import * as fs from 'fs';
@@ -27,8 +29,9 @@ import * as ReactToPrint from "react-to-print";
 import * as Cheerio from "cheerio";
 import 'bootstrap';
 import Config from '../config/config';
+import * as PhotoSphereViewer from "photo-sphere-viewer";
 
-declare const PhotoSphereViewer: any;
+// declare const PhotoSphereViewer: any;
 
 export interface IProps {
     page: IPage;
@@ -1921,18 +1924,51 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         modal.style.display = "block";
 
         let div = document.getElementById('spherepic');
-        var PSV = new PhotoSphereViewer({
+        let PSV;
+        PSV = new PhotoSphereViewer({
             panorama: pic,
             container: div,
             time_anim: 1000,
             navbar: true,
             navbar_style: {
                 backgroundColor: "silver",
-            }
+            },
+            markers:[],
         })
+        PSV.on('click', function(e) {
+            PSV.addMarker({
+                id: '#' + Math.random(),
+                tooltip: 'Generated marker',
+                longitude: e.longitude,
+                latitude: e.latitude,
+                scale: [0.5, 1.5],
+                circle: 20,
+                svgStyle: {
+                    fill: 'red',
+                    stroke: 'red',
+                    
+                  },
+                anchor: 'bottom center',
+                data: {
+                  generated: true
+                }
+            });
+          });
+          
+          /**
+           * Delete a generated marker when the user clicks on it
+           */
+          PSV.on('select-marker', function(marker,dblclick) {
+            if (marker.data && marker.data.generated) {
+                if (dblclick) {
+                    PSV.removeMarker(marker);
+                  }
+            }
+          });
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == span) {
+                PSV.destroy();
                 modal.style.display = "none";
             }
         }
