@@ -75,7 +75,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         alluser: [],
         TaskStatus: '',
         Client: '',
-        test: 'test',
+        // test: 'test',
+        // x: "a",
+        Check_List: [],
+        Comment: "",
 
         //data: [],
     };
@@ -121,7 +124,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ Username: result.Username });
                 this.setState({ Client: result.Client });
                 this.setState({ TaskStatus: result.TaskStatus });
-                // console.log(result.Username);
+                this.setState({ Check_List: result.Check_List });
+                this.setState({ Comment: result.Comment });
                 //this.setState({ })                
 
 
@@ -324,9 +328,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     {this.showTable()}
 
                 </div> */}
-                {window.onbeforeunload = (function () {
+                {/* {window.onbeforeunload = (function () {
                     return "asd"
-                })}
+                })} */}
             </div>
 
         );
@@ -403,6 +407,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                             }}
                             title="ADD WHP" onClick={this.addWHP}>AddWHP</button>
+
                         {/* <button
                             style={{
                                 // paddingTop: '20px',
@@ -471,6 +476,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                             }}
                             title="ExportJson" onClick={this.exportJson}>ExportJson</button>
+
                     </div>
                     <div style={{ marginLeft: "10px" }}>Import JSON:<input
                         style={{
@@ -490,6 +496,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
                         }}
                         type="file" id="htmlUpload" onChange={(e) => { this.importHTML(e.target.files) }} /></div>
+                    <div style={{
+                        width: "20%",
+                        // marginTop:'3px',
+                        // marginBottom:'10px',
+                        display: "none",
+                        //height: "40px"
+                    }} className="alert alert-success" role="alert" id="errormsg" >
+                        Save Successful!
+                                            </div>
+                    {/* <div>{this.state.x}</div> */}
+
                 </div>
             )
         }
@@ -1921,7 +1938,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected convert360(pic) {
-        
+
         var modal = document.getElementById('sphere');
 
         // Get the button that opens the modal
@@ -1945,16 +1962,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             },
             markers: [],
         })
-        let a = this.state.test;
+        
         PSV.on('click', function (e) {
-            // console.log(a)
+            // this.setState({x:e.latitude});
             PSV.addMarker({
                 id: '#' + Math.random(),
                 tooltip: 'Generated marker',
                 longitude: e.longitude,
                 latitude: e.latitude,
                 image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
-                content: a,
+                content: "",
                 // content:this.edit360marker(),
                 width: 32,
                 height: 32,
@@ -1963,7 +1980,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     generated: true
                 }
             });
-        });
+        }.bind(this));
 
         /**
          * Delete a generated marker when the user clicks on it
@@ -3094,6 +3111,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Username: this.state.Username,
                 TaskStatus: this.state.TaskStatus,
                 Client: this.state.Client,
+                Check_List: this.state.Check_List,
+                Comment: this.state.Comment,
             }),
             success: function (data) {
                 console.log(JSON.parse(data));

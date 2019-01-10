@@ -192,3 +192,8 @@ Change stage display in main page
 ### 1.3.4
 
 1. Change marker image and add test content to marker
+
+### 1.3.5
+
+1. Change CSS in add task
+2. Successfully tested setstate in 360

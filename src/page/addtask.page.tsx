@@ -28,16 +28,18 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
     state = {
         alluser: [],
         username: "",
+        clients: [],
+        company: "",
     };
 
     public constructor(props) {
         super(props);
         this.submitTask = this.submitTask.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
-        
+
     }
 
-    public componentDidMount(){
+    public componentDidMount() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllUsers',
 
@@ -51,6 +53,21 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
             success: (function (result) {
                 //console.log(result);
                 this.setState({ alluser: result });
+            }).bind(this),
+        });
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllClient',
+
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                //console.log(result);
+                this.setState({ clients: result });
             }).bind(this),
         });
     }
@@ -113,50 +130,138 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div>
-                </div>
+            </div>
+            <div id="signupbox" style={{ marginTop: "30px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div className="panel panel-info">
+                    <form className="form-horizontal" method="post">
+                        <div id="div_id_propertyaddress" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Property Address<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="propaddr" name="propaddr" placeholder="Property Address" style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_assetnumber" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Asset Number<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="assetnum" name="assetnum" placeholder="Asset Number" style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_startdate" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Start Date<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="startdate" name="startdate" placeholder="Start Date" style={{ marginBottom: "5px" }} type="date" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_duedate" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Due Date<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="duedate" name="duedate" placeholder="Due Date" style={{ marginBottom: "5px" }} type="date" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> City<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="city" name="city" placeholder="City" style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_desc" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Description<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <textarea className="input-md  textinput textInput form-control" id="description" name="description" placeholder="Desscription" style={{ marginBottom: "5px" }}></textarea>
+                            </div>
+                        </div>
+                        <div id="div_id_LBnum" className="form-group required">
+                            <label className="control-label col-md-4  requiredField">Lock Box Number<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="lockboxnumber" name="lockboxnumber" placeholder="Lock Box NUmber" style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_client" className="form-group required">
+                            <label className="control-label col-md-4  requiredField">Client<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => { this.setState({ company: e.target.value }) }}>
+                                    <option>Choose Client</option>
+                                    {this.state.clients.map(function (item, key) {
+                                        return (
+                                            <option key={key}>{item.Company}</option>
+                                        )
+                                    }.bind(this))}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="div_id_username" className="form-group required">
+                            <label className="control-label col-md-4  requiredField">username<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='username' onChange={e => this.UserChange(e.target.value)}>
+                                    <option>Choose User</option>
+                                    {this.state.alluser.map(function (item, key) {
+                                        return (
+                                            <option key={key}>{item.Firstname}</option>
+                                        )
+                                    }.bind(this))}
+                                </select>
+                            </div>
+                        </div>
+                        {/* <div className="form-group controls col-md-8">
+                        <button id="submit" type="submit" name="submit" className="btn btn-primary" onClick={this.submitTask} value="submit">Submit</button>
+                        </div> */}
+                        
+                    </form>
+                    <button id="submit" type="submit" name="submit" style={{marginBottom:"10px"}}className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
+                </div> </div>
+            {/* <table>
 
-            <table>
-                
-                    <tr>Property Address <input className="text" id = 'propaddr' ></input></tr>
-                    <tr>Asset Number <input className="text" id = 'assetnum' ></input></tr>
-                    <tr>Start Date      <input type="date" id= 'startdate'></input></tr>
-                    <tr>Due Date <input type='date' id= 'duedate'></input></tr>
-                    <tr>City      <input className="text" id= 'city'></input></tr>
-                    <tr>Description      <textarea style={{
-                                width: "425px",
-                                height: "130px",
-                                resize: "none"
-                            }}className="text" id= 'description'></textarea></tr>
-                    <tr>Lock Box Number      <input  className="text" id= 'lockboxnumber'></input></tr>
-                    <tr>Client      <input  className="text" id= 'client'></input></tr>
-                    <tr>Username 
+                <tr>Property Address <input className="text" id='propaddr' ></input></tr>
+                <tr>Asset Number <input className="text" id='assetnum' ></input></tr>
+                <tr>Start Date      <input type="date" id='startdate'></input></tr>
+                <tr>Due Date <input type='date' id='duedate'></input></tr>
+                <tr>City      <input className="text" id='city'></input></tr>
+                <tr>Description      <textarea style={{
+                    width: "425px",
+                    height: "130px",
+                    resize: "none"
+                }} className="text" id='description'></textarea></tr>
+                <tr>Lock Box Number      <input className="text" id='lockboxnumber'></input></tr>
+                <tr>Client
+                        <select id='client' onChange={e => { this.setState({ company: e.target.value }) }}>
+                        <option>all</option>
+                        {this.state.clients.map(function (item, key) {
+                            return (
+                                <option key={key}>{item.Company}</option>
+                            )
+                        }.bind(this))}
+                    </select>
+                </tr>
+                <tr>Username
                     <select id='username' onChange={e => this.UserChange(e.target.value)}>
-                            <option>all</option>
-                            {this.state.alluser.map(function (item, key) {
-                                return (
+                        <option>all</option>
+                        {this.state.alluser.map(function (item, key) {
+                            return (
 
-                                    <option>{item.Firstname}</option>
-                                )
-                            }.bind(this))}
-                        </select>
-                    </tr>
-                    {/* <tr>Stage <input className="text" id='stage'></input></tr> */}
+                                <option key={key}>{item.Firstname}</option>
+                            )
+                        }.bind(this))}
+                    </select>
+                </tr>
                 
-            </table>
-            <button
-            style={{
-                marginLeft:'10px',
-                width: '60px',
-                height: '25px',
-                fontSize: '14px',
-            }}
-            title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+
+            </table> */}
+            {/* <button
+                style={{
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                    fontSize: '14px',
+                }}
+                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button> */}
         </div>);
 
     }
+
+
     protected findUserByName(name) {
         //console.log(this.state.newUser); tim001
-        
+
         for (let i = 0; i < this.state.alluser.length; i++) {
             if (this.state.alluser[i].Firstname === name) {
                 return this.state.alluser[i].Username;
@@ -164,8 +269,8 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
         }
     }
 
-    protected UserChange(value){
-        this.setState({username:this.findUserByName(value)})
+    protected UserChange(value) {
+        this.setState({ username: this.findUserByName(value) })
         //console.log(this.findUserByName(value));
     }
     protected logout() {
@@ -174,33 +279,33 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
     protected changeStatus() {
         this.props.history.push('/main');
     }
-    protected addTask(){
+    protected addTask() {
 
     }
 
-    
-    protected submitTask(){
-        let name=[];
+
+    protected submitTask() {
+        let name = [];
         name.push(this.state.username);
         //console.log(this.state.username);
-        
+
         $.ajax({
             url: 'https://rpntechserver.appspot.com/initTask',
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",
             headers: {
-                Authorization:"Bearer " + localStorage.getItem('Token'),
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
             data: JSON.stringify({
-                asset_num:$('#assetnum').val(),
-                StartDate:$('#startdate').val(),
-                DueDate:$('#duedate').val(),
-                City:$('#city').val(),
-                Address:$('#propaddr').val(),
+                asset_num: $('#assetnum').val(),
+                StartDate: $('#startdate').val(),
+                DueDate: $('#duedate').val(),
+                City: $('#city').val(),
+                Address: $('#propaddr').val(),
                 Desc: $('#description').val(),
                 keycode: $('#lockboxnumber').val(),
-                client: "WF",
+                client: this.state.company,
                 Username: name,
                 //stage:$('#stage').val()
             }),

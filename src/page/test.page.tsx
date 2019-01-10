@@ -72,7 +72,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     public render() {
         // console.log(PhotoSphereViewer);
         // <Route path/>
-        
+
 
         return (<React.Fragment>
             {/* <script src="lib/photo-sphere-viewer.min.js"></script> */}
@@ -122,6 +122,25 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     <td>2018-08-24</td>
                 </tr>
             </table> */}
+            <div id="signupbox" style={{ marginTop: "50px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div className="panel panel-info">
+                    <form className="form-horizontal" method="post">
+                        <div id="div_id_select" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Select<span className="asteriskField">*</span> </label>
+                            <div className="controls col-md-8 " style={{ marginBottom: "10px" }}>
+                                <label className="radio-inline" style={{marginRight:"20px"}}><input type="radio" checked={true} name="select" id="id_select_1" value="S" style={{ marginBottom: "10px",marginRight:"5px" }}></input>Knowledge Seeker</label>
+                                <label className="radio-inline"> <input type="radio" name="select" id="id_select_2" value="P" style={{ marginBottom: "10px", marginRight:"5px"}}></input>Knowledge Provider </label>
+                            </div>
+                        </div>
+                        <div id="div_id_username" className="form-group required">
+                            <label  className="control-label col-md-4  requiredField"> Username<span className="asteriskField">*</span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="id_username" name="username" placeholder="Choose your username" style={{marginBottom:"10px"}} type="text" ></input>
+                            </div>
+                        </div>
+                    </form>
+                </div> </div>
+
             <div className="container1" id="container1"
                 style={{
                     width: "100%",
@@ -140,26 +159,26 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
                 }}
                 type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
-                <div style={{ marginLeft: "10px" }}>Import BeforeJSON:<input
-                        style={{
-                            marginTop: '5px',
-                            marginLeft: '10px',
-                            fontSize: '14px',
+            <div style={{ marginLeft: "10px" }}>Import BeforeJSON:<input
+                style={{
+                    marginTop: '5px',
+                    marginLeft: '10px',
+                    fontSize: '14px',
 
 
-                        }}
-                        type="file" id="fileUpload" onChange={(e) => { this.handleChangebefore(e.target.files) }} /></div>
-                        
-                    <button
-                            style={{
-                                // paddingTop: '20px',
-                                // marginTop: '10px',
-                                marginLeft: '10px',
-                                width: '60px',
-                                height: '25px',
-                                fontSize: '14px',
-                            }}
-                            title="download before" onClick={this.downloadBefore}>Before</button>
+                }}
+                type="file" id="fileUpload" onChange={(e) => { this.handleChangebefore(e.target.files) }} /></div>
+
+            <button
+                style={{
+                    // paddingTop: '20px',
+                    // marginTop: '10px',
+                    marginLeft: '10px',
+                    width: '60px',
+                    height: '25px',
+                    fontSize: '14px',
+                }}
+                title="download before" onClick={this.downloadBefore}>Before</button>
             <div>
                 <button onClick={this.printClient}>printClient</button>
             </div>
@@ -193,18 +212,18 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         // var photoSphereViewer = require('./lib/photo-sphere-viewer.min.js');
         // photoSphereViewer.panorama="https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media";
         // photoSphereViewer.container = "container1";
-        
+
         let div = document.getElementById('container1');
         let PSV;
-        PSV= new PhotoSphereViewer({
+        PSV = new PhotoSphereViewer({
             panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
             container: div,
             time_anim: false,
-            navbar:true,
+            navbar: true,
             navbar_style: {
                 backgroundColor: "silver",
             },
-            markers:[
+            markers: [
                 {
                     id: 'text',
                     longitude: 0,
@@ -213,15 +232,15 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     anchor: 'bottom right',
                     scale: [0.5, 1.5],
                     style: {
-                      maxWidth: '100px',
-                      color: 'white',
-                      fontSize: '20px',
-                      fontFamily: 'Helvetica, sans-serif',
-                      textAlign: 'center'
+                        maxWidth: '100px',
+                        color: 'white',
+                        fontSize: '20px',
+                        fontFamily: 'Helvetica, sans-serif',
+                        textAlign: 'center'
                     },
                     tooltip: {
-                      content: 'An HTML marker',
-                      position: 'right'
+                        content: 'An HTML marker',
+                        position: 'right'
                     }
                 }
             ]
@@ -249,40 +268,40 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             // ]
         });
 
-        
-        PSV.on('click', function(e) {
+
+        PSV.on('click', function (e) {
             PSV.addMarker({
-              id: '#' + Math.random(),
-              longitude: e.longitude,
-              latitude: e.latitude,
-              html: '&hearts;',
-              anchor: 'bottom right',
-              style: {
-                  widht:"60px",
-                  height:"60px",
-                  color: 'green',
-                
-              },
-              scale: [0.5, 1.5],
-              width: 32,
-              height: 32,
-              tooltip: 'Generated pin',
-              data: {
-                generated: true
-              }
+                id: '#' + Math.random(),
+                longitude: e.longitude,
+                latitude: e.latitude,
+                html: '&hearts;',
+                anchor: 'bottom right',
+                style: {
+                    widht: "60px",
+                    height: "60px",
+                    color: 'green',
+
+                },
+                scale: [0.5, 1.5],
+                width: 32,
+                height: 32,
+                tooltip: 'Generated pin',
+                data: {
+                    generated: true
+                }
             });
-          });
-          
-          /**
-           * Delete a generated marker when the user clicks on it
-           */
-          PSV.on('select-marker', function(marker,dblclick) {
+        });
+
+        /**
+         * Delete a generated marker when the user clicks on it
+         */
+        PSV.on('select-marker', function (marker, dblclick) {
             if (marker.data && marker.data.generated) {
                 if (dblclick) {
                     PSV.removeMarker(marker);
-                  }
+                }
             }
-          });
+        });
     }
 
     protected downloadBefore() {

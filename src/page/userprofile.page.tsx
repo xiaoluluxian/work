@@ -22,6 +22,8 @@ export interface IState {
 
 class PageGhotiUserprofile extends React.Component<IProps, IState> {
     state={
+        currStage:"",
+
         alluser:[],
         Username:"",
         Password:"",
@@ -33,16 +35,35 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
         Background:"",
         TaskIds:[],
 
+        clients:[],
+        company:"",
+        address:"",
+        check_list:[],
+
     }
     public constructor(props) {
         super(props);
         this.changeStatus = this.changeStatus.bind(this);
         this.submit = this.submit.bind(this);
         this.changeUser = this.changeUser.bind(this);
+        this.showTable = this.showTable.bind(this);
     }
     
     public componentDidMount(){
-        //console.log(localStorage.getItem('currUser'));
+        $.ajax({
+            url:"https://rpntechserver.appspot.com/findAllClient",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                this.setState({ clients: result });
+            }).bind(this),
+        });
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllUsers',
 
@@ -128,7 +149,60 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
                 </div>
-                <div>User:
+                <div style={{ marginLeft: '10px', marginTop: '5px' }}>
+                <select style={{
+                    width: "100px"
+                }}
+                    id='showbystage' onChange={e => {
+                        this.setState({ currStage: e.target.value });
+                    }}>
+                    <option value="0">User</option>
+                    <option value="1">Client</option>
+                </select>
+            </div>
+            {this.showTable()}
+                
+
+                <button style={{
+                    marginLeft:"10px",
+                    marginTop:"10px"
+                }} onClick={this.submit}>Submit</button>
+                
+            </div>
+        );
+    }
+
+    protected showTable(){
+        if(this.state.currStage === '1') {
+            return (
+                <React.Fragment>
+                    <div>Client:
+                    <select style={{
+                                width: "100px"
+                            }}
+                                id='setClient' onChange={e => this.changeClient(e.target.value)}>
+                                {this.state.clients.map(function (item, key) {
+                                    return (
+                                        <option key={key}>{item.Company}</option>
+                                    )
+                                }.bind(this))}
+                            </select>
+                        </div>
+                <table>
+                    <thead>
+                        <tr>Company: {this.state.company}</tr>
+                        <tr>Address: <input value={this.state.address} onChange={e=>{this.setState({address:e.target.value})}}></input></tr>
+                        
+                        {/* <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr> */}
+                    </thead>
+                </table>
+                </React.Fragment>
+            )
+        }
+        else {
+            return (
+                <React.Fragment>
+                    <div>User:
                     <select style={{
                                 width: "100px"
                             }}
@@ -152,14 +226,29 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         {/* <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr> */}
                     </thead>
                 </table>
-
-                <button style={{
-                    marginLeft:"10px",
-                    marginTop:"10px"
-                }} onClick={this.submit}>Submit</button>
+                </React.Fragment>
                 
-            </div>
-        );
+            )
+        }
+    }
+    protected changeClient(client){
+        console.log(client);
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findClientByCompanyName?company='+client,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                this.setState({company:result.Company});
+                this.setState({address:result.address});
+                this.setState({check_list:result.check_list});
+            }).bind(this),
+        })
     }
 
     protected changeUser(user){

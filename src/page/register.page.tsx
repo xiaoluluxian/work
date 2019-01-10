@@ -24,6 +24,128 @@ export interface IProps {
 export interface IState {
 
 }
+const questions =[
+    {
+        Category:"Yard Maintenance",
+        Questions:[
+            "Is the lawn maintained?",
+            "Are hedges and bushes trimmed away from the house?",
+            "Are there any fallen trees, branches, or twigs?",
+            "Are walks and drives free of snow and ice?",
+            "Is there any exterior debris or personal property present?",
+            "Any abandoned, unlicensed, or inoperable motor vehicles, i.e., cars, boats. RVs/campers, motorcycles, etc.?"
+        ]
+    },
+    {
+        Category:"Exterior Property Condition",
+        Questions:[
+            "Is there any evidence of vandalism?",
+            "Are there any broken/cracked windows? Number of broken/craked windows:",
+            "Are there any postings, notices, or signage that would indicate that the property has incurred a code viloation? (If yes, take photo & escalate to WF)",
+            "Is the property posted with a winterization notice?",
+            "Are there any fences that have fallen down, have missing sections, are damaged, or leaning?",
+            "Is the roof surface damaged ot tarped",
+            "Are all gutters and downspouts present and in working order? (where applicable)",
+            "Are hatchways, cellar areas, and crawlspaces boarded and secured?"
+        ]
+    },
+    {
+        Category:"Securing",
+        Questions:[
+            "Does the property appear to be occupied?",
+            "Is house secured to HUD key code?",
+            "Is a Lockbox located on the property?",
+            "Are garage and/or ourbuildings secured?",
+            "Are all windows locked or secured?",
+            "Are all fence gates secured?",
+            "Are there any boards covering the windows or doors?",
+            "Are the pool and /or spa covered and secured?",
+        ]
+    },
+    {
+        Category:"Interior Property Condition",
+        Questions:[
+            "Is there any svidence of vandalism or theft?",
+            "If yes, it there graffiti on the interior of the property?",
+            "Is there any interior debris or personal property present? i.e. window treatments, mail, furniture, etc.",
+            "Are there signs of a leaking roof?",
+            "If yes, is there any damage resulting from foor leak? (Buckling floors, fallen sheet rock, stained sheet rock, mold etc.)",
+            "is there any interior wall or ceiling damage?",
+            "Does the flooring have permanent staining, wear or damage?",
+            "Are there any missing cabinets?(kitchen, bathroom, etc.",
+            "Are there any structual and/or foundation concerns?",
+            "Is there any standing water in the house, basement, or crawlspace?",
+            "Is the property in sales clean condition?"
+        ]
+    },
+    {
+        Category:"Interior Safety Hazards",
+        Questions:[
+            "Are there any interior broken or missing hand railings?",
+            "Are there any interior broken or missing steps",
+            "Are there any interior broken or missing risers?",
+            "Are there any trip hazards present (walkways and floors)?"
+        ]
+    },
+    {
+        Category:"Plumbing/Electrical/Mechanical",
+        Questions:[
+            "Is the property winterized?",
+            "Is there any evidence that the winterization has been compromised?",
+            "Is there physical evidence that the winterization has been compromised?",
+            "Is there any obvious water leaking around plumbing fixtures, water tanks, sinks, or faucets?",
+            "Are there missing kitchen appliances? If yes, identify missing appliances in Comments section.",
+            "Is the hot waer heater missing or severely damaged?",
+            "Is the hot water heater strapped?",
+            "Do sanitary facilities(i.e. toilet, septic system) appear operational?",
+            "Does the HVAC system have parts that are missing, damaged or not connected?",
+            "Is the AC condenser unit missing or damaged?",
+            "Is there physical evidence or adequate electrical supply for lighting & appliances?",
+            "Is there exposed wiring?",
+            "Are all meters connected?"
+        ]
+    },
+    {
+        Category:"Mold",
+        Questions:[
+            "Is there any visible evidence of mold?",
+            "has the mold source been addressed? If yes, state source in Comments section."
+        ]
+    },
+    {
+        Category:"Health Hazards",
+        Questions:[
+            "Are there any damageds or issues that could be a health and safety concern? If yes, state concerns in comments section.",
+            "Hazardous Materials?",
+            "Pest and/or Rodent infestation?"
+        ]
+    },
+    {
+        Category:"Utilities",
+        Questions:[
+            "Are the utilities active?",
+            "Electric?",
+            "Gas",
+            "water",
+            "Does the property have a well?",
+            "Is a well pump present?",
+            "Does the property have a septic system?",
+        ]
+    },
+    {
+        Category:"Big Six Damage",
+        Questions:[
+            "Fire damage?",
+            "flood damage?",
+            "Tornago damage?",
+            "Boiler explosion?",
+            "Earthquake damage?",
+            "Hurricane damage?"
+        ]
+    }
+
+]
+
 
 class PageGhotiRegister extends React.Component<IProps, IState> {
     state = {
@@ -250,7 +372,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                     company: $('#company').val(),
                     address: $('#address').val(),
-                    check_list: [],
+                    check_list: questions,
                     
                 }),
                 success: function (data) {
