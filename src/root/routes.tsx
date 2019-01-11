@@ -73,6 +73,12 @@ export default function (props) {
                     path: '/ordertask',
 
                 },
+                {
+                    component: Pages.checklist,
+                    exact: true,
+                    path: '/checklist',
+
+                },
                 // {
                 //     component: "photo.html",
                 //     exact: true,

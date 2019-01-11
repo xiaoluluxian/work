@@ -77,7 +77,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Client: '',
         // test: 'test',
         // x: "a",
-        Check_List: [],
+        CheckList: [],
         Comment: "",
 
         //data: [],
@@ -124,8 +124,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ Username: result.Username });
                 this.setState({ Client: result.Client });
                 this.setState({ TaskStatus: result.TaskStatus });
-                this.setState({ Check_List: result.Check_List });
+                this.setState({ CheckList: result.CheckList });
                 this.setState({ Comment: result.Comment });
+                
                 //this.setState({ })                
 
 
@@ -231,6 +232,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.downloadwtfDuring = this.downloadwtfDuring.bind(this);
         this.convert360 = this.convert360.bind(this);
         this.edit360marker = this.edit360marker.bind(this);
+        this.checklist = this.checklist.bind(this);
 
     }
 
@@ -247,6 +249,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         // }
         // tax = taxTotal * (parseInt(this.state.Tax) ? parseInt(this.state.Tax) : 0) * 0.01;
         // total += tax;
+        // console.log(this.state.CheckList);
         let taxTotal = 0;
         let TotalAmount = 0;
         for (let i of this.state.Item) {
@@ -256,6 +259,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
         return (
+            
             <div className="main">
                 <div className="title">
                     <div style={{
@@ -475,7 +479,20 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 height: '25px',
                                 fontSize: '14px',
                             }}
-                            title="ExportJson" onClick={this.exportJson}>ExportJson</button>
+                            title="ExportJson" onClick={this.exportJson}>ExportJson
+                            </button>
+                        <button
+                            style={{
+                                // paddingTop: '20px',
+                                marginTop: '5px',
+                                marginLeft: '10px',
+                                width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="CheckList" onClick={this.checklist}>CheckList
+                            </button>
+
 
                     </div>
                     <div style={{ marginLeft: "10px" }}>Import JSON:<input
@@ -510,6 +527,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 </div>
             )
         }
+    }
+    protected checklist() {
+        this.props.history.push("/checklist");
     }
 
     protected downloadwtfBefore() {
@@ -1236,8 +1256,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
-
-            Before: []
+            Before: [],
+            Pano: ""
         }
     }
 
@@ -1248,9 +1268,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected mapItem(value, index) {
-        const addBefore = () => {
 
-        }
         return (
             <div key={index}>
                 <div className="insert">
@@ -1288,7 +1306,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                                 width: '65px',
                                 height: '25px',
-                                backgroundColor: this.state.Item[index].Taxable == true ? 'blue' : 'red'
+                                backgroundColor: this.state.Item[index].Taxable == true ? 'lightblue' : 'red'
                             }}
                                 className={value.taxable ? "check" : "uncheck"} onClick={() => {
                                     let list = this.state.Item;
@@ -1347,6 +1365,37 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         this.setState({ Item: list });
                                     }
                                 }} title="process">Status</button>
+                            <button style={{
+                                marginTop: '10px',
+                                marginLeft: '10px',
+                                fontSize: '14px',
+                                width: '65px',
+                                height: '25px',
+                                backgroundColor: this.state.Item[index].pano === "true" ? 'lightblue' : 'red'
+                            }}
+                                onClick={() => {
+                                    let list = this.state.Item;
+                                    if (list[index].pano === "true") {
+                                        list[index].pano = "false";
+                                        this.setState({ Item: list });
+                                    }
+                                    else {
+                                        list[index].pano = "true";
+                                        this.setState({ Item: list });
+                                    }
+                                    // console.log(list[index].Taxable);
+                                    this.setState({ Item: list });
+                                }} title="pano">Is360</button>
+                            <button
+                                style={{
+                                    // paddingTop: '20px',
+                                    // marginTop: '10px',
+                                    marginLeft: '10px',
+                                    width: '65px',
+                                    height: '25px',
+                                    fontSize: '14px',
+                                }}
+                                title="downloaditempics" onClick={this.downloadItemPics.bind(this,this.state.Item[index])}>ItemPics</button>
                         </div>
                         <div style={{
                             marginLeft: '10px'
@@ -1511,6 +1560,82 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 </React.Fragment>
             </div>
         )
+    }
+
+    protected downloadItemPics(item){
+        
+        let itempics = item.Before.concat(item.During,item.After);
+        let pics=[];
+        for(let i=0;i<itempics.length;i++){
+            pics.push(itempics[i].Src)
+        }
+       
+        function resetMessage() {
+            $("#result")
+                .removeClass()
+                .text("");
+        }
+        /**
+         * show a successful message.
+         * @param {String} text the text to show.
+         */
+        function showMessage(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-success")
+                .text(text);
+        }
+        /**
+         * show an error message.
+         * @param {String} text the text to show.
+         */
+        function showError(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-danger")
+                .text(text);
+        }
+
+
+        function urlToPromise(url) {
+            console.log(url)
+            return new Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+        resetMessage();
+        var zip = new JSZip();
+        
+        // find every checked item
+        pics.forEach(function (url) {
+            console.log(url);
+            var filename = url.replace(/.*\//g, "") + ".jpg";
+            zip.file(filename, urlToPromise(url), { binary: true });
+        });
+        var add = this.state.Address
+        // when everything has been downloaded, we can trigger the dl
+        zip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
+            var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+            if (metadata.currentFile) {
+                msg += ", current file = " + metadata.currentFile;
+            }
+            showMessage(msg);
+        })
+            .then(function callback(blob) {
+
+                FileSaver.saveAs(blob, add +"_"+item.Cate+item.Item+".zip");
+                showMessage("done !");
+            }, function (e) {
+                showError(e);
+            });
+
+        return false;
     }
     protected addAfterPicture(Files: FileList, index: number, temp: number) {
 
@@ -1962,7 +2087,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             },
             markers: [],
         })
-        
+
         PSV.on('click', function (e) {
             // this.setState({x:e.latitude});
             PSV.addMarker({
@@ -3111,7 +3236,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Username: this.state.Username,
                 TaskStatus: this.state.TaskStatus,
                 Client: this.state.Client,
-                Check_List: this.state.Check_List,
+                CheckList: this.state.CheckList,
                 Comment: this.state.Comment,
             }),
             success: function (data) {
