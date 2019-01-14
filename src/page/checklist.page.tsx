@@ -9,6 +9,8 @@ import * as Component from '../component/import';
 import * as Func from '../func/import';
 import * as Lambda from '../lambda/import';
 import * as $ from "jquery";
+import * as jsPDF from "jspdf";
+import "jspdf-autotable";
 
 import Config from '../config/config';
 
@@ -23,12 +25,13 @@ export interface IState {
 
 
 class PageGhotiChecklist extends React.Component<IProps, IState> {
-    state={
-        checklist:[]
+    state = {
+        checklist: [],
+        Comment: ""
     }
-    public componentDidMount(){
+    public componentDidMount() {
         $.ajax({
-            url:"https://rpntechserver.appspot.com/findChecklistByTask?task_id="+localStorage.getItem("currTask"),
+            url: "https://rpntechserver.appspot.com/findChecklistByTask?task_id=" + localStorage.getItem("currTask"),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -38,7 +41,21 @@ class PageGhotiChecklist extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 // console.log(result);
-                this.setState({checklist:result});
+                this.setState({ checklist: result });
+            }).bind(this),
+        });
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                // console.log(result);
+                this.setState({ Comment: result.Comment });
             }).bind(this),
         })
     }
@@ -48,19 +65,86 @@ class PageGhotiChecklist extends React.Component<IProps, IState> {
 
     public render() {
         return (<div>
-           <table className="table">
-           <thead>
-               {this.state.checklist.map(function(item,key){
-                   return(
-                    <React.Fragment key={key}>
-                    ()
-                    {console.log(key)}
-                    </React.Fragment>
-                   )
-               })}
-           </thead>
-           </table>
+            <table id="check_list">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </thead>
+                <tbody>
+                    {this.state.checklist.map(function (item, key) {
+
+                        let answers = item.answers;
+                        return (
+                            <React.Fragment key={key}>
+                                <tr>
+                                    <td style={{
+                                        backgroundColor: "lightblue",
+                                        fontWeight: "bold",
+                                        // color:"white"
+                                    }}>
+                                        {item.Category}</td>
+                                    <td style={{
+                                        backgroundColor: "lightblue",
+                                        fontWeight: "bold",
+                                        // color:"white"
+                                    }}>Answer</td>
+                                </tr>
+                                {item.questions.map(function (item, key) {
+                                    return (
+                                        <tr key={key}>
+                                            <td>{key + 1}. {item}</td>
+                                            <td>{answers[key]}</td>
+                                        </tr>
+                                    )
+                                })}
+                                {/* {console.log(item)} */}
+                            </React.Fragment>
+                        )
+                    })}
+
+                    <tr style={{
+                        backgroundColor: "lightblue",
+                        fontWeight: "bold",
+                        // color:"white"
+                    }}><td colSpan={2}>Comments</td></tr>
+                    <tr style={{
+                        height: "100px"
+                    }}>
+                        <td colSpan={2} style={{
+                            // height:"100px"
+                            textAlign: "left"
+                        }}>{this.state.Comment}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button onClick={this.downloadPDF}>PDF</button>
         </div>);
+
+
+    }
+
+    protected downloadPDF() {
+        var doc = new jsPDF('p', 'pt');
+        var res = doc.autoTableHtmlToJson(document.getElementById("check_list"));
+        console.log(res);
+        // doc.autoTable(res.columns, res.data);
+        
+
+        // var options = {
+        //     beforePageContent: header,
+        //     margin: {
+        //         top: 80
+        //     },
+        //     startY: doc.autoTableEndPosY() + 20
+        // };
+
+        doc.autoTable(res.columns, res.data);
+        console.log(doc);
+
+        doc.save("table.pdf");
+
     }
 }
 

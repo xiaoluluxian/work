@@ -203,3 +203,8 @@ Change stage display in main page
 1. Add pano boolean for image
 2. Fix checklist comment in task information
 3. Download pics from one item
+
+### 1.3.7
+
+1. Show checklist for each task
+2. Dowanload checklist as PDF
