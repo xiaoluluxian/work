@@ -53,6 +53,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         City: '',
         CompletionDate: '',
         Desc: '',
+        DescCN: '',
         Invoice: '',
         DueDate: '',
         InvoiceDate: '',
@@ -79,6 +80,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         // x: "a",
         CheckList: [],
         Comment: "",
+        Markers: [],
+        currImgID: ""
+
 
         //data: [],
     };
@@ -106,6 +110,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ City: result.City });
                 this.setState({ CompletionDate: result.CompletionDate });
                 this.setState({ Desc: result.Desc });
+                this.setState({ DescCN: result.DescCN });
                 this.setState({ Invoice: result.Invoice });
                 this.setState({ DueDate: result.DueDate });
                 this.setState({ InvoiceDate: result.InvoiceDate });
@@ -126,7 +131,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ TaskStatus: result.TaskStatus });
                 this.setState({ CheckList: result.CheckList });
                 this.setState({ Comment: result.Comment });
-                
+
                 //this.setState({ })                
 
 
@@ -233,6 +238,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.convert360 = this.convert360.bind(this);
         this.edit360marker = this.edit360marker.bind(this);
         this.checklist = this.checklist.bind(this);
+        this.submit360 = this.submit360.bind(this);
 
     }
 
@@ -259,7 +265,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
         return (
-            
+
             <div className="main">
                 <div className="title">
                     <div style={{
@@ -781,9 +787,27 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 // fontSize:'13px'
                             }}>Description</span>
                             <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
-                                id='city' value={this.state.Desc}
+                                id='description' value={this.state.Desc}
                                 onChange={e => {
                                     this.setState({ Desc: e.target.value });
+                                }} style={{
+                                    color: "black",
+                                    width: "100%",
+                                    height: "100px",
+                                    resize: "none"
+                                }}
+                            ></textarea>
+                        </div>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                            <span className="input-group-text" id="basic-addon1" style={{
+                                color: "black",
+                                height: "100px"
+                                // fontSize:'13px'
+                            }}>DescriptionCN</span>
+                            <textarea className="form-control" placeholder="DescriptionCN..." aria-label="DescriptionCN" aria-describedby="basic-addon1"
+                                id='descriptionCN' value={this.state.DescCN}
+                                onChange={e => {
+                                    this.setState({ DescCN: e.target.value });
                                 }} style={{
                                     color: "black",
                                     width: "100%",
@@ -821,12 +845,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <div id="sphere" className="sphere">
                         <div className="sphere-content">
                             <span className="closep">&times;</span>
+                            
                             <div id="spherepic" style={{
                                 width: "100%",
                                 height: "90%"
                             }}></div>
-
+                            <div style={{
+                                position:"relative",
+                                marginTop:"45px",
+                            }}><button onClick={this.submit360}>submit</button></div>
+                            
                         </div>
+                        
                     </div>
                     {/* <div id="myModal2" className="modal">
                     <div className="modal-content">
@@ -850,6 +880,26 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 </div>
             )
         }
+    }
+
+    protected submit360() {
+        $.ajax({
+            url: 'http://rpntechserver.appspot.com/updateMarker?image_id=' + this.state.currImgID,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'POST',
+            datatype: "json",
+            data: JSON.stringify({
+                markers: this.state.Markers
+            }),
+            success: (function (result) {
+                console.log(result);
+                // window.location.reload();
+
+            }).bind(this),
+
+        })
     }
 
     protected getInner(element) {
@@ -1395,7 +1445,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     height: '25px',
                                     fontSize: '14px',
                                 }}
-                                title="downloaditempics" onClick={this.downloadItemPics.bind(this,this.state.Item[index])}>ItemPics</button>
+                                title="downloaditempics" onClick={this.downloadItemPics.bind(this, this.state.Item[index])}>ItemPics</button>
                         </div>
                         <div style={{
                             marginLeft: '10px'
@@ -1562,14 +1612,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         )
     }
 
-    protected downloadItemPics(item){
-        
-        let itempics = item.Before.concat(item.During,item.After);
-        let pics=[];
-        for(let i=0;i<itempics.length;i++){
+    protected downloadItemPics(item) {
+
+        let itempics = item.Before.concat(item.During, item.After);
+        let pics = [];
+        for (let i = 0; i < itempics.length; i++) {
             pics.push(itempics[i].Src)
         }
-       
+
         function resetMessage() {
             $("#result")
                 .removeClass()
@@ -1611,7 +1661,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
         resetMessage();
         var zip = new JSZip();
-        
+
         // find every checked item
         pics.forEach(function (url) {
             console.log(url);
@@ -1629,7 +1679,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         })
             .then(function callback(blob) {
 
-                FileSaver.saveAs(blob, add +"_"+item.Cate+item.Item+".zip");
+                FileSaver.saveAs(blob, add + "_" + item.Cate + item.Item + ".zip");
                 showMessage("done !");
             }, function (e) {
                 showError(e);
@@ -1790,14 +1840,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 },
                 data: formData,
                 success: function (result) {
-                    // console.log(result);
+                    console.log(result);
                     let list = this.state.Item;
                     list[index].Before.push({
                         Name: Files[temp].name,
                         Format: '',
                         Cate: list[index].Cate,
                         itemId: list[index].Item,
-                        Src: result
+                        Src: result,
                     });
                     this.setState({ Item: list });
                 }.bind(this),
@@ -2063,6 +2113,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected convert360(pic) {
+        // console.log(this.state.Markers);
+        this.setState({currImgID:pic.ImageID});
 
         var modal = document.getElementById('sphere');
 
@@ -2077,53 +2129,98 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
         let div = document.getElementById('spherepic');
         let PSV;
-        PSV = new PhotoSphereViewer({
-            panorama: pic,
-            container: div,
-            time_anim: 1000,
-            navbar: true,
-            navbar_style: {
-                backgroundColor: "silver",
+        $.ajax({
+            url: "https://rpntechserver.appspot.com/findImageMarkerByImageID?imageID=" + pic.ImageID,
+            method: 'GET',
+            datatype: "json",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
             },
-            markers: [],
+            // data: test,
+            success: function (data) {
+                console.log(data)
+                this.setState({ Markers: data.Markers })
+                // console.log(this.state.Markers);
+                PSV = new PhotoSphereViewer({
+                    panorama: pic.Src,
+                    container: div,
+                    time_anim: 1000,
+                    navbar: true,
+                    navbar_style: {
+                        backgroundColor: "silver",
+                    },
+                    markers: (function () {
+                        var marlist = [];
+                        for (let i = 0; i < this.state.Markers.length; i++) {
+                            marlist.push({
+                                id: '#' + Math.random(),
+                                longitude: this.state.Markers[i].coord_y,
+                                latitude: this.state.Markers[i].CoordinateX,
+                                image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
+                                width: 32,
+                                height: 32,
+                                tootip: "testdel pin",
+                                data: {
+                                    generated: true
+                                }
+                            })
+                        };
+                        return marlist;
+                    }.bind(this)()),
+                })
+                PSV.on('click', function (e) {
+                    let createMar = {
+                        id: '#' + Math.random(),
+                        // tooltip: 'Generated marker',
+                        longitude: e.longitude,
+                        latitude: e.latitude,
+                        image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
+                        content: "",
+                        // content:this.edit360marker(),
+                        width: 32,
+                        height: 32,
+                        anchor: 'bottom center',
+                        data: {
+                            generated: true
+                        }
+                    }
+                    PSV.addMarker(createMar);
+                    let tempMar = this.state.Markers;
+                    tempMar.push({
+                        CoordinateX: createMar.latitude,
+                        Description: "",
+                        coord_y: createMar.longitude,
+                        singleMarkID: createMar.id.toString()
+                    })
+                    this.setState({ Markers: tempMar });
+                    console.log(this.state.Markers);
+                }.bind(this));
+
+                /**
+                 * Delete a generated marker when the user clicks on it
+                 */
+                PSV.on('select-marker', function (marker, dblclick) {
+                    if (marker.data && marker.data.generated) {
+                        if (dblclick) {
+                            PSV.removeMarker(marker);
+                        }
+                    }
+                });
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == span) {
+                        PSV.destroy();
+                        modal.style.display = "none";
+                    }
+                }
+            }.bind(this),
         })
+        // console.log(this.state.Markers);
 
-        PSV.on('click', function (e) {
-            // this.setState({x:e.latitude});
-            PSV.addMarker({
-                id: '#' + Math.random(),
-                tooltip: 'Generated marker',
-                longitude: e.longitude,
-                latitude: e.latitude,
-                image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
-                content: "",
-                // content:this.edit360marker(),
-                width: 32,
-                height: 32,
-                anchor: 'bottom center',
-                data: {
-                    generated: true
-                }
-            });
-        }.bind(this));
 
-        /**
-         * Delete a generated marker when the user clicks on it
-         */
-        PSV.on('select-marker', function (marker, dblclick) {
-            if (marker.data && marker.data.generated) {
-                if (dblclick) {
-                    PSV.removeMarker(marker);
-                }
-            }
-        });
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == span) {
-                PSV.destroy();
-                modal.style.display = "none";
-            }
-        }
+
+
+
     }
 
     protected mapShowItem(value, index) {
@@ -2631,7 +2728,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 padding: '3px'
                             }}
                                 src={item.Src}
-                                onClick={this.convert360.bind(this, item.Src)}
+                                onClick={this.convert360.bind(this, item)}
                             />
                         </div>
                         <div>
@@ -3218,6 +3315,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 City: this.state.City,
                 CompletionDate: this.state.CompletionDate,
                 Desc: this.state.Desc,
+                DescCN: this.state.DescCN,
                 Invoice: this.state.Invoice,
                 InvoiceDate: this.state.InvoiceDate,
                 DueDate: this.state.DueDate,

@@ -43,11 +43,21 @@ export interface IState {
 
 }
 
+
 class PageGhotiTest extends React.Component<IProps, IState> {
     state = {
         page: null,
         pic: [],
-
+        test: [
+            {
+                longitude: 0,
+                latitude: 0
+            },
+            {
+                longitude: 0.1,
+                latitude: 0.1
+            }
+        ]
     }
     public constructor(props) {
         super(props);
@@ -56,7 +66,8 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         this.handleChange = this.handleChange.bind(this);
         this.handleChangebefore = this.handleChangebefore.bind(this);
         this.downloadBefore = this.downloadBefore.bind(this);
-
+        this.convert360 = this.convert360.bind(this);
+        this.logtest = this.logtest.bind(this);
     }
 
     public componentDidMount() {
@@ -122,7 +133,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     <td>2018-08-24</td>
                 </tr>
             </table> */}
-            <div id="signupbox" style={{ marginTop: "50px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            {/* <div id="signupbox" style={{ marginTop: "50px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                 <div className="panel panel-info">
                     <form className="form-horizontal" method="post">
                         <div id="div_id_select" className="form-group required">
@@ -139,7 +150,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                             </div>
                         </div>
                     </form>
-                </div> </div>
+                </div> </div> */}
 
             <div className="container1" id="container1"
                 style={{
@@ -147,6 +158,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     height: "100%",
                 }}></div>
             <button onClick={this.convert360}>convert360</button>
+            <button onClick={this.logtest}>test</button>
             {/* {this.convert360} */}
             <tr>zipcode <input className="text" id='zipcode' ></input></tr>
             <button onClick={this.weather}>go</button>
@@ -187,6 +199,10 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         )
     }
 
+    protected logtest(){
+        console.log(this.state.test);
+    }
+
     protected printClient() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/findAllClient',
@@ -215,6 +231,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
         let div = document.getElementById('container1');
         let PSV;
+        console.log(this.state.test[0].longitude);
         PSV = new PhotoSphereViewer({
             panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
             container: div,
@@ -223,74 +240,66 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             navbar_style: {
                 backgroundColor: "silver",
             },
-            markers: [
-                {
-                    id: 'text',
-                    longitude: 0,
-                    latitude: 0,
-                    html: 'HTML <b>marker</b> &hearts;',
-                    anchor: 'bottom right',
-                    scale: [0.5, 1.5],
-                    style: {
-                        maxWidth: '100px',
-                        color: 'white',
-                        fontSize: '20px',
-                        fontFamily: 'Helvetica, sans-serif',
-                        textAlign: 'center'
-                    },
-                    tooltip: {
-                        content: 'An HTML marker',
-                        position: 'right'
-                    }
-                }
-            ]
-            // markers:[
-            //     {
-            //         // html marker with custom style
-            //         id: 'text',
+            markers: (function () {
+                var marlist = [];
+                for (let i = 0; i < this.state.test.length; i++) {
+                    marlist.push({
+                        id: '#' + Math.random(),
+                        longitude: this.state.test[i].longitude,
+                        latitude: this.state.test[i].latitude,
+                        image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
+                        width: 32,
+                        height: 32,
+                        tootip:"testdel pin",
+                        data: {
+                            generated: true
+                        }
+                    })
+                };
+                return marlist;
+            }.bind(this)())
+            // markers: (function () {
+            //     // var testlist = this.state.test;
+            //     var marlist=[];
+            //     marlist.push({
+            //         id: '#' + Math.random(),
             //         longitude: 0,
             //         latitude: 0,
-            //         html: 'HTML <b>marker</b> &hearts;',
-            //         anchor: 'bottom right',
-            //         scale: [0.5, 1.5],
-            //         style: {
-            //           maxWidth: '100px',
-            //           color: 'white',
-            //           fontSize: '20px',
-            //           fontFamily: 'Helvetica, sans-serif',
-            //           textAlign: 'center'
-            //         },
-            //         tooltip: {
-            //           content: 'An HTML marker',
-            //           position: 'right'
+            //         // image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
+            //         width: 32,
+            //         height: 32,
+            //         html: 'HTML & Image',
+            //         tootip: "testdel pin",
+            //         data: {
+            //             generated: true
             //         }
-            //       },
-            // ]
+            //     })
+            //     return marlist;
+            // }())
         });
 
 
         PSV.on('click', function (e) {
-            PSV.addMarker({
+            let mar = {
                 id: '#' + Math.random(),
                 longitude: e.longitude,
                 latitude: e.latitude,
-                html: '&hearts;',
-                anchor: 'bottom right',
-                style: {
-                    widht: "60px",
-                    height: "60px",
-                    color: 'green',
-
-                },
-                scale: [0.5, 1.5],
+                image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
                 width: 32,
                 height: 32,
                 tooltip: 'Generated pin',
                 data: {
                     generated: true
                 }
-            });
-        });
+            }
+            PSV.addMarker(mar);
+            let temp = this.state.test;
+            temp.push({
+                longitude:e.longitude,
+                latitude:e.latitude
+            })
+            this.setState({test:temp})
+        }.bind(this));
 
         /**
          * Delete a generated marker when the user clicks on it
@@ -299,6 +308,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             if (marker.data && marker.data.generated) {
                 if (dblclick) {
                     PSV.removeMarker(marker);
+                    // console.log(PSV.marker);
                 }
             }
         });

@@ -208,3 +208,7 @@ Change stage display in main page
 
 1. Show checklist for each task
 2. Dowanload checklist as PDF
+
+### 1.3.8
+
+1. Add marker on 360 pictures and connect with back end
