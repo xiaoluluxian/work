@@ -1307,7 +1307,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             PPU: 0,
             Cost: 0,
             Before: [],
-            Pano: ""
+            Pano: "",
+            description_cn:"",
         }
     }
 
@@ -1470,6 +1471,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             onChange={e => {
                                 let list = this.state.Item;
                                 list[index].description = e.target.value;
+                                this.setState({ Item: list });
+                            }}
+                            style={{
+                                width: "425px",
+                                height: "100px",
+                                resize: "none"
+                            }}>
+                        </textarea></div></tr>
+                        <tr>DescriptionCN <div> <textarea id='descriptionCN' value={value.description_cn}
+                            onChange={e => {
+                                let list = this.state.Item;
+                                list[index].description_cn = e.target.value;
                                 this.setState({ Item: list });
                             }}
                             style={{
@@ -2407,11 +2420,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         }}
                                     ></td> */}
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
 
                                 </React.Fragment>
                             )
@@ -2458,11 +2471,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
                                 </React.Fragment>
                             )
                         }.bind(this))}
@@ -2505,11 +2518,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
                                 </React.Fragment>
                             )
                         }.bind(this))}
@@ -2587,11 +2600,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         }}
                                     ></td> */}
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
 
                                 </React.Fragment>
                             )
@@ -2638,11 +2651,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
                                 </React.Fragment>
                             )
                         }.bind(this))}
@@ -2685,11 +2698,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
                                 </React.Fragment>
                             )
                         }.bind(this))}
@@ -2715,34 +2728,58 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
-    protected mapPicture(picture: any[], desc: string) {
-        return (
-            picture.map(function (item, key) {
-                return (
-                    <div>
+    
+
+    protected mapPicture(picture: any[], desc: string, descCN: string) {
+        if(localStorage.getItem("Authority")==='3'){
+            return (
+                picture.map(function (item, key) {
+                    return (
                         <div>
-                            <img style={{
-                                width: '25%',
-                                height: 'auto',
-
-                                padding: '3px'
-                            }}
-                                src={item.Src}
-                                onClick={this.convert360.bind(this, item)}
-                            />
+                            <div>
+                                <img style={{
+                                    width: '25%',
+                                    height: 'auto',
+    
+                                    padding: '3px'
+                                }}
+                                    src={item.Src}
+                                    onClick={this.convert360.bind(this, item)}
+                                />
+                            </div>
+                            <div>
+                                {key + 1}.{desc}
+                            </div>
                         </div>
+                    )
+                }.bind(this))
+            )
+        }
+        else{
+            return (
+                picture.map(function (item, key) {
+                    return (
                         <div>
-                            {key + 1}.{desc}
+                            <div>
+                                <img style={{
+                                    width: '25%',
+                                    height: 'auto',
+    
+                                    padding: '3px'
+                                }}
+                                    src={item.Src}
+                                    onClick={this.convert360.bind(this, item)}
+                                />
+                            </div>
+                            <div>
+                                {key + 1}.{desc+" / "+descCN}
+                            </div>
+    
                         </div>
-
-                    </div>
-
-
-
-
-                )
-            }.bind(this))
-        )
+                    )
+                }.bind(this))
+            )
+        }
     }
 
     protected printPDF() {
@@ -3339,7 +3376,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }),
             success: function (data) {
                 console.log(JSON.parse(data));
-                this.props.history.push('/main');
+                // this.props.history.push('/main');
+                window.location.reload();
             }.bind(this),
         });
     }

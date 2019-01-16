@@ -212,3 +212,8 @@ Change stage display in main page
 ### 1.3.8
 
 1. Add marker on 360 pictures and connect with back end
+
+### 1.3.9
+
+1. Add chinese description for task and item
+2. Change reload for edittask(test)
