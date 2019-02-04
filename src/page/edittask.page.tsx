@@ -27,7 +27,7 @@ import * as jsPDF from "jspdf";
 import * as helper from "./helpers.js";
 import * as ReactToPrint from "react-to-print";
 import * as Cheerio from "cheerio";
-import 'bootstrap';
+// import 'bootstrap';
 import Config from '../config/config';
 import * as PhotoSphereViewer from "photo-sphere-viewer";
 
@@ -607,10 +607,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         marginTop: "10px"
                     }}>
 
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "31px",
+
                                 // fontSize:'13px'
                             }}>Property Address</span>
                             <input type="text" className="form-control" placeholder="Address" aria-label="Property Address" aria-describedby="basic-addon1"
@@ -618,7 +619,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 onChange={e => this.AddrChange(e.target.value)} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -629,7 +630,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 onChange={e => this.AssetChange(e.target.value)} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -640,7 +641,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 onChange={e => { this.setState({ Invoice: e.target.value }) }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -651,7 +652,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 onChange={e => this.StartDChange(e.target.value)} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -662,7 +663,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 onChange={e => this.IDateChange(e.target.value)} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -675,7 +676,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -688,7 +689,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -701,7 +702,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -714,7 +715,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -727,7 +728,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "100px"
@@ -745,7 +746,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }}
                             ></textarea>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -767,7 +768,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "31px"
@@ -780,7 +781,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }} style={{ color: "black" }}
                             ></input>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "100px"
@@ -798,7 +799,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }}
                             ></textarea>
                         </div>
-                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px" }}>
+                        <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
                                 height: "100px"
@@ -845,18 +846,18 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <div id="sphere" className="sphere">
                         <div className="sphere-content">
                             <span className="closep">&times;</span>
-                            
+
                             <div id="spherepic" style={{
                                 width: "100%",
                                 height: "90%"
                             }}></div>
                             <div style={{
-                                position:"relative",
-                                marginTop:"45px",
+                                position: "relative",
+                                marginTop: "45px",
                             }}><button onClick={this.submit360}>submit</button></div>
-                            
+
                         </div>
-                        
+
                     </div>
                     {/* <div id="myModal2" className="modal">
                     <div className="modal-content">
@@ -870,13 +871,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     </div>
                 </div> */}
                     {this.state.Item.map(this.mapItem)}
-                    <button style={{
-                        marginTop: '10px',
-                        marginLeft: '10px',
-                        width: '430px',
-                        height: '27px',
-                        fontSize: '14px',
-                    }} onClick={this.addaddItem} title="add item">AddItem</button>
+                    <div className="insert">
+                        <button className="btn btn-primary btn-sm" style={{
+                            // marginTop: '5px',
+                            marginLeft: '10px',
+                            marginBottom: "5px",
+                            width: '97%',
+                            height: '4%',
+                            fontSize: '14px',
+                        }} onClick={this.addaddItem} title="add item">AddItem</button>
+                    </div>
+
                 </div>
             )
         }
@@ -1308,7 +1313,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             Cost: 0,
             Before: [],
             Pano: "",
-            description_cn:"",
+            description_cn: "",
         }
     }
 
@@ -1323,11 +1328,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         return (
             <div key={index}>
                 <div className="insert">
-                    <button style={{
+                    <button className="btn btn-primary btn-sm" style={{
                         marginTop: '10px',
                         marginLeft: '10px',
-                        width: '430px',
-                        height: '25px',
+                        width: '97%',
+                        height: '4%',
                         fontSize: '14px',
                     }}
                         onClick={() => {
@@ -1337,286 +1342,438 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         }}>AddItem</button>
                 </div>
                 <React.Fragment>
-                    <div className="itemTop">
-                        <div className="right">
-                            <button style={{
-                                marginTop: '10px',
-                                marginLeft: '10px',
-                                width: '65px',
-                                height: '25px',
-                                fontSize: '14px',
-                            }}
-                                className="bigger" onClick={() => {
-                                    let list = this.state.Item;
-                                    list.splice(index, 1);
-                                    this.setState({ Item: list });
-                                }} title="delete">Delete</button>
-                            <button style={{
-                                marginTop: '10px',
-                                marginLeft: '10px',
-                                fontSize: '14px',
-                                width: '65px',
-                                height: '25px',
-                                backgroundColor: this.state.Item[index].Taxable == true ? 'lightblue' : 'red'
-                            }}
-                                className={value.taxable ? "check" : "uncheck"} onClick={() => {
-                                    let list = this.state.Item;
-                                    list[index].Taxable = !list[index].Taxable;
-                                    if (list[index].Taxable === true) {
-                                        list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
-                                        list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
-                                    }
-                                    else {
-                                        list[index].Tax = 0;
-                                        list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
-                                    }
+                    <div className="row">
+                        <div className="" style={{
+                            marginTop: "3px",
+                            marginLeft: "23px",
+                            width: "92%"
+                        }}>
+                            <div className="card mb-4">
+                                <div className="card-header">
+                                    <div style={{
 
-                                    // console.log(list[index].Taxable);
-                                    this.setState({ Item: list });
-                                }} title="tax">Tax</button>
-
-                            <button style={{
-                                marginTop: '10px',
-                                marginLeft: '10px',
-                                width: '65px',
-                                height: '25px',
-                                fontSize: '14px',
-                            }}
-                                className="bigger" onClick={() => {
-                                    let list = this.state.Item;
-                                    if (list[index].Process === '0') {
-                                        list[index].Process = '1';
-                                        this.setState({ Item: list });
-                                    }
-                                    else {
-                                        list[index].Process = '0';
-                                        this.setState({ Item: list });
-                                    }
-                                }} title="process">Process</button>
-                            <button style={{
-                                marginTop: '10px',
-                                marginLeft: '10px',
-                                width: '65px',
-                                height: '25px',
-                                fontSize: '14px',
-                            }}
-                                className="bigger" onClick={() => {
-                                    let list = this.state.Item;
-                                    if (list[index].Status === '0') {
-                                        list[index].Status = '1';
-                                        this.setState({ Item: list });
-                                    }
-                                    else if (list[index].Status === '1') {
-                                        list[index].Status = '-1';
-                                        list[index].Process = '0';
-                                        this.setState({ Item: list });
-                                    }
-                                    else {
-                                        list[index].Status = '0';
-                                        this.setState({ Item: list });
-                                    }
-                                }} title="process">Status</button>
-                            <button style={{
-                                marginTop: '10px',
-                                marginLeft: '10px',
-                                fontSize: '14px',
-                                width: '65px',
-                                height: '25px',
-                                backgroundColor: this.state.Item[index].pano === "true" ? 'lightblue' : 'red'
-                            }}
-                                onClick={() => {
-                                    let list = this.state.Item;
-                                    if (list[index].pano === "true") {
-                                        list[index].pano = "false";
-                                        this.setState({ Item: list });
-                                    }
-                                    else {
-                                        list[index].pano = "true";
-                                        this.setState({ Item: list });
-                                    }
-                                    // console.log(list[index].Taxable);
-                                    this.setState({ Item: list });
-                                }} title="pano">Is360</button>
-                            <button
-                                style={{
-                                    // paddingTop: '20px',
-                                    // marginTop: '10px',
-                                    marginLeft: '10px',
-                                    width: '65px',
-                                    height: '25px',
-                                    fontSize: '14px',
-                                }}
-                                title="downloaditempics" onClick={this.downloadItemPics.bind(this, this.state.Item[index])}>ItemPics</button>
-                        </div>
-                        <div style={{
-                            marginLeft: '10px'
-                        }}
-                            className="left"><h4>{this.state.Item[index].Cate} - {this.state.Item[index].Item}</h4></div>
-                    </div>
-                    <table>
-                        <tr>Category <input className="text" id='cate' value={value.Cate}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].Cate = e.target.value;
-                                this.setState({ Item: list });
-                            }} /></tr>
-                        <tr>Item <input className="text" id='item' value={value.Item}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                //console.log(e.target.value);
-                                list[index].Item = parseInt(e.target.value) || 0;
-                                this.setState({ Item: list });
-                            }} /></tr>
-                        <tr>Description <div> <textarea id='description' value={value.description}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].description = e.target.value;
-                                this.setState({ Item: list });
-                            }}
-                            style={{
-                                width: "425px",
-                                height: "100px",
-                                resize: "none"
-                            }}>
-                        </textarea></div></tr>
-                        <tr>DescriptionCN <div> <textarea id='descriptionCN' value={value.description_cn}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].description_cn = e.target.value;
-                                this.setState({ Item: list });
-                            }}
-                            style={{
-                                width: "425px",
-                                height: "100px",
-                                resize: "none"
-                            }}>
-                        </textarea></div></tr>
-                        <tr>Comments <div> <textarea id='comments' value={value.Comments}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].Comments = e.target.value;
-                                this.setState({ Item: list });
-                            }}
-                            style={{
-                                width: "425px",
-                                height: "65px",
-                                resize: "none"
-                            }}>
-                        </textarea></div></tr>
-                        <tr>QTY <input className="text" id='qty' value={value.Qty}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].Qty = parseInt(e.target.value) || 0;
-                                list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
-                                list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
-                                this.setState({ Item: list });
-                            }} /></tr>
-                        <tr>UM <input className="text" id='um' value={value.UM}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].UM = e.target.value;
-                                this.setState({ Item: list });
-                            }} /></tr>
-                        <tr>PPU <input type="number" id='ppu' value={value.PPU}
-                            onChange={e => {
-                                let list = this.state.Item;
-                                list[index].PPU = parseFloat(e.target.value) || 0;
-                                list[index].Cost = list[index].Qty * list[index].PPU;
-                                list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
-                                list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
-                                this.setState({ Item: list });
-                            }} /></tr>
-                        <tr>Cost: {value.Cost}</tr>
-                        <tr>Tax: {value.Tax}</tr>
-                        <tr>Total: {value.Amount}</tr>
-                        <tr>
-                            Before:
-                            <input
-                                style={{
-                                    marginTop: '10px',
-                                    marginLeft: '30px',
-                                    fontSize: '14px',
-                                    marginBottom: '5px',
-
-                                }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addBeforePicture(e.target.files, index, 0) }}
-                            //onClick={e.target.value=null}
-                            //type="file" multiple id="beforefileupload" onClick={}
-                            />
-                            {this.state.Item[index].Before.map(function (pic, key) {
-                                return (
-                                    <React.Fragment>
-                                        <tr key={key}>
-                                            <td>{key + 1}:<button style={{
-                                                fontSize: '14px',
-                                            }} onClick={() => {
+                                    }}
+                                        className="left"><h4>{this.state.Item[index].Cate} - {this.state.Item[index].Item}</h4></div>
+                                    <div className="right">
+                                        <button style={{
+                                            marginTop: '3px',
+                                            marginLeft: '5px',
+                                            width: '65px',
+                                            height: '29px',
+                                            fontSize: '14px',
+                                        }}
+                                            className="btn btn-danger btn-sm" onClick={() => {
                                                 let list = this.state.Item;
-                                                list[index].Before.splice(key, 1);
+                                                list.splice(index, 1);
+                                                this.setState({ Item: list });
+                                            }} title="delete">Delete</button>
+                                        <button style={{
+                                            marginTop: '3px',
+                                            marginLeft: '5px',
+                                            fontSize: '14px',
+                                            width: '65px',
+                                            height: '29px',
+                                            // backgroundColor: this.state.Item[index].Taxable == true ? 'lightblue' : 'red'
+                                        }}
+                                            className={this.state.Item[index].Taxable == true ? "btn btn-outline-success btn-sm" : "btn btn-outline-danger btn-sm"} onClick={() => {
+                                                let list = this.state.Item;
+                                                list[index].Taxable = !list[index].Taxable;
+                                                if (list[index].Taxable === true) {
+                                                    list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
+                                                    list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
+                                                }
+                                                else {
+                                                    list[index].Tax = 0;
+                                                    list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
+                                                }
+
+                                                // console.log(list[index].Taxable);
+                                                this.setState({ Item: list });
+                                            }} title="tax">Tax</button>
+
+                                        <button style={{
+                                            marginTop: '3px',
+                                            marginLeft: '5px',
+                                            width: '65px',
+                                            height: '29px',
+                                            fontSize: '14px',
+                                        }}
+                                            className={this.state.Item[index].Process === '0' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-success btn-sm"} onClick={() => {
+                                                let list = this.state.Item;
+                                                if (list[index].Process === '0') {
+                                                    list[index].Process = '1';
+                                                    this.setState({ Item: list });
+                                                }
+                                                else {
+                                                    list[index].Process = '0';
+                                                    this.setState({ Item: list });
+                                                }
+                                            }} title="process">Process</button>
+                                        <button style={{
+                                            marginTop: '3px',
+                                            marginLeft: '5px',
+                                            width: '65px',
+                                            height: '29px',
+                                            fontSize: '14px',
+                                        }}
+                                            className={
+                                                this.state.Item[index].Status === '0' ? "btn btn-outline-warning btn-sm" : this.state.Item[index].Status === '1' ? "btn btn-outline-success btn-sm" : "btn btn-outline-danger btn-sm"
+                                            } onClick={() => {
+                                                let list = this.state.Item;
+                                                if (list[index].Status === '0') {
+                                                    list[index].Status = '1';
+                                                    this.setState({ Item: list });
+                                                }
+                                                else if (list[index].Status === '1') {
+                                                    list[index].Status = '-1';
+                                                    list[index].Process = '0';
+                                                    this.setState({ Item: list });
+                                                }
+                                                else {
+                                                    list[index].Status = '0';
+                                                    this.setState({ Item: list });
+                                                }
+                                            }} title="process">Status</button>
+                                        <button style={{
+                                            marginTop: '3px',
+                                            marginLeft: '5px',
+                                            fontSize: '14px',
+                                            width: '65px',
+                                            height: '29px',
+                                            // backgroundColor: this.state.Item[index].pano === "true" ? 'lightblue' : 'red'
+                                        }}
+                                            className={this.state.Item[index].pano === "true" ? "btn btn-outline-success btn-sm" : "btn btn-outline-danger btn-sm"}
+                                            onClick={() => {
+                                                let list = this.state.Item;
+                                                if (list[index].pano === "true") {
+                                                    list[index].pano = "false";
+                                                    this.setState({ Item: list });
+                                                }
+                                                else {
+                                                    list[index].pano = "true";
+                                                    this.setState({ Item: list });
+                                                }
+                                                // console.log(list[index].Taxable);
+                                                this.setState({ Item: list });
+                                            }} title="pano">Is360</button>
+                                        <button
+                                            style={{
+                                                // paddingTop: '20px',
+                                                marginTop: '3px',
+                                                marginLeft: '5px',
+                                                width: '72px',
+                                                height: '29px',
+                                                fontSize: '14px',
+                                            }}
+                                            className="btn btn-info btn-sm"
+                                            title="downloaditempics" onClick={this.downloadItemPics.bind(this, this.state.Item[index])}>ItemPics</button>
+                                    </div>
+                                </div>
+                                <div className="card-body">
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>Category</span>
+                                        <input type="text" className="form-control" placeholder="Category..." aria-label="Category" aria-describedby="basic-addon1"
+                                            id='cate' value={value.Cate}
+                                            style={{
+                                                color: "black",
+                                                // width:"99%"
+                                            }}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].Cate = e.target.value;
                                                 this.setState({ Item: list });
                                             }}
+                                        ></input>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>Item</span>
+                                        <input type="text" className="form-control" placeholder="Item..." aria-label="Item" aria-describedby="basic-addon1"
+                                            id='item' value={value.Item}
+                                            style={{
+                                                color: "black"
+                                            }}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].Item = e.target.value;
+                                                this.setState({ Item: list });
+                                            }}
+                                        ></input>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "100px"
+                                            // fontSize:'13px'
+                                        }}>Description</span>
+                                        <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
+                                            id='description' value={value.description}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].description = e.target.value;
+                                                this.setState({ Item: list });
+                                            }}
+                                            style={{
+                                                // width: "425px",
+                                                height: "100px",
+                                                resize: "none"
+                                            }}>
+                                            ></textarea>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "100px"
+                                            // fontSize:'13px'
+                                        }}>DescriptionCN</span>
+                                        <textarea className="form-control" placeholder="DescriptionCN..." aria-label="DescriptionCN" aria-describedby="basic-addon1"
+                                            id='descriptionCN' value={value.description_cn}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].description_cn = e.target.value;
+                                                this.setState({ Item: list });
+                                            }}
+                                            style={{
+                                                // width: "425px",
+                                                height: "100px",
+                                                resize: "none"
+                                            }}>
+                                            ></textarea>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "100px"
+                                            // fontSize:'13px'
+                                        }}>Comments</span>
+                                        <textarea className="form-control" placeholder="Comments..." aria-label="Comments" aria-describedby="basic-addon1"
+                                            id='comments' value={value.Comments}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].Comments = e.target.value;
+                                                this.setState({ Item: list });
+                                            }}
+                                            style={{
+                                                // width: "425px",
+                                                height: "100px",
+                                                resize: "none"
+                                            }}>
+                                            ></textarea>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>QTY</span>
+                                        <input type="number" className="form-control" placeholder="Qty..." aria-label="Qty" aria-describedby="basic-addon1"
+                                            id='qty' value={value.Qty}
+                                            style={{
+                                                color: "black"
+                                            }}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].Qty = parseInt(e.target.value) || 0;
+                                                list[index].Cost = list[index].Qty * list[index].PPU;
+                                                list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
+                                                list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
+                                                this.setState({ Item: list });
+                                            }}
+                                        ></input>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>UM</span>
+                                        <input type="text" className="form-control" placeholder="UM..." aria-label="UM" aria-describedby="basic-addon1"
+                                            id='um' value={value.UM}
+                                            style={{
+                                                color: "black"
+                                            }}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].UM = e.target.value;
+                                                this.setState({ Item: list });
+                                            }}
+                                        ></input>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>PPU</span>
+                                        <input type="number" className="form-control" placeholder="PPU..." aria-label="PPU" aria-describedby="basic-addon1"
+                                            id='ppu' value={value.PPU}
+                                            style={{
+                                                color: "black"
+                                            }}
+                                            onChange={e => {
+                                                let list = this.state.Item;
+                                                list[index].PPU = parseFloat(e.target.value) || 0;
+                                                list[index].Cost = list[index].Qty * list[index].PPU;
+                                                list[index].Tax = parseFloat((list[index].Qty * list[index].PPU * (parseFloat(this.state.Tax) / 100)).toFixed(2));
+                                                list[index].Amount = parseFloat(list[index].Tax + list[index].Cost);
+                                                this.setState({ Item: list });
+                                            }}
+                                        ></input>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>Cost</span>
+                                        <input type="number" className="form-control" placeholder="Cost..." aria-label="Cost" aria-describedby="basic-addon1"
+                                            id='cost' value={value.Cost}
+                                            style={{
+                                                color: "black"
+                                            }}
+                                            disabled
+                                        ></input>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>Tax</span>
+                                        <input type="number" className="form-control" placeholder="Cost..." aria-label="Cost" aria-describedby="basic-addon1"
+                                            id='cost' value={value.Tax}
+                                            style={{
+                                                color: "black"
+                                            }}
+                                            disabled
+                                        ></input>
+                                    </div>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "31px"
+                                            // fontSize:'13px'
+                                        }}>Total</span>
+                                        <input type="number" className="form-control" placeholder="Cost..." aria-label="Cost" aria-describedby="basic-addon1"
+                                            id='cost' value={value.Amount}
+                                            style={{
+                                                color: "black"
+                                            }}
+                                            disabled
+                                        ></input>
+                                    </div>
+                                    <div className="card">
+                                        <div className="card-header">
+                                            <div className="input-group-prepend input-group-sm">
+                                                <span className="input-group-text">Before</span>
+                                                <div className="custom-file">
+                                                    <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" multiple
+                                                        onChange={(e) => { this.addBeforePicture(e.target.files, index, 0) }}></input>
+                                                    <label className="custom-file-label" >Choose file</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="card-body">
+                                            {this.state.Item[index].Before.map(function (pic, key) {
+                                                return (
+                                                    <React.Fragment key={key}>
+                                                        <div className="col-auto">
+                                                            <div className="input-group mb-2">
+                                                                <div className="input-group-prepend">
+                                                                    <button className="btn btn-danger"
+                                                                        onClick={() => {
+                                                                            let list = this.state.Item;
+                                                                            list[index].Before.splice(key, 1);
+                                                                            this.setState({ Item: list });
+                                                                        }}>Del:{key + 1}</button>
+                                                                </div>
+                                                                <input type="text" className="form-control" id="inlineFormInputGroup" value={pic.Name} disabled></input>
+                                                            </div>
+                                                        </div>
+                                                    </React.Fragment>
+                                                )
+                                            }.bind(this))}
+                                        </div>
+                                    </div>
+                                    <div className="card">
+                                        <div className="card-header">
+                                            <div className="input-group-prepend input-group-sm">
+                                                <span className="input-group-text">During</span>
+                                                <div className="custom-file">
+                                                    <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" multiple
+                                                        onChange={(e) => { this.addDuringPicture(e.target.files, index, 0) }}></input>
+                                                    <label className="custom-file-label" >Choose file</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="card-body">
+                                            {this.state.Item[index].During.map(function (pic, key) {
+                                                return (
+                                                    <React.Fragment key={key}>
+                                                        <div className="col-auto">
+                                                            <div className="input-group mb-2">
+                                                                <div className="input-group-prepend">
+                                                                    <button className="btn btn-danger"
+                                                                        onClick={() => {
+                                                                            let list = this.state.Item;
+                                                                            list[index].During.splice(key, 1);
+                                                                            this.setState({ Item: list });
+                                                                        }}>Del:{key + 1}</button>
+                                                                </div>
+                                                                <input type="text" className="form-control" id="inlineFormInputGroup" value={pic.Name} disabled></input>
+                                                            </div>
+                                                        </div>
+                                                    </React.Fragment>
+                                                )
+                                            }.bind(this))}
+                                        </div>
+                                    </div>
+                                    <div className="card">
+                                        <div className="card-header">
+                                            <div className="input-group-prepend input-group-sm">
+                                                <span className="input-group-text">After</span>
+                                                <div className="custom-file">
+                                                    <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" multiple
+                                                        onChange={(e) => { this.addAfterPicture(e.target.files, index, 0) }}></input>
+                                                    <label className="custom-file-label" >Choose file</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="card-body">
+                                            {this.state.Item[index].After.map(function (pic, key) {
+                                                return (
+                                                    <React.Fragment key={key}>
+                                                        <div className="col-auto">
+                                                            <div className="input-group mb-2">
+                                                                <div className="input-group-prepend">
+                                                                    <button className="btn btn-danger"
+                                                                        onClick={() => {
+                                                                            let list = this.state.Item;
+                                                                            list[index].After.splice(key, 1);
+                                                                            this.setState({ Item: list });
+                                                                        }}>Del:{key + 1}</button>
+                                                                </div>
+                                                                <input type="text" className="form-control" id="inlineFormInputGroup" value={pic.Name} disabled></input>
+                                                            </div>
+                                                        </div>
 
-                                            >Del</button></td>
-                                            <td>{pic.Name}</td>
-                                        </tr>
-                                    </React.Fragment>
-                                )
-                            }.bind(this))}
-                        </tr>
-                        <tr>
-                            During:
-                            <input
-                                style={{
-                                    marginTop: '10px',
-                                    marginLeft: '30px',
-                                    fontSize: '14px',
-                                    marginBottom: '5px',
+                                                    </React.Fragment>
+                                                )
+                                            }.bind(this))}
+                                        </div>
+                                    </div>
 
-                                }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addDuringPicture(e.target.files, index, 0) }} />
-                            {this.state.Item[index].During.map(function (pic, key) {
-                                return (
-                                    <tr key={key}>
-                                        <td>{key + 1}:<button style={{
-                                            //marginLeft: '10px',
-                                        }} onClick={() => {
-                                            let list = this.state.Item;
-                                            list[index].During.splice(key, 1);
-                                            this.setState({ Item: list });
-                                        }}>Del</button></td>
-                                        <td>{pic.Name}</td>
-
-                                    </tr>
-                                )
-                            }.bind(this))}
-                        </tr>
-                        <tr>
-                            After:
-                            <input
-                                style={{
-                                    marginTop: '10px',
-                                    marginLeft: '30px',
-                                    fontSize: '14px',
-                                    marginBottom: '5px',
-
-                                }}
-                                type="file" multiple id="fileUpload" onChange={(e) => { this.addAfterPicture(e.target.files, index, 0) }} />
-                            {this.state.Item[index].After.map(function (pic, key) {
-                                return (
-                                    <tr key={key}>
-                                        <td>{key + 1}:<button style={{
-                                            //marginLeft: '10px',
-                                        }} onClick={() => {
-                                            let list = this.state.Item;
-                                            list[index].After.splice(key, 1);
-                                            this.setState({ Item: list });
-                                        }}>Del</button></td>
-                                        <td>{pic.Name}</td>
-                                    </tr>
-                                )
-                            }.bind(this))}
-                        </tr>
-                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="picture">
 
                     </div>
@@ -2127,7 +2284,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     protected convert360(pic) {
         // console.log(this.state.Markers);
-        this.setState({currImgID:pic.ImageID});
+        this.setState({ currImgID: pic.ImageID });
 
         var modal = document.getElementById('sphere');
 
@@ -2588,7 +2745,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.description}/{item.description_cn}<div>{item.Comments}</div></td>
                                         <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
@@ -2645,7 +2802,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr key={key}>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.description}/{item.description_cn}<div>{item.Comments}</div></td>
                                         <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
@@ -2692,7 +2849,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <tr key={key}>
                                         <td>{item.Cate}</td>
                                         <td>{item.Item}</td>
-                                        <td>{item.description}<div>{item.Comments}</div></td>
+                                        <td>{item.description}/{item.description_cn}<div>{item.Comments}</div></td>
                                         <td>{item.Cost}</td>
                                         <td>{this.showProcess(item.Process)}</td>
                                         <td>{this.showStatus(item.Status)}</td>
@@ -2728,10 +2885,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     }
 
-    
+
 
     protected mapPicture(picture: any[], desc: string, descCN: string) {
-        if(localStorage.getItem("Authority")==='3'){
+        if (localStorage.getItem("Authority") === '3') {
             return (
                 picture.map(function (item, key) {
                     return (
@@ -2740,7 +2897,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 <img style={{
                                     width: '25%',
                                     height: 'auto',
-    
+
                                     padding: '3px'
                                 }}
                                     src={item.Src}
@@ -2755,7 +2912,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 }.bind(this))
             )
         }
-        else{
+        else {
             return (
                 picture.map(function (item, key) {
                     return (
@@ -2764,7 +2921,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 <img style={{
                                     width: '25%',
                                     height: 'auto',
-    
+
                                     padding: '3px'
                                 }}
                                     src={item.Src}
@@ -2772,9 +2929,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 />
                             </div>
                             <div>
-                                {key + 1}.{desc+" / "+descCN}
+                                {key + 1}.{desc + " / " + descCN}
                             </div>
-    
+
                         </div>
                     )
                 }.bind(this))
@@ -3336,50 +3493,111 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
 
     protected submitTask() {
-        console.log(this.state);
-        $.ajax({
-            url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
-            //url: 'http://localhost:8080/login',
-            method: 'POST',
-            datatype: "json",
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('Token'),
-            },
-            data: JSON.stringify({
-                Address: this.state.Address,
-                Area: this.state.Area,
-                billTo: this.state.BillTo,
-                City: this.state.City,
-                CompletionDate: this.state.CompletionDate,
-                Desc: this.state.Desc,
-                DescCN: this.state.DescCN,
-                Invoice: this.state.Invoice,
-                InvoiceDate: this.state.InvoiceDate,
-                DueDate: this.state.DueDate,
-                ItemList: this.state.Item,
-                KeyCode: this.state.LBNum,
-                Note: this.state.Note,
-                Stage: this.state.Stage,
-                StartDate: this.state.StartDate,
-                Stories: this.state.Stories,
-                TotalCost: this.state.TotalCost,
-                TotalImage: this.state.TotalImage,
-                Year: this.state.Year,
-                asset_num: this.state.AssetNum,
-                upload_link: this.state.uploadLink,
-                Tax: this.state.Tax,
-                Username: this.state.Username,
-                TaskStatus: this.state.TaskStatus,
-                Client: this.state.Client,
-                CheckList: this.state.CheckList,
-                Comment: this.state.Comment,
-            }),
-            success: function (data) {
-                console.log(JSON.parse(data));
-                // this.props.history.push('/main');
-                window.location.reload();
-            }.bind(this),
-        });
+        let mark = 1;
+        for (let i = 0; i < this.state.Item.length; i++) {
+            if (this.state.Item[i].Process !== '1' || this.state.Item[i].Status !== '1') {
+                mark = 0;
+                break;
+            }
+        }
+        console.log(mark);
+        if (mark == 1) {
+
+            this.setState({ TaskStatus: "1" }, () => {
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
+                    //url: 'http://localhost:8080/login',
+                    method: 'POST',
+                    datatype: "json",
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: JSON.stringify({
+                        Address: this.state.Address,
+                        Area: this.state.Area,
+                        billTo: this.state.BillTo,
+                        City: this.state.City,
+                        CompletionDate: this.state.CompletionDate,
+                        Desc: this.state.Desc,
+                        DescCN: this.state.DescCN,
+                        Invoice: this.state.Invoice,
+                        InvoiceDate: this.state.InvoiceDate,
+                        DueDate: this.state.DueDate,
+                        ItemList: this.state.Item,
+                        KeyCode: this.state.LBNum,
+                        Note: this.state.Note,
+                        Stage: this.state.Stage,
+                        StartDate: this.state.StartDate,
+                        Stories: this.state.Stories,
+                        TotalCost: this.state.TotalCost,
+                        TotalImage: this.state.TotalImage,
+                        Year: this.state.Year,
+                        asset_num: this.state.AssetNum,
+                        upload_link: this.state.uploadLink,
+                        Tax: this.state.Tax,
+                        Username: this.state.Username,
+                        TaskStatus: this.state.TaskStatus,
+                        Client: this.state.Client,
+                        CheckList: this.state.CheckList,
+                        Comment: this.state.Comment,
+                    }),
+                    success: function (data) {
+                        console.log(JSON.parse(data));
+                        // this.props.history.push('/main');
+                        window.location.reload();
+                    }.bind(this),
+                });
+            });
+        }
+        else {
+            this.setState({ TaskStatus: "0" }, () => {
+                $.ajax({
+                    url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
+                    //url: 'http://localhost:8080/login',
+                    method: 'POST',
+                    datatype: "json",
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('Token'),
+                    },
+                    data: JSON.stringify({
+                        Address: this.state.Address,
+                        Area: this.state.Area,
+                        billTo: this.state.BillTo,
+                        City: this.state.City,
+                        CompletionDate: this.state.CompletionDate,
+                        Desc: this.state.Desc,
+                        DescCN: this.state.DescCN,
+                        Invoice: this.state.Invoice,
+                        InvoiceDate: this.state.InvoiceDate,
+                        DueDate: this.state.DueDate,
+                        ItemList: this.state.Item,
+                        KeyCode: this.state.LBNum,
+                        Note: this.state.Note,
+                        Stage: this.state.Stage,
+                        StartDate: this.state.StartDate,
+                        Stories: this.state.Stories,
+                        TotalCost: this.state.TotalCost,
+                        TotalImage: this.state.TotalImage,
+                        Year: this.state.Year,
+                        asset_num: this.state.AssetNum,
+                        upload_link: this.state.uploadLink,
+                        Tax: this.state.Tax,
+                        Username: this.state.Username,
+                        TaskStatus: this.state.TaskStatus,
+                        Client: this.state.Client,
+                        CheckList: this.state.CheckList,
+                        Comment: this.state.Comment,
+                    }),
+                    success: function (data) {
+                        console.log(JSON.parse(data));
+                        // this.props.history.push('/main');
+                        window.location.reload();
+                    }.bind(this),
+                });
+            });
+        }
+        // console.log(this.state.TaskStatus);
+
     }
 }
 

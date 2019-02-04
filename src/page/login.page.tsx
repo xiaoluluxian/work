@@ -13,8 +13,7 @@ import logo from "./logo";
 import * as $ from "jquery";
 import PageTransition from 'react-router-page-transition';
 import mainp from "./main.page";
-//import "bootstrap/dist/css/bootstrap.min.css";
-//import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 
 import { Redirect, BrowserRouter } from 'react-router-dom';

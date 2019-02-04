@@ -13,7 +13,7 @@ import * as $ from "jquery";
 import Config from '../config/config';
 
 export interface IProps {
-    history:any
+    history: any
 }
 
 export interface IState {
@@ -21,24 +21,24 @@ export interface IState {
 }
 
 class PageGhotiUserprofile extends React.Component<IProps, IState> {
-    state={
-        currStage:"",
+    state = {
+        currStage: "",
 
-        alluser:[],
-        Username:"",
-        Password:"",
-        Email:"",
-        Phone:"",
-        Firstname:"",
-        Lastname:"",
-        Authority:"",
-        Background:"",
-        TaskIds:[],
+        alluser: [],
+        Username: "",
+        Password: "",
+        Email: "",
+        Phone: "",
+        Firstname: "",
+        Lastname: "",
+        Authority: "",
+        Background: "",
+        TaskIds: [],
 
-        clients:[],
-        company:"",
-        address:"",
-        check_list:[],
+        clients: [],
+        company: "",
+        address: "",
+        check_list: [],
 
     }
     public constructor(props) {
@@ -48,10 +48,10 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
         this.changeUser = this.changeUser.bind(this);
         this.showTable = this.showTable.bind(this);
     }
-    
-    public componentDidMount(){
+
+    public componentDidMount() {
         $.ajax({
-            url:"https://rpntechserver.appspot.com/findAllClient",
+            url: "https://rpntechserver.appspot.com/findAllClient",
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -80,7 +80,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findUserByUsername?username='+localStorage.getItem('currUser'),
+            url: 'https://rpntechserver.appspot.com/findUserByUsername?username=' + localStorage.getItem('currUser'),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -90,15 +90,15 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 console.log(result);
-                this.setState({Username:result.Username});
-                this.setState({Password: result.Password});
-                this.setState({Email: result.Email});
-                this.setState({Firstname: result.Firstname});
-                this.setState({Lastname: result.Lastname});
-                this.setState({Phone: result.Phone});
-                this.setState({Authority: result.Authority});
-                this.setState({Background: result.Background});
-                this.setState({TaskIds: result.TaskIds});
+                this.setState({ Username: result.Username });
+                this.setState({ Password: result.Password });
+                this.setState({ Email: result.Email });
+                this.setState({ Firstname: result.Firstname });
+                this.setState({ Lastname: result.Lastname });
+                this.setState({ Phone: result.Phone });
+                this.setState({ Authority: result.Authority });
+                this.setState({ Background: result.Background });
+                this.setState({ TaskIds: result.TaskIds });
 
             }).bind(this),
         })
@@ -149,92 +149,191 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                         <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                     </div>
                 </div>
-                <div style={{ marginLeft: '10px', marginTop: '5px' }}>
-                <select style={{
-                    width: "100px"
-                }}
-                    id='showbystage' onChange={e => {
-                        this.setState({ currStage: e.target.value });
-                    }}>
-                    <option value="0">User</option>
-                    <option value="1">Client</option>
-                </select>
-            </div>
-            {this.showTable()}
-                
 
-                <button style={{
-                    marginLeft:"10px",
-                    marginTop:"10px"
-                }} onClick={this.submit}>Submit</button>
-                
+                <div className="controls col-md-8 " style={{
+                    marginTop: "5px",
+                    marginLeft: "15px",
+                    width: "20%",
+                    // height:"10%",
+                }}>
+                    <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => { this.setState({ currStage: e.target.value }) }}>
+                        <option>Choose</option>
+                        <option value="0">User</option>
+                        <option value="1">Client</option>
+                    </select>
+                </div>
+                {this.showTable()}
+
             </div>
         );
     }
 
-    protected showTable(){
-        if(this.state.currStage === '1') {
+    protected showTable() {
+        if (this.state.currStage === '1') {
             return (
                 <React.Fragment>
-                    <div>Client:
+                    {/* <div>Client:
                     <select style={{
-                                width: "100px"
-                            }}
-                                id='setClient' onChange={e => this.changeClient(e.target.value)}>
-                                {this.state.clients.map(function (item, key) {
-                                    return (
-                                        <option key={key}>{item.Company}</option>
-                                    )
-                                }.bind(this))}
-                            </select>
-                        </div>
-                <table>
-                    <thead>
-                        <tr>Company: {this.state.company}</tr>
-                        <tr>Address: <input value={this.state.address} onChange={e=>{this.setState({address:e.target.value})}}></input></tr>
-                        
-                        {/* <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr> */}
-                    </thead>
-                </table>
+                            width: "100px"
+                        }}
+                            id='setClient' onChange={e => this.changeClient(e.target.value)}>
+                            {this.state.clients.map(function (item, key) {
+                                return (
+                                    <option key={key}>{item.Company}</option>
+                                )
+                            }.bind(this))}
+                        </select>
+                    </div> */}
+                    <div className="controls col-md-8 " style={{
+                        marginTop: "5px",
+                        marginLeft: "15px",
+                        width: "20%",
+                        // height:"10%",
+                    }}>Client:
+                    <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => this.changeClient(e.target.value)}>
+                            {this.state.clients.map(function (item, key) {
+                                return (
+                                    <option key={key}>{item.Company}</option>
+                                )
+                            }.bind(this))}
+                        </select>
+                    </div>
+                    {/* <table>
+                        <thead>
+                            <tr>Company: {this.state.company}</tr>
+                            <tr>Address: <input value={this.state.address} onChange={e => { this.setState({ address: e.target.value }) }}></input></tr>
+
+                        </thead>
+                    </table> */}
+                    <div id="signupbox" style={{ marginTop: "15px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div className="panel panel-info">
+                            <form className="form-horizontal" method="post">
+                                <div id="div_id_propertyaddress" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Company<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.company} id="company" name="company" placeholder="Company..." style={{ marginBottom: "5px" }} type="text" readOnly></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_assetnumber" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Address<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.address} onChange={e => { this.setState({ address: e.target.value }) }} id="address" name="address" placeholder="Address..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+                            </form>
+                            <button id="submit" type="submit" name="submit" style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={this.submit} value="submit">Submit</button>
+                        </div> </div>
+
                 </React.Fragment>
             )
         }
         else {
             return (
                 <React.Fragment>
-                    <div>User:
+                    {/* <div>User:
                     <select style={{
-                                width: "100px"
-                            }}
-                                id='setUser' onChange={e => this.changeUser(e.target.value)}>
-                                {this.state.alluser.map(function (item, key) {
-                                    return (
-                                        <option key={key}>{item.Username}</option>
-                                    )
-                                }.bind(this))}
-                            </select>
-                        </div>
-                <table>
-                    <thead>
-                        <tr>Username: {this.state.Username}</tr>
-                        <tr>Password: <input value={this.state.Password} onChange={e=>{this.setState({Password:e.target.value})}}></input></tr>
-                        <tr>Email: <input value={this.state.Email} onChange={e=>{this.setState({Email:e.target.value})}}></input></tr>
-                        <tr>Phone: <input value={this.state.Phone} onChange={e=>{this.setState({Phone:e.target.value})}}></input></tr>
-                        <tr>Firstname: <input value={this.state.Firstname} onChange={e=>{this.setState({Firstname:e.target.value})}}></input></tr>
-                        <tr>Lastname: <input value={this.state.Lastname} onChange={e=>{this.setState({Lastname:e.target.value})}}></input></tr>
-                        <tr>Background: {this.state.Background}</tr>
-                        {/* <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr> */}
-                    </thead>
-                </table>
+                            width: "100px"
+                        }}
+                            id='setUser' onChange={e => this.changeUser(e.target.value)}>
+                            {this.state.alluser.map(function (item, key) {
+                                return (
+                                    <option key={key}>{item.Username}</option>
+                                )
+                            }.bind(this))}
+                        </select>
+                    </div> */}
+                    <div className="controls col-md-8 " style={{
+                        marginTop: "5px",
+                        marginLeft: "15px",
+                        width: "20%",
+                        // height:"10%",
+                    }}>User:
+                    <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => this.changeUser(e.target.value)}>
+                            {this.state.alluser.map(function (item, key) {
+                                return (
+                                    <option key={key}>{item.Username}</option>
+                                )
+                            }.bind(this))}
+                        </select>
+                    </div>
+                    {/* <table>
+                        <thead>
+                            <tr>Username: {this.state.Username}</tr>
+                            <tr>Password: <input value={this.state.Password} onChange={e => { this.setState({ Password: e.target.value }) }}></input></tr>
+                            <tr>Email: <input value={this.state.Email} onChange={e => { this.setState({ Email: e.target.value }) }}></input></tr>
+                            <tr>Phone: <input value={this.state.Phone} onChange={e => { this.setState({ Phone: e.target.value }) }}></input></tr>
+                            <tr>Firstname: <input value={this.state.Firstname} onChange={e => { this.setState({ Firstname: e.target.value }) }}></input></tr>
+                            <tr>Lastname: <input value={this.state.Lastname} onChange={e => { this.setState({ Lastname: e.target.value }) }}></input></tr>
+                            <tr>Background: {this.state.Background}</tr>
+                            <tr>Authority: <input value={this.state.Authority} onChange={e=>{this.setState({Authority:e.target.value})}}></input></tr>
+                        </thead>
+                    </table> */}
+
+                    <div id="signupbox" style={{ marginTop: "15px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div className="panel panel-info">
+                            <form className="form-horizontal" method="post">
+                                <div id="div_id_propertyaddress" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Username<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Username} id="username" name="username" placeholder="Username..." style={{ marginBottom: "5px" }} type="text" readOnly></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_assetnumber" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Password<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Password} onChange={e => { this.setState({ Password: e.target.value }) }} id="password" name="password" placeholder="Password..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_client" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField">Authority<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Authority} id="authority" name="authority" style={{ marginBottom: "5px" }} type="text" readOnly></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_city" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Firstname<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Firstname} onChange={e => { this.setState({ Firstname: e.target.value }) }} id="firstname" name="firstname" placeholder="Firstname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_city" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Lastname<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Lastname} onChange={e => { this.setState({ Lastname: e.target.value }) }} id="lastname" name="lastname" placeholder="Lastname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_city" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Email<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Email} onChange={e => { this.setState({ Email: e.target.value }) }} id="email" name="email" placeholder="Email..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_city" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Phone<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Phone} onChange={e => { this.setState({ Phone: e.target.value }) }} id="phone" name="phone" placeholder="Phone..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_city" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Background<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" value={this.state.Background} id="background" name="background" placeholder="Background..." style={{ marginBottom: "5px" }} type="text" readOnly></input>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <button id="submit" type="submit" name="submit" style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={this.submit} value="submit">Submit</button>
+                        </div> </div>
                 </React.Fragment>
-                
+
             )
         }
     }
-    protected changeClient(client){
+    protected changeClient(client) {
         console.log(client);
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findClientByCompanyName?company='+client,
+            url: 'https://rpntechserver.appspot.com/findClientByCompanyName?company=' + client,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -244,17 +343,17 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 console.log(result);
-                this.setState({company:result.Company});
-                this.setState({address:result.address});
-                this.setState({check_list:result.check_list});
+                this.setState({ company: result.Company });
+                this.setState({ address: result.address });
+                this.setState({ check_list: result.check_list });
             }).bind(this),
         })
     }
 
-    protected changeUser(user){
+    protected changeUser(user) {
         console.log(user);
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findUserByUsername?username='+user,
+            url: 'https://rpntechserver.appspot.com/findUserByUsername?username=' + user,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -264,23 +363,23 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             }),
             success: (function (result) {
                 console.log(result);
-                this.setState({Username:result.Username});
-                this.setState({Password: result.Password});
-                this.setState({Email: result.Email});
-                this.setState({Firstname: result.Firstname});
-                this.setState({Lastname: result.Lastname});
-                this.setState({Phone: result.Phone});
-                this.setState({Authority: result.Authority});
-                this.setState({Background: result.Background});
-                this.setState({TaskIds: result.TaskIds});
+                this.setState({ Username: result.Username });
+                this.setState({ Password: result.Password });
+                this.setState({ Email: result.Email });
+                this.setState({ Firstname: result.Firstname });
+                this.setState({ Lastname: result.Lastname });
+                this.setState({ Phone: result.Phone });
+                this.setState({ Authority: result.Authority });
+                this.setState({ Background: result.Background });
+                this.setState({ TaskIds: result.TaskIds });
             }).bind(this),
         })
     }
-    protected changeStatus(){
+    protected changeStatus() {
         this.props.history.push("/main");
     }
 
-    protected submit(){
+    protected submit() {
         $.ajax({
             url: 'https://rpntechserver.appspot.com/updateUser',
             headers: {
@@ -289,8 +388,8 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             method: 'POST',
             datatype: "json",
             data: JSON.stringify({
-                Username:this.state.Username,
-                Password:this.state.Password,
+                Username: this.state.Username,
+                Password: this.state.Password,
                 Authority: this.state.Authority,
                 Email: this.state.Email,
                 Phone: this.state.Phone,

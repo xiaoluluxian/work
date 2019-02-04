@@ -86,6 +86,21 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
 
         return (<React.Fragment>
+            <div className="row">
+                <div className="col-lg-4" style={{
+                    marginTop: "3px",
+                    marginLeft: "3px"
+                }}>
+                    <div className="card mb-4">
+                        <div className="card-header">
+                            Basic
+                        </div>
+                        <div className="card-body">
+                            This card uses Bootstrap's default styling with no utility classes added. Global styles are the only things modifying the look and feel of this default card example.
+                </div>
+                    </div>
+                </div>
+            </div>
             {/* <script src="lib/photo-sphere-viewer.min.js"></script> */}
             {/* <a href="http://localhost:8080/photo.html">asd</a> */}
             {/* <p>Click the button to sort the table alphabetically, by name:</p>
@@ -152,11 +167,11 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     </form>
                 </div> </div> */}
 
-            <div className="container1" id="container1"
+            {/* <div className="container1" id="container1"
                 style={{
                     width: "100%",
                     height: "100%",
-                }}></div>
+                }}></div> */}
             <button onClick={this.convert360}>convert360</button>
             <button onClick={this.logtest}>test</button>
             {/* {this.convert360} */}
@@ -199,7 +214,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         )
     }
 
-    protected logtest(){
+    protected logtest() {
         console.log(this.state.test);
     }
 
@@ -250,7 +265,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                         image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
                         width: 32,
                         height: 32,
-                        tootip:"testdel pin",
+                        tootip: "testdel pin",
                         data: {
                             generated: true
                         }
@@ -295,10 +310,10 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             PSV.addMarker(mar);
             let temp = this.state.test;
             temp.push({
-                longitude:e.longitude,
-                latitude:e.latitude
+                longitude: e.longitude,
+                latitude: e.latitude
             })
-            this.setState({test:temp})
+            this.setState({ test: temp })
         }.bind(this));
 
         /**

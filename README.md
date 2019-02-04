@@ -217,3 +217,8 @@ Change stage display in main page
 
 1. Add chinese description for task and item
 2. Change reload for edittask(test)
+
+### 1.4.0
+
+1. Changed CSS in edittask and register and profile
+2. add/remove marker completed

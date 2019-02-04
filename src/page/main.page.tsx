@@ -543,9 +543,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     style={{
                         marginTop: "5px"
                     }}
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={this.changeStatus.bind(this, item)}
-                >Incomplete</button>
+                    className="btn btn-outline-danger btn-sm disabled"
+                    // onClick={this.changeStatus.bind(this, item)}
+                    disabled>Incomplete</button>
             )
         }
         else if (item.TaskStatus === '1') {
@@ -553,9 +553,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 style={{
                     marginTop: "5px"
                 }}
-                className="btn btn-outline-success btn-sm"
-                onClick={this.changeStatus.bind(this, item)}
-            >Complete</button>)
+                className="btn btn-outline-success btn-sm disabled"
+                // onClick={this.changeStatus.bind(this, item)}
+                disabled>Complete</button>)
         }
         else {
             return (

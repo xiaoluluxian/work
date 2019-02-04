@@ -190,7 +190,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                             </div>
                         </div>
                         <div id="div_id_username" className="form-group required">
-                            <label className="control-label col-md-4  requiredField">username<span className="asteriskField"></span> </label>
+                            <label className="control-label col-md-4  requiredField">Username<span className="asteriskField"></span> </label>
                             <div className="controls col-md-8 ">
                                 <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='username' onChange={e => this.UserChange(e.target.value)}>
                                     <option>Choose User</option>

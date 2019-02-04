@@ -24,10 +24,10 @@ export interface IProps {
 export interface IState {
 
 }
-const questions =[
+const questions = [
     {
-        Category:"Yard Maintenance",
-        Questions:[
+        Category: "Yard Maintenance",
+        Questions: [
             "Is the lawn maintained?",
             "Are hedges and bushes trimmed away from the house?",
             "Are there any fallen trees, branches, or twigs?",
@@ -37,8 +37,8 @@ const questions =[
         ]
     },
     {
-        Category:"Exterior Property Condition",
-        Questions:[
+        Category: "Exterior Property Condition",
+        Questions: [
             "Is there any evidence of vandalism?",
             "Are there any broken/cracked windows? Number of broken/craked windows:",
             "Are there any postings, notices, or signage that would indicate that the property has incurred a code viloation? (If yes, take photo & escalate to WF)",
@@ -50,8 +50,8 @@ const questions =[
         ]
     },
     {
-        Category:"Securing",
-        Questions:[
+        Category: "Securing",
+        Questions: [
             "Does the property appear to be occupied?",
             "Is house secured to HUD key code?",
             "Is a Lockbox located on the property?",
@@ -63,8 +63,8 @@ const questions =[
         ]
     },
     {
-        Category:"Interior Property Condition",
-        Questions:[
+        Category: "Interior Property Condition",
+        Questions: [
             "Is there any svidence of vandalism or theft?",
             "If yes, it there graffiti on the interior of the property?",
             "Is there any interior debris or personal property present? i.e. window treatments, mail, furniture, etc.",
@@ -79,8 +79,8 @@ const questions =[
         ]
     },
     {
-        Category:"Interior Safety Hazards",
-        Questions:[
+        Category: "Interior Safety Hazards",
+        Questions: [
             "Are there any interior broken or missing hand railings?",
             "Are there any interior broken or missing steps",
             "Are there any interior broken or missing risers?",
@@ -88,8 +88,8 @@ const questions =[
         ]
     },
     {
-        Category:"Plumbing/Electrical/Mechanical",
-        Questions:[
+        Category: "Plumbing/Electrical/Mechanical",
+        Questions: [
             "Is the property winterized?",
             "Is there any evidence that the winterization has been compromised?",
             "Is there physical evidence that the winterization has been compromised?",
@@ -106,23 +106,23 @@ const questions =[
         ]
     },
     {
-        Category:"Mold",
-        Questions:[
+        Category: "Mold",
+        Questions: [
             "Is there any visible evidence of mold?",
             "has the mold source been addressed? If yes, state source in Comments section."
         ]
     },
     {
-        Category:"Health Hazards",
-        Questions:[
+        Category: "Health Hazards",
+        Questions: [
             "Are there any damageds or issues that could be a health and safety concern? If yes, state concerns in comments section.",
             "Hazardous Materials?",
             "Pest and/or Rodent infestation?"
         ]
     },
     {
-        Category:"Utilities",
-        Questions:[
+        Category: "Utilities",
+        Questions: [
             "Are the utilities active?",
             "Electric?",
             "Gas",
@@ -133,8 +133,8 @@ const questions =[
         ]
     },
     {
-        Category:"Big Six Damage",
-        Questions:[
+        Category: "Big Six Damage",
+        Questions: [
             "Fire damage?",
             "flood damage?",
             "Tornago damage?",
@@ -227,20 +227,24 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 }}>
                     <button className="link" title="View Task" onClick={this.changeStatus}><ins>View Task</ins></button>
                 </div></div>
-            <div style={{ marginLeft: '10px', marginTop: '5px' }}>
-                <select style={{
-                    width: "100px"
-                }}
-                    id='showbystage' onChange={e => {
-                        this.setState({ currStage: e.target.value });
-                    }}>
+
+            <div className="controls col-md-8 " style={{
+                marginTop:"5px",
+                marginLeft:"15px",
+                width:"20%",
+                // height:"10%",
+            }}>
+                <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => { this.setState({ currStage: e.target.value }) }}>
+                    <option>Choose</option>
                     <option value="0">User</option>
                     <option value="1">Client</option>
                 </select>
             </div>
+
+            
             {this.showTable()}
 
-            <button
+            {/* <button
                 style={{
                     marginLeft: '10px',
                     marginTop: '5px',
@@ -248,7 +252,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                     height: '28px',
                     fontSize: '14px',
                 }}
-                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button>
+                title="Submit Task" onClick={this.submitTask}><ins>Submit</ins></button> */}
             {/* <input
                 style={{
                     marginTop: '10px',
@@ -265,25 +269,114 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
     protected showTable() {
         if (this.state.currStage === '0') {
             return (
-                <table id="user">
-                    <tr>Username <input className="text" id='username' ></input></tr>
-                    <tr>Password <input className="text" id='password'></input></tr>
-                    <tr>Authority <input className="text" id='authority'></input></tr>
-                    <tr>Firstname <input className="text" id='firstname' ></input></tr>
-                    <tr>LastName <input className="text" id='lastname' ></input></tr>
-                    <tr>Email <input className="text" id='email' ></input></tr>
-                    <tr>Phone <input className="text" id='phone' ></input></tr>
-                    <tr>Background <input className="text" id='background' ></input></tr>
-                </table>
+                // <table id="user">
+                //     <tr>Username <input className="text" id='username' ></input></tr>
+                //     <tr>Password <input className="text" id='password'></input></tr>
+                //     <tr>Authority <input className="text" id='authority'></input></tr>
+                //     <tr>Firstname <input className="text" id='firstname' ></input></tr>
+                //     <tr>LastName <input className="text" id='lastname' ></input></tr>
+                //     <tr>Email <input className="text" id='email' ></input></tr>
+                //     <tr>Phone <input className="text" id='phone' ></input></tr>
+                //     <tr>Background <input className="text" id='background' ></input></tr>
+                // </table>
+                
+                <div id="signupbox" style={{ marginTop: "15px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div className="panel panel-info">
+                    <form className="form-horizontal" method="post">
+                        <div id="div_id_propertyaddress" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Username<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="username" name="username" placeholder="Username..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_assetnumber" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Password<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="password" name="password" placeholder="Password..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_client" className="form-group required">
+                            <label className="control-label col-md-4  requiredField">Authority<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='authority'>
+                                    <option value="0">Contractor</option>
+                                    <option value="1">Analyst</option>
+                                    <option value="2">Admin</option>
+                                    <option value="3">Client</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Firstname<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="firstname" name="firstname" placeholder="Firstname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Lastname<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="lastname" name="lastname" placeholder="Lastname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Email<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="email" name="email" placeholder="Email..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Phone<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="phone" name="phone" placeholder="Phone..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Background<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="background" name="background" placeholder="Background..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        
+                        
+                    </form>
+                    <button id="submit" type="submit" name="submit" style={{marginBottom:"10px"}}className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
+                </div> </div>
             )
         }
         else {
             return (
-                <table id="client">
-                    <tr>Company <input className="text" id='company' ></input></tr>
-                    <tr>Address <input className="text" id='address'></input></tr>
-                    <tr>check_list <input className="text" id='checklist' ></input></tr>
-                </table>
+                // <table id="client">
+                //     <tr>Company <input className="text" id='company' ></input></tr>
+                //     <tr>Address <input className="text" id='address'></input></tr>
+                //     <tr>check_list <input className="text" id='checklist' ></input></tr>
+                // </table>
+                <div id="signupbox" style={{ marginTop: "15px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div className="panel panel-info">
+                    <form className="form-horizontal" method="post">
+                        <div id="div_id_propertyaddress" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Company<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="company" name="company" placeholder="Company..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        <div id="div_id_assetnumber" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> Address<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="address" name="address" placeholder="Address..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> CheckList<span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+                                <input className="input-md  textinput textInput form-control" id="checklist" name="checklist" placeholder="Checklist..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            </div>
+                        </div>
+                        
+                    </form>
+                    <button id="submit" type="submit" name="submit" style={{marginBottom:"10px"}}className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
+                </div> </div>
             )
         }
     }
@@ -332,7 +425,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
 
 
     protected submitTask() {
-        if(this.state.currStage==='0'){
+        if (this.state.currStage === '0') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/register',
                 //url: 'http://localhost:8080/login',
@@ -357,7 +450,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 }.bind(this),
             });
         }
-        else{
+        else {
             // console.log( $('#company').val(),
             // $('#address').val(),
             // $('#checklist').val(),);
@@ -372,8 +465,8 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                     company: $('#company').val(),
                     address: $('#address').val(),
-                    check_list: questions,
-                    
+                    check_list: [],
+
                 }),
                 success: function (data) {
                     console.log(data);
