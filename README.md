@@ -222,3 +222,7 @@ Change stage display in main page
 
 1. Changed CSS in edittask and register and profile
 2. add/remove marker completed
+
+### 1.4.1
+
+1. Fixed showuser in mainpage

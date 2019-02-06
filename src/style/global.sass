@@ -4,8 +4,6 @@
  */
 
 @import './color.sass'
-// @import "bootstrap/dist/css/bootstrap.min.css"
-// @import './bootstrap.min.css'
 @import "~bootstrap/scss/bootstrap"
 @import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome"
 @import "~photo-sphere-viewer/src/scss/photo-sphere-viewer"
@@ -36,7 +34,9 @@ html, body, #container
         background: linear-gradient(to bottom, #62c5de, #627ade)
         border-bottom: 1px solid black
         display: absolute
-        align-items: center
+        align-items: left
+        width: 99%
+        // margin-right: 3px
     .space
         height: 72px
         background-color: $white
@@ -44,12 +44,14 @@ html, body, #container
         display: absolute
         align-items: center
         text-align: center
+        // width: 90%
     .menu
         height: 40px
         background-color: $teal
         color: $white
         display: flex
         align-items: center
+        // width: 90%
     .loginT
         height: 200px
         background-color: $silver

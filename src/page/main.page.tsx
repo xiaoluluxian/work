@@ -120,7 +120,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
 
     public render() {
-        
+
 
         return (
             <div className="main">
@@ -239,22 +239,22 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
                 </div>
                 {this.showTable()}
-                
+
 
 
             </div >);
     }
 
-    protected showTable(){
+    protected showTable() {
         if (localStorage.getItem("Authority") === '3') {
-            return(
+            return (
                 <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
                     <thead>
                         <tr><th>Action</th>
                             <th>Property Address</th>
                             <th>Asset Number</th>
                             <th>Due Date</th>
-                            
+
                             <th>CurrStage</th>
                             <th>Status</th>
                         </tr>
@@ -277,7 +277,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{this.showLogo}
                                     <img src={wflogo} alt="wflogo"
                                         style={{
-                                            marginRight:"3px"
+                                            marginRight: "3px"
                                         }} />
                                     {item.Address}</td>
                                 <td>{item.asset_num}</td>
@@ -294,9 +294,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 </table>
             )
         }
-        else{
-            return(
-                <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
+        else {
+            return (
+                <table className="table table-striped table-hover table-bordered table-sm" id='taskT' style={{width:"99%"}}>
                     <thead>
                         <tr><th>Action</th>
                             <th>Property Address</th>
@@ -325,12 +325,13 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>
                                     <img src={wflogo} alt="wflogo"
                                         style={{
-                                            marginRight:"3px"
+                                            marginRight: "3px"
                                         }} />
                                     {item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
-                                <td><a data-toggle="collapse" href={temp}>Show User</a><div id={temp2} className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td>
+                                {/* <td><a data-toggle="collapse" href={temp}>Show User</a><div id={temp2} className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td> */}
+                                <td><button style={{color:"blue"}}className="link" onClick={this.showUsernameHelp.bind(this, temp2)}><ins>Show User</ins></button><div id={temp2} style={{display:"none"}} className="user-dropdown">{this.showUsername(item.Username)}</div></td>
                                 {/* <td><button className="link collapsible">{this.clickShowUser}Show User</button><div id="content" style={{display: "none"}}>{this.showUsername(item.Username)}</div></td> */}
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
@@ -344,8 +345,22 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
     }
 
-    protected showLogo(){
-        
+    protected showUsernameHelp(id){
+        let ops = document.getElementById(id);
+        // console.log(ops.innerText);
+        if(ops.style.display==="none"){
+            ops.setAttribute("style","display: show");
+            // console.log(1);
+        }
+        else{
+            ops.style.display="none"
+        }
+        // console.log(ops.style.display);
+        // console.log(document.getElementById(id).style.display);
+    }
+
+    protected showLogo() {
+
     }
 
     protected showOperation() {
@@ -873,7 +888,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
-        
+
         table = document.getElementById("taskT");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
