@@ -226,3 +226,7 @@ Change stage display in main page
 ### 1.4.1
 
 1. Fixed showuser in mainpage
+
+### 1.4.2
+
+1. Tested done for add/delete/edit in 360 pictures

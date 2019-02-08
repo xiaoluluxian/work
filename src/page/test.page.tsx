@@ -51,11 +51,15 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         test: [
             {
                 longitude: 0,
-                latitude: 0
+                latitude: 0,
+                content: "firstcontent",
+                id:Math.random()
             },
             {
                 longitude: 0.1,
-                latitude: 0.1
+                latitude: 0.1,
+                content: "secondcontent",
+                id:Math.random()
             }
         ]
     }
@@ -86,34 +90,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
 
         return (<React.Fragment>
-            <div className="row">
-                <div className="col-lg-4" style={{
-                    marginTop: "3px",
-                    marginLeft: "3px"
-                }}>
-                    <div className="card mb-4">
-                        <div className="card-header">
-                            Basic
-                        </div>
-                        <div className="card-body">
-                            This card uses Bootstrap's default styling with no utility classes added. Global styles are the only things modifying the look and feel of this default card example.
-                </div>
-                    </div>
-                </div>
-            </div>
-            <p>
-                <a className="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Link with href
-  </a>
-                <button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Button with data-target
-  </button>
-            </p>
-            <div className="collapse" id="collapseExample">
-                <div className="card card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-  </div>
-            </div>
+
             {/* <script src="lib/photo-sphere-viewer.min.js"></script> */}
             {/* <a href="http://localhost:8080/photo.html">asd</a> */}
             {/* <p>Click the button to sort the table alphabetically, by name:</p>
@@ -180,11 +157,27 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     </form>
                 </div> </div> */}
 
-            {/* <div className="container1" id="container1"
+            <div className="container1" id="container1"
                 style={{
                     width: "100%",
                     height: "100%",
-                }}></div> */}
+                }}></div>
+            <div>
+                {this.state.test.length==0?<div></div>:this.state.test.map(function (item, key) {
+                    
+                    return (
+                        <React.Fragment>
+                            <div>Category{key + 1}<input value={item.content} onChange={e => {
+                                let list = this.state.test
+                                list[key].content = e.target.value;
+                                this.setState({ test: list });
+                            }}>
+                            </input></div>
+                        </React.Fragment>
+                    )
+                }.bind(this))}
+            </div>
+            
             <button onClick={this.convert360}>convert360</button>
             <button onClick={this.logtest}>test</button>
             {/* {this.convert360} */}
@@ -253,18 +246,27 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     protected convert360() {
-        // var photoSphereViewer = require('./lib/photo-sphere-viewer.min.js');
-        // photoSphereViewer.panorama="https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media";
-        // photoSphereViewer.container = "container1";
-
         let div = document.getElementById('container1');
         let PSV;
-        console.log(this.state.test[0].longitude);
+        // console.log(this.state.test[0].longitude);
+        let url = "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media"
         PSV = new PhotoSphereViewer({
-            panorama: "https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/32a8ec56-d49f-4f35-aca2-614298c3c3f2?generation=1542392846733240&alt=media",
+            panorama: url,
             container: div,
             time_anim: false,
-            navbar: true,
+            navbar: ['autorotate', 'zoom', 'markers', 'spacer-1',
+                {
+                    title: 'Refresh',
+                    className: 'custom-button',
+                    content: '↻',
+                    onClick: (function () {
+                        let loading = false;
+                        return function () {
+                            PSV.destroy();
+                        }
+                    }.bind(this)())
+                },
+                "caption",'fullscreen'],
             navbar_style: {
                 backgroundColor: "silver",
             },
@@ -272,15 +274,17 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 var marlist = [];
                 for (let i = 0; i < this.state.test.length; i++) {
                     marlist.push({
-                        id: '#' + Math.random(),
+                        id: this.state.test[i].id,
                         longitude: this.state.test[i].longitude,
                         latitude: this.state.test[i].latitude,
                         image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
                         width: 32,
                         height: 32,
-                        tootip: "testdel pin",
+                        tooltip: this.state.test[i].content,
+                        content: "content"+this.state.test[i].content,
                         data: {
-                            generated: true
+                            generated: true,
+                            
                         }
                     })
                 };
@@ -308,8 +312,9 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
 
         PSV.on('click', function (e) {
+            let tempid = '#'+Math.random();
             let mar = {
-                id: '#' + Math.random(),
+                id: tempid,
                 longitude: e.longitude,
                 latitude: e.latitude,
                 image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
@@ -317,14 +322,17 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 height: 32,
                 tooltip: 'Generated pin',
                 data: {
-                    generated: true
+                    generated: true,
+                    id:tempid
                 }
             }
             PSV.addMarker(mar);
             let temp = this.state.test;
             temp.push({
                 longitude: e.longitude,
-                latitude: e.latitude
+                latitude: e.latitude,
+                content: "firstcontent",
+                id:tempid
             })
             this.setState({ test: temp })
         }.bind(this));
@@ -335,11 +343,39 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         PSV.on('select-marker', function (marker, dblclick) {
             if (marker.data && marker.data.generated) {
                 if (dblclick) {
+                    let rmid = PSV.getCurrentMarker(marker).id
+                    let temp = this.state.test;
+                    if(temp.length==1){
+                        temp=[];
+                    }
+                    else{
+                        for(let i=0;i<temp.length;i++){
+                        
+                            if(temp[i].id===rmid){
+                                temp.splice(i,1);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    this.setState({test:temp})
                     PSV.removeMarker(marker);
                     // console.log(PSV.marker);
+                    
                 }
+                
             }
-        });
+        }.bind(this));
+    }
+
+    protected showcontent() {
+        return (
+            <div>
+                <textarea>
+                    123
+                </textarea>
+            </div>
+        )
     }
 
     protected downloadBefore() {
