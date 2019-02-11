@@ -846,15 +846,79 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <div id="sphere" className="sphere">
                         <div className="sphere-content">
                             <span className="closep">&times;</span>
+                            {/* <div style={{
+                                float: "left",
+                                width: "35%",
+                                height: "90%",
+                                overflow: "scroll",
+                                marginTop: "3%",
+                            }}>
+                                <div>
+                                    {this.state.Markers.length == 0 ? <div></div> : this.state.Markers.map(function (item, key) {
+                                        return (
+                                            <React.Fragment>
+                                                <div>Category{key + 1}<input value={item.Description} onChange={e => {
+                                                    let list = this.state.Markers
+                                                    list[key].Description = e.target.value;
+                                                    this.setState({ test: list });
+                                                }}>
+                                                </input></div>
+                                            </React.Fragment>
+                                        )
+                                    }.bind(this))}
+                                </div>
+                            </div> */}
+                            <form style={{
+                                float: "left",
+                                width: "35%",
+                                height: "90%",
+                                overflow: "scroll",
+                                marginTop: "3%",
+                            }}>
+                                <div className="form-group">
+                                    {this.state.Markers.length == 0 ? <div></div> : this.state.Markers.map(function (item, key) {
+                                        return (
+                                            <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
+                                                <span className="input-group-text" id="basic-addon1" style={{
+                                                    color: "black",
+                                                    height: "100px"
+                                                    // fontSize:'13px'
+                                                }}>Description{key + 1}</span>
+                                                <textarea className="form-control" placeholder="Description..." aria-label="Description" aria-describedby="basic-addon1"
+                                                    id='description' value={item.Description}
+                                                    onChange={e => {
+                                                        let list = this.state.Markers;
+                                                        list[key].Description = e.target.value;
+                                                        this.setState({ Markers: list });
+                                                    }} style={{
+                                                        color: "black",
+                                                        width: "100%",
+                                                        height: "100px",
+                                                        resize: "none"
+                                                    }}
+                                                ></textarea>
+                                            </div>
+                                        )
+                                    }.bind(this))}
+
+                                </div>
+                                <div className="form-group row">
+                                    <div className="col-sm-10">
+                                        <button type="submit" onClick={this.submit360} className="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
 
                             <div id="spherepic" style={{
-                                width: "100%",
+                                float: "right",
+                                width: "60%",
                                 height: "90%"
                             }}></div>
                             <div style={{
                                 position: "relative",
                                 marginTop: "45px",
-                            }}><button onClick={this.submit360}>submit</button></div>
+                            }}></div>
+
 
                         </div>
 
@@ -2314,7 +2378,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 PSV = new PhotoSphereViewer({
                     panorama: pic.Src,
                     container: div,
-                    time_anim: 1000,
+                    time_anim: false,
                     navbar: true,
                     navbar_style: {
                         backgroundColor: "silver",
@@ -2323,13 +2387,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         var marlist = [];
                         for (let i = 0; i < this.state.Markers.length; i++) {
                             marlist.push({
-                                id: '#' + Math.random(),
+                                id: this.state.Markers[i].singleMarkID,
                                 longitude: this.state.Markers[i].coord_y,
                                 latitude: this.state.Markers[i].CoordinateX,
                                 image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
                                 width: 32,
                                 height: 32,
-                                tootip: "testdel pin",
+                                tooltip: this.state.Markers[i].Description,
+                                content: this.state.Markers[i].Description,
                                 data: {
                                     generated: true
                                 }
@@ -2341,7 +2406,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 PSV.on('click', function (e) {
                     let createMar = {
                         id: '#' + Math.random(),
-                        // tooltip: 'Generated marker',
+                        tooltip: this.state.Markers.Description,
                         longitude: e.longitude,
                         latitude: e.latitude,
                         image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
@@ -2360,7 +2425,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         CoordinateX: createMar.latitude,
                         Description: "",
                         coord_y: createMar.longitude,
-                        singleMarkID: createMar.id.toString()
+                        singleMarkID: createMar.id
                     })
                     this.setState({ Markers: tempMar });
                     console.log(this.state.Markers);
@@ -2372,10 +2437,27 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 PSV.on('select-marker', function (marker, dblclick) {
                     if (marker.data && marker.data.generated) {
                         if (dblclick) {
+                            let rmid = PSV.getCurrentMarker(marker).id
+                            console.log(rmid);
+                            let temp = this.state.Markers;
+                            if (temp.length == 1) {
+                                temp = [];
+                            }
+                            else {
+                                for (let i = 0; i < temp.length; i++) {
+
+                                    if (temp[i].singleMarkID === rmid) {
+                                        temp.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            this.setState({ Markers: temp })
                             PSV.removeMarker(marker);
                         }
                     }
-                });
+                }.bind(this));
                 // When the user clicks anywhere outside of the modal, close it
                 window.onclick = function (event) {
                     if (event.target == span) {

@@ -230,3 +230,7 @@ Change stage display in main page
 ### 1.4.2
 
 1. Tested done for add/delete/edit in 360 pictures
+
+### 1.4.3
+
+1. 360 edit/delete for markers and description completed
