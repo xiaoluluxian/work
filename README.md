@@ -234,3 +234,7 @@ Change stage display in main page
 ### 1.4.3
 
 1. 360 edit/delete for markers and description completed
+
+### 1.4.4
+
+1. Fixed item bug

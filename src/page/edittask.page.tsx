@@ -1559,14 +1559,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                             height: "31px"
                                             // fontSize:'13px'
                                         }}>Item</span>
-                                        <input type="text" className="form-control" placeholder="Item..." aria-label="Item" aria-describedby="basic-addon1"
+                                        <input type="number" className="form-control" placeholder="Item..." aria-label="Item" aria-describedby="basic-addon1"
                                             id='item' value={value.Item}
                                             style={{
                                                 color: "black"
                                             }}
                                             onChange={e => {
                                                 let list = this.state.Item;
-                                                list[index].Item = e.target.value;
+                                                list[index].Item =parseInt(e.target.value)||0;
                                                 this.setState({ Item: list });
                                             }}
                                         ></input>
