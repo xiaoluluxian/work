@@ -41,7 +41,8 @@
     "deluser",
     "userprofile",
     "ordertask",
-    "checklist"
+    "checklist",
+    "printedit"
   ],
   "funcs": [],
   "lambdas": [],

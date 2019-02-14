@@ -79,12 +79,12 @@ export default function (props) {
                     path: '/checklist',
 
                 },
-                // {
-                //     component: "photo.html",
-                //     exact: true,
-                //     path: '/photo',
+                {
+                    component: Pages.printedit,
+                    exact: true,
+                    path: '/printedit',
 
-                // },
+                },
                 {
                     component: () => <div>Path = /home</div>,
                     path: '/home',

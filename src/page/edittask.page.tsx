@@ -498,6 +498,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             }}
                             title="CheckList" onClick={this.checklist}>CheckList
                             </button>
+                            <button
+                            style={{
+                                // paddingTop: '20px',
+                                marginTop: '5px',
+                                marginLeft: '10px',
+                                width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="CheckList" onClick={this.printPDF}>PrintPDF
+                            </button>
 
 
                     </div>
@@ -3024,11 +3035,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected printPDF() {
-        var divToPrint = document.getElementById('show');
-        var popupWin = window.open('', '_blank', 'width=300,height=300');
-        popupWin.document.open();
-        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
-        popupWin.document.close();
+        // localStorage.setItem("currStage", this.state.Stage);
+        this.props.history.push("/printedit");
     }
 
     protected downloadBefore() {
