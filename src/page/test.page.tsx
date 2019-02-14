@@ -310,7 +310,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             // }())
         });
 
-
+        console.log(PSV);
         PSV.on('click', function (e) {
             let tempid = '#'+Math.random();
             let mar = {
@@ -335,6 +335,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 id:tempid
             })
             this.setState({ test: temp })
+            console.log(PSV);
         }.bind(this));
 
         /**

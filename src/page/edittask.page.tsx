@@ -2201,6 +2201,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Username: this.state.Username,
                 TaskStatus: this.state.TaskStatus,
                 Client: this.state.Client,
+                CheckList: this.state.CheckList,
+                Comment: this.state.Comment,
             }),
             success: function (data) {
                 var fd = new FormData();

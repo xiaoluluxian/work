@@ -238,3 +238,8 @@ Change stage display in main page
 ### 1.4.4
 
 1. Fixed item bug
+
+### 1.4.5
+
+1. checklist print
+2. checklist add/edit/delete in register and userprofile

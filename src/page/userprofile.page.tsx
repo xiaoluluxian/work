@@ -47,6 +47,9 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
         this.submit = this.submit.bind(this);
         this.changeUser = this.changeUser.bind(this);
         this.showTable = this.showTable.bind(this);
+        this.initCategory = this.initCategory.bind(this);
+        this.addCategory = this.addCategory.bind(this);
+        this.mapCategory = this.mapCategory.bind(this);
     }
 
     public componentDidMount() {
@@ -150,10 +153,11 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                     </div>
                 </div>
 
-                <div className="controls col-md-8 " style={{
+                <div className="col-md-8 " style={{
                     marginTop: "5px",
                     marginLeft: "15px",
                     width: "20%",
+                    // float:"left"
                     // height:"10%",
                 }}>
                     <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => { this.setState({ currStage: e.target.value }) }}>
@@ -166,6 +170,107 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
 
             </div>
         );
+    }
+
+    protected addCategory() {
+        let list = this.state.check_list;
+        list.push(this.initCategory());
+        this.setState({ check_list: list });
+    }
+
+    protected initCategory() {
+        return {
+            Category: "",
+            Questions: [],
+        }
+    }
+
+
+
+    protected mapCategory(item, key) {
+        return (
+            <React.Fragment key={key}>
+                <button style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={() => {
+                    let list = this.state.check_list;
+                    list.splice(key, 0, this.initCategory());
+                    this.setState({ check_list: list });
+                }} >AddCategory</button>
+                <div className="card-header col-md-8">
+
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                        <button style={{}} className="btn btn-danger center" onClick={() => {
+                            let list = this.state.check_list;
+                            list.splice(key, 1);
+                            this.setState({ check_list: list });
+                        }}></button>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Category</span>
+
+                        <input type="text" className="form-control" placeholder="Category..." aria-label="Category" aria-describedby="basic-addon1"
+                            id='cate' value={item.Category}
+                            style={{
+                                color: "black",
+                                // width:"99%"
+                            }}
+                            onChange={e => {
+                                let list = this.state.check_list;
+                                list[key].Category = e.target.value;
+                                this.setState({ check_list: list });
+                            }}
+                        ></input>
+                    </div>
+                    <div className="card-body">
+                        {item.questions.map(function (ques, index) {
+                            return (
+                                <React.Fragment key={index}>
+                                    <button style={{ marginBottom: "10px" }} className="btn btn-info col-md-12 " onClick={() => {
+                                        let list = this.state.check_list;
+                                        list[key].questions.splice(index, 0, "");
+                                        // console.log(list[key].Questions);
+                                        this.setState({ check_list: list });
+                                    }} >AddQuestions</button>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                        <button style={{}} className="btn btn-danger center" onClick={() => {
+                                            let list = this.state.check_list;
+                                            list[key].questions.splice(index, 1);
+                                            this.setState({ check_list: list });
+                                        }}></button>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "100px"
+                                            // fontSize:'13px'
+                                        }}>Question{index + 1}</span>
+                                        <textarea className="form-control" placeholder="Question..." aria-label="DescriptionCN" aria-describedby="basic-addon1"
+                                            id='descriptionCN' value={ques}
+                                            onChange={e => {
+                                                let list = this.state.check_list[key].questions;
+                                                list[index] = e.target.value;
+                                                this.setState({ check_list: list });
+                                            }}
+                                            style={{
+                                                // width: "425px",
+                                                height: "100px",
+                                                resize: "none"
+                                            }}>
+                                            ></textarea>
+                                    </div>
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        <div>
+                            <button style={{ marginTop: "10px" }} className="btn btn-info col-md-12" onClick={() => {
+                                let list = this.state.check_list;
+                                list[key].questions.push("");
+                                this.setState({ check_list: list });
+                            }} >AddQuestions</button>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
+        )
     }
 
     protected showTable() {
@@ -184,10 +289,11 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                             }.bind(this))}
                         </select>
                     </div> */}
-                    <div className="controls col-md-8 " style={{
+                    <div className="col-md-4 " style={{
                         marginTop: "5px",
                         marginLeft: "15px",
                         width: "20%",
+                        // float:"left"
                         // height:"10%",
                     }}>Client:
                     <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => this.changeClient(e.target.value)}>
@@ -205,7 +311,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
 
                         </thead>
                     </table> */}
-                    <div id="signupbox" style={{ marginTop: "15px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                    <div id="signupbox" style={{ marginTop: "15px", float:"left"}} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                         <div className="panel panel-info">
                             <form className="form-horizontal" method="post">
                                 <div id="div_id_propertyaddress" className="form-group required">
@@ -223,6 +329,12 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                             </form>
                             <button id="submit" type="submit" name="submit" style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={this.submit} value="submit">Submit</button>
                         </div> </div>
+                    <div id="signupbox" style={{ marginTop: "15px", float: "right" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div className="panel panel-info" >
+                            {this.state.check_list.length == 0 ? <div>None</div> : this.state.check_list.map(this.mapCategory)}
+                            <button style={{ marginTop: "10px" }} className="btn btn-primary  col-md-8" onClick={this.addCategory} >AddCategory</button>
+                        </div>
+                    </div>
 
                 </React.Fragment>
             )

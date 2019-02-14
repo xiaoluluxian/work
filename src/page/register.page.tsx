@@ -17,7 +17,7 @@ import Config from '../config/config';
 
 export interface IProps {
     page: IPage;
-    updatePage: (page: IPage, next?: () => void) => void;
+    // updatePage: (page: IPage, next?: () => void) => void;
     history: any;
 }
 
@@ -154,6 +154,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         Password: '',
         Authority: '',
         currStage: '0',
+        checklist: []
 
     };
     public componentDidMount() {
@@ -166,6 +167,9 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         this.handleChange = this.handleChange.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
         this.showTable = this.showTable.bind(this);
+        this.initCategory = this.initCategory.bind(this);
+        this.addCategory = this.addCategory.bind(this);
+        this.mapCategory = this.mapCategory.bind(this);
 
     }
 
@@ -229,9 +233,9 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 </div></div>
 
             <div className="controls col-md-8 " style={{
-                marginTop:"5px",
-                marginLeft:"15px",
-                width:"20%",
+                marginTop: "5px",
+                marginLeft: "15px",
+                width: "20%",
                 // height:"10%",
             }}>
                 <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='client' onChange={e => { this.setState({ currStage: e.target.value }) }}>
@@ -241,7 +245,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 </select>
             </div>
 
-            
+
             {this.showTable()}
 
             {/* <button
@@ -279,106 +283,212 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 //     <tr>Phone <input className="text" id='phone' ></input></tr>
                 //     <tr>Background <input className="text" id='background' ></input></tr>
                 // </table>
-                
+
                 <div id="signupbox" style={{ marginTop: "15px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <div className="panel panel-info">
-                    <form className="form-horizontal" method="post">
-                        <div id="div_id_propertyaddress" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Username<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="username" name="username" placeholder="Username..." style={{ marginBottom: "5px" }} type="text" ></input>
+                    <div className="panel panel-info">
+                        <form className="form-horizontal" method="post">
+                            <div id="div_id_propertyaddress" className="form-group required">
+                                <label className="control-label col-md-4  requiredField"> Username<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <input className="input-md  textinput textInput form-control" id="username" name="username" placeholder="Username..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div id="div_id_assetnumber" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Password<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="password" name="password" placeholder="Password..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            <div id="div_id_assetnumber" className="form-group required">
+                                <label className="control-label col-md-4  requiredField"> Password<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <input className="input-md  textinput textInput form-control" id="password" name="password" placeholder="Password..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div id="div_id_client" className="form-group required">
-                            <label className="control-label col-md-4  requiredField">Authority<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='authority'>
-                                    <option value="0">Contractor</option>
-                                    <option value="1">Analyst</option>
-                                    <option value="2">Admin</option>
-                                    <option value="3">Client</option>
-                                    
-                                </select>
+                            <div id="div_id_client" className="form-group required">
+                                <label className="control-label col-md-4  requiredField">Authority<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <select className="form-control mb-2 mr-sm-2 mb-sm-0" id='authority'>
+                                        <option value="0">Contractor</option>
+                                        <option value="1">Analyst</option>
+                                        <option value="2">Admin</option>
+                                        <option value="3">Client</option>
+
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div id="div_id_city" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Firstname<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="firstname" name="firstname" placeholder="Firstname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            <div id="div_id_city" className="form-group required">
+                                <label className="control-label col-md-4  requiredField"> Firstname<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <input className="input-md  textinput textInput form-control" id="firstname" name="firstname" placeholder="Firstname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div id="div_id_city" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Lastname<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="lastname" name="lastname" placeholder="Lastname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            <div id="div_id_city" className="form-group required">
+                                <label className="control-label col-md-4  requiredField"> Lastname<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <input className="input-md  textinput textInput form-control" id="lastname" name="lastname" placeholder="Lastname..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div id="div_id_city" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Email<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="email" name="email" placeholder="Email..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            <div id="div_id_city" className="form-group required">
+                                <label className="control-label col-md-4  requiredField"> Email<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <input className="input-md  textinput textInput form-control" id="email" name="email" placeholder="Email..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div id="div_id_city" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Phone<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="phone" name="phone" placeholder="Phone..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            <div id="div_id_city" className="form-group required">
+                                <label className="control-label col-md-4  requiredField"> Phone<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <input className="input-md  textinput textInput form-control" id="phone" name="phone" placeholder="Phone..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div id="div_id_city" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Background<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="background" name="background" placeholder="Background..." style={{ marginBottom: "5px" }} type="text" ></input>
+                            <div id="div_id_city" className="form-group required">
+                                <label className="control-label col-md-4  requiredField"> Background<span className="asteriskField"></span> </label>
+                                <div className="controls col-md-8 ">
+                                    <input className="input-md  textinput textInput form-control" id="background" name="background" placeholder="Background..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                </div>
                             </div>
-                        </div>
-                        
-                        
-                    </form>
-                    <button id="submit" type="submit" name="submit" style={{marginBottom:"10px"}}className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
-                </div> </div>
+
+
+                        </form>
+                        <button id="submit" type="submit" name="submit" style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
+                    </div> </div>
             )
         }
         else {
             return (
-                // <table id="client">
-                //     <tr>Company <input className="text" id='company' ></input></tr>
-                //     <tr>Address <input className="text" id='address'></input></tr>
-                //     <tr>check_list <input className="text" id='checklist' ></input></tr>
-                // </table>
-                <div id="signupbox" style={{ marginTop: "15px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <div className="panel panel-info">
-                    <form className="form-horizontal" method="post">
-                        <div id="div_id_propertyaddress" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Company<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="company" name="company" placeholder="Company..." style={{ marginBottom: "5px" }} type="text" ></input>
-                            </div>
+                <React.Fragment>
+
+                    <div id="signupbox" style={{ marginTop: "15px", float: "left" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div className="panel panel-info" >
+                            <form className="form-horizontal" method="post" >
+                                <div id="div_id_propertyaddress" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Company<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" id="company" name="company" placeholder="Company..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+                                <div id="div_id_assetnumber" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Address<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" id="address" name="address" placeholder="Address..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+
+                                <div id="div_id_city" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> CheckList<span className="asteriskField"></span> </label>
+                                    <div className="controls col-md-8 ">
+                                        <input className="input-md  textinput textInput form-control" id="checklist" name="checklist" placeholder="Checklist..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <button id="submit" type="submit" name="submit" style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
                         </div>
-                        <div id="div_id_assetnumber" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Address<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="address" name="address" placeholder="Address..." style={{ marginBottom: "5px" }} type="text" ></input>
-                            </div>
+                    </div>
+                    <div id="signupbox" style={{ marginTop: "15px", float: "right" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div className="panel panel-info" >
+                            {this.state.checklist.map(this.mapCategory)}
+                            <button style={{ marginTop: "10px" }} className="btn btn-primary  col-md-8" onClick={this.addCategory} >AddCategory</button>
                         </div>
-                        
-                        <div id="div_id_city" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> CheckList<span className="asteriskField"></span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="checklist" name="checklist" placeholder="Checklist..." style={{ marginBottom: "5px" }} type="text" ></input>
-                            </div>
-                        </div>
-                        
-                    </form>
-                    <button id="submit" type="submit" name="submit" style={{marginBottom:"10px"}}className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
-                </div> </div>
+                    </div>
+                </React.Fragment>
             )
         }
+    }
+
+    protected addCategory() {
+        let list = this.state.checklist;
+        list.push(this.initCategory());
+        this.setState({ checklist: list });
+    }
+
+    protected initCategory() {
+        return {
+            Category: "",
+            Questions: [],
+        }
+    }
+
+
+
+    protected mapCategory(item, key) {
+        return (
+            <React.Fragment key={key}>
+                <button style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={() => {
+                    let list = this.state.checklist;
+                    list.splice(key, 0, this.initCategory());
+                    this.setState({ checklist: list });
+                }} >AddCategory</button>
+                <div className="card-header col-md-8">
+
+                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                        <button style={{}}className="btn btn-danger center" onClick={()=>{
+                            let list = this.state.checklist;
+                            list.splice(key, 1);
+                            this.setState({ checklist: list });
+                        }}></button>
+                        <span className="input-group-text" id="basic-addon1" style={{
+                            color: "black",
+                            height: "31px"
+                            // fontSize:'13px'
+                        }}>Category</span>
+
+                        <input type="text" className="form-control" placeholder="Category..." aria-label="Category" aria-describedby="basic-addon1"
+                            id='cate' value={item.Category}
+                            style={{
+                                color: "black",
+                                // width:"99%"
+                            }}
+                            onChange={e => {
+                                let list = this.state.checklist;
+                                list[key].Category = e.target.value;
+                                this.setState({ checklist: list });
+                            }}
+                        ></input>
+                    </div>
+                    <div className="card-body">
+                        {item.Questions.map(function (ques, index) {
+                            return (
+                                <React.Fragment key={index}>
+                                    <button style={{ marginBottom: "10px" }} className="btn btn-info col-md-12 " onClick={() => {
+                                        let list = this.state.checklist;
+                                        list[key].Questions.splice(index, 0, "");
+                                        // console.log(list[key].Questions);
+                                        this.setState({ checklist: list });
+                                    }} >AddQuestions</button>
+                                    <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
+                                    <button style={{}}className="btn btn-danger center" onClick={()=>{
+                                        let list = this.state.checklist;
+                                        list[key].Questions.splice(index, 1);
+                                        this.setState({ checklist: list });
+                                    }}></button>
+                                        <span className="input-group-text" id="basic-addon1" style={{
+                                            color: "black",
+                                            height: "100px"
+                                            // fontSize:'13px'
+                                        }}>Question{index + 1}</span>
+                                        <textarea className="form-control" placeholder="Question..." aria-label="DescriptionCN" aria-describedby="basic-addon1"
+                                            id='descriptionCN' value={ques}
+                                            onChange={e => {
+                                                let list = this.state.checklist[key].Questions;
+                                                list[index] = e.target.value;
+                                                this.setState({ checklist: list });
+                                            }}
+                                            style={{
+                                                // width: "425px",
+                                                height: "100px",
+                                                resize: "none"
+                                            }}>
+                                            ></textarea>
+                                    </div>
+                                </React.Fragment>
+                            )
+                        }.bind(this))}
+                        <div>
+                            <button style={{ marginTop: "10px" }} className="btn btn-info col-md-12" onClick={() => {
+                                let list = this.state.checklist;
+                                list[key].Questions.push("");
+                                this.setState({ checklist: list });
+                            }} >AddQuestions</button>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
+        )
     }
     protected handleChange(selectorFiles: FileList) {
         //var tmppath = URL.createObjectURL(selectorFiles[0]);
@@ -465,7 +575,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                     company: $('#company').val(),
                     address: $('#address').val(),
-                    check_list: [],
+                    check_list: this.state.checklist
 
                 }),
                 success: function (data) {

@@ -15,7 +15,7 @@ import "jspdf-autotable";
 import Config from '../config/config';
 
 export interface IProps {
-
+    history:any
 }
 
 export interface IState {
@@ -65,13 +65,12 @@ class PageGhotiChecklist extends React.Component<IProps, IState> {
 
     public render() {
         return (<div>
-            <table id="check_list">
-            <thead>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </thead>
+            {/* start */}
+            <button id="backbtn" onClick={()=>{
+                this.props.history.push("/edittask");
+            }}>back</button>
+            <table style={{ marginBottom: "10px" }} id="check_list">
+
                 <tbody>
                     {this.state.checklist.map(function (item, key) {
 
@@ -119,31 +118,21 @@ class PageGhotiChecklist extends React.Component<IProps, IState> {
                     </tr>
                 </tbody>
             </table>
-            <button onClick={this.downloadPDF}>PDF</button>
+            {/* end */}
+            <button id="pdfbtn" onClick={this.downloadPDF}>PDF</button>
         </div>);
 
 
     }
 
     protected downloadPDF() {
-        var doc = new jsPDF('p', 'pt');
-        var res = doc.autoTableHtmlToJson(document.getElementById("check_list"));
-        console.log(res);
-        // doc.autoTable(res.columns, res.data);
-        
-
-        // var options = {
-        //     beforePageContent: header,
-        //     margin: {
-        //         top: 80
-        //     },
-        //     startY: doc.autoTableEndPosY() + 20
-        // };
-
-        doc.autoTable(res.columns, res.data);
-        console.log(doc);
-
-        doc.save("table.pdf");
+        let printbutton = document.getElementById("pdfbtn");
+        let backbutton = document.getElementById("backbtn");
+        printbutton.style.visibility = "hidden";
+        backbutton.style.visibility = "hidden"
+        window.print();
+        printbutton.style.visibility = "visible";
+        backbutton.style.visibility = "visible";
 
     }
 }
