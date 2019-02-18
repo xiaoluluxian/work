@@ -252,3 +252,7 @@ Change stage display in main page
 
 1. Changed table in main
 2. ediittask print pdf done
+
+### 1.4.7
+
+1. FIxed mappicture in edittask

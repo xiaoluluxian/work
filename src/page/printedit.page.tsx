@@ -153,21 +153,43 @@ class PageGhotiPrintedit extends React.Component<IProps, IState> {
         return (
             picture.map(function (item, key) {
                 return (
-                    <div>
+                    // <div key={key} style={{
+                    //     // position: 'flex',
+                    //     flex:1
+                    // }}>
+                    //     <div>
+                    //         <img style={{
+                    //             width: '25%',
+                    //             height: 'auto',
+
+                    //             padding: '3px'
+                    //         }}
+                    //             src={item.Src}
+                           
+                    //         />
+                    //         <div>{desc}{descCN ? "/" + descCN : ""}</div>
+                    //     </div>
+                        
+                    // </div>
+                    <div key={key} style={{
+                        // position: 'flex',
+                        flex:1,
+                        // float:"left"
+                        width:"33%",
+                        display:"inline-block"
+                    }}>
                         <div>
                             <img style={{
-                                width: '25%',
+                                width: '90%',
                                 height: 'auto',
-
                                 padding: '3px'
                             }}
                                 src={item.Src}
                            
                             />
+                            <div style={{width:"97%"}}>{desc}{descCN ? "/" + descCN : ""}</div>
                         </div>
-                        <div>
-                            {desc}{descCN ? "/" + descCN : ""}
-                        </div>
+                        
                     </div>
                     
                     // <td style={{
@@ -272,8 +294,6 @@ class PageGhotiPrintedit extends React.Component<IProps, IState> {
                 </div>
                 </div>
                     </div >
-
-
                     <div style={{ marginTop:"10px", width: "55%", float: "right" }}>
                         <h1 style={{
                             color:"powderblue", 

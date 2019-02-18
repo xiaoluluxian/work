@@ -2987,21 +2987,25 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             return (
                 picture.map(function (item, key) {
                     return (
-                        <div>
+                        <div key={key} style={{
+                            // position: 'flex',
+                            flex:1,
+                            // float:"left"
+                            width:"33%",
+                            display:"inline-block"
+                        }}>
                             <div>
                                 <img style={{
-                                    width: '25%',
+                                    width: '90%',
                                     height: 'auto',
-
                                     padding: '3px'
                                 }}
                                     src={item.Src}
                                     onClick={this.convert360.bind(this, item)}
                                 />
+                                <div style={{width:"97%"}}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
                             </div>
-                            <div>
-                                {key + 1}.{desc}
-                            </div>
+                            
                         </div>
                     )
                 }.bind(this))
@@ -3011,22 +3015,25 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             return (
                 picture.map(function (item, key) {
                     return (
-                        <div>
+                        <div key={key} style={{
+                            // position: 'flex',
+                            flex:1,
+                            // float:"left"
+                            width:"33%",
+                            display:"inline-block"
+                        }}>
                             <div>
                                 <img style={{
-                                    width: '25%',
+                                    width: '90%',
                                     height: 'auto',
-
                                     padding: '3px'
                                 }}
                                     src={item.Src}
                                     onClick={this.convert360.bind(this, item)}
                                 />
+                                <div style={{width:"97%"}}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
                             </div>
-                            <div>
-                                {key + 1}.{desc + " / " + descCN}
-                            </div>
-
+                            
                         </div>
                     )
                 }.bind(this))
