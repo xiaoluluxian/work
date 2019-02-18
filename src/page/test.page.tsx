@@ -12,6 +12,8 @@ import * as Lambda from '../lambda/import';
 import * as $ from "jquery";
 import * as Cheerio from "cheerio"
 
+import "datatables.net"
+
 import Config from '../config/config';
 import { bootstrap, button } from "bootstrap"
 import * as FileSaver from 'file-saver';
@@ -43,23 +45,156 @@ export interface IState {
 
 }
 
+const datas = [
+    {
+        patientId: 1,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+
+    {
+        patientId: 2,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+
+    {
+        patientId: 3,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 4,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 5,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 6,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 7,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 8,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 9,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 10,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 11,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 12,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 13,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+    {
+        patientId: 14,
+        otherId: "LanTest101",
+        firstName: "x1",
+        lastName: "yLanTest101",
+        gender: "M",
+        dob: "10/16/1941",
+        race: "Caucasian/White"
+    },
+]
+
 
 class PageGhotiTest extends React.Component<IProps, IState> {
+
     state = {
         page: null,
         pic: [],
+        clients: [],
         test: [
             {
                 longitude: 0,
                 latitude: 0,
                 content: "firstcontent",
-                id:Math.random()
+                id: Math.random()
             },
             {
                 longitude: 0.1,
                 latitude: 0.1,
                 content: "secondcontent",
-                id:Math.random()
+                id: Math.random()
             }
         ]
     }
@@ -75,13 +210,62 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
+        $.ajax({
+            url: "https://rpntechserver.appspot.com/findTasksByPage?page_index=1&page_size=2&stages=current",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            success: (function (result) {
+                console.log(result);
+                // console.log(JSON.stringify(result));
+                
+            }).bind(this),
+        })
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllTasks',
 
-        // const script = document.createElement("script");
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                // this.setState({ data: result });
 
-        // script.src = "photo-sphere-viewer.min.js";
-        // script.async = true;
+            }).bind(this),
+        });
 
-        // document.body.appendChild(script);
+        // $.ajax({
+        //     url: "https://rpntechserver.appspot.com/findAllClient",
+        //     headers: {
+        //         Authorization: "Bearer " + localStorage.getItem('Token'),
+        //     },
+        //     method: 'GET',
+        //     datatype: "json",
+        //     success: (function (result) {
+        //         console.log(result);
+        //         // console.log(JSON.stringify(result));
+        //         this.setState({ clients: result });
+        //     }).bind(this),
+        // })
+        // $.ajax({
+        //     url: "https://rpntechserver.appspot.com/findTaskByClient?company=GBH",
+        //     headers: {
+        //         Authorization: "Bearer " + localStorage.getItem('Token'),
+        //     },
+        //     method: 'GET',
+        //     datatype: "json",
+        //     success: (function (result) {
+        //         console.log(result);
+        //         // console.log(JSON.stringify(result));
+        //         // this.setState({ clients: result });
+        //     }).bind(this),
+        // })
     }
 
     public render() {
@@ -90,96 +274,57 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
 
         return (<React.Fragment>
+            {/* <div style={{width:"90%", margin:"auto"}}>
+                <table className="table table-bordered table-striped" id="examplee" style={{}}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {datas.map(function(item, key){
+                            return(
+                                <tr>
+                                    <td>{item.patientId}</td>
+                                    <td>{item.otherId}</td>
+                                    <td>{item.firstName}</td>
+                                    <td>{item.lastName}</td>
+                                    <td>{item.gender}</td>
+                                    <td>{item.dob}</td>
+                                </tr>
+                            )
+                        })}
+                        
+                    </tbody>
+                </table>
+            </div>
+            {this.showtable()} */}
 
-            {/* <script src="lib/photo-sphere-viewer.min.js"></script> */}
-            {/* <a href="http://localhost:8080/photo.html">asd</a> */}
-            {/* <p>Click the button to sort the table alphabetically, by name:</p>
-            <p><button onClick={this.sortTable}>Sort</button></p>
-            
-            <table id="myTable">
-                <tr>
-                    <th>Name</th>
-                    <th>number</th>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbkop</td>
-                    <td>2018-05-03</td>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbkop</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>North/South</td>
-                    <td>2017/03-16</td>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>2018-05-03</td>
-                </tr>
-                <tr>
-                    <td>Koniglich Essen</td>
-                    <td>2018-06-03</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>2018-05-17</td>
-                </tr>
-                <tr>
-                    <td>Paris specialites</td>
-                    <td>2018-09-21</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>2018-05-14</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>2018-08-24</td>
-                </tr>
-            </table> */}
-            {/* <div id="signupbox" style={{ marginTop: "50px" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <div className="panel panel-info">
-                    <form className="form-horizontal" method="post">
-                        <div id="div_id_select" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> Select<span className="asteriskField">*</span> </label>
-                            <div className="controls col-md-8 " style={{ marginBottom: "10px" }}>
-                                <label className="radio-inline" style={{marginRight:"20px"}}><input type="radio" checked={true} name="select" id="id_select_1" value="S" style={{ marginBottom: "10px",marginRight:"5px" }}></input>Knowledge Seeker</label>
-                                <label className="radio-inline"> <input type="radio" name="select" id="id_select_2" value="P" style={{ marginBottom: "10px", marginRight:"5px"}}></input>Knowledge Provider </label>
-                            </div>
-                        </div>
-                        <div id="div_id_username" className="form-group required">
-                            <label  className="control-label col-md-4  requiredField"> Username<span className="asteriskField">*</span> </label>
-                            <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="id_username" name="username" placeholder="Choose your username" style={{marginBottom:"10px"}} type="text" ></input>
-                            </div>
-                        </div>
-                    </form>
-                </div> </div> */}
-
-            <div className="container1" id="container1"
+            {/* <div className="container1" id="container1"
                 style={{
                     width: "100%",
                     height: "100%",
-                }}></div>
-            <div>
-                {this.state.test.length==0?<div></div>:this.state.test.map(function (item, key) {
-                    
-                    return (
-                        <React.Fragment>
-                            <div>Category{key + 1}<input value={item.content} onChange={e => {
-                                let list = this.state.test
-                                list[key].content = e.target.value;
-                                this.setState({ test: list });
-                            }}>
-                            </input></div>
-                        </React.Fragment>
-                    )
-                }.bind(this))}
-            </div>
-            
+                }}></div> */}
+
+
             <button onClick={this.convert360}>convert360</button>
             <button onClick={this.logtest}>test</button>
+
             {/* {this.convert360} */}
             <tr>zipcode <input className="text" id='zipcode' ></input></tr>
             <button onClick={this.weather}>go</button>
@@ -218,6 +363,29 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
         </React.Fragment>
         )
+    }
+
+    protected showtable() {
+        // $(document).ready(function () {
+        //     $('#examplee').DataTable({
+        //         "ajax": datas,
+        //         "columns":[
+        //             {"datas":"patientId"},
+        //             {"datas":"otherId"},
+        //             {"datas":"firstName"},
+        //             {"datas":"lastName"},
+        //             {"datas":"gender"},
+        //             {"datas":"dob"},
+        //         ],
+        //         "bDestroy": true
+        //     });
+        // });
+        $(document).ready(function () {
+            $('#examplee').dataTable({
+                responsive: true,
+                bDestroy: true
+            });
+        });
     }
 
     protected logtest() {
@@ -266,7 +434,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                         }
                     }.bind(this)())
                 },
-                "caption",'fullscreen'],
+                "caption", 'fullscreen'],
             navbar_style: {
                 backgroundColor: "silver",
             },
@@ -281,10 +449,10 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                         width: 32,
                         height: 32,
                         tooltip: this.state.test[i].content,
-                        content: "content"+this.state.test[i].content,
+                        content: "content" + this.state.test[i].content,
                         data: {
                             generated: true,
-                            
+
                         }
                     })
                 };
@@ -312,7 +480,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
         console.log(PSV);
         PSV.on('click', function (e) {
-            let tempid = '#'+Math.random();
+            let tempid = '#' + Math.random();
             let mar = {
                 id: tempid,
                 longitude: e.longitude,
@@ -323,7 +491,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 tooltip: 'Generated pin',
                 data: {
                     generated: true,
-                    id:tempid
+                    id: tempid
                 }
             }
             PSV.addMarker(mar);
@@ -332,7 +500,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 longitude: e.longitude,
                 latitude: e.latitude,
                 content: "firstcontent",
-                id:tempid
+                id: tempid
             })
             this.setState({ test: temp })
             console.log(PSV);
@@ -346,25 +514,25 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 if (dblclick) {
                     let rmid = PSV.getCurrentMarker(marker).id
                     let temp = this.state.test;
-                    if(temp.length==1){
-                        temp=[];
+                    if (temp.length == 1) {
+                        temp = [];
                     }
-                    else{
-                        for(let i=0;i<temp.length;i++){
-                        
-                            if(temp[i].id===rmid){
-                                temp.splice(i,1);
+                    else {
+                        for (let i = 0; i < temp.length; i++) {
+
+                            if (temp[i].id === rmid) {
+                                temp.splice(i, 1);
                                 break;
                             }
                         }
                     }
-                    
-                    this.setState({test:temp})
+
+                    this.setState({ test: temp })
                     PSV.removeMarker(marker);
                     // console.log(PSV.marker);
-                    
+
                 }
-                
+
             }
         }.bind(this));
     }

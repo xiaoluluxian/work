@@ -246,4 +246,9 @@ Change stage display in main page
 
 ## 1.4.5
 
-1. edittask pring pdf(1)
+1. edittask print pdf(1)
+
+### 1.4.6
+
+1. Changed table in main
+2. ediittask print pdf done

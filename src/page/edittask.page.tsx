@@ -2672,11 +2672,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         }}
                                     ></td> */}
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
 
                                 </React.Fragment>
                             )
@@ -2723,11 +2723,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
                                 </React.Fragment>
                             )
                         }.bind(this))}
@@ -2852,11 +2852,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         }}
                                     ></td> */}
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
 
                                 </React.Fragment>
                             )
@@ -2903,11 +2903,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
                                 </React.Fragment>
                             )
                         }.bind(this))}
@@ -2950,11 +2950,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <td>{this.showStatus(item.Status)}</td>
                                     </tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "#DDDDDD", borderBottomColor: "#DDDDDD" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "#DDDDDD", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
                                 </React.Fragment>
                             )
                         }.bind(this))}

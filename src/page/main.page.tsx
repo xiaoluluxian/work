@@ -15,6 +15,8 @@ import * as $ from 'jquery';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { Redirect } from 'react-router-dom'
 import * as ReactDOM from 'react-dom'
+// import "datatables.net"
+
 //import { Button } from 'reactstrap'
 //import "bootstrap/dist/css/bootstrap.min.css";
 //import {FontAwesomeIcon} from '@fortawesome/fontawesome-free'
@@ -41,6 +43,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     state = {
         data: [],
         alluser: [],
+        clients: [],
+        allTasks: [],
+        currPageSize: "25",
+        currPage: "0",
+        searchAddr: ""
     };
     public constructor(props) {
         super(props);
@@ -59,6 +66,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.ordertask = this.ordertask.bind(this);
         this.showOperation = this.showOperation.bind(this);
         this.showTable = this.showTable.bind(this);
+        this.ClientChange = this.ClientChange.bind(this);
+        this.changePage = this.changePage.bind(this)
 
     }
 
@@ -77,11 +86,43 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 this.setState({ alluser: result });
             }).bind(this),
         });
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findAllClient',
+
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                // console.log(result);
+                this.setState({ clients: result });
+
+            }).bind(this),
+        });
         if (localStorage.getItem('Authority') === '2' || '3') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',
-                //url: 'https://rpnserver.appspot.com/userProfile',
-                //url: 'http://localhost:8080/login',
+
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ allTasks: result });
+
+                }).bind(this),
+            });
+
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findTasksByPage?page_index=0&page_size=25&stages=current',
+
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -95,12 +136,12 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
                 }).bind(this),
             });
+
         }
         else if (localStorage.getItem('Authority') === '1') {
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/userProfile',
-                //url: 'https://rpnserver.appspot.com/userProfile',
-                //url: 'http://localhost:8080/login',
+
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -120,6 +161,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
 
     public render() {
+        let pages = Math.ceil(this.state.allTasks.length / parseInt(this.state.currPageSize));
+        let buttonList = []
+        for (let i = 0; i < pages; i++) {
+            buttonList.push(i + 1)
+        }
 
 
         return (
@@ -147,7 +193,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         }}>
                             Repair and Preservation Network, LLC
                 </div>
-                        <div style={{
+                        {/* <div style={{
                             marginTop: '20px',
                             marginRight: '20px',
                             textAlign: 'center',
@@ -155,7 +201,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
                         }}>
                             <input type="text" id="myInput" onKeyUp={this.search} placeholder="Search for Addr.." title="Search Task" />
-                        </div>
+                        </div> */}
                         <div style={{
                             marginTop: '20px',
                             marginRight: '10px',
@@ -196,7 +242,6 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <option>all</option>
                                 {this.state.alluser.map(function (item, key) {
                                     return (
-
                                         <option key={key}>{item.Firstname}</option>
                                     )
                                 }.bind(this))}
@@ -204,7 +249,26 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                         </div>
                     </div>
                     <div style={{
-                        padding: '10px'
+                        padding: '10px',
+                    }}>
+                        <div>Clients:
+                    <select style={{
+                                width: "100px"
+                            }}
+                                id='setUser' onChange={e => this.ClientChange(e.target.value)}>
+                                <option>All</option>
+                                {this.state.clients.map(function (item, key) {
+                                    return (
+                                        <option key={key}>{item.Company}</option>
+                                    )
+                                }.bind(this))}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style={{
+
+                        // borderColor:"black"
                     }}>
                         <div>SortBy:
                     <select style={{
@@ -238,17 +302,158 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     </div>
 
                 </div>
-                {this.showTable()}
+                <div style={{
+                    width: "99%",
+                    margin: "auto",
+                    marginTop: "10px",
+                    border: '1px solid grey',
+                }}>
+                    <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+                        <select onChange={e => this.changePageSize(e.target.value)}>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                            <option>all</option>
+                        </select>
 
+                        <input style={{
+                            float: "right",
+                            marginRight: "5px"
+                        }} type="text" id="myInput"
+                            onChange={event => { this.setState({ searchAddr: event.target.value }) }}
+                            onKeyPress={event => {
+                                if (event.key === 'Enter') {
+                                    // console.log(this.state.searchAddr)
+                                    
+                                    $.ajax({
+                                        url: 'https://rpntechserver.appspot.com//findTaskByAddr?address='+this.state.searchAddr,
+                                        headers: {
+                                            Authorization: "Bearer " + localStorage.getItem('Token'),
+                                        },
+                                        method: 'GET',
+                                        datatype: "json",
+                                        data: JSON.stringify({
+                                        }),
+                                        success: (function (result) {
+                                            if(result){
+                                                this.setState({ data: result });
+                                            }
+                                            else{
+                                                window.alert("No such Property!!!!")
+                                            }
+                                            
+                                        }).bind(this),
+                                    });
+                                }
+                            }}
+                            placeholder="Search for Addr.." title="Search Task" />
 
-
+                    </div>
+                    {this.showTable()}
+                    <div>
+                        {buttonList.map(function (item, key) {
+                            return (
+                                <button style={{
+                                    marginLeft: "10px",
+                                    marginBottom: "10px",
+                                    width: "40px",
+                                    height: "40px"
+                                }}
+                                    onClick={this.changePage.bind(this, item - 1)}
+                                >{item}</button>
+                            )
+                        }.bind(this))}
+                    </div>
+                </div>
             </div >);
+    }
+
+    protected changePageSize(size) {
+        this.setState({ currPageSize: size })
+        this.setState({ currPage: "0" })
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findTasksByPage?page_index=0&page_size=' + size + '&stages=current',
+
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                this.setState({ data: result });
+
+            }).bind(this),
+        });
+    }
+
+    protected changePage(pageNum) {
+        this.setState({ currPage: pageNum })
+        $.ajax({
+            url: 'https://rpntechserver.appspot.com/findTasksByPage?page_index=' + pageNum + '&page_size=' + this.state.currPageSize + '&stages=current',
+
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('Token'),
+            },
+            method: 'GET',
+            datatype: "json",
+            data: JSON.stringify({
+            }),
+            success: (function (result) {
+                console.log(result);
+                this.setState({ data: result });
+
+            }).bind(this),
+        });
+    }
+
+    protected ClientChange(client) {
+        console.log(client);
+        if (client === 'all') {
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    //console.log(result);
+                    this.setState({ data: result });
+
+                }).bind(this),
+            });
+        }
+        else {
+
+            //console.log(newname);
+            $.ajax({
+                //url: 'https://rpntechserver.appspot.com/userProfile',
+                url: 'https://rpntechserver.appspot.com/findTaskByClient?company=' + client,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ data: result });
+
+                }).bind(this),
+            });
+        }
     }
 
     protected showTable() {
         if (localStorage.getItem("Authority") === '3') {
             return (
-                <table className="table table-striped table-hover table-bordered table-sm" id='taskT'>
+                <table style={{ marginTop: "15px", width: "99%" }} className="table table-striped table-hover table-bordered table-sm" id='taskT'>
                     <thead>
                         <tr><th>Action</th>
                             <th>Property Address</th>
@@ -292,11 +497,13 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
                     }.bind(this))}</tbody>
                 </table>
+
             )
+
         }
         else {
             return (
-                <table className="table table-striped table-hover table-bordered table-sm" id='taskT' style={{width:"99%"}}>
+                <table className="table table-striped table-hover table-bordered table-sm" id='taskT' style={{ marginTop: "15px", width: "99%" }}>
                     <thead>
                         <tr><th>Action</th>
                             <th>Property Address</th>
@@ -331,7 +538,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
                                 {/* <td><a data-toggle="collapse" href={temp}>Show User</a><div id={temp2} className="panel-collapse collapse">{this.showUsername(item.Username)}</div></td> */}
-                                <td><button style={{color:"blue"}}className="link" onClick={this.showUsernameHelp.bind(this, temp2)}><ins>Show User</ins></button><div id={temp2} style={{display:"none"}} className="user-dropdown">{this.showUsername(item.Username)}</div></td>
+                                <td><button style={{ color: "blue" }} className="link" onClick={this.showUsernameHelp.bind(this, temp2)}><ins>Show User</ins></button><div id={temp2} style={{ display: "none" }} className="user-dropdown">{this.showUsername(item.Username)}</div></td>
                                 {/* <td><button className="link collapsible">{this.clickShowUser}Show User</button><div id="content" style={{display: "none"}}>{this.showUsername(item.Username)}</div></td> */}
                                 {/* <td>{item.Stage}</td> */}
                                 <td>{this.showStage(item.Stage)}</td>
@@ -342,18 +549,19 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     }.bind(this))}</tbody>
                 </table>
             )
+
         }
     }
 
-    protected showUsernameHelp(id){
+    protected showUsernameHelp(id) {
         let ops = document.getElementById(id);
         // console.log(ops.innerText);
-        if(ops.style.display==="none"){
-            ops.setAttribute("style","display: show");
+        if (ops.style.display === "none") {
+            ops.setAttribute("style", "display: show");
             // console.log(1);
         }
-        else{
-            ops.style.display="none"
+        else {
+            ops.style.display = "none"
         }
         // console.log(ops.style.display);
         // console.log(document.getElementById(id).style.display);
@@ -885,22 +1093,28 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected search() {
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
+        // var input, filter, table, tr, td, i;
+        // input = document.getElementById("myInput");
+        // filter = input.value.toUpperCase();
 
-        table = document.getElementById("taskT");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
+        // table = document.getElementById("taskT");
+        // tr = table.getElementsByTagName("tr");
+        // for (i = 0; i < tr.length; i++) {
+        //     td = tr[i].getElementsByTagName("td")[1];
+        //     if (td) {
+        //         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        //             tr[i].style.display = "";
+        //         } else {
+        //             tr[i].style.display = "none";
+        //         }
+        //     }
+        // }
+        // $(".myInput").on('keyup', function (e) {
+        //     if (e.keyCode == 13) {
+        //         console.log(123)
+        //     }
+        // });
+
     }
 
 

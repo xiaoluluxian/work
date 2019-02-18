@@ -130,13 +130,19 @@ class PageGhotiPrintedit extends React.Component<IProps, IState> {
             taxTotal += (i.Tax ? i.Tax : 0);
         }
         return (<div>
-            <div style={{
+            <div id="noprint" style={{
                 height: "3%",
                 backgroundColor: "lightblue"
             }}>
-                <button id="backbtn" onClick={() => {
+                <button id="backbtn" style={{marginLeft:"3px"}} onClick={() => {
                     this.props.history.push("/edittask")
                 }}>back</button>
+                <button id="printbtn" style={{marginLeft:"10px"}} onClick={() => {
+                    let hideDiv = document.getElementById("noprint");
+                    hideDiv.style.visibility = 'hidden';
+                    window.print();
+                    hideDiv.style.visibility = "visible";
+                }}>Print</button>
             </div>
 
             {this.showTable(taxTotal, TotalAmount)}
@@ -147,43 +153,43 @@ class PageGhotiPrintedit extends React.Component<IProps, IState> {
         return (
             picture.map(function (item, key) {
                 return (
-                    // <div>
-                    //     <div>
-                    //         <img style={{
-                    //             width: '25%',
-                    //             height: 'auto',
+                    <div>
+                        <div>
+                            <img style={{
+                                width: '25%',
+                                height: 'auto',
 
-                    //             padding: '3px'
-                    //         }}
-                    //             src={item.Src}
+                                padding: '3px'
+                            }}
+                                src={item.Src}
                            
-                    //         />
-                    //     </div>
-                    //     <div>
-                    //         {desc}{descCN ? "/" + descCN : ""}
-                    //     </div>
-                    // </div>
+                            />
+                        </div>
+                        <div>
+                            {desc}{descCN ? "/" + descCN : ""}
+                        </div>
+                    </div>
                     
-                    <td style={{
-                        // display:"table-cell"
-                        width:"50%"
-                        }}>
-                        <img style={{
-                            width: '100%',
-                            height: 'auto',
-                            // display:"block",
+                    // <td style={{
+                    //     // display:"table-cell"
+                    //     width:"50%"
+                    //     }}>
+                    //     <img style={{
+                    //         width: '100%',
+                    //         height: 'auto',
+                    //         // display:"block",
                             
 
-                            padding: '3px'
-                        }}
-                            src={item.Src}
+                    //         padding: '3px'
+                    //     }}
+                    //         src={item.Src}
 
-                        /><div style={{
-                            margin:"auto",
-                            wordWrap: "break-word"
-                        }}>124444444444444aaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa444444444444444443</div>
+                    //     /><div style={{
+                    //         margin:"auto",
+                    //         wordWrap: "break-word"
+                    //     }}>124444444444444aaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa444444444444444443</div>
                         
-                    </td>
+                    // </td>
                     
                 )
             }.bind(this))
@@ -322,11 +328,11 @@ class PageGhotiPrintedit extends React.Component<IProps, IState> {
                                         }}
                                     ></td> */}
                                     <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
-                                    <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
-                                    <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
                                     <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
-                                    <tr><td style={{ borderLeftColor: "white", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.description_cn)}</td></tr>
+                                    <tr><td style={{ borderLeftColor: "white", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
 
                                 </React.Fragment>
                             )
@@ -346,28 +352,279 @@ class PageGhotiPrintedit extends React.Component<IProps, IState> {
         }
         else if (this.state.Stage === "2") {
             return (
+                
                 <React.Fragment>
-                    <table id="stage2">
-                        <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
+                <div style={{
+                    float: "left",
+                    marginLeft: "20px",
+                    width: "45%",
+                    height: "10px",
+                    // backgroundColor:"blue"
+                }}>
+                    <div style={{
+                        flex: 1,
+                        paddingLeft: '10px',
+                        paddingTop: '20px',
+                        display: 'inline',
+                        fontSize: '20px',
+                        color: 'darkblue',
+                        fontWeight: 'bold',
+                    }}>
+                        <div style={{
+                            width: 'auto',
+                            height: '40px',
+                        }}>
+                            {/* <img src={rlogo} alt="logo" style={{
+                                width: 'auto',
+                                height: '80px',
+                            }} /> */}
+                        </div>
+                    </div>
+                    <div style={{ 
+            display: 'flex',
+            
+            }}>
+            
+            <img src={logo} alt="logo" style={{
+                width: '70px',
+                height: '60px',
+            }} />
+            
+            <div style={{ flex: 3,
+                paddingLeft:'10px' ,
+            
+            }}>
+            <div style={{
+                flex: 1,
+                paddingTop:'20px',
+                display: 'inline',
+                fontSize: '20px',
+                color: 'darkblue',
+                fontWeight: 'bold',
+            }}>
+                Document Presented by<br/>
+                Repair and Preservation Network, LLC<br/>
+            </div>
+                10 Old Mamaroneck Road Unit 1A.<br />
+                White Plains, NY 10605<br />
+                Phone: (866)-766-8880
+                
+            </div>
+            </div>
+                </div >
+
+
+                <div style={{ marginTop:"10px", width: "55%", float: "right" }}>
+                    <h1 style={{
+                        color:"powderblue", 
+                        marginLeft: "10px", 
+                        textAlign:"center", 
+                        fontSize: '45px',
+                        fontWeight: 'bold', 
+                }}>WORK ORDER</h1>
+                <table id="stage2" style={{
+                        // float: "right",
+                        // width: "45%",
+                        // marginRight: "10px",
+                        marginTop: "20px"
+                    }}>
+                        <tr><td style={{ width: "25%" }}>Property Address</td> <td>{this.state.Address}</td></tr>
                         <tr><td style={{ width: "25%" }}>KeyCode/LockBoxNum</td><td>{this.state.LBNum}</td></tr>
                         <tr><td style={{ width: "25%" }}>Due Date</td><td>{this.state.DueDate}</td></tr>
-                        <tr><td style={{ width: "25%" }}>City/State/Zip Code </td><td>{this.state.City}</td></tr>
                         <tr><td style={{ width: "25%" }}>UploadLink</td><td>{this.state.uploadLink}</td></tr>
                     </table>
-                </React.Fragment>
+                    
+                </div>
+                <div style={{
+                    marginTop:"270px", 
+                    marginLeft:"30px"
+                }}>
+                <table style={{margin:"auto"}}>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Item</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>{this.state.Item.map(function (item, key) {
+                        return (
+                            <React.Fragment key={key}>
+                                <tr>
+                                    <td>{item.Cate}</td>
+                                    <td>{item.Item}</td>
+                                    <td>{item.description}<div>{item.Comments}</div></td>
+                                    <td>{item.Cost}</td>
+                                    
+                                </tr>
+                                {/* <td
+                                    style={{
+                                        border: "none",
+                                        borderCollapse: "collapse",
+                                    }}
+                                ></td> */}
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{ borderLeftColor: "white", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
+
+                            </React.Fragment>
+                        )
+                    }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
+                    </tbody>
+                    {/* <tbody>
+                        {this.state.Item.map(this.mapShowItem)}
+                    </tbody> */}
+                </table>
+                </div>
+                
+
+            </React.Fragment>
             )
         }
         else {
             return (
+                
                 <React.Fragment>
-                    <table id="stage3">
+                <div style={{
+                    float: "left",
+                    marginLeft: "20px",
+                    width: "45%",
+                    height: "10px",
+                    // backgroundColor:"blue"
+                }}>
+                    <div style={{
+                        flex: 1,
+                        paddingLeft: '10px',
+                        paddingTop: '20px',
+                        display: 'inline',
+                        fontSize: '20px',
+                        color: 'darkblue',
+                        fontWeight: 'bold',
+                    }}>
+                        <div style={{
+                            width: 'auto',
+                            height: '40px',
+                        }}>
+                            {/* <img src={rlogo} alt="logo" style={{
+                                width: 'auto',
+                                height: '80px',
+                            }} /> */}
+                        </div>
+                    </div>
+                    <div style={{ 
+            display: 'flex',
+            
+            }}>
+            
+            <img src={logo} alt="logo" style={{
+                width: '70px',
+                height: '60px',
+            }} />
+            
+            <div style={{ flex: 3,
+                paddingLeft:'10px' ,
+            
+            }}>
+            <div style={{
+                flex: 1,
+                paddingTop:'20px',
+                display: 'inline',
+                fontSize: '20px',
+                color: 'darkblue',
+                fontWeight: 'bold',
+            }}>
+                Document Presented by<br/>
+                Repair and Preservation Network, LLC<br/>
+            </div>
+                10 Old Mamaroneck Road Unit 1A.<br />
+                White Plains, NY 10605<br />
+                Phone: (866)-766-8880
+                
+            </div>
+            </div>
+                </div >
+
+
+                <div style={{ marginTop:"10px", width: "55%", float: "right" }}>
+                    <h1 style={{
+                        color:"powderblue", 
+                        marginLeft: "10px", 
+                        textAlign:"center", 
+                        fontSize: '45px',
+                        fontWeight: 'bold', 
+                }}>INVOICE</h1>
+                <table id="stage3" style={{
+                        // float: "right",
+                        // width: "45%",
+                        // marginRight: "10px",
+                        marginTop: "20px"
+                    }}>
                         <tr><td style={{ width: "25%" }}>Property Address:</td> <td>{this.state.Address}</td></tr>
                         <tr><td style={{ width: "25%" }}>Invoice Number</td> <td>{this.state.Invoice}</td></tr>
                         <tr><td style={{ width: "25%" }}>CompletionDate</td><td>{this.state.CompletionDate}</td></tr>
                         <tr><td style={{ width: "25%" }}>Invoice Date</td><td>{this.state.InvoiceDate}</td></tr>
                         <tr><td style={{ width: "25%" }}>BillTo </td><td>{this.state.BillTo}</td></tr>
                     </table>
-                </React.Fragment>
+                </div>
+                <div style={{
+                    marginTop:"330px", 
+                    marginLeft:"30px"
+                }}>
+                <table style={{margin:"auto"}}>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Item</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>{this.state.Item.map(function (item, key) {
+                        return (
+                            <React.Fragment key={key}>
+                                <tr>
+                                    <td>{item.Cate}</td>
+                                    <td>{item.Item}</td>
+                                    <td>{item.description}<div>{item.Comments}</div></td>
+                                    <td>{item.Cost}</td>
+                                    
+                                </tr>
+                                {/* <td
+                                    style={{
+                                        border: "none",
+                                        borderCollapse: "collapse",
+                                    }}
+                                ></td> */}
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}>Before </th></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.Before, item.description, item.Comments)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}> During </th></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.During, item.description, item.Comments)}</td></tr>
+                                <tr><td style={{ borderLeftColor: "white", borderBottomColor: "white" }}>&nbsp;</td><th colSpan={6}> After </th></tr>
+                                <tr><td style={{ borderLeftColor: "white", }}>&nbsp;</td><td colSpan={6}>{this.mapPicture(item.After, item.description, item.Comments)}</td></tr>
+
+                            </React.Fragment>
+                        )
+                    }.bind(this))}
+                        <tr><td colSpan={2}>HOA: Sales tax {this.state.Tax} %</td><td colSpan={5}>TotalTax: ${taxTotal}</td></tr>
+                        <tr><td colSpan={6}>Total Amount: ${TotalAmount} </td></tr>
+                    </tbody>
+                    {/* <tbody>
+                        {this.state.Item.map(this.mapShowItem)}
+                    </tbody> */}
+                </table>
+                </div>
+                
+
+            </React.Fragment>
+                
             )
         }
     }
