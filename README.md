@@ -255,8 +255,13 @@ Change stage display in main page
 
 ### 1.4.7
 
-1. FIxed mappicture in edittask
+1. Fixed mappicture in edittask
 
-## 1.4.8
+### 1.4.8
 
 1. Fixed checklist in register and userprofile
+
+### 1.4.9
+
+1. Add items to edittask when submit marker
+2. Fixed css in edittask

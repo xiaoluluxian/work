@@ -498,7 +498,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             }}
                             title="CheckList" onClick={this.checklist}>CheckList
                             </button>
-                            <button
+                        <button
                             style={{
                                 // paddingTop: '20px',
                                 marginTop: '5px',
@@ -879,14 +879,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     }.bind(this))}
                                 </div>
                             </div> */}
-                            <form style={{
+                            <div style={{
                                 float: "left",
                                 width: "35%",
                                 height: "90%",
                                 overflow: "scroll",
                                 marginTop: "3%",
                             }}>
-                                <div className="form-group">
+                                <div className="form-group" style={{
+                                    width: "99%"
+                                }}>
                                     {this.state.Markers.length == 0 ? <div></div> : this.state.Markers.map(function (item, key) {
                                         return (
                                             <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
@@ -913,12 +915,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     }.bind(this))}
 
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group row" style={{
+                                    width: "50%"
+                                }}>
                                     <div className="col-sm-10">
-                                        <button type="submit" onClick={this.submit360} className="btn btn-primary">Submit</button>
+                                        <button onClick={this.submit360} className="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
 
                             <div id="spherepic" style={{
                                 float: "right",
@@ -963,6 +967,32 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     }
 
     protected submit360() {
+        
+
+        let list = this.state.Item;
+        for (let i = 0; i < this.state.Markers.length; i++) {
+            list.push({
+                Cate: ".Marker",
+                After: [],
+                Amount: 0,
+                During: [],
+                Process: '0',
+                Status: '0',
+                Tax: 0,
+                Taxable: true,
+                description: this.state.Markers[i].Description,
+                Comments: '',
+                Item:(i+1),
+                Qty: 0,
+                UM: '',
+                PPU: 0,
+                Cost: 0,
+                Before: [],
+                Pano: "",
+                description_cn: "",
+            })
+        }
+        this.setState({Item:list})
         $.ajax({
             url: 'http://rpntechserver.appspot.com/updateMarker?image_id=' + this.state.currImgID,
             headers: {
@@ -974,9 +1004,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 markers: this.state.Markers
             }),
             success: (function (result) {
-                console.log(result);
-                // window.location.reload();
-
+                // console.log(result);
+                window.alert("360 Markers saved successfully!")
             }).bind(this),
 
         })
@@ -1577,7 +1606,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                             }}
                                             onChange={e => {
                                                 let list = this.state.Item;
-                                                list[index].Item =parseInt(e.target.value)||0;
+                                                list[index].Item = parseInt(e.target.value) || 0;
                                                 this.setState({ Item: list });
                                             }}
                                         ></input>
@@ -2406,7 +2435,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 image: "https://cdn4.iconfinder.com/data/icons/peppyicons/512/660011-location-512.png",
                                 width: 32,
                                 height: 32,
-                                tooltip: this.state.Markers[i].Description,
+                                tooltip: (i + 1) + '. ' + this.state.Markers[i].Description,
                                 content: this.state.Markers[i].Description,
                                 data: {
                                     generated: true
@@ -2434,6 +2463,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     }
                     PSV.addMarker(createMar);
                     let tempMar = this.state.Markers;
+                    let item = this.state.Item;
                     tempMar.push({
                         CoordinateX: createMar.latitude,
                         Description: "",
@@ -2989,10 +3019,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     return (
                         <div key={key} style={{
                             // position: 'flex',
-                            flex:1,
+                            flex: 1,
                             // float:"left"
-                            width:"33%",
-                            display:"inline-block"
+                            width: "33%",
+                            display: "inline-block"
                         }}>
                             <div>
                                 <img style={{
@@ -3003,9 +3033,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     src={item.Src}
                                     onClick={this.convert360.bind(this, item)}
                                 />
-                                <div style={{width:"97%"}}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
+                                <div style={{ width: "97%" }}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
                             </div>
-                            
+
                         </div>
                     )
                 }.bind(this))
@@ -3017,10 +3047,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     return (
                         <div key={key} style={{
                             // position: 'flex',
-                            flex:1,
+                            flex: 1,
                             // float:"left"
-                            width:"33%",
-                            display:"inline-block"
+                            width: "33%",
+                            display: "inline-block"
                         }}>
                             <div>
                                 <img style={{
@@ -3031,9 +3061,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     src={item.Src}
                                     onClick={this.convert360.bind(this, item)}
                                 />
-                                <div style={{width:"97%"}}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
+                                <div style={{ width: "97%" }}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
                             </div>
-                            
+
                         </div>
                     )
                 }.bind(this))
