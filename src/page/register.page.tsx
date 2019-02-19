@@ -464,8 +464,9 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                                         <textarea className="form-control" placeholder="Question..." aria-label="DescriptionCN" aria-describedby="basic-addon1"
                                             id='descriptionCN' value={ques}
                                             onChange={e => {
-                                                let list = this.state.checklist[key].Questions;
-                                                list[index] = e.target.value;
+                                                // console.log(this.state.checklist[key].Questions)
+                                                let list = this.state.checklist;
+                                                list[key].Questions[index] = e.target.value;
                                                 this.setState({ checklist: list });
                                             }}
                                             style={{

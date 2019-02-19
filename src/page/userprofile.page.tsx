@@ -39,6 +39,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
         company: "",
         address: "",
         check_list: [],
+        clientID:""
 
     }
     public constructor(props) {
@@ -181,7 +182,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
     protected initCategory() {
         return {
             Category: "",
-            Questions: [],
+            questions: [],
         }
     }
 
@@ -246,8 +247,8 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                                         <textarea className="form-control" placeholder="Question..." aria-label="DescriptionCN" aria-describedby="basic-addon1"
                                             id='descriptionCN' value={ques}
                                             onChange={e => {
-                                                let list = this.state.check_list[key].questions;
-                                                list[index] = e.target.value;
+                                                let list = this.state.check_list;
+                                                list[key].questions[index] = e.target.value;
                                                 this.setState({ check_list: list });
                                             }}
                                             style={{
@@ -458,6 +459,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
                 this.setState({ company: result.Company });
                 this.setState({ address: result.address });
                 this.setState({ check_list: result.check_list });
+                this.setState({clientID:result.ID})
             }).bind(this),
         })
     }
@@ -492,28 +494,48 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
     }
 
     protected submit() {
-        $.ajax({
-            url: 'https://rpntechserver.appspot.com/updateUser',
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('Token'),
-            },
-            method: 'POST',
-            datatype: "json",
-            data: JSON.stringify({
-                Username: this.state.Username,
-                Password: this.state.Password,
-                Authority: this.state.Authority,
-                Email: this.state.Email,
-                Phone: this.state.Phone,
-                Firstname: this.state.Firstname,
-                Lastname: this.state.Lastname,
-                Background: this.state.Background,
-                TaskIds: this.state.TaskIds
-            }),
-            success: (function (result) {
-                this.props.history.push("/main");
-            }).bind(this),
-        });
+        if(this.state.currStage==='1'){
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/updateClient?_id='+this.state.clientID,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'POST',
+                datatype: "json",
+                data: JSON.stringify({
+                    company: this.state.company,
+                    address: this.state.address,
+                    check_list : this.state.check_list
+                }),
+                success: (function (result) {
+                    this.props.history.push("/main");
+                }).bind(this),
+            });
+        }
+        else{
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/updateUser',
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'POST',
+                datatype: "json",
+                data: JSON.stringify({
+                    Username: this.state.Username,
+                    Password: this.state.Password,
+                    Authority: this.state.Authority,
+                    Email: this.state.Email,
+                    Phone: this.state.Phone,
+                    Firstname: this.state.Firstname,
+                    Lastname: this.state.Lastname,
+                    Background: this.state.Background,
+                    TaskIds: this.state.TaskIds
+                }),
+                success: (function (result) {
+                    this.props.history.push("/main");
+                }).bind(this),
+            });
+        }
     }
 }
 
