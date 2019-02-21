@@ -150,27 +150,43 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                                         </div>
 
 
-                                        <button type="button"  className="btn btn-login float-right" onClick={this.login}>LogIn</button>
+                                        <button type="button" className="btn btn-login float-right" onClick={this.login}>LogIn</button>
                                         <div style={{
                                             width: "50%",
-                                            visibility:"hidden",
+                                            visibility: "hidden",
                                             //height: "40px"
-                                        }} className="alert alert-danger" role="alert"  id="errormsg" >
+                                        }} className="alert alert-danger" role="alert" id="errormsg" >
                                             Wrong Username or Password
                                             </div>
                                     </form>
                                     <div className="copy-text"><div>© 2018 REPAIR AND PRESERVATION NETWORK.</div><div> All Rights Reserved <a href="http://www.rpncompany.com">rpncompany.com</a></div></div>
                                 </div>
                                 <div className="col-md-8 banner-sec">
+                                    {/* <div className="slideshow-container">
+                                        <div className="mySlides fade">
+                                            <img src="https://static.pexels.com/photos/33972/pexels-photo.jpg" style={{ width: "100%"}}></img>
+                                            <div className="text">Caption Text</div>
+                                        </div>
+                                        <div className="mySlides fade">
+                                            <img src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" style={{ width: "100%" }}></img>
+                                            <div className="text">Caption Two</div>
+                                        </div>
+                                    </div>
+                                    <div style={{}}>
+                                        <span className="dot" ></span>
+                                        <span className="dot" ></span>
+                                        <span className="dot" ></span>
+                                    </div> */}
+
                                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                                        <ol className="carousel-indicators">
+                                        {/* <ol className="carousel-indicators">
                                             <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                        </ol>
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="1" ></li>
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="2" ></li>
+                                        </ol> */}
                                         <div className="carousel-inner" role="listbox">
                                             <div className="carousel-item active">
-                                                <img className="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide" />
+                                                <img className="d-block img-fluid" src="https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/8b3309a8-7a15-4541-9a83-bed56bd6ea54?generation=1550684692370305&alt=media" alt="First slide" />
                                                 <div className="carousel-caption d-none d-md-block">
                                                     <div className="banner-text">
                                                         <h2>Start From RPN</h2>
@@ -234,7 +250,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
             }).bind(this),
             error: (function (jqXHR, textStatus, errorThrown) {
                 //console.log(msg);
-                $("#errormsg").css('visibility','visible');
+                $("#errormsg").css('visibility', 'visible');
 
             }),
         });

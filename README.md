@@ -265,3 +265,7 @@ Change stage display in main page
 
 1. Add items to edittask when submit marker
 2. Fixed css in edittask
+
+### 1.4.10
+
+1. Changed login picture

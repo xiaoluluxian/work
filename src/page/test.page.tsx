@@ -220,7 +220,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             success: (function (result) {
                 console.log(result);
                 // console.log(JSON.stringify(result));
-                
+
             }).bind(this),
         })
         $.ajax({
@@ -320,6 +320,28 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     width: "100%",
                     height: "100%",
                 }}></div> */}
+            <div id="myCarousel" className="carousel slide" data-ride="carousel">
+
+                <ol className="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+
+
+                <div className="carousel-inner">
+                    <div className="item active">
+                        <img style={{width:"25%"}} src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="Los Angeles"></img>
+                    </div>
+
+                    <div className="item">
+                        <img style={{width:"25%"}} src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="Chicago"></img>
+                    </div>
+
+                    <div className="item">
+                        <img style={{width:"25%"}} src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="New York"></img>
+                    </div>
+                </div></div>
 
 
             <button onClick={this.convert360}>convert360</button>

@@ -30,14 +30,10 @@ import Config from '../config/config';
 export interface IProps {
     page: IPage;
     history: any;
-
 }
 
 export interface IState {
 }
-
-
-
 
 class PageGhotiMain extends React.Component<IProps, IState> {
     state = {
