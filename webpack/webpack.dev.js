@@ -44,10 +44,14 @@ let config = {
                     }
                 }]
             },
-            {　　　　　　
+            {
                 test: /\.(jpg|png|gif|webp)$/,
-                loader: 'url-loader?limit=8192'　　　　
+                loader: 'url-loader?limit=8192'
             },
+            // {
+            //     test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/,
+            //     loader: 'url?limit=100000&name=[name].[ext]'
+            // },
             {
                 test: /\.sass$/,
                 use: [
@@ -69,31 +73,31 @@ let config = {
             template: PUBLIC_DIR
         }),
         new CopyWebpackPlugin([{
-            from: FAVICON_DIR,
-            to: BUILD_DIR,
-        }, {
-            from: MANIFEST_DIR,
-            to: BUILD_DIR,
-        },
-        // {
-        //     from: A,
-        //     to: BUILD_DIR,
-        // },
-        {
-            from: B,
-            to: BUILD_DIR,
-        },
-        {
-            from: C,
-            to: BUILD_DIR,
-        },{
-            from: D,
-            to: BUILD_DIR,
-        },{
-            from: E,
-            to: BUILD_DIR,
-        }
-    ], {}),
+                from: FAVICON_DIR,
+                to: BUILD_DIR,
+            }, {
+                from: MANIFEST_DIR,
+                to: BUILD_DIR,
+            },
+            // {
+            //     from: A,
+            //     to: BUILD_DIR,
+            // },
+            {
+                from: B,
+                to: BUILD_DIR,
+            },
+            {
+                from: C,
+                to: BUILD_DIR,
+            }, {
+                from: D,
+                to: BUILD_DIR,
+            }, {
+                from: E,
+                to: BUILD_DIR,
+            }
+        ], {}),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         }),

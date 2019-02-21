@@ -269,3 +269,11 @@ Change stage display in main page
 ### 1.4.10
 
 1. Changed login picture
+
+### 1.4.11
+
+1. Some small css style fixed
+
+### 1.4.12
+
+1. Fixed css style in login page
