@@ -370,7 +370,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                             // marginLeft: '10px',
                             // backgroundColor:"silver",
                             marginRight: '10px',
-                            width: '60px',
+                            // width: '64px',
                             height: '25px',
                             fontSize: '14px',
 
@@ -382,7 +382,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 // paddingTop: '20px',
                                 // marginTop: '10px',
                                 marginLeft: '10px',
-                                width: '60px',
+                                // width: '60px',
                                 height: '25px',
                                 fontSize: '14px',
                             }}
@@ -392,7 +392,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 // paddingTop: '20px',
                                 // marginTop: '10px',
                                 marginLeft: '10px',
-                                width: '60px',
+                                // width: '60px',
                                 height: '25px',
                                 fontSize: '14px',
                             }}
@@ -481,7 +481,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 // paddingTop: '20px',
                                 marginTop: '5px',
                                 marginLeft: '10px',
-                                width: '85px',
+                                // width: '85px',
                                 height: '25px',
                                 fontSize: '14px',
                             }}
@@ -621,7 +621,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px",
+                                height: "29px",
 
                                 // fontSize:'13px'
                             }}>Property Address</span>
@@ -633,7 +633,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Asset Number</span>
                             <input type="text" className="form-control" placeholder="Asset Number" aria-label="Asset Number" aria-describedby="basic-addon1"
@@ -644,7 +644,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Invoice Number</span>
                             <input type="text" className="form-control" placeholder="Invoice Number" aria-label="Invoice Number" aria-describedby="basic-addon1"
@@ -655,7 +655,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Start Date</span>
                             <input type="date" className="form-control" placeholder="StartDate" aria-label="StartDate" aria-describedby="basic-addon1"
@@ -666,7 +666,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Due Date</span>
                             <input type="date" className="form-control" placeholder="DueDate" aria-label="DueDate" aria-describedby="basic-addon1"
@@ -677,7 +677,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Complete Date</span>
                             <input type="date" className="form-control" placeholder="CompletionDate" aria-label="CompletionDate" aria-describedby="basic-addon1"
@@ -690,7 +690,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Invoice Date</span>
                             <input type="date" className="form-control" placeholder="InvoiceDate" aria-label="InvoiceDate" aria-describedby="basic-addon1"
@@ -703,11 +703,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>City/State/Zip Code</span>
-                            <input type="text" className="form-control" placeholder="city/zip code" aria-label="City" aria-describedby="basic-addon1"
-                                id='city' value={this.state.City}
+                            <input autoComplete="false" type="text" className="form-control" placeholder="city/zip code" 
+                                 value={this.state.City}
                                 onChange={e => {
                                     this.setState({ City: e.target.value });
                                 }} style={{ color: "black" }}
@@ -716,7 +716,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Lock Box Number</span>
                             <input type="text" className="form-control" placeholder="lockboxnumber" aria-label="LockBoxNumber" aria-describedby="basic-addon1"
@@ -729,11 +729,11 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Client</span>
                             <input type="text" className="form-control" placeholder="client..." aria-label="Client" aria-describedby="basic-addon1"
-                                id='client' value={this.state.Client}
+                                id='client' value={this.state.Client} disabled
                                 onChange={e => {
                                     this.setState({ Client: e.target.value });
                                 }} style={{ color: "black" }}
@@ -760,7 +760,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>Tax</span>
                             <input type="text" className="form-control" placeholder="Enter Tax Please..." aria-label="Tax" aria-describedby="basic-addon1"
@@ -782,7 +782,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         <div className="input-group-prepend input-group-sm" style={{ marginBottom: "2px", width: "99%" }}>
                             <span className="input-group-text" id="basic-addon1" style={{
                                 color: "black",
-                                height: "31px"
+                                height: "29px"
                                 // fontSize:'13px'
                             }}>BillTo</span>
                             <input type="text" className="form-control" placeholder="bill to..." aria-label="BillTo" aria-describedby="basic-addon1"
@@ -1498,7 +1498,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                         <button style={{
                                             marginTop: '3px',
                                             marginLeft: '5px',
-                                            width: '65px',
+                                            width: '69px',
                                             height: '29px',
                                             fontSize: '14px',
                                         }}
@@ -1565,7 +1565,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                                 // paddingTop: '20px',
                                                 marginTop: '3px',
                                                 marginLeft: '5px',
-                                                width: '72px',
+                                                width: '76px',
                                                 height: '29px',
                                                 fontSize: '14px',
                                             }}
@@ -1577,7 +1577,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>Category</span>
                                         <input type="text" className="form-control" placeholder="Category..." aria-label="Category" aria-describedby="basic-addon1"
@@ -1596,7 +1596,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>Item</span>
                                         <input type="number" className="form-control" placeholder="Item..." aria-label="Item" aria-describedby="basic-addon1"
@@ -1674,7 +1674,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>QTY</span>
                                         <input type="number" className="form-control" placeholder="Qty..." aria-label="Qty" aria-describedby="basic-addon1"
@@ -1695,7 +1695,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>UM</span>
                                         <input type="text" className="form-control" placeholder="UM..." aria-label="UM" aria-describedby="basic-addon1"
@@ -1713,7 +1713,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>PPU</span>
                                         <input type="number" className="form-control" placeholder="PPU..." aria-label="PPU" aria-describedby="basic-addon1"
@@ -1734,7 +1734,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>Cost</span>
                                         <input type="number" className="form-control" placeholder="Cost..." aria-label="Cost" aria-describedby="basic-addon1"
@@ -1748,7 +1748,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>Tax</span>
                                         <input type="number" className="form-control" placeholder="Cost..." aria-label="Cost" aria-describedby="basic-addon1"
@@ -1762,7 +1762,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
-                                            height: "31px"
+                                            height: "29px"
                                             // fontSize:'13px'
                                         }}>Total</span>
                                         <input type="number" className="form-control" placeholder="Cost..." aria-label="Cost" aria-describedby="basic-addon1"

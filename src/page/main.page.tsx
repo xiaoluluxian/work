@@ -616,11 +616,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     }}>
                         <button className="link" title="UserProfile" onClick={this.userProfile}><ins>Profile</ins></button>
                     </div>
-                    <div style={{
+                    {/* <div style={{
                         padding: '10px',
                     }}>
                         <button className="link" title="test" onClick={this.test}><ins>Test</ins></button>
-                    </div>
+                    </div> */}
 
                 </React.Fragment>
             )

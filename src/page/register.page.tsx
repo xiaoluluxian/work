@@ -204,7 +204,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                         width: '30%'
 
                     }}>
-                        <input type="text" id="myInput" placeholder="Search for Addr.." title="Search Task" />
+                        
                     </div>
                     {/* <div style={{
                         marginTop: '20px',
