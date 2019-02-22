@@ -369,9 +369,9 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                                 </div>
 
                                 <div id="div_id_city" className="form-group required">
-                                    <label className="control-label col-md-4  requiredField"> CheckList<span className="asteriskField"></span> </label>
+                                    <label className="control-label col-md-4  requiredField"> CheckList--><span className="asteriskField"></span> </label>
                                     <div className="controls col-md-8 ">
-                                        <input className="input-md  textinput textInput form-control" id="checklist" name="checklist" placeholder="Checklist..." style={{ marginBottom: "5px" }} type="text" ></input>
+                                        
                                     </div>
                                 </div>
 

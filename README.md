@@ -277,3 +277,9 @@ Change stage display in main page
 ### 1.4.12
 
 1. Fixed css style in login page
+
+### 1.4.13
+
+1. Fixed add task city field
+2. Fixed main page bank icon
+3. Add button to delete all item with cate ".marker"

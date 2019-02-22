@@ -159,9 +159,9 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                             </div>
                         </div>
                         <div id="div_id_city" className="form-group required">
-                            <label className="control-label col-md-4  requiredField"> City<span className="asteriskField"></span> </label>
+                            <label className="control-label col-md-4  requiredField"> City/State/Zip<span className="asteriskField"></span> </label>
                             <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="city" name="city" placeholder="City" style={{ marginBottom: "5px" }} type="text" ></input>
+                                <input className="input-md  textinput textInput form-control" id="city" name="city" placeholder="City/State/Zip" style={{ marginBottom: "5px" }} type="text" ></input>
                             </div>
                         </div>
                         <div id="div_id_desc" className="form-group required">
@@ -173,7 +173,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
                         <div id="div_id_LBnum" className="form-group required">
                             <label className="control-label col-md-4  requiredField">Lock Box Number<span className="asteriskField"></span> </label>
                             <div className="controls col-md-8 ">
-                                <input className="input-md  textinput textInput form-control" id="lockboxnumber" name="lockboxnumber" placeholder="Lock Box NUmber" style={{ marginBottom: "5px" }} type="text" ></input>
+                                <input className="input-md  textinput textInput form-control" id="lockboxnumber" name="lockboxnumber" placeholder="Lock Box Number" style={{ marginBottom: "5px" }} type="text" ></input>
                             </div>
                         </div>
                         <div id="div_id_client" className="form-group required">

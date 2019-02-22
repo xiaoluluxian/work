@@ -64,6 +64,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.showTable = this.showTable.bind(this);
         this.ClientChange = this.ClientChange.bind(this);
         this.changePage = this.changePage.bind(this)
+        this.showLogo = this.showLogo.bind(this);
 
     }
 
@@ -305,14 +306,14 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     border: '1px solid grey',
                 }}>
                     <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                    Show 
-                        <select style={{marginLeft:"3px", marginRight:"3px"}}onChange={e => this.changePageSize(e.target.value)}>
+                        Show
+                        <select style={{ marginLeft: "3px", marginRight: "3px" }} onChange={e => this.changePageSize(e.target.value)}>
                             <option>25</option>
                             <option>50</option>
                             <option>100</option>
                             <option>all</option>
                         </select>
-                         Entries
+                        Entries
                         <input style={{
                             float: "right",
                             marginRight: "5px"
@@ -321,9 +322,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                             onKeyPress={event => {
                                 if (event.key === 'Enter') {
                                     // console.log(this.state.searchAddr)
-                                    
+
                                     $.ajax({
-                                        url: 'https://rpntechserver.appspot.com//findTaskByAddr?address='+this.state.searchAddr,
+                                        url: 'https://rpntechserver.appspot.com//findTaskByAddr?address=' + this.state.searchAddr,
                                         headers: {
                                             Authorization: "Bearer " + localStorage.getItem('Token'),
                                         },
@@ -332,13 +333,13 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                         data: JSON.stringify({
                                         }),
                                         success: (function (result) {
-                                            if(result){
+                                            if (result) {
                                                 this.setState({ data: result });
                                             }
-                                            else{
+                                            else {
                                                 window.alert("No such Property!!!!")
                                             }
-                                            
+
                                         }).bind(this),
                                     });
                                 }
@@ -349,20 +350,20 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                     {this.showTable()}
                     <div>
                         {buttonList.map(function (item, key) {
-                            if(this.state.currPage===key){
+                            if (this.state.currPage === key) {
                                 return (
                                     <button key={key} style={{
                                         marginLeft: "10px",
                                         marginBottom: "10px",
                                         width: "40px",
                                         height: "40px",
-                                        backgroundColor:"#003366"
+                                        backgroundColor: "#003366"
                                     }}
                                         onClick={this.changePage.bind(this, item - 1)}
                                     >{item}</button>
                                 )
                             }
-                            else{
+                            else {
                                 return (
                                     <button key={key} style={{
                                         marginLeft: "10px",
@@ -374,7 +375,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     >{item}</button>
                                 )
                             }
-                            
+
                         }.bind(this))}
                     </div>
                 </div>
@@ -492,11 +493,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     {this.showSetTask(item)}
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
-                                <td>{this.showLogo}
-                                    <img src={wflogo} alt="wflogo"
-                                        style={{
-                                            marginRight: "3px"
-                                        }} />
+                                <td>{this.showLogo.bind(this,item)}
+
                                     {item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
@@ -518,7 +516,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             return (
                 <table className="table table-striped table-hover table-bordered table-sm" id='taskT' style={{ marginTop: "15px", width: "99%" }}>
                     <thead>
-                        <tr><th style={{width:"10%"}}>Action</th>
+                        <tr><th style={{ width: "10%" }}>Action</th>
                             <th>Property Address</th>
                             <th>Asset Number</th>
                             <th>Due Date</th>
@@ -543,10 +541,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
                                 <td>
-                                    <img src={wflogo} alt="wflogo"
-                                        style={{
-                                            marginRight: "3px"
-                                        }} />
+                                {this.showLogo(item)}
                                     {item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
@@ -580,7 +575,19 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         // console.log(document.getElementById(id).style.display);
     }
 
-    protected showLogo() {
+    protected showLogo(item) {
+        
+        if (item.Client === "WF") {
+            return (
+                <img src={wflogo} alt="wflogo"
+                    style={{
+                        marginRight: "3px"
+                    }} />
+            )
+        }
+        else {
+            return
+        }
 
     }
 

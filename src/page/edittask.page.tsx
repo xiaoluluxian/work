@@ -239,6 +239,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.edit360marker = this.edit360marker.bind(this);
         this.checklist = this.checklist.bind(this);
         this.submit360 = this.submit360.bind(this);
+        this.deleteMarkerList = this.deleteMarkerList.bind(this);
 
     }
 
@@ -417,6 +418,16 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                             }}
                             title="ADD WHP" onClick={this.addWHP}>AddWHP</button>
+                            <button
+                            style={{
+                                // paddingTop: '20px',
+                                // marginTop: '10px',
+                                marginLeft: '10px',
+                                // width: '85px',
+                                height: '25px',
+                                fontSize: '14px',
+                            }}
+                            title="Del Marker" onClick={this.deleteMarkerList}>DelMarker</button>
 
                         {/* <button
                             style={{
@@ -545,6 +556,20 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             )
         }
     }
+
+    protected deleteMarkerList(){
+        let list = this.state.Item;
+        let temp=[];
+        for(let i=0;i<list.length;i++){
+            if(list[i].Cate.includes(".Marker")){
+            }
+            else{
+                temp.push(list[i]);
+            }
+        }
+        this.setState({Item:temp});
+    }
+
     protected checklist() {
         this.props.history.push("/checklist");
     }
@@ -994,7 +1019,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
         this.setState({Item:list})
         $.ajax({
-            url: 'http://rpntechserver.appspot.com/updateMarker?image_id=' + this.state.currImgID,
+            url: 'https://rpntechserver.appspot.com/updateMarker?image_id=' + this.state.currImgID,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
