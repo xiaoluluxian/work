@@ -12,7 +12,8 @@ import * as Lambda from '../lambda/import';
 import * as $ from "jquery";
 import * as Cheerio from "cheerio"
 
-import "datatables.net"
+// import "datatables.net"
+import * as Chart from 'chart.js';
 
 import Config from '../config/config';
 import { bootstrap, button } from "bootstrap"
@@ -320,16 +321,21 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     width: "100%",
                     height: "100%",
                 }}></div> */}
-            <button>
-                <i></i>
-            </button>
+            <div style={{
+                width: "50%",
+                height: ""
+            }}>
+                <canvas id="myChart" style={{}}></canvas>
+            </div>
 
+            {this.showChart()}
 
+            {/* 
             <button onClick={this.convert360}>convert360</button>
-            <button onClick={this.logtest}>test</button>
+            <button onClick={this.logtest}>test</button> */}
 
             {/* {this.convert360} */}
-            <tr>zipcode <input className="text" id='zipcode' ></input></tr>
+            {/* <tr>zipcode <input className="text" id='zipcode' ></input></tr>
             <button onClick={this.weather}>go</button>
             <input
                 style={{
@@ -362,10 +368,76 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 title="download before" onClick={this.downloadBefore}>Before</button>
             <div>
                 <button onClick={this.printClient}>printClient</button>
-            </div>
+            </div> */}
 
         </React.Fragment>
         )
+    }
+
+    protected showChart() {
+        $(document).ready(function () {
+            var canvas: any = document.getElementById("myChart");
+            var ctx = canvas.getContext('2d');
+            let color: String[] = [];
+            let datas: number[] = [100.4, 135.3, 373.456, 94, 250]
+            for (let i = 0; i < datas.length; i++) {
+                color.push("rgba(255, 99, 132, 0.2)")
+            }
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    // labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                    labels: ['January', 'Feburary', 'March', 'April', 'May'],
+                    // datasets: [{
+                    //     label: '# of Votes',
+                    //     data: [12, 19, 3, 5, 2, 3],
+                    //     backgroundColor: [
+                    //         'rgba(255, 99, 132, 0.2)',
+                    //         'rgba(54, 162, 235, 0.2)',
+                    //         'rgba(255, 206, 86, 0.2)',
+                    //         'rgba(75, 192, 192, 0.2)',
+                    //         'rgba(153, 102, 255, 0.2)',
+                    //         'rgba(255, 159, 64, 0.2)'
+                    //     ],
+                    //     borderColor: [
+                    //         'rgba(255,99,132,1)',
+                    //         'rgba(54, 162, 235, 1)',
+                    //         'rgba(255, 206, 86, 1)',
+                    //         'rgba(75, 192, 192, 1)',
+                    //         'rgba(153, 102, 255, 1)',
+                    //         'rgba(255, 159, 64, 1)'
+                    //     ],
+                    //     borderWidth: 1
+                    // }]
+                    datasets: [
+                        {
+                            label: "2018",
+                            data: datas,
+                            backgroundColor: color
+
+
+                        },
+                        {
+                            label: "2019",
+                            data: [5, 6, 7, 8],
+                            backgroundColor: ['rgba(54, 162, 235, 0.2)']
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        })
+
+
+
     }
 
     protected showtable() {

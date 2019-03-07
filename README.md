@@ -287,3 +287,7 @@ Change stage display in main page
 ### 1.4.14
 
 1. Fixed page show task problem
+
+### 1.5.0
+
+1. Successfully tested chart.js in test
