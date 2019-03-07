@@ -283,3 +283,7 @@ Change stage display in main page
 1. Fixed add task city field
 2. Fixed main page bank icon
 3. Add button to delete all item with cate ".marker"
+
+### 1.4.14
+
+1. Fixed page show task problem

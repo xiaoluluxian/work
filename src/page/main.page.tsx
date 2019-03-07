@@ -41,9 +41,11 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         alluser: [],
         clients: [],
         allTasks: [],
+        nonArcTasks: [],
         currPageSize: "25",
         currPage: 0,
-        searchAddr: ""
+        searchAddr: "",
+        currtaskLeng: 0,
     };
     public constructor(props) {
         super(props);
@@ -116,6 +118,22 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
                 }).bind(this),
             });
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
+
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                method: 'GET',
+                datatype: "json",
+                data: JSON.stringify({
+                }),
+                success: (function (result) {
+                    console.log(result);
+                    this.setState({ nonArcTasks: result });
+                    this.setState({ currtaskLeng: result.length })
+                }).bind(this),
+            });
 
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findTasksByPage?page_index=0&page_size=25&stages=current',
@@ -149,7 +167,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 success: (function (result) {
                     //console.log(result);
                     this.setState({ data: result });
-
+                    this.setState({ currtaskLeng: result.length })
                 }).bind(this),
             });
         }
@@ -158,7 +176,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
 
     public render() {
-        let pages = Math.ceil(this.state.allTasks.length / parseInt(this.state.currPageSize));
+        let pages = Math.ceil(this.state.currtaskLeng / parseInt(this.state.currPageSize));
         let buttonList = []
         for (let i = 0; i < pages; i++) {
             buttonList.push(i + 1)
@@ -425,9 +443,9 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
     protected ClientChange(client) {
         console.log(client);
-        if (client === 'all') {
+        if (client === 'All') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -437,7 +455,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }),
                 success: (function (result) {
                     //console.log(result);
-                    this.setState({ data: result });
+                    this.setState({
+                        data: result,
+                        currtaskLeng: result.length
+                    });
 
                 }).bind(this),
             });
@@ -457,7 +478,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }),
                 success: (function (result) {
                     console.log(result);
-                    this.setState({ data: result });
+                    this.setState({
+                        data: result,
+                        currtaskLeng: result.length
+                    });
 
                 }).bind(this),
             });
@@ -493,7 +517,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     {this.showSetTask(item)}
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
-                                <td>{this.showLogo.bind(this,item)}
+                                <td>{this.showLogo.bind(this, item)}
 
                                     {item.Address}</td>
                                 <td>{item.asset_num}</td>
@@ -541,7 +565,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     {/* <button title="deltask" onClick={this.delTask.bind(this, item)}>Del</button> */}
                                 </td>
                                 <td>
-                                {this.showLogo(item)}
+                                    {this.showLogo(item)}
                                     {item.Address}</td>
                                 <td>{item.asset_num}</td>
                                 <td>{item.DueDate}</td>
@@ -576,7 +600,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     }
 
     protected showLogo(item) {
-        
+
         if (item.Client === "WF") {
             return (
                 <img src={wflogo} alt="wflogo"
@@ -657,7 +681,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         // console.log($('#showbystage'));
         if ($('#showbystage').val() === '-1') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
                 //url: 'https://rpnserver.appspot.com/userProfile',
                 //url: 'http://localhost:8080/login',
                 headers: {
@@ -669,7 +693,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }),
                 success: (function (result) {
                     //console.log(result);
-                    this.setState({ data: result });
+                    this.setState({
+                        data: result,
+                        currtaskLeng: result.length
+                    });
 
                 }).bind(this),
             })
@@ -686,7 +713,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }),
                 success: (function (result) {
                     console.log(result);
-                    this.setState({ data: result });
+                    this.setState({
+                        data: result,
+                        currtaskLeng: result.length
+                    });
 
                 }).bind(this),
             })
@@ -1013,7 +1043,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         console.log(value);
         if (value === 'all') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -1023,7 +1053,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }),
                 success: (function (result) {
                     //console.log(result);
-                    this.setState({ data: result });
+                    this.setState({
+                        data: result,
+                        currtaskLeng: result.length
+                    });
 
                 }).bind(this),
             });
@@ -1043,7 +1076,10 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }),
                 success: (function (result) {
                     //console.log(result);
-                    this.setState({ data: result });
+                    this.setState({
+                        data: result,
+                        currtaskLeng: result.length
+                    });
 
                 }).bind(this),
             });
