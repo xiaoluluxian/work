@@ -610,7 +610,20 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             )
         }
         else {
-            return
+            if(item.ClientIcon){
+                return (
+                    <img src={item.ClientIcon} alt="wflogo"
+                        style={{
+                            marginRight: "3px",
+                            width:"25px",
+                            height:"25px"
+                        }} />
+                )
+            }
+            else{
+                return
+            }
+            
         }
 
     }

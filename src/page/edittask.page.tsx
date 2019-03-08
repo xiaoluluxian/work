@@ -76,6 +76,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         alluser: [],
         TaskStatus: '',
         Client: '',
+        ClientIcon:'',
         // test: 'test',
         // x: "a",
         CheckList: [],
@@ -131,6 +132,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ TaskStatus: result.TaskStatus });
                 this.setState({ CheckList: result.CheckList });
                 this.setState({ Comment: result.Comment });
+                this.setState({ ClientIcon :result.ClientIcon})
 
                 //this.setState({ })                
 
@@ -2268,6 +2270,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Client: this.state.Client,
                 CheckList: this.state.CheckList,
                 Comment: this.state.Comment,
+                ClientIcon: this.state.ClientIcon
             }),
             success: function (data) {
                 var fd = new FormData();
@@ -3694,6 +3697,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                         Client: this.state.Client,
                         CheckList: this.state.CheckList,
                         Comment: this.state.Comment,
+                        ClientIcon: this.state.ClientIcon
                     }),
                     success: function (data) {
                         console.log(JSON.parse(data));

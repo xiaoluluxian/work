@@ -291,3 +291,7 @@ Change stage display in main page
 ### 1.5.0
 
 1. Successfully tested chart.js in test
+
+### 1.5.1
+
+1. Client icon upload done!

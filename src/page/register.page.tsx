@@ -154,7 +154,8 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         Password: '',
         Authority: '',
         currStage: '0',
-        checklist: []
+        checklist: [],
+        icon: ""
 
     };
     public componentDidMount() {
@@ -204,7 +205,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                         width: '30%'
 
                     }}>
-                        
+
                     </div>
                     {/* <div style={{
                         marginTop: '20px',
@@ -367,19 +368,31 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                                         <input className="input-md  textinput textInput form-control" id="address" name="address" placeholder="Address..." style={{ marginBottom: "5px" }} type="text" ></input>
                                     </div>
                                 </div>
-
-                                <div id="div_id_city" className="form-group required">
-                                    <label className="control-label col-md-4  requiredField"> CheckList--><span className="asteriskField"></span> </label>
-                                    <div className="controls col-md-8 ">
-                                        
+                                <div id="div_id_assetnumber" className="form-group required">
+                                    <label className="control-label col-md-4  requiredField"> Icon<span className="asteriskField"></span> </label>
+                                    <div style={{
+                                        width: "60%",
+                                        marginLeft: "15px"
+                                    }} className="input-group-prepend input-group-sm">
+                                        <span className="input-group-text">{this.state.icon? <img style={{width:"25px", height:"25px"}}src={this.state.icon}/> : <div></div>}</span>
+                                        <div className="custom-file">
+                                            <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                                                onChange={(e) => { this.addIcon(e.target.files) }}></input>
+                                            <label className="custom-file-label" >Upload Icon</label>
+                                        </div>
                                     </div>
                                 </div>
-
                             </form>
                             <button id="submit" type="submit" name="submit" style={{ marginBottom: "10px" }} className="btn btn-primary  col-md-8" onClick={this.submitTask} value="submit">Submit</button>
                         </div>
                     </div>
                     <div id="signupbox" style={{ marginTop: "15px", float: "right" }} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div id="div_id_city" className="form-group required">
+                            <label className="control-label col-md-4  requiredField"> CheckList--><span className="asteriskField"></span> </label>
+                            <div className="controls col-md-8 ">
+
+                            </div>
+                        </div>
                         <div className="panel panel-info" >
                             {this.state.checklist.map(this.mapCategory)}
                             <button style={{ marginTop: "10px" }} className="btn btn-primary  col-md-8" onClick={this.addCategory} >AddCategory</button>
@@ -388,6 +401,28 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 </React.Fragment>
             )
         }
+    }
+
+    protected addIcon(File: FileList) {
+        var formData = new FormData();
+            formData.append('image', File[0]);
+            $.ajax({
+                url: 'https://rpntechserver.appspot.com/uploadImage',
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                dataType: 'json',
+                fileElementId: 'file-input',
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('Token'),
+                },
+                data: formData,
+                success: function (result) {
+                    this.setState({ icon: result });
+                }.bind(this),
+            });
     }
 
     protected addCategory() {
@@ -416,7 +451,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 <div className="card-header col-md-8">
 
                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
-                        <button style={{}}className="btn btn-danger center" onClick={()=>{
+                        <button style={{}} className="btn btn-danger center" onClick={() => {
                             let list = this.state.checklist;
                             list.splice(key, 1);
                             this.setState({ checklist: list });
@@ -451,11 +486,11 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                                         this.setState({ checklist: list });
                                     }} >AddQuestions</button>
                                     <div className="input-group-prepend input-group-sm" style={{ marginBottom: "0px" }}>
-                                    <button style={{}}className="btn btn-danger center" onClick={()=>{
-                                        let list = this.state.checklist;
-                                        list[key].Questions.splice(index, 1);
-                                        this.setState({ checklist: list });
-                                    }}></button>
+                                        <button style={{}} className="btn btn-danger center" onClick={() => {
+                                            let list = this.state.checklist;
+                                            list[key].Questions.splice(index, 1);
+                                            this.setState({ checklist: list });
+                                        }}></button>
                                         <span className="input-group-text" id="basic-addon1" style={{
                                             color: "black",
                                             height: "100px"
@@ -576,7 +611,8 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                     company: $('#company').val(),
                     address: $('#address').val(),
-                    check_list: this.state.checklist
+                    check_list: this.state.checklist,
+                    icon:this.state.icon
 
                 }),
                 success: function (data) {
