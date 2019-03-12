@@ -189,9 +189,9 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
                                                 <img className="d-block img-fluid" src="https://www.googleapis.com/download/storage/v1/b/post-images-rpntech/o/8b3309a8-7a15-4541-9a83-bed56bd6ea54?generation=1550684692370305&alt=media" alt="First slide" />
                                                 <div className="carousel-caption d-none d-md-block">
                                                     <div style={{marginBottom:"10%"}}className="banner-text">
-                                                        <h2 style={{textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"}}>Start From RPN</h2>
-                                                        <p style={{textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"}}>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
-                                                        <p style={{textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"}}>Repair and Preservation Network is headquartered in White Plains, New York. Our other operation facilities are located in Des Moines, Iowa and Chicago, Illinois. We provide nationwide coverage of our services.</p>
+                                                        <h2 style={{}}>Start From RPN</h2>
+                                                        <p style={{}}>Our best-in-class services and reputation rely upon our core corporate values of quality, commitment and integrity. These values are thoroughly integrated in our day-to-day work with our clients, our vendor partners and our employees.</p>
+                                                        <p style={{}}>Repair and Preservation Network is headquartered in White Plains, New York. Our other operation facilities are located in Des Moines, Iowa and Chicago, Illinois. We provide nationwide coverage of our services.</p>
                                                     </div>
                                                 </div>
                                             </div>

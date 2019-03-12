@@ -1079,7 +1079,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             //console.log(newname);
             $.ajax({
                 //url: 'https://rpntechserver.appspot.com/userProfile',
-                url: 'http://rpntechserver.appspot.com/getTasksByUser?username=' + newname,
+                url: 'https://rpntechserver.appspot.com/getTasksByUser?username=' + newname,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -1145,7 +1145,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     protected delTask(item) {
         //console.log(item.TaskID);
         $.ajax({
-            url: 'http://rpntechserver.appspot.com/deleteTask?task_id=' + item.TaskID,
+            url: 'https://rpntechserver.appspot.com/deleteTask?task_id=' + item.TaskID,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },

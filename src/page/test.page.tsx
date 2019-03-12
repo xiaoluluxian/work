@@ -40,6 +40,7 @@ import * as PhotoSphereViewer from "photo-sphere-viewer";
 
 export interface IProps {
     page: IPage;
+    history: any;
 }
 
 export interface IState {
@@ -329,6 +330,13 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             </div>
 
             {this.showChart()}
+            <button id="testbtn" className="link" style={{
+                color:"blue"
+            }}>
+                <i className="fas fa-fw fa-cog"></i>
+                <span>Components</span>
+            </button>
+
 
             {/* 
             <button onClick={this.convert360}>convert360</button>

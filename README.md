@@ -295,3 +295,7 @@ Change stage display in main page
 ### 1.5.1
 
 1. Client icon upload done!
+
+### 1.5.2
+
+1. Fixed some bugs in main and login
