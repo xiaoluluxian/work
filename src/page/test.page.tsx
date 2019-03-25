@@ -30,10 +30,13 @@ import * as helper from "./helpers.js";
 // import  "./photo.html";
 // import * as THREE from "./three.min.js";
 import * as PhotoSphereViewer from "photo-sphere-viewer";
+import routes from "../root/routes"
+import {MDBDataTable} from "mdbreact"
 // import * as THREE from "three";
 // import * as DOT from "dot";
 // import * as uEvent from "uevent";
 // import * as D from "d.js";
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 
 // declare const PhotoSphereViewer: any;
@@ -180,6 +183,7 @@ const datas = [
 
 
 class PageGhotiTest extends React.Component<IProps, IState> {
+    num = 0
 
     state = {
         page: null,
@@ -198,7 +202,9 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 content: "secondcontent",
                 id: Math.random()
             }
-        ]
+        ],
+        loading: 0,
+        data:[]
     }
     public constructor(props) {
         super(props);
@@ -212,8 +218,9 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
+        // this.demoAsyncCall().then(() => this.setState({ loading: false }));
         $.ajax({
-            url: "https://rpntechserver.appspot.com/findTasksByPage?page_index=1&page_size=2&stages=current",
+            url: "https://rpntechserver.appspot.com/findTasksByPage?page_index=1&page_size=25&stages=current",
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -222,6 +229,9 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             success: (function (result) {
                 console.log(result);
                 // console.log(JSON.stringify(result));
+                this.num+=1
+                console.log("first:"+this.num);
+                this.setState({data:result})
 
             }).bind(this),
         })
@@ -238,6 +248,9 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             success: (function (result) {
                 console.log(result);
                 // this.setState({ data: result });
+                this.num+=1
+                console.log("second:"+this.num)
+                this.setState({})
 
             }).bind(this),
         });
@@ -271,115 +284,96 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     }
 
     public render() {
+        if (this.num != 2) {
+            return <div>123123123123123123132</div>
+        }
         // console.log(PhotoSphereViewer);
         // <Route path/>
 
+        else {
+            return (<React.Fragment>
+              <div style={{width:"90%"}}>
+                <BootstrapTable style={{width:"90%"}} data={this.state.data} striped hover pagination>
+                    <TableHeaderColumn isKey dataField = "Address">Address</TableHeaderColumn>
+                    <TableHeaderColumn dataField="asset_num">AssetNumber</TableHeaderColumn>
+                </BootstrapTable>
+                </div> 
+                {/* {this.showtable()} */}
+    
+                {/* <div className="container1" id="container1"
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                    }}></div> */}
+                <div style={{
+                    width: "50%",
+                    height: ""
+                }}>
+                    <canvas id="myChart" style={{}}></canvas>
+                </div>
+                
+    
+                {this.showChart()}
+                <button id="testbtn" className="link" style={{
+                    color:"blue"
+                }}>
+                    <i className="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
+                </button>
+    
+    
+                {/* 
+                <button onClick={this.convert360}>convert360</button>
+                <button onClick={this.logtest}>test</button> */}
+    
+                {/* {this.convert360} */}
+                {/* <tr>zipcode <input className="text" id='zipcode' ></input></tr>
+                <button onClick={this.weather}>go</button>
+                <input
+                    style={{
+                        marginTop: '10px',
+                        marginLeft: '10px',
+                        fontSize: '14px',
+    
+    
+                    }}
+                    type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
+                <div style={{ marginLeft: "10px" }}>Import BeforeJSON:<input
+                    style={{
+                        marginTop: '5px',
+                        marginLeft: '10px',
+                        fontSize: '14px',
+    
+    
+                    }}
+                    type="file" id="fileUpload" onChange={(e) => { this.handleChangebefore(e.target.files) }} /></div>
+    
+                <button
+                    style={{
+                        // paddingTop: '20px',
+                        // marginTop: '10px',
+                        marginLeft: '10px',
+                        width: '60px',
+                        height: '25px',
+                        fontSize: '14px',
+                    }}
+                    title="download before" onClick={this.downloadBefore}>Before</button>
+                <div>
+                    <button onClick={this.printClient}>printClient</button>
+                </div> */}
+    
+            </React.Fragment>
+            )
+        }
 
-        return (<React.Fragment>
-            {/* <div style={{width:"90%", margin:"auto"}}>
-                <table className="table table-bordered table-striped" id="examplee" style={{}}>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        {datas.map(function(item, key){
-                            return(
-                                <tr>
-                                    <td>{item.patientId}</td>
-                                    <td>{item.otherId}</td>
-                                    <td>{item.firstName}</td>
-                                    <td>{item.lastName}</td>
-                                    <td>{item.gender}</td>
-                                    <td>{item.dob}</td>
-                                </tr>
-                            )
-                        })}
-                        
-                    </tbody>
-                </table>
-            </div>
-            {this.showtable()} */}
+    }
 
-            {/* <div className="container1" id="container1"
-                style={{
-                    width: "100%",
-                    height: "100%",
-                }}></div> */}
-            <div style={{
-                width: "50%",
-                height: ""
-            }}>
-                <canvas id="myChart" style={{}}></canvas>
-            </div>
+    // protected 
 
-            {this.showChart()}
-            <button id="testbtn" className="link" style={{
-                color:"blue"
-            }}>
-                <i className="fas fa-fw fa-cog"></i>
-                <span>Components</span>
-            </button>
+    
 
-
-            {/* 
-            <button onClick={this.convert360}>convert360</button>
-            <button onClick={this.logtest}>test</button> */}
-
-            {/* {this.convert360} */}
-            {/* <tr>zipcode <input className="text" id='zipcode' ></input></tr>
-            <button onClick={this.weather}>go</button>
-            <input
-                style={{
-                    marginTop: '10px',
-                    marginLeft: '10px',
-                    fontSize: '14px',
-
-
-                }}
-                type="file" id="fileUpload" onChange={(e) => { this.handleChange(e.target.files) }} />
-            <div style={{ marginLeft: "10px" }}>Import BeforeJSON:<input
-                style={{
-                    marginTop: '5px',
-                    marginLeft: '10px',
-                    fontSize: '14px',
-
-
-                }}
-                type="file" id="fileUpload" onChange={(e) => { this.handleChangebefore(e.target.files) }} /></div>
-
-            <button
-                style={{
-                    // paddingTop: '20px',
-                    // marginTop: '10px',
-                    marginLeft: '10px',
-                    width: '60px',
-                    height: '25px',
-                    fontSize: '14px',
-                }}
-                title="download before" onClick={this.downloadBefore}>Before</button>
-            <div>
-                <button onClick={this.printClient}>printClient</button>
-            </div> */}
-
-        </React.Fragment>
-        )
+    protected demoAsyncCall() {
+        return new Promise((resolve) => setTimeout(() => resolve(), 1000));
     }
 
     protected showChart() {
@@ -463,12 +457,21 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         //         "bDestroy": true
         //     });
         // });
-        $(document).ready(function () {
+       
+        
+            console.log(this.state.data)
             $('#examplee').dataTable({
-                responsive: true,
-                bDestroy: true
-            });
-        });
+                "processing": true,
+                "ajax": this.state.data,
+                "columns":[
+                    "Address",
+                    "asset_num",
+                    "DueDate",
+                    "Stage",
+                    "TaskStatus"
+                ]
+            })
+        
     }
 
     protected logtest() {

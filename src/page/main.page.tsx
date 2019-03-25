@@ -102,6 +102,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             }).bind(this),
         });
         if (localStorage.getItem('Authority') === '2' || '3') {
+            let now = Date.now()
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findAllTasks',
 
@@ -113,6 +114,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 data: JSON.stringify({
                 }),
                 success: (function (result) {
+                    console.log("All:"+(Date.now()-now))
                     console.log(result);
                     this.setState({ allTasks: result });
 
@@ -136,7 +138,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             });
 
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findTasksByPage?page_index=0&page_size=25&stages=current',
+                url: 'https://rpntechserver.appspot.com/findAllTasksByStage?stage=running&paging=true&page_index=0&page_size=25',
 
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -340,7 +342,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                             onKeyPress={event => {
                                 if (event.key === 'Enter') {
                                     // console.log(this.state.searchAddr)
-
+                                    let time = Date.now()
                                     $.ajax({
                                         url: 'https://rpntechserver.appspot.com//findTaskByAddr?address=' + this.state.searchAddr,
                                         headers: {
@@ -352,6 +354,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                         }),
                                         success: (function (result) {
                                             if (result) {
+                                                console.log("search="+(Date.now()-time))
                                                 this.setState({ data: result });
                                             }
                                             else {
@@ -715,6 +718,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             })
         }
         else {
+            let now = Date.now()
             $.ajax({
                 url: 'https://rpntechserver.appspot.com/findTaskByStage?stage=' + $('#showbystage').val(),
                 headers: {
@@ -726,6 +730,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }),
                 success: (function (result) {
                     console.log(result);
+                    console.log("none:"+(Date.now()-now))
+                    // window.alert("done")
                     this.setState({
                         data: result,
                         currtaskLeng: result.length

@@ -299,3 +299,7 @@ Change stage display in main page
 ### 1.5.2
 
 1. Fixed some bugs in main and login
+
+### 1.5.3
+
+1. Partiall fixed API bugs in main(1)
