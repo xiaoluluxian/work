@@ -86,6 +86,12 @@ export default function (props) {
 
                 },
                 {
+                    component: Pages.photo,
+                    exact: true,
+                    path: '/photo',
+
+                },
+                {
                     component: () => <div>Path = /home</div>,
                     path: '/home',
                 },
@@ -93,6 +99,7 @@ export default function (props) {
                     component: () => <div>404</div>,
                     path: '*',
                 },
+                
             ],
         },
     ];

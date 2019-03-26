@@ -292,19 +292,19 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
         else {
             return (<React.Fragment>
-              <div style={{width:"90%"}}>
+              {/* <div style={{width:"90%"}}>
                 <BootstrapTable style={{width:"90%"}} data={this.state.data} striped hover pagination>
                     <TableHeaderColumn isKey dataField = "Address">Address</TableHeaderColumn>
                     <TableHeaderColumn dataField="asset_num">AssetNumber</TableHeaderColumn>
                 </BootstrapTable>
-                </div> 
+                </div>  */}
                 {/* {this.showtable()} */}
     
-                {/* <div className="container1" id="container1"
+                <div className="container1" id="container1"
                     style={{
                         width: "100%",
                         height: "100%",
-                    }}></div> */}
+                    }}></div>
                 <div style={{
                     width: "50%",
                     height: ""
@@ -312,8 +312,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                     <canvas id="myChart" style={{}}></canvas>
                 </div>
                 
-    
-                {this.showChart()}
+                {/* {this.showChart()} */}
                 <button id="testbtn" className="link" style={{
                     color:"blue"
                 }}>
@@ -322,9 +321,9 @@ class PageGhotiTest extends React.Component<IProps, IState> {
                 </button>
     
     
-                {/* 
+                
                 <button onClick={this.convert360}>convert360</button>
-                <button onClick={this.logtest}>test</button> */}
+                {/* <button onClick={this.logtest}>test</button> */}
     
                 {/* {this.convert360} */}
                 {/* <tr>zipcode <input className="text" id='zipcode' ></input></tr>

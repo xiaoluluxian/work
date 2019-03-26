@@ -16,6 +16,7 @@ import PageGhotiUserprofile from './userprofile.page';
 import PageGhotiOrdertask from './ordertask.page';
 import PageGhotiChecklist from './checklist.page';
 import PageGhotiPrintedit from './printedit.page';
+import PageGhotiPhoto from './photo.page';
 export {
     PageGhotiMain as main,
     PageGhotiAddtask as addtask,
@@ -29,4 +30,5 @@ export {
     PageGhotiOrdertask as ordertask,
     PageGhotiChecklist as checklist,
     PageGhotiPrintedit as printedit,
+    PageGhotiPhoto as photo,
 };

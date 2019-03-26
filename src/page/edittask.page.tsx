@@ -76,13 +76,14 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         alluser: [],
         TaskStatus: '',
         Client: '',
-        ClientIcon:'',
+        ClientIcon: '',
         // test: 'test',
         // x: "a",
         CheckList: [],
         Comment: "",
         Markers: [],
-        currImgID: ""
+        currImgID: "",
+        currImgSrc:""
 
 
         //data: [],
@@ -132,7 +133,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 this.setState({ TaskStatus: result.TaskStatus });
                 this.setState({ CheckList: result.CheckList });
                 this.setState({ Comment: result.Comment });
-                this.setState({ ClientIcon :result.ClientIcon})
+                this.setState({ ClientIcon: result.ClientIcon })
 
                 //this.setState({ })                
 
@@ -242,7 +243,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         this.checklist = this.checklist.bind(this);
         this.submit360 = this.submit360.bind(this);
         this.deleteMarkerList = this.deleteMarkerList.bind(this);
-
+        this.generateURL = this.generateURL.bind(this)
     }
 
 
@@ -420,7 +421,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 fontSize: '14px',
                             }}
                             title="ADD WHP" onClick={this.addWHP}>AddWHP</button>
-                            <button
+                        <button
                             style={{
                                 // paddingTop: '20px',
                                 // marginTop: '10px',
@@ -559,17 +560,17 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
     }
 
-    protected deleteMarkerList(){
+    protected deleteMarkerList() {
         let list = this.state.Item;
-        let temp=[];
-        for(let i=0;i<list.length;i++){
-            if(list[i].Cate.includes(".Marker")){
+        let temp = [];
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].Cate.includes(".Marker")) {
             }
-            else{
+            else {
                 temp.push(list[i]);
             }
         }
-        this.setState({Item:temp});
+        this.setState({ Item: temp });
     }
 
     protected checklist() {
@@ -733,8 +734,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 height: "29px"
                                 // fontSize:'13px'
                             }}>City/State/Zip Code</span>
-                            <input autoComplete="false" type="text" className="form-control" placeholder="city/zip code" 
-                                 value={this.state.City}
+                            <input autoComplete="false" type="text" className="form-control" placeholder="city/zip code"
+                                value={this.state.City}
                                 onChange={e => {
                                     this.setState({ City: e.target.value });
                                 }} style={{ color: "black" }}
@@ -947,7 +948,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                                 }}>
                                     <div className="col-sm-10">
                                         <button onClick={this.submit360} className="btn btn-primary">Submit</button>
+                                        <button style={{ marginLeft: "10px" }} onClick={this.generateURL} className="btn btn-info">URL</button>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -993,8 +996,12 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
     }
 
+    protected generateURL() {
+        window.alert(this.state.currImgSrc);
+    }
+
     protected submit360() {
-        
+
 
         let list = this.state.Item;
         for (let i = 0; i < this.state.Markers.length; i++) {
@@ -1009,7 +1016,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 Taxable: true,
                 description: this.state.Markers[i].Description,
                 Comments: '',
-                Item:(i+1),
+                Item: (i + 1),
                 Qty: 0,
                 UM: '',
                 PPU: 0,
@@ -1019,7 +1026,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 description_cn: "",
             })
         }
-        this.setState({Item:list})
+        this.setState({ Item: list })
         $.ajax({
             url: 'https://rpntechserver.appspot.com/updateMarker?image_id=' + this.state.currImgID,
             headers: {
@@ -2419,6 +2426,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
     protected convert360(pic) {
         // console.log(this.state.Markers);
         this.setState({ currImgID: pic.ImageID });
+        this.setState({ currImgSrc: pic.Src })
 
         var modal = document.getElementById('sphere');
 
@@ -3070,30 +3078,58 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             )
         }
         else {
+
             return (
                 picture.map(function (item, key) {
-                    return (
-                        <div key={key} style={{
-                            // position: 'flex',
-                            flex: 1,
-                            // float:"left"
-                            width: "33%",
-                            display: "inline-block"
-                        }}>
-                            <div>
-                                <img style={{
-                                    width: '90%',
-                                    height: 'auto',
-                                    padding: '3px'
-                                }}
-                                    src={item.Src}
-                                    onClick={this.convert360.bind(this, item)}
-                                />
-                                <div style={{ width: "97%" }}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
-                            </div>
+                    if (item.ImageID) {
+                        return (
+                            <div key={key} style={{
+                                // position: 'flex',
+                                flex: 1,
+                                // float:"left"
+                                width: "33%",
+                                display: "inline-block"
+                            }}>
+                                <div>
+                                    <img style={{
+                                        width: '90%',
+                                        height: 'auto',
+                                        padding: '3px'
+                                    }}
+                                        src={item.Src}
+                                        onClick={this.convert360.bind(this, item)}
+                                    />
+                                    <div style={{ width: "97%" }}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
+                                </div>
 
-                        </div>
-                    )
+                            </div>
+                        )
+                    }
+                    else {
+                        return (
+                            <div key={key} style={{
+                                // position: 'flex',
+                                flex: 1,
+                                // float:"left"
+                                width: "33%",
+                                display: "inline-block"
+                            }}>
+                                <div>
+                                    <img style={{
+                                        width: '90%',
+                                        height: 'auto',
+                                        padding: '3px'
+                                    }}
+                                        src={item.Src}
+
+                                    />
+                                    <div style={{ width: "97%" }}>{key + 1}.{desc}{descCN ? "/" + descCN : ""}</div>
+                                </div>
+
+                            </div>
+                        )
+                    }
+
                 }.bind(this))
             )
         }

@@ -303,3 +303,7 @@ Change stage display in main page
 ### 1.5.3
 
 1. Partiall fixed API bugs in main(1)
+
+### 1.5.4
+
+1. Show 360 photo on outside page

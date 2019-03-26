@@ -42,7 +42,8 @@
     "userprofile",
     "ordertask",
     "checklist",
-    "printedit"
+    "printedit",
+    "photo"
   ],
   "funcs": [],
   "lambdas": [],
