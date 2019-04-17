@@ -41,7 +41,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            url: 'https://rpnserver.appspot.com/findAllUsers',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -56,7 +56,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllClient',
+            url: 'https://rpnserver.appspot.com/findAllClient',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -290,7 +290,7 @@ class PageGhotiAddtask extends React.Component<IProps, IState> {
         //console.log(this.state.username);
 
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/initTask',
+            url: 'https://rpnserver.appspot.com/initTask',
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",

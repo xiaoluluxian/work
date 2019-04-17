@@ -31,7 +31,7 @@ class PageGhotiChecklist extends React.Component<IProps, IState> {
     }
     public componentDidMount() {
         $.ajax({
-            url: "https://rpntechserver.appspot.com/findChecklistByTask?task_id=" + localStorage.getItem("currTask"),
+            url: "https://rpnserver.appspot.com/findChecklistByTask?task_id=" + localStorage.getItem("currTask"),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -45,7 +45,7 @@ class PageGhotiChecklist extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
+            url: 'https://rpnserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },

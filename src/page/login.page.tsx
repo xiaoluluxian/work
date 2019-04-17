@@ -230,7 +230,7 @@ class PageGhotiLogin extends React.Component<IProps, IState> {
         var toastr = "eee";
 
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/login',
+            url: 'https://rpnserver.appspot.com/login',
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",

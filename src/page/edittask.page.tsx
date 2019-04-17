@@ -83,7 +83,10 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         Comment: "",
         Markers: [],
         currImgID: "",
-        currImgSrc:""
+        currImgSrc:"",
+
+        
+
 
 
         //data: [],
@@ -92,7 +95,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
+            url: 'https://rpnserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -141,7 +144,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=before',
+            url: 'https://rpnserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=before',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -153,7 +156,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=during',
+            url: 'https://rpnserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=during',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -166,7 +169,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=after',
+            url: 'https://rpnserver.appspot.com/findAllImg?task_id=' + localStorage.getItem("currTask") + '&status=after',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -179,7 +182,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            url: 'https://rpnserver.appspot.com/findAllUsers',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -885,28 +888,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                     <div id="sphere" className="sphere">
                         <div className="sphere-content">
                             <span className="closep">&times;</span>
-                            {/* <div style={{
-                                float: "left",
-                                width: "35%",
-                                height: "90%",
-                                overflow: "scroll",
-                                marginTop: "3%",
-                            }}>
-                                <div>
-                                    {this.state.Markers.length == 0 ? <div></div> : this.state.Markers.map(function (item, key) {
-                                        return (
-                                            <React.Fragment>
-                                                <div>Category{key + 1}<input value={item.Description} onChange={e => {
-                                                    let list = this.state.Markers
-                                                    list[key].Description = e.target.value;
-                                                    this.setState({ test: list });
-                                                }}>
-                                                </input></div>
-                                            </React.Fragment>
-                                        )
-                                    }.bind(this))}
-                                </div>
-                            </div> */}
+                            
                             <div style={{
                                 float: "left",
                                 width: "35%",
@@ -1028,7 +1010,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
         this.setState({ Item: list })
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/updateMarker?image_id=' + this.state.currImgID,
+            url: 'https://rpnserver.appspot.com/updateMarker?image_id=' + this.state.currImgID,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -1212,6 +1194,9 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             UM: '',
             PPU: 0,
             Cost: 0,
+            completeness:"0",
+            SubCost:0,
+            SubPPU:0,
 
             Before: []
         }
@@ -2001,7 +1986,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var formData = new FormData();
             formData.append('image', Files[temp]);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
+                url: 'https://rpnserver.appspot.com/uploadImage',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 dataType: 'json',
@@ -2031,7 +2016,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var formData = new FormData();
             formData.append('image', Files[temp]);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
+                url: 'https://rpnserver.appspot.com/uploadImage',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 dataType: 'json',
@@ -2067,7 +2052,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var formData = new FormData();
             formData.append('image', Files[temp]);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
+                url: 'https://rpnserver.appspot.com/uploadImage',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 dataType: 'json',
@@ -2097,7 +2082,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var formData = new FormData();
             formData.append('image', Files[temp]);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
+                url: 'https://rpnserver.appspot.com/uploadImage',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 dataType: 'json',
@@ -2135,7 +2120,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var formData = new FormData();
             formData.append('image', Files[temp]);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
+                url: 'https://rpnserver.appspot.com/uploadImage',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 dataType: 'json',
@@ -2165,7 +2150,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             var formData = new FormData();
             formData.append('image', Files[temp]);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
+                url: 'https://rpnserver.appspot.com/uploadImage',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 dataType: 'json',
@@ -2199,7 +2184,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         console.log($('#delcate').val());
         console.log($('#delitem').val());
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/deleteItem?task_id=' + localStorage.getItem("currTask") + "&cate=" + $('#delcate').val() + "&item=" + $('#delitem').val(),
+            url: 'https://rpnserver.appspot.com/deleteItem?task_id=' + localStorage.getItem("currTask") + "&cate=" + $('#delcate').val() + "&item=" + $('#delitem').val(),
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",
@@ -2243,7 +2228,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         }
 
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
+            url: 'https://rpnserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
             method: 'POST',
             datatype: "json",
@@ -2296,7 +2281,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
                 }
 
                 $.ajax({
-                    url: 'https://rpntechserver.appspot.com/addTaskToUser',
+                    url: 'https://rpnserver.appspot.com/addTaskToUser',
                     //url: 'http://192.168.0.66:8080/addTaskToUserII?userToRemove='+this.state.oldUser+'&userToAdd='+$('#setUser').val()+'&task_id='+localStorage.getItem('currTask'),
                     method: 'POST',
                     dataType: 'json',
@@ -2397,8 +2382,8 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
             //console.log(json);
             console.log(localStorage.getItem('currTask'));
             $.ajax({
-                //url: 'https://rpntechserver.appspot.com/parseJson',
-                url: 'https://rpntechserver.appspot.com/parseJson?task_id=' + localStorage.getItem('currTask'),
+                //url: 'https://rpnserver.appspot.com/parseJson',
+                url: 'https://rpnserver.appspot.com/parseJson?task_id=' + localStorage.getItem('currTask'),
                 method: 'POST',
                 datatype: "json",
                 headers: {
@@ -2442,7 +2427,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         let div = document.getElementById('spherepic');
         let PSV;
         $.ajax({
-            url: "https://rpntechserver.appspot.com/findImageMarkerByImageID?imageID=" + pic.ImageID,
+            url: "https://rpnserver.appspot.com/findImageMarkerByImageID?imageID=" + pic.ImageID,
             method: 'GET',
             datatype: "json",
             headers: {
@@ -3698,7 +3683,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
 
             this.setState({ TaskStatus: "1" }, () => {
                 $.ajax({
-                    url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
+                    url: 'https://rpnserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
                     //url: 'http://localhost:8080/login',
                     method: 'POST',
                     datatype: "json",
@@ -3746,7 +3731,7 @@ class PageGhotiEdittask extends React.Component<IProps, IState> {
         else {
             this.setState({ TaskStatus: "0" }, () => {
                 $.ajax({
-                    url: 'https://rpntechserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
+                    url: 'https://rpnserver.appspot.com/updateTask?task_id=' + localStorage.getItem("currTask"),
                     //url: 'http://localhost:8080/login',
                     method: 'POST',
                     datatype: "json",

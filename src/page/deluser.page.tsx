@@ -38,7 +38,7 @@ class PageGhotiDeluser extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            url: 'https://rpnserver.appspot.com/findAllUsers',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -137,7 +137,7 @@ class PageGhotiDeluser extends React.Component<IProps, IState> {
         let name = this.findUserByName(this.state.chooseUser);
         console.log(name);
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/removeUser?username='+name,
+            url: 'https://rpnserver.appspot.com/removeUser?username='+name,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },

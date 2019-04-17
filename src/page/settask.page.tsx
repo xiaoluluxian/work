@@ -35,7 +35,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
     public componentDidMount() {
         var id;
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
+            url: 'https://rpnserver.appspot.com/findTaskById?task_id=' + localStorage.getItem("currTask"),
             //url: 'http://localhost:8080/login',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -52,7 +52,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            url: 'https://rpnserver.appspot.com/findAllUsers',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -334,7 +334,7 @@ class PageGhotiSettask extends React.Component<IProps, IState> {
         }
 
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/addTaskToUser',
+            url: 'https://rpnserver.appspot.com/addTaskToUser',
             //url: 'http://192.168.0.66:8080/addTaskToUserII?userToRemove='+this.state.oldUser+'&userToAdd='+$('#setUser').val()+'&task_id='+localStorage.getItem('currTask'),
             method: 'POST',
             dataType: 'json',

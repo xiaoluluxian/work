@@ -72,7 +72,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            url: 'https://rpnserver.appspot.com/findAllUsers',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -86,7 +86,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllClient',
+            url: 'https://rpnserver.appspot.com/findAllClient',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -104,7 +104,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         if (localStorage.getItem('Authority') === '2' || '3') {
             let now = Date.now()
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                url: 'https://rpnserver.appspot.com/findAllTasks',
 
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -121,7 +121,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 }).bind(this),
             });
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
+                url: 'https://rpnserver.appspot.com/findNonAchievedTasks',
 
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -138,7 +138,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             });
 
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findAllTasksByStage?stage=running&paging=true&page_index=0&page_size=25',
+                url: 'https://rpnserver.appspot.com/findAllTasksByStage?stage=running&paging=true&page_index=0&page_size=25',
 
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -157,7 +157,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         }
         else if (localStorage.getItem('Authority') === '1') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/userProfile',
+                url: 'https://rpnserver.appspot.com/userProfile',
 
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -344,7 +344,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                                     // console.log(this.state.searchAddr)
                                     let time = Date.now()
                                     $.ajax({
-                                        url: 'https://rpntechserver.appspot.com//findTaskByAddr?address=' + this.state.searchAddr,
+                                        url: 'https://rpnserver.appspot.com//findTaskByAddr?address=' + this.state.searchAddr,
                                         headers: {
                                             Authorization: "Bearer " + localStorage.getItem('Token'),
                                         },
@@ -407,7 +407,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         this.setState({ currPageSize: size })
         this.setState({ currPage: "0" })
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findTasksByPage?page_index=0&page_size=' + size + '&stages=current',
+            url: 'https://rpnserver.appspot.com/findTasksByPage?page_index=0&page_size=' + size + '&stages=current',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -427,7 +427,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     protected changePage(pageNum) {
         this.setState({ currPage: pageNum })
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findTasksByPage?page_index=' + pageNum + '&page_size=' + this.state.currPageSize + '&stages=current',
+            url: 'https://rpnserver.appspot.com/findTasksByPage?page_index=' + pageNum + '&page_size=' + this.state.currPageSize + '&stages=current',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -448,7 +448,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         console.log(client);
         if (client === 'All') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
+                url: 'https://rpnserver.appspot.com/findNonAchievedTasks',
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -470,8 +470,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
 
             //console.log(newname);
             $.ajax({
-                //url: 'https://rpntechserver.appspot.com/userProfile',
-                url: 'https://rpntechserver.appspot.com/findTaskByClient?company=' + client,
+                //url: 'https://rpnserver.appspot.com/userProfile',
+                url: 'https://rpnserver.appspot.com/findTaskByClient?company=' + client,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -697,7 +697,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         // console.log($('#showbystage'));
         if ($('#showbystage').val() === '-1') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
+                url: 'https://rpnserver.appspot.com/findNonAchievedTasks',
                 //url: 'https://rpnserver.appspot.com/userProfile',
                 //url: 'http://localhost:8080/login',
                 headers: {
@@ -720,7 +720,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         else {
             let now = Date.now()
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findTaskByStage?stage=' + $('#showbystage').val(),
+                url: 'https://rpnserver.appspot.com/findTaskByStage?stage=' + $('#showbystage').val(),
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -755,7 +755,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             fd.append('task_id', item.TaskID);
             fd.append('status', st);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/markTaskStatus',
+                url: 'https://rpnserver.appspot.com/markTaskStatus',
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -767,7 +767,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 contentType: false,
                 success: (function (result) {
                     $.ajax({
-                        url: 'https://rpntechserver.appspot.com/findAllTasks',
+                        url: 'https://rpnserver.appspot.com/findAllTasks',
                         //url: 'https://rpnserver.appspot.com/userProfile',
                         //url: 'http://localhost:8080/login',
                         headers: {
@@ -794,7 +794,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             fd.append('task_id', item.TaskID);
             fd.append('status', st);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/markTaskStatus',
+                url: 'https://rpnserver.appspot.com/markTaskStatus',
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -806,7 +806,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
                 contentType: false,
                 success: (function (result) {
                     $.ajax({
-                        url: 'https://rpntechserver.appspot.com/findAllTasks',
+                        url: 'https://rpnserver.appspot.com/findAllTasks',
                         //url: 'https://rpnserver.appspot.com/userProfile',
                         //url: 'http://localhost:8080/login',
                         headers: {
@@ -943,7 +943,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     protected delUser() {
         this.props.history.push("/deluser");
         // $.ajax({
-        //     url: 'https://rpntechserver.appspot.com/removeUser',
+        //     url: 'https://rpnserver.appspot.com/removeUser',
         //     headers: {
         //         Authorization: "Bearer " + localStorage.getItem('Token'),
         //     },
@@ -1062,7 +1062,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
         console.log(value);
         if (value === 'all') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findNonAchievedTasks',
+                url: 'https://rpnserver.appspot.com/findNonAchievedTasks',
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -1084,8 +1084,8 @@ class PageGhotiMain extends React.Component<IProps, IState> {
             var newname = this.findUserByName(value);
             //console.log(newname);
             $.ajax({
-                //url: 'https://rpntechserver.appspot.com/userProfile',
-                url: 'https://rpntechserver.appspot.com/getTasksByUser?username=' + newname,
+                //url: 'https://rpnserver.appspot.com/userProfile',
+                url: 'https://rpnserver.appspot.com/getTasksByUser?username=' + newname,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -1151,7 +1151,7 @@ class PageGhotiMain extends React.Component<IProps, IState> {
     protected delTask(item) {
         //console.log(item.TaskID);
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/deleteTask?task_id=' + item.TaskID,
+            url: 'https://rpnserver.appspot.com/deleteTask?task_id=' + item.TaskID,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },

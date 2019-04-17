@@ -220,7 +220,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
     public componentDidMount() {
         // this.demoAsyncCall().then(() => this.setState({ loading: false }));
         $.ajax({
-            url: "https://rpntechserver.appspot.com/findTasksByPage?page_index=1&page_size=25&stages=current",
+            url: "https://rpnserver.appspot.com/findTasksByPage?page_index=1&page_size=25&stages=current",
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -236,7 +236,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
             }).bind(this),
         })
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllTasks',
+            url: 'https://rpnserver.appspot.com/findAllTasks',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -256,7 +256,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         });
 
         // $.ajax({
-        //     url: "https://rpntechserver.appspot.com/findAllClient",
+        //     url: "https://rpnserver.appspot.com/findAllClient",
         //     headers: {
         //         Authorization: "Bearer " + localStorage.getItem('Token'),
         //     },
@@ -269,7 +269,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
         //     }).bind(this),
         // })
         // $.ajax({
-        //     url: "https://rpntechserver.appspot.com/findTaskByClient?company=GBH",
+        //     url: "https://rpnserver.appspot.com/findTaskByClient?company=GBH",
         //     headers: {
         //         Authorization: "Bearer " + localStorage.getItem('Token'),
         //     },
@@ -479,7 +479,7 @@ class PageGhotiTest extends React.Component<IProps, IState> {
 
     protected printClient() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllClient',
+            url: 'https://rpnserver.appspot.com/findAllClient',
             method: 'GET',
             datatype: "json",
             headers: {

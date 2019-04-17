@@ -55,7 +55,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         $.ajax({
-            url: "https://rpntechserver.appspot.com/findAllClient",
+            url: "https://rpnserver.appspot.com/findAllClient",
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -69,7 +69,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            url: 'https://rpnserver.appspot.com/findAllUsers',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -84,7 +84,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
             }).bind(this),
         });
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findUserByUsername?username=' + localStorage.getItem('currUser'),
+            url: 'https://rpnserver.appspot.com/findUserByUsername?username=' + localStorage.getItem('currUser'),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -446,7 +446,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
     protected changeClient(client) {
         console.log(client);
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findClientByCompanyName?company=' + client,
+            url: 'https://rpnserver.appspot.com/findClientByCompanyName?company=' + client,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -467,7 +467,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
     protected changeUser(user) {
         console.log(user);
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findUserByUsername?username=' + user,
+            url: 'https://rpnserver.appspot.com/findUserByUsername?username=' + user,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },
@@ -496,7 +496,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
     protected submit() {
         if(this.state.currStage==='1'){
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/updateClient?_id='+this.state.clientID,
+                url: 'https://rpnserver.appspot.com/updateClient?_id='+this.state.clientID,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -514,7 +514,7 @@ class PageGhotiUserprofile extends React.Component<IProps, IState> {
         }
         else{
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/updateUser',
+                url: 'https://rpnserver.appspot.com/updateUser',
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },

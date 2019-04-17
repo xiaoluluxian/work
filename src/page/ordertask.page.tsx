@@ -49,7 +49,7 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
     };
     public componentDidMount() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllTasks',
+            url: 'https://rpnserver.appspot.com/findAllTasks',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -65,7 +65,7 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
         });
 
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/findAllUsers',
+            url: 'https://rpnserver.appspot.com/findAllUsers',
 
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -262,7 +262,7 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
         this.setState({currUser:user});
         if(user==="all"){
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findAllTasks',
+                url: 'https://rpnserver.appspot.com/findAllTasks',
     
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
@@ -279,7 +279,7 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
         }
         else{
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/findUserByUsername?username=' + user,
+                url: 'https://rpnserver.appspot.com/findUserByUsername?username=' + user,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -302,8 +302,8 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
                 }).bind(this),
             });
             $.ajax({
-                //url: 'https://rpntechserver.appspot.com/userProfile',
-                url: 'http://rpntechserver.appspot.com/getTasksByUser?username=' + user,
+                //url: 'https://rpnserver.appspot.com/userProfile',
+                url: 'http://rpnserver.appspot.com/getTasksByUser?username=' + user,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('Token'),
                 },
@@ -328,7 +328,7 @@ class PageGhotiOrdertask extends React.Component<IProps, IState> {
 
     protected submitTask() {
         $.ajax({
-            url: 'https://rpntechserver.appspot.com/updateUser',
+            url: 'https://rpnserver.appspot.com/updateUser',
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('Token'),
             },

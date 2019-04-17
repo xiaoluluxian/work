@@ -407,7 +407,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
         var formData = new FormData();
             formData.append('image', File[0]);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/uploadImage',
+                url: 'https://rpnserver.appspot.com/uploadImage',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 dataType: 'json',
@@ -573,7 +573,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
     protected submitTask() {
         if (this.state.currStage === '0') {
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/register',
+                url: 'https://rpnserver.appspot.com/register',
                 //url: 'http://localhost:8080/login',
                 method: 'POST',
                 datatype: "json",
@@ -601,7 +601,7 @@ class PageGhotiRegister extends React.Component<IProps, IState> {
             // $('#address').val(),
             // $('#checklist').val(),);
             $.ajax({
-                url: 'https://rpntechserver.appspot.com/createClient',
+                url: 'https://rpnserver.appspot.com/createClient',
                 //url: 'http://localhost:8080/login',
                 method: 'POST',
                 datatype: "json",
